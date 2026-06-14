@@ -1,0 +1,7 @@
+{
+  "name": "@playbykey/docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "PlayByKey Developers - documentation site for PlayByKey developer tooling (docs.playbykey.com).",
+  "type": "module"
+}

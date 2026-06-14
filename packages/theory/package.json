@@ -1,0 +1,10 @@
+{
+  "name": "@playbykey/theory",
+  "version": "0.1.0",
+  "description": "Music theory engine for scales, modes, intervals, and key relationships.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}
