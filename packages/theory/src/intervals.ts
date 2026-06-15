@@ -1,11 +1,11 @@
-import { INTERVAL_IDS, THEORY_INTERVAL_IDS } from './constants';
+import { INTERVAL_IDS, INTERVAL_ID_VALUES } from './constants';
 import { getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
-import type { ModeName, Note, TheoryIntervalId } from './types';
+import type { ModeName, Note, IntervalId } from './types';
 
-interface TheoryIntervalContext {
+interface IntervalContext {
   root: Note;
   mode: ModeName;
-  interval: TheoryIntervalId;
+  interval: IntervalId;
 }
 
 interface IntervalSpec {
@@ -27,7 +27,7 @@ interface ResolvedInterval {
   label: string;
 }
 
-const INTERVAL_DEFINITIONS: Record<TheoryIntervalId, IntervalDefinition> = {
+const INTERVAL_DEFINITIONS: Record<IntervalId, IntervalDefinition> = {
   [INTERVAL_IDS.HALF_STEP]: {
     label: 'Half step',
     intervalSpec: { fromDegree: 3, toDegree: 4, semitones: 1 },
@@ -82,8 +82,8 @@ const INTERVAL_DEFINITIONS: Record<TheoryIntervalId, IntervalDefinition> = {
   },
 };
 
-const isTheoryIntervalId = (value: string): value is TheoryIntervalId =>
-  (THEORY_INTERVAL_IDS as readonly string[]).includes(value);
+const isIntervalId = (value: string): value is IntervalId =>
+  (INTERVAL_ID_VALUES as readonly string[]).includes(value);
 
 const noteAtDegree = (root: Note, mode: ModeName, degree: number): Note => {
   if (degree === 8) {
@@ -123,11 +123,11 @@ const resolveEndpointsFromSpec = (
   };
 };
 
-const intervalUsesChromaticTo = (interval: TheoryIntervalId): boolean =>
+const intervalUsesChromaticTo = (interval: IntervalId): boolean =>
   INTERVAL_DEFINITIONS[interval].intervalSpec.chromaticTo === true;
 
 const resolveIntervalEndpoints = (
-  context: TheoryIntervalContext
+  context: IntervalContext
 ): ResolvedInterval => {
   const definition = INTERVAL_DEFINITIONS[context.interval];
   const { intervalSpec } = definition;
@@ -146,7 +146,7 @@ const resolveIntervalEndpoints = (
 };
 
 export type {
-  TheoryIntervalContext,
+  IntervalContext,
   IntervalSpec,
   IntervalDefinition,
   ResolvedInterval,
@@ -154,7 +154,7 @@ export type {
 
 export {
   INTERVAL_DEFINITIONS,
-  isTheoryIntervalId,
+  isIntervalId,
   intervalUsesChromaticTo,
   resolveIntervalEndpoints,
 };

@@ -18,8 +18,8 @@ changed before v1, see [open-questions.md](./open-questions.md).
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Note`               | The 12 chromatic notes, sharps only (no flats/enharmonics): `'C' \| 'C#' \| 'D' \| 'D#' \| 'E' \| 'F' \| 'F#' \| 'G' \| 'G#' \| 'A' \| 'A#' \| 'B'`.                |
 | `ModeName`           | The 7 modes of the major scale, ordered by brightness: `'ionian' \| 'dorian' \| 'phrygian' \| 'lydian' \| 'mixolydian' \| 'aeolian' \| 'locrian'`.                  |
-| `TheoryIntervalId`   | Identifiers for the 13 intervals in the interval catalog, from `'half_step'` to `'octave'`.                                                                         |
-| `TheoryScaleKind`    | Scale kinds used in theory diagrams and scale strips: `'mode' \| 'chromatic' \| 'pentatonic' \| 'blues' \| 'harmonic-minor'`.                                       |
+| `IntervalId`         | Identifiers for the 13 intervals in the interval catalog, from `'half_step'` to `'octave'`.                                                                         |
+| `ScaleKind`          | Scale kinds used in theory diagrams and scale strips: `'mode' \| 'chromatic' \| 'pentatonic' \| 'blues' \| 'harmonic-minor'`.                                       |
 | `FrameworkId`        | Identifier for each of the 5 practice frameworks: `'modal' \| 'major-scale' \| 'minor-scale' \| 'relative-key' \| 'circle-of-fifths'`.                              |
 | `VisualizationType`  | Available instrument/visualization views: `'keyboard' \| 'fretboard'`.                                                                                              |
 | `NotationType`       | Scale degree notation: `'number'` (1-7) or `'letter'` (note names).                                                                                                 |
@@ -34,13 +34,13 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 ### Interval and scale types
 
-| Type                    | Description                                                                                                                                                   |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TheoryIntervalContext` | Input to `resolveIntervalEndpoints`: `{ root: Note; mode: ModeName; interval: TheoryIntervalId }`.                                                            |
-| `IntervalSpec`          | How an interval's endpoints and size are computed: `{ fromDegree: number; toDegree?: number; semitones: number; chromaticTo?: boolean }`.                     |
-| `IntervalDefinition`    | A catalog entry: `{ label: string; intervalSpec: IntervalSpec }`.                                                                                             |
-| `ResolvedInterval`      | Output of `resolveIntervalEndpoints`: `{ from: Note; to: Note; semitones: number; label: string }`.                                                           |
-| `ScaleDefinition`       | A scale kind's definition: `{ label: string; semitoneOffsets?: readonly number[]; parentMode?: ModeName; raiseDegree?: number; pentatonicSubset?: boolean }`. |
+| Type                 | Description                                                                                                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `IntervalContext`    | Input to `resolveIntervalEndpoints`: `{ root: Note; mode: ModeName; interval: IntervalId }`.                                                                  |
+| `IntervalSpec`       | How an interval's endpoints and size are computed: `{ fromDegree: number; toDegree?: number; semitones: number; chromaticTo?: boolean }`.                     |
+| `IntervalDefinition` | A catalog entry: `{ label: string; intervalSpec: IntervalSpec }`.                                                                                             |
+| `ResolvedInterval`   | Output of `resolveIntervalEndpoints`: `{ from: Note; to: Note; semitones: number; label: string }`.                                                           |
+| `ScaleDefinition`    | A scale kind's definition: `{ label: string; semitoneOffsets?: readonly number[]; parentMode?: ModeName; raiseDegree?: number; pentatonicSubset?: boolean }`. |
 
 ---
 
@@ -56,17 +56,17 @@ changed before v1, see [open-questions.md](./open-questions.md).
 | `PERSPECTIVE_IDS`        | Named constant map for `RelativePerspective` values (`MAJOR`, `MINOR`).                                                                                                                        |
 | `ACCIDENTAL_IDS`         | Named constant map for `AccidentalType` values (`SHARP`, `FLAT`, `BOTH`).                                                                                                                      |
 | `VISUALIZATION_IDS`      | Named constant map for `VisualizationType` values (`KEYBOARD`, `FRETBOARD`).                                                                                                                   |
-| `INTERVAL_IDS`           | Named constant map for `TheoryIntervalId` values (`HALF_STEP` through `OCTAVE`).                                                                                                               |
-| `THEORY_INTERVAL_IDS`    | `readonly TheoryIntervalId[]` - all 13 interval ids, derived from `INTERVAL_IDS`.                                                                                                              |
-| `SCALE_KIND_IDS`         | Named constant map for `TheoryScaleKind` values (`MODE`, `CHROMATIC`, `PENTATONIC`, `BLUES`, `HARMONIC_MINOR`).                                                                                |
-| `THEORY_SCALE_KINDS`     | `readonly TheoryScaleKind[]` - all scale kinds, derived from `SCALE_KIND_IDS`.                                                                                                                 |
+| `INTERVAL_IDS`           | Named constant map for `IntervalId` values (`HALF_STEP` through `OCTAVE`).                                                                                                                     |
+| `INTERVAL_ID_VALUES`     | `readonly IntervalId[]` - all 13 interval ids, derived from `INTERVAL_IDS`.                                                                                                                    |
+| `SCALE_KIND_IDS`         | Named constant map for `ScaleKind` values (`MODE`, `CHROMATIC`, `PENTATONIC`, `BLUES`, `HARMONIC_MINOR`).                                                                                      |
+| `SCALE_KIND_VALUES`      | `readonly ScaleKind[]` - all scale kinds, derived from `SCALE_KIND_IDS`.                                                                                                                       |
 | `FRAMEWORK_IDS`          | Named constant map for `FrameworkId` values (`MODAL`, `MAJOR_SCALE`, `MINOR_SCALE`, `RELATIVE_KEY`, `CIRCLE_OF_FIFTHS`).                                                                       |
 | `FRAMEWORKS`             | `readonly FrameworkInfo[]` - the 5 practice frameworks with display copy (name, subtitle, description, "how it works").                                                                        |
 | `CATEGORIES`             | `readonly CategoryInfo[]` - the 3 practice category levels with display copy (name, time range, focus).                                                                                        |
 | `VALID_FRAMEWORK_IDS`    | `Set<FrameworkId>` - set of all framework ids, for route validation.                                                                                                                           |
 | `ENHARMONIC_LABELS`      | `Partial<Record<Note, string>>` - display labels for the 5 black-key notes, e.g. `'C#': 'Db/C#'`. See [open-questions.md #2](./open-questions.md#2-getenharmonicequivalent-and-the-note-type). |
-| `INTERVAL_DEFINITIONS`   | `Record<TheoryIntervalId, IntervalDefinition>` - the interval catalog: label and `IntervalSpec` for each of the 13 intervals.                                                                  |
-| `SCALE_DEFINITIONS`      | `Record<TheoryScaleKind, ScaleDefinition>` - definitions for each scale kind (mode, chromatic, pentatonic, blues, harmonic minor).                                                             |
+| `INTERVAL_DEFINITIONS`   | `Record<IntervalId, IntervalDefinition>` - the interval catalog: label and `IntervalSpec` for each of the 13 intervals.                                                                        |
+| `SCALE_DEFINITIONS`      | `Record<ScaleKind, ScaleDefinition>` - definitions for each scale kind (mode, chromatic, pentatonic, blues, harmonic minor).                                                                   |
 | `BLUES_SEMITONE_OFFSETS` | `readonly number[]` - `[0, 3, 5, 6, 7, 10]`, the semitone offsets for the 6-note blues scale.                                                                                                  |
 | `PENTATONIC_DEGREES`     | `readonly number[]` - `[1, 2, 3, 5, 6]`, the scale degrees in major/minor pentatonic subsets.                                                                                                  |
 | `FULL_SCALE_DEGREES`     | `readonly number[]` - `[1, 2, 3, 4, 5, 6, 7]`, all 7 diatonic scale degrees.                                                                                                                   |
@@ -284,18 +284,18 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 ### Intervals (`src/intervals.ts`)
 
-#### `isTheoryIntervalId`
+#### `isIntervalId`
 
-- **Signature:** `isTheoryIntervalId(value: string): value is TheoryIntervalId`
+- **Signature:** `isIntervalId(value: string): value is IntervalId`
 - **Parameters:** `value`.
-- **Returns:** `true` if `value` is one of the 13 `TheoryIntervalId`
+- **Returns:** `true` if `value` is one of the 13 `IntervalId`
   values; narrows the type.
 - **Use case:** Validating untrusted string input before treating it as a
-  `TheoryIntervalId`.
+  `IntervalId`.
 
 #### `intervalUsesChromaticTo`
 
-- **Signature:** `intervalUsesChromaticTo(interval: TheoryIntervalId): boolean`
+- **Signature:** `intervalUsesChromaticTo(interval: IntervalId): boolean`
 - **Parameters:** `interval`.
 - **Returns:** `true` if `interval`'s definition resolves its "to" note
   chromatically (by semitone offset from the root) rather than by scale
@@ -306,8 +306,8 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 #### `resolveIntervalEndpoints`
 
-- **Signature:** `resolveIntervalEndpoints(context: TheoryIntervalContext): ResolvedInterval`
-- **Parameters:** `context: { root: Note; mode: ModeName; interval: TheoryIntervalId }`.
+- **Signature:** `resolveIntervalEndpoints(context: IntervalContext): ResolvedInterval`
+- **Parameters:** `context: { root: Note; mode: ModeName; interval: IntervalId }`.
 - **Returns:** `{ from: Note; to: Note; semitones: number; label: string }`
   - the two notes bounding `interval` within `root`/`mode`, the interval's
     semitone size, and its display label.
@@ -366,7 +366,7 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 #### `getScaleEmphasisDegrees`
 
-- **Signature:** `getScaleEmphasisDegrees(scaleKind: TheoryScaleKind): readonly number[]`
+- **Signature:** `getScaleEmphasisDegrees(scaleKind: ScaleKind): readonly number[]`
 - **Parameters:** `scaleKind`.
 - **Returns:** The scale-degree positions to visually emphasize for
   `scaleKind`: `PENTATONIC_DEGREES` for `'pentatonic'`, `[1..6]` for
@@ -377,7 +377,7 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 #### `getDerivedScaleNotes`
 
-- **Signature:** `getDerivedScaleNotes(root: Note, mode: ModeName, scaleKind: TheoryScaleKind): Note[]`
+- **Signature:** `getDerivedScaleNotes(root: Note, mode: ModeName, scaleKind: ScaleKind): Note[]`
 - **Parameters:** `root`, `mode`, `scaleKind`.
 - **Returns:** The notes for `scaleKind` built from `root` (and `mode`,
   where relevant):
@@ -392,7 +392,7 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 #### `getKeyboardContextNotes`
 
-- **Signature:** `getKeyboardContextNotes(root: Note, mode: ModeName, scaleKind: TheoryScaleKind): Note[]`
+- **Signature:** `getKeyboardContextNotes(root: Note, mode: ModeName, scaleKind: ScaleKind): Note[]`
 - **Parameters:** `root`, `mode`, `scaleKind`.
 - **Returns:** The wider note set used as keyboard/fretboard context
   behind `scaleKind`:

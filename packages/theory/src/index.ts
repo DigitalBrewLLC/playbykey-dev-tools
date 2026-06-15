@@ -8,8 +8,8 @@
 export type {
   Note,
   ModeName,
-  TheoryIntervalId,
-  TheoryScaleKind,
+  IntervalId,
+  ScaleKind,
   FrameworkId,
   VisualizationType,
   NotationType,
@@ -29,9 +29,9 @@ export {
   MODE_IDS,
   MODE_NAMES,
   INTERVAL_IDS,
-  THEORY_INTERVAL_IDS,
+  INTERVAL_ID_VALUES,
   SCALE_KIND_IDS,
-  THEORY_SCALE_KINDS,
+  SCALE_KIND_VALUES,
   VISUALIZATION_IDS,
   ACCIDENTAL_IDS,
   FRAMEWORK_IDS,
@@ -68,7 +68,7 @@ export {
 } from './engine';
 
 export type {
-  TheoryIntervalContext,
+  IntervalContext,
   IntervalSpec,
   IntervalDefinition,
   ResolvedInterval,
@@ -76,7 +76,7 @@ export type {
 
 export {
   INTERVAL_DEFINITIONS,
-  isTheoryIntervalId,
+  isIntervalId,
   intervalUsesChromaticTo,
   resolveIntervalEndpoints,
 } from './intervals';

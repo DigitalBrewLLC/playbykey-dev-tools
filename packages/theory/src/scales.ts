@@ -1,6 +1,6 @@
 import { MODE_IDS, NOTES } from './constants';
 import { getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
-import type { ModeName, Note, TheoryScaleKind } from './types';
+import type { ModeName, Note, ScaleKind } from './types';
 
 /** Semitone offsets from the tonic for the six-note blues scale. */
 const BLUES_SEMITONE_OFFSETS = [0, 3, 5, 6, 7, 10] as const;
@@ -19,7 +19,7 @@ interface ScaleDefinition {
   pentatonicSubset?: boolean;
 }
 
-const SCALE_DEFINITIONS: Record<TheoryScaleKind, ScaleDefinition> = {
+const SCALE_DEFINITIONS: Record<ScaleKind, ScaleDefinition> = {
   mode: {
     label: 'Mode scale',
   },
@@ -80,9 +80,7 @@ const getPentatonicDegrees = (): readonly number[] => PENTATONIC_DEGREES;
 
 const getFullScaleDegrees = (): readonly number[] => FULL_SCALE_DEGREES;
 
-const getScaleEmphasisDegrees = (
-  scaleKind: TheoryScaleKind
-): readonly number[] => {
+const getScaleEmphasisDegrees = (scaleKind: ScaleKind): readonly number[] => {
   if (scaleKind === 'blues') {
     return BLUES_SEMITONE_OFFSETS.map((_, index) => index + 1);
   }
@@ -102,7 +100,7 @@ const getScaleEmphasisDegrees = (
 const getDerivedScaleNotes = (
   root: Note,
   mode: ModeName,
-  scaleKind: TheoryScaleKind
+  scaleKind: ScaleKind
 ): Note[] => {
   const definition = SCALE_DEFINITIONS[scaleKind];
 
@@ -131,7 +129,7 @@ const getDerivedScaleNotes = (
 const getKeyboardContextNotes = (
   root: Note,
   mode: ModeName,
-  scaleKind: TheoryScaleKind
+  scaleKind: ScaleKind
 ): Note[] => {
   if (scaleKind === 'chromatic') {
     return [...NOTES];

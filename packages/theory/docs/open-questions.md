@@ -90,9 +90,9 @@ full `(root, mode, interval)` context like `resolveIntervalEndpoints`?
 **Context:**
 
 - `INTERVAL_DEFINITIONS` (`src/intervals.ts`) already stores a fixed
-  `semitones` value per `TheoryIntervalId`, independent of root or mode
+  `semitones` value per `IntervalId`, independent of root or mode
   (e.g. `major_3rd` -> 4, `minor_7th` -> 10).
-- `resolveIntervalEndpoints(context: TheoryIntervalContext)` takes
+- `resolveIntervalEndpoints(context: IntervalContext)` takes
   `{ root, mode, interval }` and returns `{ from, to, semitones, label }`.
   It needs `root`/`mode` to resolve the `from`/`to` notes, but the
   `semitones` it returns is read straight from `INTERVAL_DEFINITIONS` -
@@ -102,11 +102,11 @@ full `(root, mode, interval)` context like `resolveIntervalEndpoints`?
 
 **Options:**
 
-1. **`getIntervalSemitones(interval: TheoryIntervalId): number`** - a
+1. **`getIntervalSemitones(interval: IntervalId): number`** - a
    direct lookup (`INTERVAL_DEFINITIONS[interval].intervalSpec.semitones`).
    Simple, and accurately reflects that the semitone count does not depend
    on root or mode.
-2. **`getIntervalSemitones(context: TheoryIntervalContext): number`** -
+2. **`getIntervalSemitones(context: IntervalContext): number`** -
    mirrors `resolveIntervalEndpoints`'s signature for consistency, even
    though `root`/`mode` would be unused.
 
@@ -119,6 +119,6 @@ resolve the target note via scale degrees - only the one
 - If `getIntervalSemitones` takes a bare `interval`, it and
   `getNoteAtInterval(root, mode, interval)` end up with different shaped
   signatures.
-- If `getIntervalSemitones` takes a `TheoryIntervalContext`, both
+- If `getIntervalSemitones` takes an `IntervalContext`, both
   functions share a consistent context-based signature, at the cost of an
   unused `mode` field for `getIntervalSemitones`.
