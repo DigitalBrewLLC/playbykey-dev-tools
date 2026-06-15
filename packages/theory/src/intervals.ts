@@ -123,9 +123,6 @@ const resolveEndpointsFromSpec = (
   };
 };
 
-const intervalUsesChromaticTo = (interval: IntervalId): boolean =>
-  INTERVAL_DEFINITIONS[interval].intervalSpec.chromaticTo === true;
-
 const resolveIntervalEndpoints = (
   context: IntervalContext
 ): ResolvedInterval => {
@@ -152,9 +149,4 @@ export type {
   ResolvedInterval,
 };
 
-export {
-  INTERVAL_DEFINITIONS,
-  isIntervalId,
-  intervalUsesChromaticTo,
-  resolveIntervalEndpoints,
-};
+export { INTERVAL_DEFINITIONS, isIntervalId, resolveIntervalEndpoints };

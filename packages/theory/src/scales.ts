@@ -123,10 +123,10 @@ const getDerivedScaleNotes = (
 };
 
 /**
- * Returns the wider note set used as keyboard/strip context behind a scale kind
+ * Returns the wider note set used as harmonic context around a scale kind
  * (e.g. aeolian for blues, parent mode for pentatonic).
  */
-const getKeyboardContextNotes = (
+const getScaleContextNotes = (
   root: Note,
   mode: ModeName,
   scaleKind: ScaleKind
@@ -154,8 +154,8 @@ export {
   getDerivedScaleNotes,
   getFullScaleDegrees,
   getHarmonicMinorNotes,
-  getKeyboardContextNotes,
   getPentatonicDegrees,
+  getScaleContextNotes,
   getScaleEmphasisDegrees,
   notesFromSemitoneOffsets,
 };

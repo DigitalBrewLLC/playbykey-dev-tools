@@ -14,23 +14,16 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 ### Core types
 
-| Type                 | Description                                                                                                                                                         |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Note`               | The 12 chromatic notes, sharps only (no flats/enharmonics): `'C' \| 'C#' \| 'D' \| 'D#' \| 'E' \| 'F' \| 'F#' \| 'G' \| 'G#' \| 'A' \| 'A#' \| 'B'`.                |
-| `ModeName`           | The 7 modes of the major scale, ordered by brightness: `'ionian' \| 'dorian' \| 'phrygian' \| 'lydian' \| 'mixolydian' \| 'aeolian' \| 'locrian'`.                  |
-| `IntervalId`         | Identifiers for the 13 intervals in the interval catalog, from `'half_step'` to `'octave'`.                                                                         |
-| `ScaleKind`          | Scale kinds used in theory diagrams and scale strips: `'mode' \| 'chromatic' \| 'pentatonic' \| 'blues' \| 'harmonic-minor'`.                                       |
-| `FrameworkId`        | Identifier for each of the 5 practice frameworks: `'modal' \| 'major-scale' \| 'minor-scale' \| 'relative-key' \| 'circle-of-fifths'`.                              |
-| `VisualizationType`  | Available instrument/visualization views: `'keyboard' \| 'fretboard'`.                                                                                              |
-| `NotationType`       | Scale degree notation: `'number'` (1-7) or `'letter'` (note names).                                                                                                 |
-| `AccidentalType`     | Accidental display preference: `'sharp' \| 'flat' \| 'both'`.                                                                                                       |
-| `CategoryLevel`      | Practice category level: `1 \| 2 \| 3`.                                                                                                                             |
-| `CategoryLevelLabel` | Player-facing difficulty label: `'Beginner' \| 'Intermediate' \| 'Advanced'`.                                                                                       |
-| `ModeInfo`           | Display metadata for a mode: `{ id: ModeName; name: string; scaleDegree: number; character: string }`.                                                              |
-| `FrameworkInfo`      | Display metadata for a framework: `{ id: FrameworkId; name: string; subtitle: string; description: string; howItWorks?: HowItWorksContent }`.                       |
-| `CategoryInfo`       | Display metadata for a practice category: `{ level: CategoryLevel; levelLabel: CategoryLevelLabel; name: string; timeRange: string; focus: string }`.               |
-| `NoteDisplayInfo`    | Computed display data for a single chromatic note: `{ note: Note; inScale: boolean; scaleDegree: number \| null; label: string; isRoot: boolean }`.                 |
-| `VisualizationState` | The complete filter state driving all visualizations: `{ key: Note; mode: ModeName; notation: NotationType; view: VisualizationType; accidental: AccidentalType }`. |
+| Type              | Description                                                                                                                                          |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Note`            | The 12 chromatic notes, sharps only (no flats/enharmonics): `'C' \| 'C#' \| 'D' \| 'D#' \| 'E' \| 'F' \| 'F#' \| 'G' \| 'G#' \| 'A' \| 'A#' \| 'B'`. |
+| `ModeName`        | The 7 modes of the major scale, ordered by brightness: `'ionian' \| 'dorian' \| 'phrygian' \| 'lydian' \| 'mixolydian' \| 'aeolian' \| 'locrian'`.   |
+| `IntervalId`      | Identifiers for the 13 intervals in the interval catalog, from `'half_step'` to `'octave'`.                                                          |
+| `ScaleKind`       | Scale kinds used in theory diagrams and scale strips: `'mode' \| 'chromatic' \| 'pentatonic' \| 'blues' \| 'harmonic-minor'`.                        |
+| `NotationType`    | Scale degree notation: `'number'` (1-7) or `'letter'` (note names).                                                                                  |
+| `AccidentalType`  | Accidental display preference: `'sharp' \| 'flat' \| 'both'`.                                                                                        |
+| `ModeInfo`        | Display metadata for a mode: `{ id: ModeName; name: string; scaleDegree: number; character: string }`.                                               |
+| `NoteDisplayInfo` | Computed display data for a single chromatic note: `{ note: Note; inScale: boolean; scaleDegree: number \| null; label: string; isRoot: boolean }`.  |
 
 ### Interval and scale types
 
@@ -53,17 +46,11 @@ changed before v1, see [open-questions.md](./open-questions.md).
 | `MODE_NAMES`             | `readonly ModeName[]` - all mode name values, derived from `MODE_IDS`.                                                                                                                         |
 | `MODE_IDS`               | Named constant map for `ModeName` values (`IONIAN`, `DORIAN`, `PHRYGIAN`, `LYDIAN`, `MIXOLYDIAN`, `AEOLIAN`, `LOCRIAN`).                                                                       |
 | `NOTATION_IDS`           | Named constant map for `NotationType` values (`LETTER`, `NUMBER`).                                                                                                                             |
-| `PERSPECTIVE_IDS`        | Named constant map for `RelativePerspective` values (`MAJOR`, `MINOR`).                                                                                                                        |
 | `ACCIDENTAL_IDS`         | Named constant map for `AccidentalType` values (`SHARP`, `FLAT`, `BOTH`).                                                                                                                      |
-| `VISUALIZATION_IDS`      | Named constant map for `VisualizationType` values (`KEYBOARD`, `FRETBOARD`).                                                                                                                   |
 | `INTERVAL_IDS`           | Named constant map for `IntervalId` values (`HALF_STEP` through `OCTAVE`).                                                                                                                     |
 | `INTERVAL_ID_VALUES`     | `readonly IntervalId[]` - all 13 interval ids, derived from `INTERVAL_IDS`.                                                                                                                    |
 | `SCALE_KIND_IDS`         | Named constant map for `ScaleKind` values (`MODE`, `CHROMATIC`, `PENTATONIC`, `BLUES`, `HARMONIC_MINOR`).                                                                                      |
 | `SCALE_KIND_VALUES`      | `readonly ScaleKind[]` - all scale kinds, derived from `SCALE_KIND_IDS`.                                                                                                                       |
-| `FRAMEWORK_IDS`          | Named constant map for `FrameworkId` values (`MODAL`, `MAJOR_SCALE`, `MINOR_SCALE`, `RELATIVE_KEY`, `CIRCLE_OF_FIFTHS`).                                                                       |
-| `FRAMEWORKS`             | `readonly FrameworkInfo[]` - the 5 practice frameworks with display copy (name, subtitle, description, "how it works").                                                                        |
-| `CATEGORIES`             | `readonly CategoryInfo[]` - the 3 practice category levels with display copy (name, time range, focus).                                                                                        |
-| `VALID_FRAMEWORK_IDS`    | `Set<FrameworkId>` - set of all framework ids, for route validation.                                                                                                                           |
 | `ENHARMONIC_LABELS`      | `Partial<Record<Note, string>>` - display labels for the 5 black-key notes, e.g. `'C#': 'Db/C#'`. See [open-questions.md #2](./open-questions.md#2-getenharmonicequivalent-and-the-note-type). |
 | `INTERVAL_DEFINITIONS`   | `Record<IntervalId, IntervalDefinition>` - the interval catalog: label and `IntervalSpec` for each of the 13 intervals.                                                                        |
 | `SCALE_DEFINITIONS`      | `Record<ScaleKind, ScaleDefinition>` - definitions for each scale kind (mode, chromatic, pentatonic, blues, harmonic minor).                                                                   |
@@ -293,17 +280,6 @@ changed before v1, see [open-questions.md](./open-questions.md).
 - **Use case:** Validating untrusted string input before treating it as a
   `IntervalId`.
 
-#### `intervalUsesChromaticTo`
-
-- **Signature:** `intervalUsesChromaticTo(interval: IntervalId): boolean`
-- **Parameters:** `interval`.
-- **Returns:** `true` if `interval`'s definition resolves its "to" note
-  chromatically (by semitone offset from the root) rather than by scale
-  degree. Currently `true` only for `'minor_7th'`.
-- **Use case:** Deciding whether an interval's endpoints depend on the
-  active `mode` - degree-based intervals do, chromatic-to intervals only
-  depend on `root`.
-
 #### `resolveIntervalEndpoints`
 
 - **Signature:** `resolveIntervalEndpoints(context: IntervalContext): ResolvedInterval`
@@ -390,16 +366,16 @@ changed before v1, see [open-questions.md](./open-questions.md).
 - **Use case:** The single entry point for "the notes of this scale kind",
   used by scale visualizations that support multiple scale kinds.
 
-#### `getKeyboardContextNotes`
+#### `getScaleContextNotes`
 
-- **Signature:** `getKeyboardContextNotes(root: Note, mode: ModeName, scaleKind: ScaleKind): Note[]`
+- **Signature:** `getScaleContextNotes(root: Note, mode: ModeName, scaleKind: ScaleKind): Note[]`
 - **Parameters:** `root`, `mode`, `scaleKind`.
-- **Returns:** The wider note set used as keyboard/fretboard context
-  behind `scaleKind`:
+- **Returns:** The wider note set used as harmonic context around
+  `scaleKind`:
   - all 12 notes for `'chromatic'`
   - the Aeolian scale on `root` for `'blues'`
   - harmonic minor notes for `'harmonic-minor'`
   - `getScaleNotes(root, mode)` otherwise
-- **Use case:** Determining which notes to render as backdrop (e.g.
-  dimmed/inactive keys) around the emphasized notes from
-  `getDerivedScaleNotes`.
+- **Use case:** Determining which notes to render as backdrop around the
+  emphasized notes from `getDerivedScaleNotes`, for any visualization -
+  keyboard, fretboard, or otherwise.

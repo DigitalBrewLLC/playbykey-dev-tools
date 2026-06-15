@@ -6,8 +6,8 @@ import {
   getBluesNotes,
   getDerivedScaleNotes,
   getHarmonicMinorNotes,
-  getKeyboardContextNotes,
   getPentatonicDegrees,
+  getScaleContextNotes,
   getScaleEmphasisDegrees,
   PENTATONIC_DEGREES,
   SCALE_DEFINITIONS,
@@ -70,15 +70,15 @@ describe('getScaleEmphasisDegrees', () => {
   });
 });
 
-describe('getKeyboardContextNotes', () => {
+describe('getScaleContextNotes', () => {
   it('uses aeolian parent for blues keyboard context', () => {
-    expect(getKeyboardContextNotes('A', MODE_IDS.AEOLIAN, 'blues')).toEqual(
+    expect(getScaleContextNotes('A', MODE_IDS.AEOLIAN, 'blues')).toEqual(
       getScaleNotes('A', MODE_IDS.AEOLIAN)
     );
   });
 
   it('uses parent mode for pentatonic keyboard context', () => {
-    expect(getKeyboardContextNotes('C', MODE_IDS.IONIAN, 'pentatonic')).toEqual(
+    expect(getScaleContextNotes('C', MODE_IDS.IONIAN, 'pentatonic')).toEqual(
       getScaleNotes('C', MODE_IDS.IONIAN)
     );
   });
