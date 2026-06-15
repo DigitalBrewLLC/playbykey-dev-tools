@@ -10,36 +10,23 @@ export type {
   ModeName,
   IntervalId,
   ScaleKind,
-  FrameworkId,
-  VisualizationType,
   NotationType,
   AccidentalType,
-  CategoryLevel,
-  CategoryLevelLabel,
   ModeInfo,
-  FrameworkInfo,
-  CategoryInfo,
   NoteDisplayInfo,
-  VisualizationState,
 } from './types';
 
 export {
   NOTATION_IDS,
-  PERSPECTIVE_IDS,
   MODE_IDS,
   MODE_NAMES,
   INTERVAL_IDS,
   INTERVAL_ID_VALUES,
   SCALE_KIND_IDS,
   SCALE_KIND_VALUES,
-  VISUALIZATION_IDS,
   ACCIDENTAL_IDS,
-  FRAMEWORK_IDS,
   NOTES,
   MODES,
-  FRAMEWORKS,
-  CATEGORIES,
-  VALID_FRAMEWORK_IDS,
   ENHARMONIC_LABELS,
 } from './constants';
 
@@ -77,7 +64,6 @@ export type {
 export {
   INTERVAL_DEFINITIONS,
   isIntervalId,
-  intervalUsesChromaticTo,
   resolveIntervalEndpoints,
 } from './intervals';
 
@@ -92,8 +78,8 @@ export {
   getDerivedScaleNotes,
   getFullScaleDegrees,
   getHarmonicMinorNotes,
-  getKeyboardContextNotes,
   getPentatonicDegrees,
+  getScaleContextNotes,
   getScaleEmphasisDegrees,
   notesFromSemitoneOffsets,
 } from './scales';
