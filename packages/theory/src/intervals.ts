@@ -123,8 +123,12 @@ const resolveEndpointsFromSpec = (
   };
 };
 
-const intervalUsesChromaticTo = (interval: IntervalId): boolean =>
-  INTERVAL_DEFINITIONS[interval].intervalSpec.chromaticTo === true;
+/**
+ * Returns the fixed semitone count for a given interval.
+ * The count is a property of the interval itself — root and mode do not affect it.
+ */
+const getIntervalSemitones = (interval: IntervalId): number =>
+  INTERVAL_DEFINITIONS[interval].intervalSpec.semitones;
 
 const resolveIntervalEndpoints = (
   context: IntervalContext
@@ -155,6 +159,6 @@ export type {
 export {
   INTERVAL_DEFINITIONS,
   isIntervalId,
-  intervalUsesChromaticTo,
+  getIntervalSemitones,
   resolveIntervalEndpoints,
 };
