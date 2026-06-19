@@ -2,7 +2,16 @@
  * Core music theory domain types shared across all features.
  */
 
-/** The 12 chromatic notes using sharps (no flats/enharmonics). */
+/**
+ * The 12 chromatic notes using sharps only.
+ *
+ * Flats are intentionally excluded. The entire engine (chromatic indexing,
+ * scale computation, NOTES array) depends on this fixed 12-element set.
+ * For display purposes, `ENHARMONIC_LABELS` maps the 5 black-key notes to
+ * their combined sharp/flat label (e.g. `'C#': 'Db/C#'`). A function that
+ * returns a flat-spelled note (e.g. `Db`) cannot exist without extending
+ * this type — which would be a cross-cutting breaking change.
+ */
 type Note =
   | 'C'
   | 'C#'
