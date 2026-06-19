@@ -123,6 +123,13 @@ const resolveEndpointsFromSpec = (
   };
 };
 
+/**
+ * Returns the fixed semitone count for a given interval.
+ * The count is a property of the interval itself — root and mode do not affect it.
+ */
+const getIntervalSemitones = (interval: IntervalId): number =>
+  INTERVAL_DEFINITIONS[interval].intervalSpec.semitones;
+
 const resolveIntervalEndpoints = (
   context: IntervalContext
 ): ResolvedInterval => {
@@ -149,4 +156,9 @@ export type {
   ResolvedInterval,
 };
 
-export { INTERVAL_DEFINITIONS, isIntervalId, resolveIntervalEndpoints };
+export {
+  INTERVAL_DEFINITIONS,
+  isIntervalId,
+  getIntervalSemitones,
+  resolveIntervalEndpoints,
+};

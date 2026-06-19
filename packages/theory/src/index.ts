@@ -64,6 +64,7 @@ export type {
 export {
   INTERVAL_DEFINITIONS,
   isIntervalId,
+  getIntervalSemitones,
   resolveIntervalEndpoints,
 } from './intervals';
 
