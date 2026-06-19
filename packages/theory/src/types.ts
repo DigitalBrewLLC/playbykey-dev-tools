@@ -27,8 +27,8 @@ type ModeName =
   | 'aeolian'
   | 'locrian';
 
-/** Theory interval subtopic ids used in the interval catalog and diagrams. */
-type TheoryIntervalId =
+/** Interval identifiers used in the interval catalog. */
+type IntervalId =
   | 'half_step'
   | 'whole_step'
   | 'major_2nd'
@@ -43,8 +43,8 @@ type TheoryIntervalId =
   | 'major_7th'
   | 'octave';
 
-/** Scale kinds used in theory diagrams and scale strips. */
-type TheoryScaleKind =
+/** Scale kinds supported by the scale-derivation functions. */
+type ScaleKind =
   | 'mode'
   | 'chromatic'
   | 'pentatonic'
@@ -130,8 +130,8 @@ interface VisualizationState {
 export type {
   Note,
   ModeName,
-  TheoryIntervalId,
-  TheoryScaleKind,
+  IntervalId,
+  ScaleKind,
   FrameworkId,
   VisualizationType,
   NotationType,

@@ -8,8 +8,8 @@ import type {
   ModeName,
   NotationType,
   RelativePerspective,
-  TheoryIntervalId,
-  TheoryScaleKind,
+  IntervalId,
+  ScaleKind,
   VisualizationType,
   AccidentalType,
 } from './types';
@@ -56,7 +56,7 @@ const MODE_IDS = {
 /** All mode names derived from MODE_IDS. */
 const MODE_NAMES = Object.values(MODE_IDS) as readonly ModeName[];
 
-/** Named constants for each theory interval id, validated against TheoryIntervalId. */
+/** Named constants for each interval id, validated against IntervalId. */
 const INTERVAL_IDS = {
   HALF_STEP: 'half_step',
   WHOLE_STEP: 'whole_step',
@@ -71,26 +71,22 @@ const INTERVAL_IDS = {
   MINOR_7TH: 'minor_7th',
   MAJOR_7TH: 'major_7th',
   OCTAVE: 'octave',
-} as const satisfies Record<string, TheoryIntervalId>;
+} as const satisfies Record<string, IntervalId>;
 
-/** All theory interval ids derived from INTERVAL_IDS. */
-const THEORY_INTERVAL_IDS = Object.values(
-  INTERVAL_IDS
-) as readonly TheoryIntervalId[];
+/** All interval ids derived from INTERVAL_IDS. */
+const INTERVAL_ID_VALUES = Object.values(INTERVAL_IDS) as readonly IntervalId[];
 
-/** Named constants for each theory scale kind, validated against TheoryScaleKind. */
+/** Named constants for each scale kind, validated against ScaleKind. */
 const SCALE_KIND_IDS = {
   MODE: 'mode',
   CHROMATIC: 'chromatic',
   PENTATONIC: 'pentatonic',
   BLUES: 'blues',
   HARMONIC_MINOR: 'harmonic-minor',
-} as const satisfies Record<string, TheoryScaleKind>;
+} as const satisfies Record<string, ScaleKind>;
 
-/** All theory scale kinds derived from SCALE_KIND_IDS. */
-const THEORY_SCALE_KINDS = Object.values(
-  SCALE_KIND_IDS
-) as readonly TheoryScaleKind[];
+/** All scale kinds derived from SCALE_KIND_IDS. */
+const SCALE_KIND_VALUES = Object.values(SCALE_KIND_IDS) as readonly ScaleKind[];
 
 /** Named constants for each visualization view, validated against VisualizationType. */
 const VISUALIZATION_IDS = {
@@ -301,9 +297,9 @@ export {
   MODE_IDS,
   MODE_NAMES,
   INTERVAL_IDS,
-  THEORY_INTERVAL_IDS,
+  INTERVAL_ID_VALUES,
   SCALE_KIND_IDS,
-  THEORY_SCALE_KINDS,
+  SCALE_KIND_VALUES,
   VISUALIZATION_IDS,
   ACCIDENTAL_IDS,
   FRAMEWORK_IDS,
