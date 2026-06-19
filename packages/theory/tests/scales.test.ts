@@ -71,13 +71,13 @@ describe('getScaleEmphasisDegrees', () => {
 });
 
 describe('getScaleContextNotes', () => {
-  it('uses aeolian parent for blues keyboard context', () => {
+  it('uses aeolian parent for blues harmonic context', () => {
     expect(getScaleContextNotes('A', MODE_IDS.AEOLIAN, 'blues')).toEqual(
       getScaleNotes('A', MODE_IDS.AEOLIAN)
     );
   });
 
-  it('uses parent mode for pentatonic keyboard context', () => {
+  it('uses parent mode for pentatonic harmonic context', () => {
     expect(getScaleContextNotes('C', MODE_IDS.IONIAN, 'pentatonic')).toEqual(
       getScaleNotes('C', MODE_IDS.IONIAN)
     );
