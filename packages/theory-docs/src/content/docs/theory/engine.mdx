@@ -1,6 +1,22 @@
 ---
 title: Engine Functions
-description: Core scale, mode, and note computation functions
+description: Core scale, mode, and note computation functions in @playbykey/theory
 ---
 
-Engine playground coming soon.
+import EnginePlayground from '../../../components/playgrounds/EnginePlayground';
+
+The engine module covers scales, modes, key relationships, and note utilities. Use the live playground to call any function and inspect its output immediately.
+
+## Live Playground
+
+<EnginePlayground client:load />
+
+## Function Reference
+
+**Scale and mode:** `getScaleNotes`, `getParentScaleModes`, `getModeAlterations`, and `getModalRoot` derive notes and relationships from a root and mode.
+
+**Key relationships:** `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, and `getCircleOfFifthsOrder` answer common key-signature questions.
+
+**Note utilities:** `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`, and `buildNoteMap` work with individual notes and chromatic indices.
+
+**Type guards:** `isNote` and `isModeName` validate string inputs at runtime.
