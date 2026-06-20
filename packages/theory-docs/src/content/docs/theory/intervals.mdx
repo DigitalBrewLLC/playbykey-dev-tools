@@ -1,6 +1,20 @@
 ---
 title: Intervals
-description: Interval lookup and resolution functions
+description: Interval lookup and resolution functions in @playbykey/theory
 ---
 
-Intervals playground coming soon.
+import IntervalsPlayground from '../../../components/playgrounds/IntervalsPlayground';
+
+An `IntervalId` names a standard interval in the PlayByKey catalog — from half steps through the octave. The intervals module lets you look up semitone distances and resolve concrete from/to notes for any root and mode.
+
+## Live Playground
+
+<IntervalsPlayground client:load />
+
+## Types Reference
+
+**`IntervalContext`** — `{ root: Note; mode: ModeName; interval: IntervalId }`. Passed to `resolveIntervalEndpoints` to anchor interval resolution in a scale.
+
+**`ResolvedInterval`** — `{ from: Note; to: Note; semitones: number; label: string }`. The resolved endpoints plus the catalog label for the interval.
+
+**`IntervalDefinition`** — `{ label: string; intervalSpec: IntervalSpec }`. Describes how an interval is defined relative to scale degrees. See the Constants page for the full catalog.
