@@ -1,1 +1,17 @@
-/* PlayByKey brand overrides — populated in Task 04 */
+/* PlayByKey brand overrides for Starlight */
+
+:root,
+:root[data-theme='dark'] {
+  /* Accent — amber (theory section color from playbykey.com) */
+  --sl-color-accent-low: #b45309;
+  --sl-color-accent: #f59e0b;
+  --sl-color-accent-high: #fcd34d;
+  --sl-color-text-accent: #f59e0b;
+
+  /* Typography */
+  --sl-font:
+    'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  --sl-font-mono:
+    ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
+}
