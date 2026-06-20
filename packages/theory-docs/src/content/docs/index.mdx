@@ -1,6 +1,52 @@
 ---
 title: Theory Engine
-description: API reference and playground for @playbykey/theory
+description: A zero-dependency TypeScript library for scales, modes, intervals, and key relationships.
 ---
 
-Getting started content coming soon.
+A zero-dependency TypeScript library for scales, modes, intervals, and key relationships. No external API calls. Runs anywhere JavaScript runs.
+
+## Installation
+
+```bash
+npm install @playbykey/theory
+# or
+pnpm add @playbykey/theory
+# or
+yarn add @playbykey/theory
+```
+
+## Quickstart
+
+```typescript
+import { getScaleNotes, getParentScaleModes } from '@playbykey/theory';
+
+// Get all notes in D Dorian
+const notes = getScaleNotes('D', 'dorian');
+console.log(notes); // ['D', 'E', 'F', 'G', 'A', 'B', 'C']
+
+// Find the parent major key
+const parentModes = getParentScaleModes('D', 'dorian');
+const parent = parentModes.find(m => m.mode === 'ionian');
+console.log(parent?.root); // 'C'
+```
+
+## What's in the package
+
+| Category | What it covers | Page |
+| --- | --- | --- |
+| Engine | Scales, modes, key relationships, note utilities | [Engine Functions](/theory/engine/) |
+| Intervals | Interval catalog, semitone lookup, endpoint resolution | [Intervals](/theory/intervals/) |
+| Scales | Blues, harmonic minor, pentatonic, derived scales | [Scales](/theory/scales/) |
+| Constants | All exported constants and their values | [Constants](/theory/constants/) |
+
+## TypeScript
+
+The package is written in TypeScript with strict mode. All exported functions are fully typed. No `any`. Import types directly:
+
+```typescript
+import type { Note, ModeName } from '@playbykey/theory';
+```
+
+## Note notation
+
+The package uses sharps-only notation (`C#`, not `Db`). Reference `ENHARMONIC_LABELS` for display-friendly flat/sharp labels.
