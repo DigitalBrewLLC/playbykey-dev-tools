@@ -50,6 +50,9 @@ importers:
       '@astrojs/starlight':
         specifier: ^0.34.3
         version: 0.34.8(astro@5.18.2(@types/node@24.13.2)(lightningcss@1.32.0)(rollup@4.62.0)(typescript@5.9.3)(yaml@2.9.0))
+      '@playbykey/theory':
+        specifier: workspace:*
+        version: link:../theory
       astro:
         specifier: ^5.17.2
         version: 5.18.2(@types/node@24.13.2)(lightningcss@1.32.0)(rollup@4.62.0)(typescript@5.9.3)(yaml@2.9.0)
