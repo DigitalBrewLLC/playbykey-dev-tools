@@ -1,6 +1,20 @@
 ---
 title: Scales
-description: Scale derivation functions
+description: Derived scale functions in @playbykey/theory
 ---
 
-Scales playground coming soon.
+import ScalesPlayground from '../../../components/playgrounds/ScalesPlayground';
+
+The scales module covers derived scale types — blues, harmonic minor, pentatonic, and other kinds beyond the core diatonic modes. Use these functions when you need note sets for non-mode-based scales or scale metadata like emphasis degrees.
+
+## Live Playground
+
+<ScalesPlayground client:load />
+
+## Function Reference
+
+**Note arrays:** `getBluesNotes`, `getHarmonicMinorNotes`, and `getDerivedScaleNotes` return concrete note lists for a root (and scale kind where applicable).
+
+**Context and degrees:** `getScaleContextNotes` returns the parent diatonic context for a derived scale. `getPentatonicDegrees` and `getScaleEmphasisDegrees` return scale-degree numbers rather than note names.
+
+**Utility:** `notesFromSemitoneOffsets` builds a custom note array from semitone offsets — useful when defining your own scale patterns programmatically.
