@@ -1,6 +1,61 @@
 ---
 title: Constants
-description: All exported constants and their values
+description: All exported constants and their values from @playbykey/theory
 ---
 
-Constants reference coming soon.
+import ConstantDisplay from '../../../components/ConstantDisplay';
+import {
+  ACCIDENTAL_IDS,
+  BLUES_SEMITONE_OFFSETS,
+  ENHARMONIC_LABELS,
+  FULL_SCALE_DEGREES,
+  INTERVAL_DEFINITIONS,
+  INTERVAL_IDS,
+  INTERVAL_ID_VALUES,
+  MODE_IDS,
+  MODE_INTERVALS,
+  MODE_NAMES,
+  MODE_SEMITONE_OFFSETS,
+  MODES,
+  NOTATION_IDS,
+  NOTES,
+  PENTATONIC_DEGREES,
+  SCALE_DEFINITIONS,
+  SCALE_KIND_IDS,
+  SCALE_KIND_VALUES,
+} from '@playbykey/theory';
+
+Every constant below is imported from `@playbykey/theory` at build time — values always match the installed package.
+
+## Notes
+
+<ConstantDisplay name="NOTES" type="readonly Note[]" value={NOTES} />
+<ConstantDisplay name="ENHARMONIC_LABELS" type="Record<string, string>" value={ENHARMONIC_LABELS} />
+
+## Modes
+
+<ConstantDisplay name="MODES" type="readonly ModeInfo[]" value={MODES} />
+<ConstantDisplay name="MODE_IDS" type="Record<string, ModeName>" value={MODE_IDS} />
+<ConstantDisplay name="MODE_NAMES" type="readonly ModeName[]" value={MODE_NAMES} />
+<ConstantDisplay name="MODE_INTERVALS" type="Record<ModeName, readonly number[]>" value={MODE_INTERVALS} />
+<ConstantDisplay name="MODE_SEMITONE_OFFSETS" type="Record<ModeName, readonly number[]>" value={MODE_SEMITONE_OFFSETS} />
+
+## Intervals
+
+<ConstantDisplay name="INTERVAL_DEFINITIONS" type="Record<IntervalId, IntervalDefinition>" value={INTERVAL_DEFINITIONS} />
+<ConstantDisplay name="INTERVAL_IDS" type="Record<string, IntervalId>" value={INTERVAL_IDS} />
+<ConstantDisplay name="INTERVAL_ID_VALUES" type="readonly IntervalId[]" value={INTERVAL_ID_VALUES} />
+
+## Scales
+
+<ConstantDisplay name="SCALE_DEFINITIONS" type="Record<ScaleKind, ScaleDefinition>" value={SCALE_DEFINITIONS} />
+<ConstantDisplay name="SCALE_KIND_IDS" type="Record<string, ScaleKind>" value={SCALE_KIND_IDS} />
+<ConstantDisplay name="SCALE_KIND_VALUES" type="readonly ScaleKind[]" value={SCALE_KIND_VALUES} />
+<ConstantDisplay name="BLUES_SEMITONE_OFFSETS" type="readonly number[]" value={BLUES_SEMITONE_OFFSETS} />
+<ConstantDisplay name="PENTATONIC_DEGREES" type="{ major: readonly number[]; minor: readonly number[] }" value={PENTATONIC_DEGREES} />
+<ConstantDisplay name="FULL_SCALE_DEGREES" type="readonly number[]" value={FULL_SCALE_DEGREES} />
+
+## Notation and display
+
+<ConstantDisplay name="NOTATION_IDS" type="Record<string, NotationType>" value={NOTATION_IDS} />
+<ConstantDisplay name="ACCIDENTAL_IDS" type="Record<string, AccidentalType>" value={ACCIDENTAL_IDS} />
