@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import type { CSSProperties } from 'react';
 import {
   getBluesNotes,
   getDerivedScaleNotes,
@@ -13,25 +14,25 @@ import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ScaleKindSelect } from '../ui/ScaleKindSelect';
 
-const containerStyle = {
+const containerStyle: CSSProperties = {
   display: 'flex',
-  flexDirection: 'column' as const,
+  flexDirection: 'column',
   gap: '0.5rem',
 };
 
-const fieldStyle = {
+const fieldStyle: CSSProperties = {
   display: 'flex',
-  flexDirection: 'column' as const,
+  flexDirection: 'column',
   gap: '0.25rem',
 };
 
-const labelStyle = {
+const labelStyle: CSSProperties = {
   fontSize: '0.875rem',
   fontWeight: 600,
   color: 'var(--sl-color-gray-2)',
 };
 
-const selectStyle = {
+const selectStyle: CSSProperties = {
   padding: '0.375rem 0.5rem',
   borderRadius: '0.375rem',
   border: '1px solid var(--sl-color-gray-5)',

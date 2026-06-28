@@ -1,22 +1,24 @@
+import type { CSSProperties } from 'react';
+
 interface ResultPanelProps {
   label: string;
   value: unknown;
 }
 
-const panelStyle = {
+const panelStyle: CSSProperties = {
   display: 'flex',
-  flexDirection: 'column' as const,
+  flexDirection: 'column',
   gap: '0.375rem',
   marginTop: '0.75rem',
 };
 
-const labelStyle = {
+const labelStyle: CSSProperties = {
   fontSize: '0.875rem',
   fontWeight: 600,
   color: 'var(--sl-color-gray-2)',
 };
 
-const codeStyle = {
+const codeStyle: CSSProperties = {
   padding: '0.375rem 0.5rem',
   borderRadius: '0.375rem',
   background: 'var(--sl-color-gray-6)',
@@ -26,13 +28,13 @@ const codeStyle = {
   fontSize: '0.875rem',
 };
 
-const preStyle = {
+const preStyle: CSSProperties = {
   margin: 0,
   padding: '0.75rem',
   borderRadius: '0.375rem',
   background: 'var(--sl-color-gray-6)',
   border: '1px solid var(--sl-color-gray-5)',
-  overflowX: 'auto' as const,
+  overflowX: 'auto',
 };
 
 const isStringArray = (value: unknown): value is string[] =>

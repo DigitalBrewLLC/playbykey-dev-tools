@@ -1,28 +1,30 @@
+import type { CSSProperties } from 'react';
+
 interface ConstantDisplayProps {
   name: string;
   type: string;
   value: unknown;
 }
 
-const blockStyle = {
+const blockStyle: CSSProperties = {
   marginBottom: '1.5rem',
 };
 
-const nameStyle = {
+const nameStyle: CSSProperties = {
   margin: '0 0 0.25rem',
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.9375rem',
   color: 'var(--sl-color-accent)',
 };
 
-const typeStyle = {
+const typeStyle: CSSProperties = {
   margin: '0 0 0.5rem',
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.8125rem',
   color: 'var(--sl-color-gray-3)',
 };
 
-const codeStyle = {
+const codeStyle: CSSProperties = {
   display: 'block',
   padding: '0.75rem',
   borderRadius: '0.375rem',
@@ -31,8 +33,8 @@ const codeStyle = {
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.8125rem',
   color: 'var(--sl-color-gray-1)',
-  overflowX: 'auto' as const,
-  whiteSpace: 'pre-wrap' as const,
+  overflowX: 'auto',
+  whiteSpace: 'pre-wrap',
 };
 
 const isStringArray = (value: unknown): value is string[] =>

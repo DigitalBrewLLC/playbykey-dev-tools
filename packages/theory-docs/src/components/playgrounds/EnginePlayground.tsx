@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import type { CSSProperties } from 'react';
 import {
   buildNoteMap,
   getCircleOfFifthsOrder,
@@ -163,26 +164,26 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
   },
 ];
 
-const containerStyle = {
+const containerStyle: CSSProperties = {
   display: 'flex',
-  flexDirection: 'column' as const,
+  flexDirection: 'column',
   gap: '1rem',
 };
 
-const fieldStyle = {
+const fieldStyle: CSSProperties = {
   display: 'flex',
-  flexDirection: 'column' as const,
+  flexDirection: 'column',
   gap: '0.25rem',
   marginTop: 0,
 };
 
-const labelStyle = {
+const labelStyle: CSSProperties = {
   fontSize: '0.875rem',
   fontWeight: 600,
   color: 'var(--sl-color-gray-2)',
 };
 
-const selectStyle = {
+const selectStyle: CSSProperties = {
   padding: '0.375rem 0.5rem',
   borderRadius: '0.375rem',
   border: '1px solid var(--sl-color-gray-5)',
@@ -190,7 +191,7 @@ const selectStyle = {
   color: 'var(--sl-color-gray-1)',
 };
 
-const inputStyle = {
+const inputStyle: CSSProperties = {
   padding: '0.375rem 0.5rem',
   borderRadius: '0.375rem',
   border: '1px solid var(--sl-color-gray-5)',
@@ -200,13 +201,13 @@ const inputStyle = {
   fontSize: '0.875rem',
 };
 
-const controlsRowStyle = {
+const controlsRowStyle: CSSProperties = {
   display: 'flex',
-  flexWrap: 'wrap' as const,
+  flexWrap: 'wrap',
   gap: '0.75rem',
 };
 
-const signatureStyle = {
+const signatureStyle: CSSProperties = {
   margin: 0,
   padding: '0.5rem 0.75rem',
   borderRadius: '0.375rem',
@@ -215,10 +216,10 @@ const signatureStyle = {
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.8125rem',
   color: 'var(--sl-color-gray-1)',
-  overflowX: 'auto' as const,
+  overflowX: 'auto',
 };
 
-const descriptionStyle = {
+const descriptionStyle: CSSProperties = {
   margin: 0,
   color: 'var(--sl-color-gray-2)',
   lineHeight: 1.5,

@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { ResultPanel } from './ResultPanel';
 
 interface FunctionCardProps {
@@ -8,9 +9,9 @@ interface FunctionCardProps {
   result: unknown;
 }
 
-const cardStyle = {
+const cardStyle: CSSProperties = {
   display: 'flex',
-  flexDirection: 'column' as const,
+  flexDirection: 'column',
   gap: '0.75rem',
   padding: '1rem',
   borderRadius: '0.5rem',
@@ -19,13 +20,13 @@ const cardStyle = {
   marginBottom: '1rem',
 };
 
-const headingStyle = {
+const headingStyle: CSSProperties = {
   margin: 0,
   fontSize: '1.125rem',
   color: 'var(--sl-color-accent)',
 };
 
-const signatureStyle = {
+const signatureStyle: CSSProperties = {
   margin: 0,
   padding: '0.5rem 0.75rem',
   borderRadius: '0.375rem',
@@ -34,18 +35,18 @@ const signatureStyle = {
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.8125rem',
   color: 'var(--sl-color-gray-1)',
-  overflowX: 'auto' as const,
+  overflowX: 'auto',
 };
 
-const descriptionStyle = {
+const descriptionStyle: CSSProperties = {
   margin: 0,
   color: 'var(--sl-color-gray-2)',
   lineHeight: 1.5,
 };
 
-const controlsStyle = {
+const controlsStyle: CSSProperties = {
   display: 'flex',
-  flexWrap: 'wrap' as const,
+  flexWrap: 'wrap',
   gap: '0.75rem',
 };
 

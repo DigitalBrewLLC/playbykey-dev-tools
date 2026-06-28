@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import type { CSSProperties } from 'react';
 import {
   getIntervalSemitones,
   resolveIntervalEndpoints,
@@ -9,9 +10,9 @@ import { IntervalSelect } from '../ui/IntervalSelect';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 
-const containerStyle = {
+const containerStyle: CSSProperties = {
   display: 'flex',
-  flexDirection: 'column' as const,
+  flexDirection: 'column',
   gap: '0.5rem',
 };
 
