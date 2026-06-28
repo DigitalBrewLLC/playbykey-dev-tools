@@ -173,6 +173,7 @@ const fieldStyle = {
   display: 'flex',
   flexDirection: 'column' as const,
   gap: '0.25rem',
+  marginTop: 0,
 };
 
 const labelStyle = {
@@ -284,8 +285,8 @@ const EnginePlayground = () => {
   const [notation, setNotation] = useState<NotationType>('letter');
   const [guardInput, setGuardInput] = useState('C');
 
-  const selected =
-    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
+  // functionId is always a valid EngineFunctionId, so find always returns a match
+  const selected = ENGINE_FUNCTIONS.find((fn) => fn.id === functionId)!;
 
   const result = useMemo(
     () =>
