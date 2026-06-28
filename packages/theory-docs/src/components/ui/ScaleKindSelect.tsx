@@ -1,4 +1,4 @@
-import { SCALE_KIND_VALUES } from '@playbykey/theory';
+import { ScaleKinds } from '@playbykey/theory';
 import type { ScaleKind } from '@playbykey/theory';
 
 interface ScaleKindSelectProps {
@@ -46,7 +46,7 @@ const ScaleKindSelect = ({
         value={value}
         onChange={(event) => onChange(event.target.value as ScaleKind)}
       >
-        {SCALE_KIND_VALUES.map((kind) => (
+        {Object.values(ScaleKinds).map((kind) => (
           <option key={kind} value={kind}>
             {formatScaleKindLabel(kind)}
           </option>
