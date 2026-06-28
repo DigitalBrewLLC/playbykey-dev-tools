@@ -52,8 +52,8 @@ type IntervalId =
   | 'major_7th'
   | 'octave';
 
-/** Scale kinds supported by the scale-derivation functions. */
-type ScaleKind =
+/** Scale types supported by the scale-derivation functions. */
+type ScaleType =
   | 'mode'
   | 'chromatic'
   | 'pentatonic'
@@ -87,7 +87,7 @@ export type {
   Note,
   ModeName,
   IntervalId,
-  ScaleKind,
+  ScaleType,
   NotationType,
   AccidentalType,
   ModeInfo,

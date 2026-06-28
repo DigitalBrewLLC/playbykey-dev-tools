@@ -4,7 +4,7 @@ interface FunctionCardProps {
   name: string;
   signature: string;
   description: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   result: unknown;
 }
 
@@ -63,7 +63,7 @@ const FunctionCard = ({
         <code>{signature}</code>
       </pre>
       <p style={descriptionStyle}>{description}</p>
-      <div style={controlsStyle}>{children}</div>
+      {children && <div style={controlsStyle}>{children}</div>}
       <ResultPanel label="Result" value={result} />
     </section>
   );

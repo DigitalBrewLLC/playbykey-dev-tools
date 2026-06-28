@@ -284,9 +284,6 @@ const EnginePlayground = () => {
   const [notation, setNotation] = useState<NotationType>('letter');
   const [guardInput, setGuardInput] = useState('C');
 
-  const selected =
-    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
-
   const result = useMemo(
     () =>
       computeResult(
@@ -312,6 +309,11 @@ const EnginePlayground = () => {
       guardInput,
     ]
   );
+
+  const selected =
+    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
+
+  if (selected === undefined) return null;
 
   return (
     <div style={containerStyle}>

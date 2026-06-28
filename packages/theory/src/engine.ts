@@ -9,6 +9,24 @@
 import type { Note, ModeName, NotationType, NoteDisplayInfo } from './types';
 import { Modes, CHROMATIC_NOTES, MODES, ModeInfoById } from './constants';
 
+const KEY_SIGNATURE_COUNT: Record<
+  Note,
+  { sharps: number } | { flats: number }
+> = {
+  C: { sharps: 0 },
+  G: { sharps: 1 },
+  D: { sharps: 2 },
+  A: { sharps: 3 },
+  E: { sharps: 4 },
+  B: { sharps: 5 },
+  'F#': { sharps: 6 },
+  'C#': { flats: 5 },
+  'G#': { flats: 4 },
+  'D#': { flats: 3 },
+  'A#': { flats: 2 },
+  F: { flats: 1 },
+};
+
 /**
  * Interval patterns (in semitones) for each mode of the major scale.
  * Each array sums to 12 (one octave) and contains 7 step sizes.
@@ -155,14 +173,20 @@ const buildNoteMap = (
   mode: ModeName,
   notation: NotationType
 ): NoteDisplayInfo[] => {
+  const scaleNotes = getScaleNotes(root, mode);
   return CHROMATIC_NOTES.map((note) => {
-    const scaleDegree = getScaleDegree(root, mode, note);
-
+    const index = scaleNotes.indexOf(note);
+    const scaleDegree = index === -1 ? null : index + 1;
     return {
       note,
       inScale: scaleDegree !== null,
       scaleDegree,
-      label: getNoteLabel(note, root, mode, notation),
+      label:
+        notation === 'letter'
+          ? note
+          : scaleDegree !== null
+            ? String(scaleDegree)
+            : '',
       isRoot: note === root,
     };
   });
@@ -177,19 +201,15 @@ const buildNoteMap = (
 const getModeAlterations = (
   mode: ModeName
 ): Partial<Record<number, 'flat' | 'sharp'>> => {
-  const ionianOffsets = MODE_SEMITONE_OFFSETS['ionian'];
+  const ionianOffsets = MODE_SEMITONE_OFFSETS[Modes.Ionian];
   const modeOffsets = MODE_SEMITONE_OFFSETS[mode];
   const result: Partial<Record<number, 'flat' | 'sharp'>> = {};
   for (let i = 0; i < 7; i++) {
-    const ionian = ionianOffsets[i];
-    const current = modeOffsets[i];
-    if (current !== undefined && ionian !== undefined && current < ionian) {
+    const ionian = elementAt(ionianOffsets, i);
+    const current = elementAt(modeOffsets, i);
+    if (current < ionian) {
       result[i + 1] = 'flat';
-    } else if (
-      current !== undefined &&
-      ionian !== undefined &&
-      current > ionian
-    ) {
+    } else if (current > ionian) {
       result[i + 1] = 'sharp';
     }
   }
@@ -210,13 +230,13 @@ const getParentScaleModes = (
   const modeInfo = ModeInfoById[mode];
   const parentRootIndex =
     (getNoteIndex(key) -
-      elementAt(MODE_SEMITONE_OFFSETS['ionian'], modeInfo.scaleDegree - 1) +
+      elementAt(MODE_SEMITONE_OFFSETS[Modes.Ionian], modeInfo.scaleDegree - 1) +
       12) %
     12;
   const parentRoot = noteAtIndex(parentRootIndex);
-  const parentScaleNotes = getScaleNotes(parentRoot, 'ionian');
+  const parentScaleNotes = getScaleNotes(parentRoot, Modes.Ionian);
   return MODES.map((m, i) => ({
-    root: parentScaleNotes[i] as Note,
+    root: elementAt(parentScaleNotes, i),
     mode: m.id,
   }));
 };
@@ -232,8 +252,8 @@ const getParentScaleModes = (
  */
 const getModalRoot = (parentKey: Note, mode: ModeName): Note => {
   const modeInfo = ModeInfoById[mode];
-  const parentNotes = getScaleNotes(parentKey, 'ionian');
-  return parentNotes[modeInfo.scaleDegree - 1] as Note;
+  const parentNotes = getScaleNotes(parentKey, Modes.Ionian);
+  return elementAt(parentNotes, modeInfo.scaleDegree - 1);
 };
 
 /**
@@ -279,23 +299,7 @@ const getCircleOfFifthsOrder = (): readonly Note[] => {
  */
 const getKeySignatureCount = (
   key: Note
-): { sharps: number } | { flats: number } => {
-  const lookup: Record<Note, { sharps: number } | { flats: number }> = {
-    C: { sharps: 0 },
-    G: { sharps: 1 },
-    D: { sharps: 2 },
-    A: { sharps: 3 },
-    E: { sharps: 4 },
-    B: { sharps: 5 },
-    'F#': { sharps: 6 },
-    'C#': { flats: 5 },
-    'G#': { flats: 4 },
-    'D#': { flats: 3 },
-    'A#': { flats: 2 },
-    F: { flats: 1 },
-  };
-  return lookup[key];
-};
+): { sharps: number } | { flats: number } => KEY_SIGNATURE_COUNT[key];
 
 const isNote = (value: string): value is Note => NOTE_SET.has(value);
 

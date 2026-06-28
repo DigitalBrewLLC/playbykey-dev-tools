@@ -4,7 +4,7 @@ import type {
   ModeName,
   NotationType,
   IntervalId,
-  ScaleKind,
+  ScaleType,
   AccidentalType,
 } from './types';
 
@@ -63,14 +63,14 @@ const Intervals = {
   Octave: 'octave',
 } as const satisfies Record<string, IntervalId>;
 
-/** Named constants for each derived scale kind. */
-const ScaleKinds = {
+/** Named constants for each derived scale type. */
+const ScaleTypes = {
   Mode: 'mode',
   Chromatic: 'chromatic',
   Pentatonic: 'pentatonic',
   Blues: 'blues',
   HarmonicMinor: 'harmonic-minor',
-} as const satisfies Record<string, ScaleKind>;
+} as const satisfies Record<string, ScaleType>;
 
 /** Named constants for each accidental display preference. */
 const Accidentals = {
@@ -156,7 +156,7 @@ export {
   Notations,
   Modes,
   Intervals,
-  ScaleKinds,
+  ScaleTypes,
   Accidentals,
   MODES,
   ModeInfoById,

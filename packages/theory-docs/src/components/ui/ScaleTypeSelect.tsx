@@ -1,9 +1,9 @@
-import { ScaleKinds } from '@playbykey/theory';
-import type { ScaleKind } from '@playbykey/theory';
+import { ScaleTypes } from '@playbykey/theory';
+import type { ScaleType } from '@playbykey/theory';
 
-interface ScaleKindSelectProps {
-  value: ScaleKind;
-  onChange: (kind: ScaleKind) => void;
+interface ScaleTypeSelectProps {
+  value: ScaleType;
+  onChange: (scaleType: ScaleType) => void;
   label?: string;
 }
 
@@ -27,28 +27,28 @@ const selectStyle = {
   color: 'var(--sl-color-gray-1)',
 };
 
-const formatScaleKindLabel = (kind: ScaleKind) =>
-  kind
+const formatScaleTypeLabel = (scaleType: ScaleType) =>
+  scaleType
     .split(/[-_]/)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ');
 
-const ScaleKindSelect = ({
+const ScaleTypeSelect = ({
   value,
   onChange,
-  label = 'Scale Kind',
-}: ScaleKindSelectProps) => {
+  label = 'Scale Type',
+}: ScaleTypeSelectProps) => {
   return (
     <label style={fieldStyle}>
       <span style={labelStyle}>{label}</span>
       <select
         style={selectStyle}
         value={value}
-        onChange={(event) => onChange(event.target.value as ScaleKind)}
+        onChange={(event) => onChange(event.target.value as ScaleType)}
       >
-        {Object.values(ScaleKinds).map((kind) => (
-          <option key={kind} value={kind}>
-            {formatScaleKindLabel(kind)}
+        {Object.values(ScaleTypes).map((scaleType) => (
+          <option key={scaleType} value={scaleType}>
+            {formatScaleTypeLabel(scaleType)}
           </option>
         ))}
       </select>
@@ -56,4 +56,4 @@ const ScaleKindSelect = ({
   );
 };
 
-export { ScaleKindSelect };
+export { ScaleTypeSelect };
