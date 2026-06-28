@@ -1,5 +1,6 @@
 import { MODES } from '@playbykey/theory';
 import type { ModeName } from '@playbykey/theory';
+import { fieldStyle, labelStyle, selectStyle } from './selectStyles';
 
 interface ModeSelectProps {
   value: ModeName;
@@ -7,29 +8,9 @@ interface ModeSelectProps {
   label?: string;
 }
 
-const fieldStyle = {
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: '0.25rem',
-};
-
-const labelStyle = {
-  fontSize: '0.875rem',
-  fontWeight: 600,
-  color: 'var(--sl-color-gray-2)',
-};
-
-const selectStyle = {
-  padding: '0.375rem 0.5rem',
-  borderRadius: '0.375rem',
-  border: '1px solid var(--sl-color-gray-5)',
-  background: 'var(--sl-color-gray-6)',
-  color: 'var(--sl-color-gray-1)',
-};
-
 const ModeSelect = ({ value, onChange, label = 'Mode' }: ModeSelectProps) => {
   return (
-    <label style={fieldStyle}>
+    <div style={fieldStyle}>
       <span style={labelStyle}>{label}</span>
       <select
         style={selectStyle}
@@ -42,7 +23,7 @@ const ModeSelect = ({ value, onChange, label = 'Mode' }: ModeSelectProps) => {
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 };
 
