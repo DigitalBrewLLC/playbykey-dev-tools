@@ -1,6 +1,19 @@
 ---
 title: Constants
-description: All exported constants and their values from @playbykey/theory
+description: Exported constants for notes, modes, intervals, scales, and notation in @playbykey/theory
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Constants — @playbykey/theory"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Exported constants for notes, modes, intervals, scales, and notation in @playbykey/theory"
+  - tag: meta
+    attrs:
+      property: og:url
+      content: "https://theory-engine.docs.playbykey.com/theory/constants/"
 ---
 
 import ModeExplorer from '../../../components/playgrounds/ModeExplorer';
@@ -9,7 +22,7 @@ import IntervalExplorer from '../../../components/playgrounds/IntervalExplorer';
 import ScalesExplorer from '../../../components/playgrounds/ScalesExplorer';
 import NotationExplorer from '../../../components/playgrounds/NotationExplorer';
 
-Every constant below is exported from `@playbykey/theory`. Select inputs to see live values and the exact function call.
+Every constant below is exported from `@playbykey/theory`. The catalog covers the 12 chromatic `NOTES`, the 7 diatonic `MODES`, the full `INTERVAL_DEFINITIONS` map, `SCALE_DEFINITIONS` for derived scale types, and `NOTATION_IDS` for display mapping. Select inputs to see live values and the exact function call.
 
 ## Notes
 
@@ -25,7 +38,7 @@ Every constant below is exported from `@playbykey/theory`. Select inputs to see 
 
 ## Intervals
 
-`INTERVAL_DEFINITIONS` maps each interval ID to a label and semitone count. `resolveIntervalEndpoints` uses this data to find the actual notes that bound an interval in a given key and mode.
+`INTERVAL_DEFINITIONS` maps each interval ID to a label and semitone count. `resolveIntervalEndpoints` uses this data to find the actual notes that bound an interval in a given key and mode. See the [Intervals](/theory/intervals/) page for live resolution and the full type reference.
 
 <IntervalExplorer client:load />
 

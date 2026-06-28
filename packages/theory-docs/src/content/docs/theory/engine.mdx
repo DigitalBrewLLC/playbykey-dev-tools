@@ -1,22 +1,35 @@
 ---
-title: Engine Functions
-description: Core scale, mode, and note computation functions in @playbykey/theory
+title: Keys & Modes
+description: Scale notes, diatonic modes, key relationships, and note utilities in @playbykey/theory
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Keys & Modes — @playbykey/theory"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Scale notes, diatonic modes, key relationships, and note utilities in @playbykey/theory"
+  - tag: meta
+    attrs:
+      property: og:url
+      content: "https://theory-engine.docs.playbykey.com/theory/engine/"
 ---
 
 import EnginePlayground from '../../../components/playgrounds/EnginePlayground';
 
-The engine module covers scales, modes, key relationships, and note utilities. Use the live playground to call any function and inspect its output immediately.
+Compute scale notes for any root and diatonic mode, traverse key relationships, and look up note positions and scale degrees. Use the live playground to call any function and inspect its output immediately.
 
 ## Live Playground
 
 <EnginePlayground client:load />
 
-## Function Reference
+## Scale & Mode Functions
 
 **Scale and mode:** `getScaleNotes`, `getParentScaleModes`, `getModeAlterations`, and `getModalRoot` compute the note set, degree alterations, and modal rotations for any root and mode combination.
 
 **Key relationships:** `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, and `getCircleOfFifthsOrder` find relative keys, sharp and flat counts, and traverse all 12 keys in fifth order.
 
-**Note utilities:** `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`, and `buildNoteMap` look up scale degrees, check note membership, convert between note names and chromatic indices, and compute semitone distances.
+**Note utilities:** `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`, and `buildNoteMap` look up scale degrees, check note membership, convert between note names and chromatic indices, and compute semitone distances. See the [Constants](/theory/constants/) page for the full note and mode constant catalog.
 
 **Type guards:** `isNote`, `isModeName`, `parseNote`, and `parseModeName` narrow untrusted strings - URL params, user input, or external data - to typed `Note` or `ModeName` values before passing them to engine functions.
