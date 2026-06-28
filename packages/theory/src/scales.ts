@@ -1,4 +1,4 @@
-import { MODE_IDS, NOTES } from './constants';
+import { Modes, CHROMATIC_NOTES } from './constants';
 import { getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
 import type { ModeName, Note, ScaleKind } from './types';
 
@@ -37,7 +37,7 @@ const SCALE_DEFINITIONS: Record<ScaleKind, ScaleDefinition> = {
   },
   'harmonic-minor': {
     label: 'Harmonic minor scale',
-    parentMode: MODE_IDS.AEOLIAN,
+    parentMode: Modes.Aeolian,
     raiseDegree: 7,
   },
 };
@@ -52,7 +52,7 @@ const notesFromSemitoneOffsets = (
 
 const getHarmonicMinorNotes = (root: Note): Note[] => {
   const definition = SCALE_DEFINITIONS['harmonic-minor'];
-  const parentMode = definition.parentMode ?? MODE_IDS.AEOLIAN;
+  const parentMode = definition.parentMode ?? Modes.Aeolian;
   const parentNotes = getScaleNotes(root, parentMode);
   const raiseDegree = definition.raiseDegree ?? 7;
   const raisedIndex = raiseDegree - 1;
@@ -88,7 +88,7 @@ const getScaleEmphasisDegrees = (scaleKind: ScaleKind): readonly number[] => {
     return PENTATONIC_DEGREES;
   }
   if (scaleKind === 'chromatic') {
-    return NOTES.map((_, index) => index + 1);
+    return CHROMATIC_NOTES.map((_, index) => index + 1);
   }
   return FULL_SCALE_DEGREES;
 };
@@ -132,10 +132,10 @@ const getScaleContextNotes = (
   scaleKind: ScaleKind
 ): Note[] => {
   if (scaleKind === 'chromatic') {
-    return [...NOTES];
+    return [...CHROMATIC_NOTES];
   }
   if (scaleKind === 'blues') {
-    return getScaleNotes(root, MODE_IDS.AEOLIAN);
+    return getScaleNotes(root, Modes.Aeolian);
   }
   if (scaleKind === 'harmonic-minor') {
     return getHarmonicMinorNotes(root);

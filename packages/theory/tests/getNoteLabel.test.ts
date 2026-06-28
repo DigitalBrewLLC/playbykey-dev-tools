@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getNoteLabel, MODE_IDS, NOTATION_IDS } from '../src';
+import { getNoteLabel, Modes, Notations } from '../src';
 import type { Note } from '../src';
 import { ALL_NOTES, ALL_MODES } from './fixtures';
 
@@ -9,30 +9,28 @@ describe('getNoteLabel — letter notation', () => {
     it.each(ALL_NOTES.map((n) => ({ note: n })))(
       '$note → "$note"',
       ({ note }) => {
-        expect(
-          getNoteLabel(note, 'C', MODE_IDS.IONIAN, NOTATION_IDS.LETTER)
-        ).toBe(note);
+        expect(getNoteLabel(note, 'C', Modes.Ionian, Notations.Letter)).toBe(
+          note
+        );
       }
     );
   });
 
   describe('returns the note name regardless of the active key', () => {
     it('F# in G ionian → "F#"', () => {
-      expect(
-        getNoteLabel('F#', 'G', MODE_IDS.IONIAN, NOTATION_IDS.LETTER)
-      ).toBe('F#');
+      expect(getNoteLabel('F#', 'G', Modes.Ionian, Notations.Letter)).toBe(
+        'F#'
+      );
     });
 
     it('A# in D# dorian → "A#"', () => {
-      expect(
-        getNoteLabel('A#', 'D#', MODE_IDS.DORIAN, NOTATION_IDS.LETTER)
-      ).toBe('A#');
+      expect(getNoteLabel('A#', 'D#', Modes.Dorian, Notations.Letter)).toBe(
+        'A#'
+      );
     });
 
     it('C in B locrian → "C"', () => {
-      expect(
-        getNoteLabel('C', 'B', MODE_IDS.LOCRIAN, NOTATION_IDS.LETTER)
-      ).toBe('C');
+      expect(getNoteLabel('C', 'B', Modes.Locrian, Notations.Letter)).toBe('C');
     });
   });
 });
@@ -51,9 +49,9 @@ describe('getNoteLabel — number notation', () => {
     ];
 
     it.each(C_IONIAN_DEGREES)('$note → "$label"', ({ note, label }) => {
-      expect(
-        getNoteLabel(note, 'C', MODE_IDS.IONIAN, NOTATION_IDS.NUMBER)
-      ).toBe(label);
+      expect(getNoteLabel(note, 'C', Modes.Ionian, Notations.Number)).toBe(
+        label
+      );
     });
   });
 
@@ -63,9 +61,9 @@ describe('getNoteLabel — number notation', () => {
     it.each(OUT_OF_SCALE.map((n) => ({ note: n })))(
       '$note → ""',
       ({ note }) => {
-        expect(
-          getNoteLabel(note, 'C', MODE_IDS.IONIAN, NOTATION_IDS.NUMBER)
-        ).toBe('');
+        expect(getNoteLabel(note, 'C', Modes.Ionian, Notations.Number)).toBe(
+          ''
+        );
       }
     );
   });
@@ -73,23 +71,17 @@ describe('getNoteLabel — number notation', () => {
   describe('degree labels shift correctly with different modes', () => {
     // C dorian: [C D D# F G A A#], degree 3 is D# not E
     it('D# is degree 3 in C dorian', () => {
-      expect(
-        getNoteLabel('D#', 'C', MODE_IDS.DORIAN, NOTATION_IDS.NUMBER)
-      ).toBe('3');
+      expect(getNoteLabel('D#', 'C', Modes.Dorian, Notations.Number)).toBe('3');
     });
 
     // E is out of scale in C dorian
     it('E returns empty string in C dorian', () => {
-      expect(getNoteLabel('E', 'C', MODE_IDS.DORIAN, NOTATION_IDS.NUMBER)).toBe(
-        ''
-      );
+      expect(getNoteLabel('E', 'C', Modes.Dorian, Notations.Number)).toBe('');
     });
 
     // G ionian: degree 7 is F#
     it('F# is degree 7 in G ionian', () => {
-      expect(
-        getNoteLabel('F#', 'G', MODE_IDS.IONIAN, NOTATION_IDS.NUMBER)
-      ).toBe('7');
+      expect(getNoteLabel('F#', 'G', Modes.Ionian, Notations.Number)).toBe('7');
     });
   });
 
@@ -97,9 +89,9 @@ describe('getNoteLabel — number notation', () => {
     it.each(ALL_NOTES.map((n) => ({ note: n })))(
       'root $note → "1" in $note ionian',
       ({ note }) => {
-        expect(
-          getNoteLabel(note, note, MODE_IDS.IONIAN, NOTATION_IDS.NUMBER)
-        ).toBe('1');
+        expect(getNoteLabel(note, note, Modes.Ionian, Notations.Number)).toBe(
+          '1'
+        );
       }
     );
   });
@@ -108,7 +100,7 @@ describe('getNoteLabel — number notation', () => {
     it.each(ALL_MODES.map((m) => ({ mode: m })))(
       'C is degree 1 in C $mode',
       ({ mode }) => {
-        expect(getNoteLabel('C', 'C', mode, NOTATION_IDS.NUMBER)).toBe('1');
+        expect(getNoteLabel('C', 'C', mode, Notations.Number)).toBe('1');
       }
     );
   });

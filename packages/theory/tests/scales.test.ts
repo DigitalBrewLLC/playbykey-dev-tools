@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MODE_IDS, SCALE_KIND_IDS } from '../src/constants';
+import { Modes, ScaleKinds } from '../src/constants';
 import { getScaleNotes } from '../src/engine';
 import {
   BLUES_SEMITONE_OFFSETS,
@@ -15,33 +15,31 @@ import {
 
 describe('SCALE_DEFINITIONS', () => {
   it('defines every theory scale kind', () => {
-    expect(Object.keys(SCALE_DEFINITIONS)).toEqual(
-      Object.values(SCALE_KIND_IDS)
-    );
+    expect(Object.keys(SCALE_DEFINITIONS)).toEqual(Object.values(ScaleKinds));
   });
 });
 
 describe('getDerivedScaleNotes', () => {
   it('returns diatonic mode notes for mode kind', () => {
-    expect(getDerivedScaleNotes('C', MODE_IDS.IONIAN, 'mode')).toEqual(
-      getScaleNotes('C', MODE_IDS.IONIAN)
+    expect(getDerivedScaleNotes('C', Modes.Ionian, 'mode')).toEqual(
+      getScaleNotes('C', Modes.Ionian)
     );
   });
 
   it('returns all 12 chromatic pitches for chromatic kind', () => {
-    expect(
-      getDerivedScaleNotes('C', MODE_IDS.IONIAN, 'chromatic')
-    ).toHaveLength(12);
+    expect(getDerivedScaleNotes('C', Modes.Ionian, 'chromatic')).toHaveLength(
+      12
+    );
   });
 
   it('returns pentatonic subset degrees from parent mode', () => {
     expect(
-      getDerivedScaleNotes('C', MODE_IDS.IONIAN, 'pentatonic').map((n) => n)
+      getDerivedScaleNotes('C', Modes.Ionian, 'pentatonic').map((n) => n)
     ).toEqual(['C', 'D', 'E', 'G', 'A']);
   });
 
   it('returns blues scale with blue note for blues kind', () => {
-    expect(getDerivedScaleNotes('A', MODE_IDS.AEOLIAN, 'blues')).toEqual(
+    expect(getDerivedScaleNotes('A', Modes.Aeolian, 'blues')).toEqual(
       getBluesNotes('A')
     );
     expect(getBluesNotes('A')).toContain('D#');
@@ -72,14 +70,14 @@ describe('getScaleEmphasisDegrees', () => {
 
 describe('getScaleContextNotes', () => {
   it('uses aeolian parent for blues harmonic context', () => {
-    expect(getScaleContextNotes('A', MODE_IDS.AEOLIAN, 'blues')).toEqual(
-      getScaleNotes('A', MODE_IDS.AEOLIAN)
+    expect(getScaleContextNotes('A', Modes.Aeolian, 'blues')).toEqual(
+      getScaleNotes('A', Modes.Aeolian)
     );
   });
 
   it('uses parent mode for pentatonic harmonic context', () => {
-    expect(getScaleContextNotes('C', MODE_IDS.IONIAN, 'pentatonic')).toEqual(
-      getScaleNotes('C', MODE_IDS.IONIAN)
+    expect(getScaleContextNotes('C', Modes.Ionian, 'pentatonic')).toEqual(
+      getScaleNotes('C', Modes.Ionian)
     );
   });
 });

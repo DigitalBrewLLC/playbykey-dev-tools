@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getScaleNotes, MODE_IDS } from '../src';
+import { getScaleNotes, Modes } from '../src';
 import type { Note, ModeName } from '../src';
 import { ALL_NOTES, ALL_MODES } from './fixtures';
 
@@ -21,17 +21,17 @@ const IONIAN_KEYS: Array<{ root: Note; expected: Note[] }> = [
 
 // All 7 modes from C — full expected output arrays for concrete verification
 const C_MODES: Array<{ mode: ModeName; expected: Note[] }> = [
-  { mode: MODE_IDS.IONIAN, expected: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
-  { mode: MODE_IDS.DORIAN, expected: ['C', 'D', 'D#', 'F', 'G', 'A', 'A#'] },
+  { mode: Modes.Ionian, expected: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
+  { mode: Modes.Dorian, expected: ['C', 'D', 'D#', 'F', 'G', 'A', 'A#'] },
   {
-    mode: MODE_IDS.PHRYGIAN,
+    mode: Modes.Phrygian,
     expected: ['C', 'C#', 'D#', 'F', 'G', 'G#', 'A#'],
   },
-  { mode: MODE_IDS.LYDIAN, expected: ['C', 'D', 'E', 'F#', 'G', 'A', 'B'] },
-  { mode: MODE_IDS.MIXOLYDIAN, expected: ['C', 'D', 'E', 'F', 'G', 'A', 'A#'] },
-  { mode: MODE_IDS.AEOLIAN, expected: ['C', 'D', 'D#', 'F', 'G', 'G#', 'A#'] },
+  { mode: Modes.Lydian, expected: ['C', 'D', 'E', 'F#', 'G', 'A', 'B'] },
+  { mode: Modes.Mixolydian, expected: ['C', 'D', 'E', 'F', 'G', 'A', 'A#'] },
+  { mode: Modes.Aeolian, expected: ['C', 'D', 'D#', 'F', 'G', 'G#', 'A#'] },
   {
-    mode: MODE_IDS.LOCRIAN,
+    mode: Modes.Locrian,
     expected: ['C', 'C#', 'D#', 'F', 'F#', 'G#', 'A#'],
   },
 ];
@@ -39,7 +39,7 @@ const C_MODES: Array<{ mode: ModeName; expected: Note[] }> = [
 describe('getScaleNotes', () => {
   describe('all 12 keys in ionian mode — full output verified', () => {
     it.each(IONIAN_KEYS)('$root ionian', ({ root, expected }) => {
-      expect(getScaleNotes(root, MODE_IDS.IONIAN)).toEqual(expected);
+      expect(getScaleNotes(root, Modes.Ionian)).toEqual(expected);
     });
   });
 

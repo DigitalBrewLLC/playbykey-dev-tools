@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isNoteInScale, MODE_IDS } from '../src';
+import { isNoteInScale, Modes } from '../src';
 import type { Note, ModeName } from '../src';
 import { ALL_NOTES } from './fixtures';
 
@@ -21,13 +21,13 @@ const IONIAN_IN_SCALE: Array<{ root: Note; inScale: Note[] }> = [
 
 // All 7 modes from C with their in-scale notes
 const C_MODES_IN_SCALE: Array<{ mode: ModeName; inScale: Note[] }> = [
-  { mode: MODE_IDS.IONIAN, inScale: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
-  { mode: MODE_IDS.DORIAN, inScale: ['C', 'D', 'D#', 'F', 'G', 'A', 'A#'] },
-  { mode: MODE_IDS.PHRYGIAN, inScale: ['C', 'C#', 'D#', 'F', 'G', 'G#', 'A#'] },
-  { mode: MODE_IDS.LYDIAN, inScale: ['C', 'D', 'E', 'F#', 'G', 'A', 'B'] },
-  { mode: MODE_IDS.MIXOLYDIAN, inScale: ['C', 'D', 'E', 'F', 'G', 'A', 'A#'] },
-  { mode: MODE_IDS.AEOLIAN, inScale: ['C', 'D', 'D#', 'F', 'G', 'G#', 'A#'] },
-  { mode: MODE_IDS.LOCRIAN, inScale: ['C', 'C#', 'D#', 'F', 'F#', 'G#', 'A#'] },
+  { mode: Modes.Ionian, inScale: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
+  { mode: Modes.Dorian, inScale: ['C', 'D', 'D#', 'F', 'G', 'A', 'A#'] },
+  { mode: Modes.Phrygian, inScale: ['C', 'C#', 'D#', 'F', 'G', 'G#', 'A#'] },
+  { mode: Modes.Lydian, inScale: ['C', 'D', 'E', 'F#', 'G', 'A', 'B'] },
+  { mode: Modes.Mixolydian, inScale: ['C', 'D', 'E', 'F', 'G', 'A', 'A#'] },
+  { mode: Modes.Aeolian, inScale: ['C', 'D', 'D#', 'F', 'G', 'G#', 'A#'] },
+  { mode: Modes.Locrian, inScale: ['C', 'C#', 'D#', 'F', 'F#', 'G#', 'A#'] },
 ];
 
 describe('isNoteInScale', () => {
@@ -38,10 +38,10 @@ describe('isNoteInScale', () => {
     it.each(IONIAN_IN_SCALE)('$root ionian', ({ root, inScale }) => {
       const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
       for (const note of inScale) {
-        expect(isNoteInScale(root, MODE_IDS.IONIAN, note)).toBe(true);
+        expect(isNoteInScale(root, Modes.Ionian, note)).toBe(true);
       }
       for (const note of outOfScale) {
-        expect(isNoteInScale(root, MODE_IDS.IONIAN, note)).toBe(false);
+        expect(isNoteInScale(root, Modes.Ionian, note)).toBe(false);
       }
     });
   });

@@ -7,7 +7,7 @@
  */
 
 import type { Note, ModeName, NotationType, NoteDisplayInfo } from './types';
-import { MODE_NAMES, NOTES, MODES } from './constants';
+import { Modes, CHROMATIC_NOTES, MODES, ModeInfoById } from './constants';
 
 /**
  * Interval patterns (in semitones) for each mode of the major scale.
@@ -54,19 +54,28 @@ const elementAt = <T>(array: readonly T[], index: number): T => {
   return value;
 };
 
+/** Pre-computed sets for O(1) type-guard lookups. */
+const NOTE_SET = new Set<string>(CHROMATIC_NOTES);
+const MODE_NAME_SET = new Set<string>(Object.values(Modes));
+
 /**
- * Returns the chromatic index (0-11) of a note within the NOTES array.
+ * Returns the chromatic index (0-11) of a note within the chromatic scale.
  * C = 0, C# = 1, D = 2, ... B = 11.
+ * Throws RangeError if the value is not a recognised note at runtime.
  */
 const getNoteIndex = (note: Note): number => {
-  return NOTES.indexOf(note);
+  const index = CHROMATIC_NOTES.indexOf(note);
+  if (index === -1) {
+    throw new RangeError(`"${note}" is not a valid note`);
+  }
+  return index;
 };
 
 /**
  * Returns the note at a given chromatic index, wrapping around at 12.
  */
 const noteAtIndex = (index: number): Note => {
-  return elementAt(NOTES, ((index % 12) + 12) % 12);
+  return elementAt(CHROMATIC_NOTES, ((index % 12) + 12) % 12);
 };
 
 /**
@@ -146,7 +155,7 @@ const buildNoteMap = (
   mode: ModeName,
   notation: NotationType
 ): NoteDisplayInfo[] => {
-  return NOTES.map((note) => {
+  return CHROMATIC_NOTES.map((note) => {
     const scaleDegree = getScaleDegree(root, mode, note);
 
     return {
@@ -198,11 +207,10 @@ const getParentScaleModes = (
   key: Note,
   mode: ModeName
 ): Array<{ root: Note; mode: ModeName }> => {
-  const modeInfo = MODES.find((m) => m.id === mode);
-  const scaleDegree = modeInfo !== undefined ? modeInfo.scaleDegree : 1;
+  const modeInfo = ModeInfoById[mode];
   const parentRootIndex =
     (getNoteIndex(key) -
-      elementAt(MODE_SEMITONE_OFFSETS['ionian'], scaleDegree - 1) +
+      elementAt(MODE_SEMITONE_OFFSETS['ionian'], modeInfo.scaleDegree - 1) +
       12) %
     12;
   const parentRoot = noteAtIndex(parentRootIndex);
@@ -223,10 +231,9 @@ const getParentScaleModes = (
  * Example: getModalRoot('C', 'ionian')   => 'C'  (1st degree, unchanged)
  */
 const getModalRoot = (parentKey: Note, mode: ModeName): Note => {
-  const modeInfo = MODES.find((m) => m.id === mode);
-  const scaleDegree = modeInfo !== undefined ? modeInfo.scaleDegree : 1;
+  const modeInfo = ModeInfoById[mode];
   const parentNotes = getScaleNotes(parentKey, 'ionian');
-  return parentNotes[scaleDegree - 1] as Note;
+  return parentNotes[modeInfo.scaleDegree - 1] as Note;
 };
 
 /**
@@ -290,11 +297,10 @@ const getKeySignatureCount = (
   return lookup[key];
 };
 
-const isNote = (value: string): value is Note =>
-  (NOTES as readonly string[]).includes(value);
+const isNote = (value: string): value is Note => NOTE_SET.has(value);
 
 const isModeName = (value: string): value is ModeName =>
-  (MODE_NAMES as readonly string[]).includes(value);
+  MODE_NAME_SET.has(value);
 
 /** First token before a space or comma (e.g. "C ionian" -> "C"). */
 const firstToken = (value: string): string => {
@@ -321,6 +327,7 @@ const parseModeName = (value: string): ModeName | null => {
 };
 
 export {
+  elementAt,
   MODE_INTERVALS,
   MODE_SEMITONE_OFFSETS,
   getNoteIndex,

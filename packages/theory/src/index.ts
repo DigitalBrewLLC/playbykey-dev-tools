@@ -17,20 +17,20 @@ export type {
 } from './types';
 
 export {
-  NOTATION_IDS,
-  MODE_IDS,
-  MODE_NAMES,
-  INTERVAL_IDS,
-  INTERVAL_ID_VALUES,
-  SCALE_KIND_IDS,
-  SCALE_KIND_VALUES,
-  ACCIDENTAL_IDS,
-  NOTES,
+  Notes,
+  CHROMATIC_NOTES,
+  Notations,
+  Modes,
+  Intervals,
+  ScaleKinds,
+  Accidentals,
   MODES,
+  ModeInfoById,
   ENHARMONIC_LABELS,
 } from './constants';
 
 export {
+  elementAt,
   MODE_INTERVALS,
   MODE_SEMITONE_OFFSETS,
   getNoteIndex,
