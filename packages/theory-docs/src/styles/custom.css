@@ -1,12 +1,12 @@
-/* PlayByKey brand overrides for Starlight */
+/* PlayByKey brand theme for Starlight — theory accent (amber) */
 
-:root,
-:root[data-theme='dark'] {
-  /* Accent — amber (theory section color from playbykey.com) */
-  --sl-color-accent-low: #b45309;
+/* ── Light mode ─────────────────────────────────────────── */
+:root {
+  /* Accent */
+  --sl-color-accent-low: #fef3c7;
   --sl-color-accent: #f59e0b;
-  --sl-color-accent-high: #fcd34d;
-  --sl-color-text-accent: #f59e0b;
+  --sl-color-accent-high: #b45309;
+  --sl-color-text-accent: #b45309;
 
   /* Typography */
   --sl-font:
@@ -14,4 +14,65 @@
     Arial, sans-serif;
   --sl-font-mono:
     ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
+
+  /* Surfaces */
+  --sl-color-bg: #fafafa;
+  --sl-color-bg-nav: #ffffff;
+  --sl-color-bg-sidebar: #f5f5f5;
+  --sl-color-bg-inline-code: #f0f0f0;
+
+  /* Text */
+  --sl-color-text: #171717;
+
+  /* Gray scale — light (1 = dark, 6 = light) */
+  --sl-color-gray-1: #171717;
+  --sl-color-gray-2: #404040;
+  --sl-color-gray-3: #737373;
+  --sl-color-gray-4: #a3a3a3;
+  --sl-color-gray-5: #d4d4d4;
+  --sl-color-gray-6: #f0f0f0;
+  --sl-color-gray-7: #fafafa;
+
+  /* Borders */
+  --sl-color-hairline: #e5e5e5;
+  --sl-color-hairline-shade: #d4d4d4;
+
+  /* Absolute */
+  --sl-color-white: #ffffff;
+  --sl-color-black: #0a0a0a;
+}
+
+/* ── Dark mode ──────────────────────────────────────────── */
+:root[data-theme='dark'] {
+  /* Accent */
+  --sl-color-accent-low: #451a03;
+  --sl-color-accent: #f59e0b;
+  --sl-color-accent-high: #fcd34d;
+  --sl-color-text-accent: #f59e0b;
+
+  /* Surfaces */
+  --sl-color-bg: #111111;
+  --sl-color-bg-nav: #0f0f0f;
+  --sl-color-bg-sidebar: #0f0f0f;
+  --sl-color-bg-inline-code: #1a1a1a;
+
+  /* Text */
+  --sl-color-text: #e5e5e5;
+
+  /* Gray scale — dark (1 = light, 6 = dark) */
+  --sl-color-gray-1: #f5f5f5;
+  --sl-color-gray-2: #e5e5e5;
+  --sl-color-gray-3: #a3a3a3;
+  --sl-color-gray-4: #737373;
+  --sl-color-gray-5: #404040;
+  --sl-color-gray-6: #262626;
+  --sl-color-gray-7: #1a1a1a;
+
+  /* Borders */
+  --sl-color-hairline: #262626;
+  --sl-color-hairline-shade: #404040;
+
+  /* Absolute */
+  --sl-color-white: #f5f5f5;
+  --sl-color-black: #0a0a0a;
 }
