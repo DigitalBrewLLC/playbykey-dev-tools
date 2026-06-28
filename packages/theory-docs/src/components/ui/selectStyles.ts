@@ -11,6 +11,7 @@ export const labelStyle = {
 };
 
 export const selectStyle = {
+  margin: 0,
   padding: '0.375rem 0.5rem',
   borderRadius: '0.375rem',
   border: '1px solid var(--sl-color-gray-5)',
