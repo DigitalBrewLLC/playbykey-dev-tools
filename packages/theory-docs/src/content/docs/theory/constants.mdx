@@ -3,30 +3,21 @@ title: Constants
 description: All exported constants and their values from @playbykey/theory
 ---
 
-import ConstantDisplay from '../../../components/ConstantDisplay';
 import ModeExplorer from '../../../components/playgrounds/ModeExplorer';
-import {
-  ACCIDENTAL_IDS,
-  BLUES_SEMITONE_OFFSETS,
-  ENHARMONIC_LABELS,
-  FULL_SCALE_DEGREES,
-  INTERVAL_DEFINITIONS,
-  INTERVAL_IDS,
-  INTERVAL_ID_VALUES,
-  NOTATION_IDS,
-  NOTES,
-  PENTATONIC_DEGREES,
-  SCALE_DEFINITIONS,
-  SCALE_KIND_IDS,
-  SCALE_KIND_VALUES,
-} from '@playbykey/theory';
 
 Every constant below is imported from `@playbykey/theory` at build time — values always match the installed package.
 
 ## Notes
 
-<ConstantDisplay name="NOTES" type="readonly Note[]" value={NOTES} />
-<ConstantDisplay name="ENHARMONIC_LABELS" type="Record<string, string>" value={ENHARMONIC_LABELS} />
+The 12 chromatic notes in sharps-only order: `C`, `C#`, `D`, `D#`, `E`, `F`, `F#`, `G`, `G#`, `A`, `A#`, `B`. Use `ENHARMONIC_LABELS` to display flat equivalents.
+
+| Note | Display label |
+|------|---------------|
+| `C#` | Db/C# |
+| `D#` | Eb/D# |
+| `F#` | Gb/F# |
+| `G#` | Ab/G# |
+| `A#` | Bb/A# |
 
 ## Modes
 
@@ -36,20 +27,44 @@ Every constant below is imported from `@playbykey/theory` at build time — valu
 
 ## Intervals
 
-<ConstantDisplay name="INTERVAL_DEFINITIONS" type="Record<IntervalId, IntervalDefinition>" value={INTERVAL_DEFINITIONS} />
-<ConstantDisplay name="INTERVAL_IDS" type="Record<string, IntervalId>" value={INTERVAL_IDS} />
-<ConstantDisplay name="INTERVAL_ID_VALUES" type="readonly IntervalId[]" value={INTERVAL_ID_VALUES} />
+`INTERVAL_DEFINITIONS` maps each interval ID to a label and semitone count. Use `INTERVAL_IDS` to reference constants by name rather than bare strings.
+
+| ID | Label | Semitones |
+|----|-------|-----------|
+| `half_step` | Half step | 1 |
+| `whole_step` | Whole step | 2 |
+| `major_2nd` | Major 2nd | 2 |
+| `minor_3rd` | Minor 3rd | 3 |
+| `major_3rd` | Major 3rd | 4 |
+| `perfect_4th` | Perfect 4th | 5 |
+| `tritone` | Tritone | 6 |
+| `perfect_5th` | Perfect 5th | 7 |
+| `minor_6th` | Minor 6th | 8 |
+| `major_6th` | Major 6th | 9 |
+| `minor_7th` | Minor 7th | 10 |
+| `major_7th` | Major 7th | 11 |
+| `octave` | Octave | 12 |
 
 ## Scales
 
-<ConstantDisplay name="SCALE_DEFINITIONS" type="Record<ScaleKind, ScaleDefinition>" value={SCALE_DEFINITIONS} />
-<ConstantDisplay name="SCALE_KIND_IDS" type="Record<string, ScaleKind>" value={SCALE_KIND_IDS} />
-<ConstantDisplay name="SCALE_KIND_VALUES" type="readonly ScaleKind[]" value={SCALE_KIND_VALUES} />
-<ConstantDisplay name="BLUES_SEMITONE_OFFSETS" type="readonly number[]" value={BLUES_SEMITONE_OFFSETS} />
-<ConstantDisplay name="PENTATONIC_DEGREES" type="{ major: readonly number[]; minor: readonly number[] }" value={PENTATONIC_DEGREES} />
-<ConstantDisplay name="FULL_SCALE_DEGREES" type="readonly number[]" value={FULL_SCALE_DEGREES} />
+`SCALE_DEFINITIONS` maps each scale kind to a label and how its notes are computed. The numeric constants below are used by the derived scale functions.
+
+| Scale kind | Label | Notes |
+|------------|-------|-------|
+| `mode` | Mode scale | Computed by `getScaleNotes` |
+| `chromatic` | Chromatic scale | Offsets: 0–11 |
+| `pentatonic` | Pentatonic scale | Degrees 1, 2, 3, 5, 6 of the diatonic scale |
+| `blues` | Blues scale | Offsets: 0, 3, 5, 6, 7, 10 |
+| `harmonic-minor` | Harmonic minor scale | Aeolian with raised 7th |
+
+- `BLUES_SEMITONE_OFFSETS` — `[0, 3, 5, 6, 7, 10]`
+- `PENTATONIC_DEGREES` — `[1, 2, 3, 5, 6]`
+- `FULL_SCALE_DEGREES` — `[1, 2, 3, 4, 5, 6, 7]`
 
 ## Notation and display
 
-<ConstantDisplay name="NOTATION_IDS" type="Record<string, NotationType>" value={NOTATION_IDS} />
-<ConstantDisplay name="ACCIDENTAL_IDS" type="Record<string, AccidentalType>" value={ACCIDENTAL_IDS} />
+- `NOTATION_IDS.LETTER` → `'letter'`
+- `NOTATION_IDS.NUMBER` → `'number'`
+- `ACCIDENTAL_IDS.SHARP` → `'sharp'`
+- `ACCIDENTAL_IDS.FLAT` → `'flat'`
+- `ACCIDENTAL_IDS.BOTH` → `'both'`
