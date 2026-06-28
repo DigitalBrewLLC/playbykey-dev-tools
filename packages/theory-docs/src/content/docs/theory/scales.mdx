@@ -1,6 +1,19 @@
 ---
 title: Scales
 description: Compute blues scale, pentatonic, harmonic minor, and derived scale note sets in @playbykey/theory
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Scales — @playbykey/theory"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Compute blues scale, pentatonic, harmonic minor, and derived scale note sets in @playbykey/theory"
+  - tag: meta
+    attrs:
+      property: og:url
+      content: "https://theory-engine.docs.playbykey.com/theory/scales/"
 ---
 
 import ScalesPlayground from '../../../components/playgrounds/ScalesPlayground';
@@ -11,7 +24,7 @@ The scales module computes note sets for derived scale types — blues scale, pe
 
 <ScalesPlayground client:load />
 
-## Function Reference
+## Derived Scale Functions
 
 **Note arrays:** `getBluesNotes`, `getHarmonicMinorNotes`, and `getDerivedScaleNotes` return concrete note lists for a root (and scale kind where applicable).
 

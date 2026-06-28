@@ -1,7 +1,26 @@
 ﻿{
   "name": "@playbykey/theory",
   "version": "0.1.0",
-  "description": "Music theory engine for scales, modes, intervals, and key relationships.",
+  "description": "Zero-dependency TypeScript music theory engine for scales, modes, intervals, and key relationships.",
+  "keywords": [
+    "music-theory",
+    "typescript",
+    "scales",
+    "modes",
+    "intervals",
+    "key-signatures",
+    "diatonic",
+    "pentatonic",
+    "blues-scale",
+    "harmonic-minor",
+    "zero-dependencies",
+    "mcp"
+  ],
+  "homepage": "https://theory-engine.docs.playbykey.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DigitalBrewLLC/playbykey-dev-tools"
+  },
   "type": "module",
   "license": "MIT",
   "scripts": {

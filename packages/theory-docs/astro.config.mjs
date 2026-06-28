@@ -41,6 +41,12 @@ export default defineConfig({
             href: 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap',
           },
         },
+        { tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
+        {
+          tag: 'meta',
+          attrs: { property: 'og:site_name', content: '@playbykey/theory' },
+        },
+        { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary' } },
         {
           tag: 'script',
           attrs: { type: 'application/ld+json' },
