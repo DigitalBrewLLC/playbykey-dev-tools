@@ -2,6 +2,7 @@ export const fieldStyle = {
   display: 'flex',
   flexDirection: 'column' as const,
   gap: '0.25rem',
+  marginTop: 0,
 };
 
 export const labelStyle = {
