@@ -4,6 +4,7 @@ description: All exported constants and their values from @playbykey/theory
 ---
 
 import ConstantDisplay from '../../../components/ConstantDisplay';
+import ModeExplorer from '../../../components/playgrounds/ModeExplorer';
 import {
   ACCIDENTAL_IDS,
   BLUES_SEMITONE_OFFSETS,
@@ -12,11 +13,6 @@ import {
   INTERVAL_DEFINITIONS,
   INTERVAL_IDS,
   INTERVAL_ID_VALUES,
-  MODE_IDS,
-  MODE_INTERVALS,
-  MODE_NAMES,
-  MODE_SEMITONE_OFFSETS,
-  MODES,
   NOTATION_IDS,
   NOTES,
   PENTATONIC_DEGREES,
@@ -34,11 +30,9 @@ Every constant below is imported from `@playbykey/theory` at build time — valu
 
 ## Modes
 
-<ConstantDisplay name="MODES" type="readonly ModeInfo[]" value={MODES} />
-<ConstantDisplay name="MODE_IDS" type="Record<string, ModeName>" value={MODE_IDS} />
-<ConstantDisplay name="MODE_NAMES" type="readonly ModeName[]" value={MODE_NAMES} />
-<ConstantDisplay name="MODE_INTERVALS" type="Record<ModeName, readonly number[]>" value={MODE_INTERVALS} />
-<ConstantDisplay name="MODE_SEMITONE_OFFSETS" type="Record<ModeName, readonly number[]>" value={MODE_SEMITONE_OFFSETS} />
+`MODES` describes each of the 7 diatonic modes — name, scale degree, and character. `MODE_INTERVALS` and `MODE_SEMITONE_OFFSETS` give the step sizes and absolute offsets from the root. Select a root and mode below to see all of these values together with a live scale result.
+
+<ModeExplorer client:load />
 
 ## Intervals
 
