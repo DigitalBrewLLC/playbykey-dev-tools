@@ -33,13 +33,13 @@ const KEY_SIGNATURE_COUNT: Record<
  * Describes movement between consecutive scale degrees.
  */
 const MODE_INTERVALS: Record<ModeName, readonly number[]> = {
-  ionian: [2, 2, 1, 2, 2, 2, 1],
-  dorian: [2, 1, 2, 2, 2, 1, 2],
-  phrygian: [1, 2, 2, 2, 1, 2, 2],
-  lydian: [2, 2, 2, 1, 2, 2, 1],
-  mixolydian: [2, 2, 1, 2, 2, 1, 2],
-  aeolian: [2, 1, 2, 2, 1, 2, 2],
-  locrian: [1, 2, 2, 1, 2, 2, 2],
+  [Modes.Ionian]: [2, 2, 1, 2, 2, 2, 1],
+  [Modes.Dorian]: [2, 1, 2, 2, 2, 1, 2],
+  [Modes.Phrygian]: [1, 2, 2, 2, 1, 2, 2],
+  [Modes.Lydian]: [2, 2, 2, 1, 2, 2, 1],
+  [Modes.Mixolydian]: [2, 2, 1, 2, 2, 1, 2],
+  [Modes.Aeolian]: [2, 1, 2, 2, 1, 2, 2],
+  [Modes.Locrian]: [1, 2, 2, 1, 2, 2, 2],
 };
 
 /**
@@ -50,13 +50,13 @@ const MODE_INTERVALS: Record<ModeName, readonly number[]> = {
  * root +0, +2 (2nd), +4 (3rd), +5 (4th), +7 (5th), +9 (6th), +11 (7th).
  */
 const MODE_SEMITONE_OFFSETS: Record<ModeName, readonly number[]> = {
-  ionian: [0, 2, 4, 5, 7, 9, 11],
-  dorian: [0, 2, 3, 5, 7, 9, 10],
-  phrygian: [0, 1, 3, 5, 7, 8, 10],
-  lydian: [0, 2, 4, 6, 7, 9, 11],
-  mixolydian: [0, 2, 4, 5, 7, 9, 10],
-  aeolian: [0, 2, 3, 5, 7, 8, 10],
-  locrian: [0, 1, 3, 5, 6, 8, 10],
+  [Modes.Ionian]: [0, 2, 4, 5, 7, 9, 11],
+  [Modes.Dorian]: [0, 2, 3, 5, 7, 9, 10],
+  [Modes.Phrygian]: [0, 1, 3, 5, 7, 8, 10],
+  [Modes.Lydian]: [0, 2, 4, 6, 7, 9, 11],
+  [Modes.Mixolydian]: [0, 2, 4, 5, 7, 9, 10],
+  [Modes.Aeolian]: [0, 2, 3, 5, 7, 8, 10],
+  [Modes.Locrian]: [0, 1, 3, 5, 6, 8, 10],
 };
 
 /**
