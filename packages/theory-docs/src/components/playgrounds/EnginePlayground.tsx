@@ -15,8 +15,8 @@ import {
   isModeName,
   isNote,
   isNoteInScale,
-  noteAtIndex,
   Modes,
+  noteAtIndex,
   Notes,
   Notations,
 } from '@playbykey/theory';

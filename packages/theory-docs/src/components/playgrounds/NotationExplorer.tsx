@@ -6,8 +6,8 @@ import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
 
 const NOTATION_DESCRIPTIONS: Record<NotationType, string> = {
-  letter: 'In-scale and out-of-scale notes labeled by name',
-  number:
+  [Notations.Letter]: 'In-scale and out-of-scale notes labeled by name',
+  [Notations.Number]:
     'In-scale notes labeled by scale degree; out-of-scale notes as empty string',
 };
 

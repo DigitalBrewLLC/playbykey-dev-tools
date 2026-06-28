@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import {
   SCALE_DEFINITIONS,
   getDerivedScaleNotes,
+  Modes,
+  Notes,
   ScaleTypes,
 } from '@playbykey/theory';
 import type { ModeName, Note, ScaleType } from '@playbykey/theory';
@@ -52,8 +54,8 @@ const snippetCallStyle = {
 };
 
 const ScalesExplorer = () => {
-  const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
+  const [root, setRoot] = useState<Note>(Notes.C);
+  const [mode, setMode] = useState<ModeName>(Modes.Ionian);
   const [scaleType, setScaleType] = useState<ScaleType>(ScaleTypes.Mode);
 
   const modeIsRelevant =
