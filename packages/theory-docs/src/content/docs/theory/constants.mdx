@@ -4,67 +4,39 @@ description: All exported constants and their values from @playbykey/theory
 ---
 
 import ModeExplorer from '../../../components/playgrounds/ModeExplorer';
+import NotesExplorer from '../../../components/playgrounds/NotesExplorer';
+import IntervalExplorer from '../../../components/playgrounds/IntervalExplorer';
+import ScalesExplorer from '../../../components/playgrounds/ScalesExplorer';
+import NotationExplorer from '../../../components/playgrounds/NotationExplorer';
 
-Every constant below is imported from `@playbykey/theory` at build time — values always match the installed package.
+Every constant below is exported from `@playbykey/theory`. Select inputs to see live values and the exact function call.
 
 ## Notes
 
-The 12 chromatic notes in sharps-only order: `C`, `C#`, `D`, `D#`, `E`, `F`, `F#`, `G`, `G#`, `A`, `A#`, `B`. Use `ENHARMONIC_LABELS` to display flat equivalents.
+`NOTES` is the ordered list of all 12 chromatic notes. `ENHARMONIC_LABELS` maps each accidental note to its flat/sharp display string.
 
-| Note | Display label |
-|------|---------------|
-| `C#` | Db/C# |
-| `D#` | Eb/D# |
-| `F#` | Gb/F# |
-| `G#` | Ab/G# |
-| `A#` | Bb/A# |
+<NotesExplorer client:load />
 
 ## Modes
 
-`MODES` describes each of the 7 diatonic modes — name, scale degree, and character. `MODE_INTERVALS` and `MODE_SEMITONE_OFFSETS` give the step sizes and absolute offsets from the root. Select a root and mode below to see all of these values together with a live scale result.
+`MODES` describes each of the 7 diatonic modes — name, scale degree, and character. `MODE_INTERVALS` and `MODE_SEMITONE_OFFSETS` give the step sizes and absolute offsets from the root.
 
 <ModeExplorer client:load />
 
 ## Intervals
 
-`INTERVAL_DEFINITIONS` maps each interval ID to a label and semitone count. Use `INTERVAL_IDS` to reference constants by name rather than bare strings.
+`INTERVAL_DEFINITIONS` maps each interval ID to a label and semitone count. `resolveIntervalEndpoints` uses this data to find the actual notes that bound an interval in a given key and mode.
 
-| ID | Label | Semitones |
-|----|-------|-----------|
-| `half_step` | Half step | 1 |
-| `whole_step` | Whole step | 2 |
-| `major_2nd` | Major 2nd | 2 |
-| `minor_3rd` | Minor 3rd | 3 |
-| `major_3rd` | Major 3rd | 4 |
-| `perfect_4th` | Perfect 4th | 5 |
-| `tritone` | Tritone | 6 |
-| `perfect_5th` | Perfect 5th | 7 |
-| `minor_6th` | Minor 6th | 8 |
-| `major_6th` | Major 6th | 9 |
-| `minor_7th` | Minor 7th | 10 |
-| `major_7th` | Major 7th | 11 |
-| `octave` | Octave | 12 |
+<IntervalExplorer client:load />
 
 ## Scales
 
-`SCALE_DEFINITIONS` maps each scale kind to a label and how its notes are computed. The numeric constants below are used by the derived scale functions.
+`SCALE_DEFINITIONS` maps each scale kind to a label and how its notes are computed. `getDerivedScaleNotes` uses this to return the correct note set for any root and scale kind.
 
-| Scale kind | Label | Notes |
-|------------|-------|-------|
-| `mode` | Mode scale | Computed by `getScaleNotes` |
-| `chromatic` | Chromatic scale | Offsets: 0–11 |
-| `pentatonic` | Pentatonic scale | Degrees 1, 2, 3, 5, 6 of the diatonic scale |
-| `blues` | Blues scale | Offsets: 0, 3, 5, 6, 7, 10 |
-| `harmonic-minor` | Harmonic minor scale | Aeolian with raised 7th |
-
-- `BLUES_SEMITONE_OFFSETS` — `[0, 3, 5, 6, 7, 10]`
-- `PENTATONIC_DEGREES` — `[1, 2, 3, 5, 6]`
-- `FULL_SCALE_DEGREES` — `[1, 2, 3, 4, 5, 6, 7]`
+<ScalesExplorer client:load />
 
 ## Notation and display
 
-- `NOTATION_IDS.LETTER` → `'letter'`
-- `NOTATION_IDS.NUMBER` → `'number'`
-- `ACCIDENTAL_IDS.SHARP` → `'sharp'`
-- `ACCIDENTAL_IDS.FLAT` → `'flat'`
-- `ACCIDENTAL_IDS.BOTH` → `'both'`
+`NOTATION_IDS` controls how `buildNoteMap` labels each note — by name or by scale degree. Switch notation types to see how the same root and mode produce different labels.
+
+<NotationExplorer client:load />
