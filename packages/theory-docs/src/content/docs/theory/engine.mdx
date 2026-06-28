@@ -13,10 +13,10 @@ The engine module covers scales, modes, key relationships, and note utilities. U
 
 ## Function Reference
 
-**Scale and mode:** `getScaleNotes`, `getParentScaleModes`, `getModeAlterations`, and `getModalRoot` derive notes and relationships from a root and mode.
+**Scale and mode:** `getScaleNotes`, `getParentScaleModes`, `getModeAlterations`, and `getModalRoot` compute the note set, degree alterations, and modal rotations for any root and mode combination.
 
-**Key relationships:** `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, and `getCircleOfFifthsOrder` answer common key-signature questions.
+**Key relationships:** `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, and `getCircleOfFifthsOrder` find relative keys, sharp and flat counts, and traverse all 12 keys in fifth order.
 
-**Note utilities:** `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`, and `buildNoteMap` work with individual notes and chromatic indices.
+**Note utilities:** `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`, and `buildNoteMap` look up scale degrees, check note membership, convert between note names and chromatic indices, and compute semitone distances.
 
-**Type guards:** `isNote` and `isModeName` validate string inputs at runtime.
+**Type guards:** `isNote`, `isModeName`, `parseNote`, and `parseModeName` narrow untrusted strings - URL params, user input, or external data - to typed `Note` or `ModeName` values before passing them to engine functions.

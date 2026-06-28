@@ -3,10 +3,20 @@ import starlight from '@astrojs/starlight';
 import react from '@astrojs/react';
 
 export default defineConfig({
+  site: 'https://theory-engine.docs.playbykey.com',
   integrations: [
     starlight({
       title: 'Theory Engine',
       description: 'API reference and playground for @playbykey/theory',
+      titleDelimiter: '-',
+      favicon: '/favicon.svg',
+      social: [
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/DigitalBrewLLC/playbykey-dev-tools',
+        },
+      ],
       head: [
         {
           tag: 'link',
