@@ -1,5 +1,5 @@
 import { Intervals } from './constants';
-import { getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
+import { elementAt, getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
 import type { ModeName, Note, IntervalId } from './types';
 
 interface IntervalContext {
@@ -91,12 +91,7 @@ const noteAtDegree = (root: Note, mode: ModeName, degree: number): Note => {
   if (degree === 8) {
     return root;
   }
-  const notes = getScaleNotes(root, mode);
-  const note = notes[degree - 1];
-  if (note === undefined) {
-    throw new Error(`Invalid scale degree ${degree} for ${root} ${mode}`);
-  }
-  return note;
+  return elementAt(getScaleNotes(root, mode), degree - 1);
 };
 
 const resolveEndpointsFromSpec = (
