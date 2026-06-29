@@ -7,7 +7,13 @@
  */
 
 import type { Note, ModeName, NotationType, NoteDisplayInfo } from './types';
-import { Modes, CHROMATIC_NOTES, MODES, ModeInfoById } from './constants';
+import {
+  Accidentals,
+  Modes,
+  CHROMATIC_NOTES,
+  MODES,
+  ModeInfoById,
+} from './constants';
 
 const KEY_SIGNATURE_COUNT: Record<
   Note,
@@ -207,13 +213,13 @@ const getModeAlterations = (
   const ionianOffsets = MODE_SEMITONE_OFFSETS[Modes.Ionian];
   const modeOffsets = MODE_SEMITONE_OFFSETS[mode];
   const result: Partial<Record<number, 'flat' | 'sharp'>> = {};
-  for (let i = 0; i < 7; i++) {
-    const ionian = elementAt(ionianOffsets, i);
-    const current = elementAt(modeOffsets, i);
+  for (let degreeIndex = 0; degreeIndex < 7; degreeIndex++) {
+    const ionian = elementAt(ionianOffsets, degreeIndex);
+    const current = elementAt(modeOffsets, degreeIndex);
     if (current < ionian) {
-      result[i + 1] = 'flat';
+      result[degreeIndex + 1] = Accidentals.Flat;
     } else if (current > ionian) {
-      result[i + 1] = 'sharp';
+      result[degreeIndex + 1] = Accidentals.Sharp;
     }
   }
   return result;
