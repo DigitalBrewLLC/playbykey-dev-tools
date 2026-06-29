@@ -99,8 +99,8 @@ const NotationExplorer = () => {
             value={notation}
             onChange={(e) => setNotation(e.target.value as NotationType)}
           >
-            <option value="letter">Letter</option>
-            <option value="number">Number</option>
+            <option value={Notations.Letter}>Letter</option>
+            <option value={Notations.Number}>Number</option>
           </select>
         </label>
       </div>
