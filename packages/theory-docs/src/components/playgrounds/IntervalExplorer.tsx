@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import {
   INTERVAL_DEFINITIONS,
+  Intervals,
+  Modes,
+  Notes,
   resolveIntervalEndpoints,
 } from '@playbykey/theory';
 import type { IntervalId, ModeName, Note } from '@playbykey/theory';
@@ -56,9 +59,9 @@ const snippetCallStyle = {
 };
 
 const IntervalExplorer = () => {
-  const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
-  const [interval, setInterval] = useState<IntervalId>('perfect_5th');
+  const [root, setRoot] = useState<Note>(Notes.C);
+  const [mode, setMode] = useState<ModeName>(Modes.Ionian);
+  const [interval, setInterval] = useState<IntervalId>(Intervals.Perfect5th);
 
   const definition = useMemo(() => INTERVAL_DEFINITIONS[interval], [interval]);
   const resolved = useMemo(

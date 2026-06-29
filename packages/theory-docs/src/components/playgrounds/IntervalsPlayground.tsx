@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import {
   getIntervalSemitones,
+  Intervals,
+  Modes,
+  Notes,
   resolveIntervalEndpoints,
 } from '@playbykey/theory';
 import type { IntervalId, ModeName, Note } from '@playbykey/theory';
@@ -16,12 +19,14 @@ const containerStyle = {
 };
 
 const IntervalsPlayground = () => {
-  const [semitonesInterval, setSemitonesInterval] =
-    useState<IntervalId>('perfect_5th');
-  const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
-  const [resolveInterval, setResolveInterval] =
-    useState<IntervalId>('major_3rd');
+  const [semitonesInterval, setSemitonesInterval] = useState<IntervalId>(
+    Intervals.Perfect5th
+  );
+  const [root, setRoot] = useState<Note>(Notes.C);
+  const [mode, setMode] = useState<ModeName>(Modes.Ionian);
+  const [resolveInterval, setResolveInterval] = useState<IntervalId>(
+    Intervals.Major3rd
+  );
 
   const semitonesResult = useMemo(
     () => getIntervalSemitones(semitonesInterval),

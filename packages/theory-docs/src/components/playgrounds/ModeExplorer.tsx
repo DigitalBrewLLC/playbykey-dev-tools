@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react';
 import {
   getModeAlterations,
   getScaleNotes,
-  MODES,
+  ModeInfoById,
+  Modes,
   MODE_INTERVALS,
   MODE_SEMITONE_OFFSETS,
+  Notes,
 } from '@playbykey/theory';
 import type { ModeName, Note } from '@playbykey/theory';
 import { ModeSelect } from '../ui/ModeSelect';
@@ -84,11 +86,10 @@ const snippetCallStyle = {
 };
 
 const ModeExplorer = () => {
-  const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
+  const [root, setRoot] = useState<Note>(Notes.C);
+  const [mode, setMode] = useState<ModeName>(Modes.Ionian);
 
-  // MODES contains all 7 modes; find with a valid ModeName is always defined
-  const modeInfo = useMemo(() => MODES.find((m) => m.id === mode)!, [mode]);
+  const modeInfo = useMemo(() => ModeInfoById[mode], [mode]);
   const intervals = useMemo(() => MODE_INTERVALS[mode], [mode]);
   const offsets = useMemo(() => MODE_SEMITONE_OFFSETS[mode], [mode]);
   const alterations = useMemo(() => getModeAlterations(mode), [mode]);
@@ -117,7 +118,7 @@ const ModeExplorer = () => {
         <span style={dataValueStyle}>{formatArray(offsets)}</span>
       </div>
 
-      <ResultPanel label="Alterations from Ionian" value={alterations} />
+      <ResultPanel label="Accidentals from Ionian" value={alterations} />
 
       <p style={snippetStyle}>
         <code
