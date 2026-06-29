@@ -16,6 +16,9 @@ import {
   isNote,
   isNoteInScale,
   noteAtIndex,
+  Modes,
+  Notes,
+  Notations,
 } from '@playbykey/theory';
 import type { ModeName, Note, NotationType } from '@playbykey/theory';
 import { ModeSelect } from '../ui/ModeSelect';
@@ -275,17 +278,14 @@ const computeResult = (
 const EnginePlayground = () => {
   const [functionId, setFunctionId] =
     useState<EngineFunctionId>('getScaleNotes');
-  const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
-  const [targetNote, setTargetNote] = useState<Note>('E');
-  const [fromNote, setFromNote] = useState<Note>('C');
-  const [toNote, setToNote] = useState<Note>('E');
+  const [root, setRoot] = useState<Note>(Notes.C);
+  const [mode, setMode] = useState<ModeName>(Modes.Ionian);
+  const [targetNote, setTargetNote] = useState<Note>(Notes.E);
+  const [fromNote, setFromNote] = useState<Note>(Notes.C);
+  const [toNote, setToNote] = useState<Note>(Notes.E);
   const [index, setIndex] = useState(6);
-  const [notation, setNotation] = useState<NotationType>('letter');
+  const [notation, setNotation] = useState<NotationType>(Notations.Letter);
   const [guardInput, setGuardInput] = useState('C');
-
-  const selected =
-    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
 
   const result = useMemo(
     () =>
@@ -312,6 +312,11 @@ const EnginePlayground = () => {
       guardInput,
     ]
   );
+
+  const selected =
+    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
+
+  if (selected === undefined) return null;
 
   return (
     <div style={containerStyle}>
@@ -378,8 +383,8 @@ const EnginePlayground = () => {
                 setNotation(event.target.value as NotationType)
               }
             >
-              <option value="letter">Letter</option>
-              <option value="number">Number</option>
+              <option value={Notations.Letter}>Letter</option>
+              <option value={Notations.Number}>Number</option>
             </select>
           </label>
         )}

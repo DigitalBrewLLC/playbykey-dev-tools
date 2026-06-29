@@ -7,7 +7,31 @@
  */
 
 import type { Note, ModeName, NotationType, NoteDisplayInfo } from './types';
-import { MODE_NAMES, NOTES, MODES } from './constants';
+import {
+  Accidentals,
+  Modes,
+  CHROMATIC_NOTES,
+  MODES,
+  ModeInfoById,
+} from './constants';
+
+const KEY_SIGNATURE_COUNT: Record<
+  Note,
+  { sharps: number } | { flats: number }
+> = {
+  C: { sharps: 0 },
+  G: { sharps: 1 },
+  D: { sharps: 2 },
+  A: { sharps: 3 },
+  E: { sharps: 4 },
+  B: { sharps: 5 },
+  'F#': { sharps: 6 },
+  'C#': { flats: 5 },
+  'G#': { flats: 4 },
+  'D#': { flats: 3 },
+  'A#': { flats: 2 },
+  F: { flats: 1 },
+};
 
 /**
  * Interval patterns (in semitones) for each mode of the major scale.
@@ -15,13 +39,13 @@ import { MODE_NAMES, NOTES, MODES } from './constants';
  * Describes movement between consecutive scale degrees.
  */
 const MODE_INTERVALS: Record<ModeName, readonly number[]> = {
-  ionian: [2, 2, 1, 2, 2, 2, 1],
-  dorian: [2, 1, 2, 2, 2, 1, 2],
-  phrygian: [1, 2, 2, 2, 1, 2, 2],
-  lydian: [2, 2, 2, 1, 2, 2, 1],
-  mixolydian: [2, 2, 1, 2, 2, 1, 2],
-  aeolian: [2, 1, 2, 2, 1, 2, 2],
-  locrian: [1, 2, 2, 1, 2, 2, 2],
+  [Modes.Ionian]: [2, 2, 1, 2, 2, 2, 1],
+  [Modes.Dorian]: [2, 1, 2, 2, 2, 1, 2],
+  [Modes.Phrygian]: [1, 2, 2, 2, 1, 2, 2],
+  [Modes.Lydian]: [2, 2, 2, 1, 2, 2, 1],
+  [Modes.Mixolydian]: [2, 2, 1, 2, 2, 1, 2],
+  [Modes.Aeolian]: [2, 1, 2, 2, 1, 2, 2],
+  [Modes.Locrian]: [1, 2, 2, 1, 2, 2, 2],
 };
 
 /**
@@ -32,13 +56,13 @@ const MODE_INTERVALS: Record<ModeName, readonly number[]> = {
  * root +0, +2 (2nd), +4 (3rd), +5 (4th), +7 (5th), +9 (6th), +11 (7th).
  */
 const MODE_SEMITONE_OFFSETS: Record<ModeName, readonly number[]> = {
-  ionian: [0, 2, 4, 5, 7, 9, 11],
-  dorian: [0, 2, 3, 5, 7, 9, 10],
-  phrygian: [0, 1, 3, 5, 7, 8, 10],
-  lydian: [0, 2, 4, 6, 7, 9, 11],
-  mixolydian: [0, 2, 4, 5, 7, 9, 10],
-  aeolian: [0, 2, 3, 5, 7, 8, 10],
-  locrian: [0, 1, 3, 5, 6, 8, 10],
+  [Modes.Ionian]: [0, 2, 4, 5, 7, 9, 11],
+  [Modes.Dorian]: [0, 2, 3, 5, 7, 9, 10],
+  [Modes.Phrygian]: [0, 1, 3, 5, 7, 8, 10],
+  [Modes.Lydian]: [0, 2, 4, 6, 7, 9, 11],
+  [Modes.Mixolydian]: [0, 2, 4, 5, 7, 9, 10],
+  [Modes.Aeolian]: [0, 2, 3, 5, 7, 8, 10],
+  [Modes.Locrian]: [0, 1, 3, 5, 6, 8, 10],
 };
 
 /**
@@ -54,19 +78,31 @@ const elementAt = <T>(array: readonly T[], index: number): T => {
   return value;
 };
 
+/** Pre-computed sets for O(1) type-guard lookups. */
+const NOTE_SET = new Set<string>(CHROMATIC_NOTES);
+const MODE_NAME_SET = new Set<string>(Object.values(Modes));
+
 /**
- * Returns the chromatic index (0-11) of a note within the NOTES array.
+ * Returns the chromatic index (0-11) of a note within the chromatic scale.
  * C = 0, C# = 1, D = 2, ... B = 11.
+ * Throws RangeError if the value is not a recognised note at runtime.
  */
 const getNoteIndex = (note: Note): number => {
-  return NOTES.indexOf(note);
+  const index = CHROMATIC_NOTES.indexOf(note);
+  if (index === -1) {
+    throw new RangeError(`"${note}" is not a valid note`);
+  }
+  return index;
 };
 
 /**
- * Returns the note at a given chromatic index, wrapping around at 12.
+ * Returns the pitch class at a given chromatic index.
+ * Pitches repeat every 12 semitones (one octave), so any index outside 0–11
+ * resolves to its enharmonic equivalent: 12 → C, 13 → C#, -1 → B.
+ * The double modulo handles negative indices correctly across JS runtimes.
  */
 const noteAtIndex = (index: number): Note => {
-  return elementAt(NOTES, ((index % 12) + 12) % 12);
+  return elementAt(CHROMATIC_NOTES, ((index % 12) + 12) % 12);
 };
 
 /**
@@ -146,14 +182,20 @@ const buildNoteMap = (
   mode: ModeName,
   notation: NotationType
 ): NoteDisplayInfo[] => {
-  return NOTES.map((note) => {
-    const scaleDegree = getScaleDegree(root, mode, note);
-
+  const scaleNotes = getScaleNotes(root, mode);
+  return CHROMATIC_NOTES.map((note) => {
+    const index = scaleNotes.indexOf(note);
+    const scaleDegree = index === -1 ? null : index + 1;
     return {
       note,
       inScale: scaleDegree !== null,
       scaleDegree,
-      label: getNoteLabel(note, root, mode, notation),
+      label:
+        notation === 'letter'
+          ? note
+          : scaleDegree !== null
+            ? String(scaleDegree)
+            : '',
       isRoot: note === root,
     };
   });
@@ -168,20 +210,16 @@ const buildNoteMap = (
 const getModeAlterations = (
   mode: ModeName
 ): Partial<Record<number, 'flat' | 'sharp'>> => {
-  const ionianOffsets = MODE_SEMITONE_OFFSETS['ionian'];
+  const ionianOffsets = MODE_SEMITONE_OFFSETS[Modes.Ionian];
   const modeOffsets = MODE_SEMITONE_OFFSETS[mode];
   const result: Partial<Record<number, 'flat' | 'sharp'>> = {};
-  for (let i = 0; i < 7; i++) {
-    const ionian = ionianOffsets[i];
-    const current = modeOffsets[i];
-    if (current !== undefined && ionian !== undefined && current < ionian) {
-      result[i + 1] = 'flat';
-    } else if (
-      current !== undefined &&
-      ionian !== undefined &&
-      current > ionian
-    ) {
-      result[i + 1] = 'sharp';
+  for (let degreeIndex = 0; degreeIndex < 7; degreeIndex++) {
+    const ionian = elementAt(ionianOffsets, degreeIndex);
+    const current = elementAt(modeOffsets, degreeIndex);
+    if (current < ionian) {
+      result[degreeIndex + 1] = Accidentals.Flat;
+    } else if (current > ionian) {
+      result[degreeIndex + 1] = Accidentals.Sharp;
     }
   }
   return result;
@@ -198,17 +236,16 @@ const getParentScaleModes = (
   key: Note,
   mode: ModeName
 ): Array<{ root: Note; mode: ModeName }> => {
-  const modeInfo = MODES.find((m) => m.id === mode);
-  const scaleDegree = modeInfo !== undefined ? modeInfo.scaleDegree : 1;
+  const modeInfo = ModeInfoById[mode];
   const parentRootIndex =
     (getNoteIndex(key) -
-      elementAt(MODE_SEMITONE_OFFSETS['ionian'], scaleDegree - 1) +
+      elementAt(MODE_SEMITONE_OFFSETS[Modes.Ionian], modeInfo.scaleDegree - 1) +
       12) %
     12;
   const parentRoot = noteAtIndex(parentRootIndex);
-  const parentScaleNotes = getScaleNotes(parentRoot, 'ionian');
+  const parentScaleNotes = getScaleNotes(parentRoot, Modes.Ionian);
   return MODES.map((m, i) => ({
-    root: parentScaleNotes[i] as Note,
+    root: elementAt(parentScaleNotes, i),
     mode: m.id,
   }));
 };
@@ -223,10 +260,9 @@ const getParentScaleModes = (
  * Example: getModalRoot('C', 'ionian')   => 'C'  (1st degree, unchanged)
  */
 const getModalRoot = (parentKey: Note, mode: ModeName): Note => {
-  const modeInfo = MODES.find((m) => m.id === mode);
-  const scaleDegree = modeInfo !== undefined ? modeInfo.scaleDegree : 1;
-  const parentNotes = getScaleNotes(parentKey, 'ionian');
-  return parentNotes[scaleDegree - 1] as Note;
+  const modeInfo = ModeInfoById[mode];
+  const parentNotes = getScaleNotes(parentKey, Modes.Ionian);
+  return elementAt(parentNotes, modeInfo.scaleDegree - 1);
 };
 
 /**
@@ -272,29 +308,12 @@ const getCircleOfFifthsOrder = (): readonly Note[] => {
  */
 const getKeySignatureCount = (
   key: Note
-): { sharps: number } | { flats: number } => {
-  const lookup: Record<Note, { sharps: number } | { flats: number }> = {
-    C: { sharps: 0 },
-    G: { sharps: 1 },
-    D: { sharps: 2 },
-    A: { sharps: 3 },
-    E: { sharps: 4 },
-    B: { sharps: 5 },
-    'F#': { sharps: 6 },
-    'C#': { flats: 5 },
-    'G#': { flats: 4 },
-    'D#': { flats: 3 },
-    'A#': { flats: 2 },
-    F: { flats: 1 },
-  };
-  return lookup[key];
-};
+): { sharps: number } | { flats: number } => KEY_SIGNATURE_COUNT[key];
 
-const isNote = (value: string): value is Note =>
-  (NOTES as readonly string[]).includes(value);
+const isNote = (value: string): value is Note => NOTE_SET.has(value);
 
 const isModeName = (value: string): value is ModeName =>
-  (MODE_NAMES as readonly string[]).includes(value);
+  MODE_NAME_SET.has(value);
 
 /** First token before a space or comma (e.g. "C ionian" -> "C"). */
 const firstToken = (value: string): string => {
@@ -321,6 +340,7 @@ const parseModeName = (value: string): ModeName | null => {
 };
 
 export {
+  elementAt,
   MODE_INTERVALS,
   MODE_SEMITONE_OFFSETS,
   getNoteIndex,

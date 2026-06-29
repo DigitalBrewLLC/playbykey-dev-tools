@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getScaleDegree, MODE_IDS } from '../src';
+import { getScaleDegree, Modes } from '../src';
 import type { Note, ModeName } from '../src';
 
 // Strategy:
@@ -112,53 +112,53 @@ const IONIAN_DEGREES: Array<{ root: Note; note: Note; degree: number }> = [
 // All 7 modes from C — every in-scale note mapped to its degree (49 cases)
 // Ionian is intentionally excluded: it is already fully exercised in IONIAN_DEGREES above.
 const C_MODE_DEGREES: Array<{ mode: ModeName; note: Note; degree: number }> = [
-  { mode: MODE_IDS.DORIAN, note: 'C', degree: 1 },
-  { mode: MODE_IDS.DORIAN, note: 'D', degree: 2 },
-  { mode: MODE_IDS.DORIAN, note: 'D#', degree: 3 },
-  { mode: MODE_IDS.DORIAN, note: 'F', degree: 4 },
-  { mode: MODE_IDS.DORIAN, note: 'G', degree: 5 },
-  { mode: MODE_IDS.DORIAN, note: 'A', degree: 6 },
-  { mode: MODE_IDS.DORIAN, note: 'A#', degree: 7 },
+  { mode: Modes.Dorian, note: 'C', degree: 1 },
+  { mode: Modes.Dorian, note: 'D', degree: 2 },
+  { mode: Modes.Dorian, note: 'D#', degree: 3 },
+  { mode: Modes.Dorian, note: 'F', degree: 4 },
+  { mode: Modes.Dorian, note: 'G', degree: 5 },
+  { mode: Modes.Dorian, note: 'A', degree: 6 },
+  { mode: Modes.Dorian, note: 'A#', degree: 7 },
 
-  { mode: MODE_IDS.PHRYGIAN, note: 'C', degree: 1 },
-  { mode: MODE_IDS.PHRYGIAN, note: 'C#', degree: 2 },
-  { mode: MODE_IDS.PHRYGIAN, note: 'D#', degree: 3 },
-  { mode: MODE_IDS.PHRYGIAN, note: 'F', degree: 4 },
-  { mode: MODE_IDS.PHRYGIAN, note: 'G', degree: 5 },
-  { mode: MODE_IDS.PHRYGIAN, note: 'G#', degree: 6 },
-  { mode: MODE_IDS.PHRYGIAN, note: 'A#', degree: 7 },
+  { mode: Modes.Phrygian, note: 'C', degree: 1 },
+  { mode: Modes.Phrygian, note: 'C#', degree: 2 },
+  { mode: Modes.Phrygian, note: 'D#', degree: 3 },
+  { mode: Modes.Phrygian, note: 'F', degree: 4 },
+  { mode: Modes.Phrygian, note: 'G', degree: 5 },
+  { mode: Modes.Phrygian, note: 'G#', degree: 6 },
+  { mode: Modes.Phrygian, note: 'A#', degree: 7 },
 
-  { mode: MODE_IDS.LYDIAN, note: 'C', degree: 1 },
-  { mode: MODE_IDS.LYDIAN, note: 'D', degree: 2 },
-  { mode: MODE_IDS.LYDIAN, note: 'E', degree: 3 },
-  { mode: MODE_IDS.LYDIAN, note: 'F#', degree: 4 },
-  { mode: MODE_IDS.LYDIAN, note: 'G', degree: 5 },
-  { mode: MODE_IDS.LYDIAN, note: 'A', degree: 6 },
-  { mode: MODE_IDS.LYDIAN, note: 'B', degree: 7 },
+  { mode: Modes.Lydian, note: 'C', degree: 1 },
+  { mode: Modes.Lydian, note: 'D', degree: 2 },
+  { mode: Modes.Lydian, note: 'E', degree: 3 },
+  { mode: Modes.Lydian, note: 'F#', degree: 4 },
+  { mode: Modes.Lydian, note: 'G', degree: 5 },
+  { mode: Modes.Lydian, note: 'A', degree: 6 },
+  { mode: Modes.Lydian, note: 'B', degree: 7 },
 
-  { mode: MODE_IDS.MIXOLYDIAN, note: 'C', degree: 1 },
-  { mode: MODE_IDS.MIXOLYDIAN, note: 'D', degree: 2 },
-  { mode: MODE_IDS.MIXOLYDIAN, note: 'E', degree: 3 },
-  { mode: MODE_IDS.MIXOLYDIAN, note: 'F', degree: 4 },
-  { mode: MODE_IDS.MIXOLYDIAN, note: 'G', degree: 5 },
-  { mode: MODE_IDS.MIXOLYDIAN, note: 'A', degree: 6 },
-  { mode: MODE_IDS.MIXOLYDIAN, note: 'A#', degree: 7 },
+  { mode: Modes.Mixolydian, note: 'C', degree: 1 },
+  { mode: Modes.Mixolydian, note: 'D', degree: 2 },
+  { mode: Modes.Mixolydian, note: 'E', degree: 3 },
+  { mode: Modes.Mixolydian, note: 'F', degree: 4 },
+  { mode: Modes.Mixolydian, note: 'G', degree: 5 },
+  { mode: Modes.Mixolydian, note: 'A', degree: 6 },
+  { mode: Modes.Mixolydian, note: 'A#', degree: 7 },
 
-  { mode: MODE_IDS.AEOLIAN, note: 'C', degree: 1 },
-  { mode: MODE_IDS.AEOLIAN, note: 'D', degree: 2 },
-  { mode: MODE_IDS.AEOLIAN, note: 'D#', degree: 3 },
-  { mode: MODE_IDS.AEOLIAN, note: 'F', degree: 4 },
-  { mode: MODE_IDS.AEOLIAN, note: 'G', degree: 5 },
-  { mode: MODE_IDS.AEOLIAN, note: 'G#', degree: 6 },
-  { mode: MODE_IDS.AEOLIAN, note: 'A#', degree: 7 },
+  { mode: Modes.Aeolian, note: 'C', degree: 1 },
+  { mode: Modes.Aeolian, note: 'D', degree: 2 },
+  { mode: Modes.Aeolian, note: 'D#', degree: 3 },
+  { mode: Modes.Aeolian, note: 'F', degree: 4 },
+  { mode: Modes.Aeolian, note: 'G', degree: 5 },
+  { mode: Modes.Aeolian, note: 'G#', degree: 6 },
+  { mode: Modes.Aeolian, note: 'A#', degree: 7 },
 
-  { mode: MODE_IDS.LOCRIAN, note: 'C', degree: 1 },
-  { mode: MODE_IDS.LOCRIAN, note: 'C#', degree: 2 },
-  { mode: MODE_IDS.LOCRIAN, note: 'D#', degree: 3 },
-  { mode: MODE_IDS.LOCRIAN, note: 'F', degree: 4 },
-  { mode: MODE_IDS.LOCRIAN, note: 'F#', degree: 5 },
-  { mode: MODE_IDS.LOCRIAN, note: 'G#', degree: 6 },
-  { mode: MODE_IDS.LOCRIAN, note: 'A#', degree: 7 },
+  { mode: Modes.Locrian, note: 'C', degree: 1 },
+  { mode: Modes.Locrian, note: 'C#', degree: 2 },
+  { mode: Modes.Locrian, note: 'D#', degree: 3 },
+  { mode: Modes.Locrian, note: 'F', degree: 4 },
+  { mode: Modes.Locrian, note: 'F#', degree: 5 },
+  { mode: Modes.Locrian, note: 'G#', degree: 6 },
+  { mode: Modes.Locrian, note: 'A#', degree: 7 },
 ];
 
 // The 5 chromatic notes absent from C ionian (W W H W W W H pattern leaves these out)
@@ -169,7 +169,7 @@ describe('getScaleDegree', () => {
     it.each(IONIAN_DEGREES)(
       '$root ionian: $note → degree $degree',
       ({ root, note, degree }) => {
-        expect(getScaleDegree(root, MODE_IDS.IONIAN, note)).toBe(degree);
+        expect(getScaleDegree(root, Modes.Ionian, note)).toBe(degree);
       }
     );
   });
@@ -187,7 +187,7 @@ describe('getScaleDegree', () => {
     it.each(C_IONIAN_OUT_OF_SCALE.map((n) => ({ note: n })))(
       '$note is not in C ionian → null',
       ({ note }) => {
-        expect(getScaleDegree('C', MODE_IDS.IONIAN, note)).toBeNull();
+        expect(getScaleDegree('C', Modes.Ionian, note)).toBeNull();
       }
     );
   });

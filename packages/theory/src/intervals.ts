@@ -1,5 +1,5 @@
-import { INTERVAL_IDS, INTERVAL_ID_VALUES } from './constants';
-import { getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
+import { Intervals } from './constants';
+import { elementAt, getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
 import type { ModeName, Note, IntervalId } from './types';
 
 interface IntervalContext {
@@ -28,73 +28,70 @@ interface ResolvedInterval {
 }
 
 const INTERVAL_DEFINITIONS: Record<IntervalId, IntervalDefinition> = {
-  [INTERVAL_IDS.HALF_STEP]: {
+  [Intervals.HalfStep]: {
     label: 'Half step',
     intervalSpec: { fromDegree: 3, toDegree: 4, semitones: 1 },
   },
-  [INTERVAL_IDS.WHOLE_STEP]: {
+  [Intervals.WholeStep]: {
     label: 'Whole step',
     intervalSpec: { fromDegree: 2, toDegree: 3, semitones: 2 },
   },
-  [INTERVAL_IDS.MAJOR_2ND]: {
+  [Intervals.Major2nd]: {
     label: 'Major 2nd',
     intervalSpec: { fromDegree: 1, toDegree: 2, semitones: 2 },
   },
-  [INTERVAL_IDS.MINOR_3RD]: {
+  [Intervals.Minor3rd]: {
     label: 'Minor 3rd',
     intervalSpec: { fromDegree: 3, toDegree: 5, semitones: 3 },
   },
-  [INTERVAL_IDS.MAJOR_3RD]: {
+  [Intervals.Major3rd]: {
     label: 'Major 3rd',
     intervalSpec: { fromDegree: 1, toDegree: 3, semitones: 4 },
   },
-  [INTERVAL_IDS.PERFECT_4TH]: {
+  [Intervals.Perfect4th]: {
     label: 'Perfect 4th',
     intervalSpec: { fromDegree: 1, toDegree: 4, semitones: 5 },
   },
-  [INTERVAL_IDS.TRITONE]: {
+  [Intervals.Tritone]: {
     label: 'Tritone',
     intervalSpec: { fromDegree: 4, toDegree: 7, semitones: 6 },
   },
-  [INTERVAL_IDS.PERFECT_5TH]: {
+  [Intervals.Perfect5th]: {
     label: 'Perfect 5th',
     intervalSpec: { fromDegree: 1, toDegree: 5, semitones: 7 },
   },
-  [INTERVAL_IDS.MINOR_6TH]: {
+  [Intervals.Minor6th]: {
     label: 'Minor 6th',
     intervalSpec: { fromDegree: 3, toDegree: 8, semitones: 8 },
   },
-  [INTERVAL_IDS.MAJOR_6TH]: {
+  [Intervals.Major6th]: {
     label: 'Major 6th',
     intervalSpec: { fromDegree: 1, toDegree: 6, semitones: 9 },
   },
-  [INTERVAL_IDS.MINOR_7TH]: {
+  [Intervals.Minor7th]: {
     label: 'Minor 7th',
     intervalSpec: { fromDegree: 1, semitones: 10, chromaticTo: true },
   },
-  [INTERVAL_IDS.MAJOR_7TH]: {
+  [Intervals.Major7th]: {
     label: 'Major 7th',
     intervalSpec: { fromDegree: 1, toDegree: 7, semitones: 11 },
   },
-  [INTERVAL_IDS.OCTAVE]: {
+  [Intervals.Octave]: {
     label: 'Octave',
     intervalSpec: { fromDegree: 1, toDegree: 8, semitones: 12 },
   },
 };
 
+const INTERVAL_VALUE_SET = new Set<string>(Object.values(Intervals));
+
 const isIntervalId = (value: string): value is IntervalId =>
-  (INTERVAL_ID_VALUES as readonly string[]).includes(value);
+  INTERVAL_VALUE_SET.has(value);
 
 const noteAtDegree = (root: Note, mode: ModeName, degree: number): Note => {
   if (degree === 8) {
     return root;
   }
-  const notes = getScaleNotes(root, mode);
-  const note = notes[degree - 1];
-  if (note === undefined) {
-    throw new Error(`Invalid scale degree ${degree} for ${root} ${mode}`);
-  }
-  return note;
+  return elementAt(getScaleNotes(root, mode), degree - 1);
 };
 
 const resolveEndpointsFromSpec = (

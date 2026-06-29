@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getModeAlterations, MODE_IDS } from '../src';
+import { getModeAlterations, Modes } from '../src';
 import { ALTERATION } from './fixtures';
 
 // getModeAlterations compares a mode's semitone offsets against ionian [0,2,4,5,7,9,11]
@@ -14,7 +14,7 @@ describe('getModeAlterations', () => {
     it('ionian [0,2,4,5,7,9,11] returns an empty object', () => {
       // C ionian: C  D  E  F  G  A  B
       // A ionian: A  B  C# D  E  F# G#
-      expect(getModeAlterations(MODE_IDS.IONIAN)).toEqual({});
+      expect(getModeAlterations(Modes.Ionian)).toEqual({});
     });
   });
 
@@ -22,7 +22,7 @@ describe('getModeAlterations', () => {
     it('dorian [0,2,3,5,7,9,10] — degree 3: 4→3, degree 7: 11→10', () => {
       // C dorian: C  D  Eb F  G  A  Bb
       // B dorian: B  C# D  E  F# G# A
-      expect(getModeAlterations(MODE_IDS.DORIAN)).toEqual({
+      expect(getModeAlterations(Modes.Dorian)).toEqual({
         3: ALTERATION.FLAT,
         7: ALTERATION.FLAT,
       });
@@ -31,7 +31,7 @@ describe('getModeAlterations', () => {
     it('phrygian [0,1,3,5,7,8,10] — degrees 2, 3, 6, 7 all lowered', () => {
       // C phrygian: C  Db Eb F  G  Ab Bb
       // C# phrygian: C# D  E  F# G# A  B
-      expect(getModeAlterations(MODE_IDS.PHRYGIAN)).toEqual({
+      expect(getModeAlterations(Modes.Phrygian)).toEqual({
         2: ALTERATION.FLAT,
         3: ALTERATION.FLAT,
         6: ALTERATION.FLAT,
@@ -42,7 +42,7 @@ describe('getModeAlterations', () => {
     it('mixolydian [0,2,4,5,7,9,10] — degree 7: 11→10, the defining lowered 7th', () => {
       // C mixolydian: C  D  E  F  G  A  Bb
       // E mixolydian: E  F# G# A  B  C# D
-      expect(getModeAlterations(MODE_IDS.MIXOLYDIAN)).toEqual({
+      expect(getModeAlterations(Modes.Mixolydian)).toEqual({
         7: ALTERATION.FLAT,
       });
     });
@@ -50,7 +50,7 @@ describe('getModeAlterations', () => {
     it('aeolian [0,2,3,5,7,8,10] — degrees 3, 6, 7 all lowered', () => {
       // C aeolian: C  D  Eb F  G  Ab Bb
       // F# aeolian: F# G# A  B  C# D  E
-      expect(getModeAlterations(MODE_IDS.AEOLIAN)).toEqual({
+      expect(getModeAlterations(Modes.Aeolian)).toEqual({
         3: ALTERATION.FLAT,
         6: ALTERATION.FLAT,
         7: ALTERATION.FLAT,
@@ -60,7 +60,7 @@ describe('getModeAlterations', () => {
     it('locrian [0,1,3,5,6,8,10] — degrees 2, 3, 5, 6, 7 all lowered', () => {
       // C locrian:  C  Db Eb F  Gb Ab Bb
       // G# locrian: G# A  B  C# D  E  F#
-      expect(getModeAlterations(MODE_IDS.LOCRIAN)).toEqual({
+      expect(getModeAlterations(Modes.Locrian)).toEqual({
         2: ALTERATION.FLAT,
         3: ALTERATION.FLAT,
         5: ALTERATION.FLAT,
@@ -74,7 +74,7 @@ describe('getModeAlterations', () => {
     it('lydian [0,2,4,6,7,9,11] — degree 4: 5→6, the defining raised 4th', () => {
       // C lydian: C  D  E  F# G  A  B
       // D lydian: D  E  F# G# A  B  C#
-      expect(getModeAlterations(MODE_IDS.LYDIAN)).toEqual({
+      expect(getModeAlterations(Modes.Lydian)).toEqual({
         4: ALTERATION.SHARP,
       });
     });

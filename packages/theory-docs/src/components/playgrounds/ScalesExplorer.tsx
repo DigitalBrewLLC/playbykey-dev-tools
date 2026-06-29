@@ -1,10 +1,14 @@
 import { useMemo, useState } from 'react';
-import { SCALE_DEFINITIONS, getDerivedScaleNotes } from '@playbykey/theory';
-import type { ModeName, Note, ScaleKind } from '@playbykey/theory';
+import {
+  SCALE_DEFINITIONS,
+  getDerivedScaleNotes,
+  ScaleTypes,
+} from '@playbykey/theory';
+import type { ModeName, Note, ScaleType } from '@playbykey/theory';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
-import { ScaleKindSelect } from '../ui/ScaleKindSelect';
+import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
 
 const containerStyle = {
   display: 'flex',
@@ -50,20 +54,21 @@ const snippetCallStyle = {
 const ScalesExplorer = () => {
   const [root, setRoot] = useState<Note>('C');
   const [mode, setMode] = useState<ModeName>('ionian');
-  const [scaleKind, setScaleKind] = useState<ScaleKind>('mode');
+  const [scaleType, setScaleType] = useState<ScaleType>(ScaleTypes.Mode);
 
-  const modeIsRelevant = scaleKind === 'mode' || scaleKind === 'pentatonic';
-  const definition = useMemo(() => SCALE_DEFINITIONS[scaleKind], [scaleKind]);
+  const modeIsRelevant =
+    scaleType === ScaleTypes.Mode || scaleType === ScaleTypes.Pentatonic;
+  const definition = useMemo(() => SCALE_DEFINITIONS[scaleType], [scaleType]);
   const notes = useMemo(
-    () => getDerivedScaleNotes(root, mode, scaleKind),
-    [root, mode, scaleKind]
+    () => getDerivedScaleNotes(root, mode, scaleType),
+    [root, mode, scaleType]
   );
 
   return (
     <div style={containerStyle}>
       <div style={controlsRowStyle}>
         <NoteSelect value={root} onChange={setRoot} />
-        <ScaleKindSelect value={scaleKind} onChange={setScaleKind} />
+        <ScaleTypeSelect value={scaleType} onChange={setScaleType} />
         {modeIsRelevant && <ModeSelect value={mode} onChange={setMode} />}
       </div>
 
@@ -74,7 +79,7 @@ const ScalesExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`getDerivedScaleNotes('${root}', '${mode}', '${scaleKind}')`}</code>
+        >{`getDerivedScaleNotes('${root}', '${mode}', '${scaleType}')`}</code>
       </p>
 
       <ResultPanel label="getDerivedScaleNotes result" value={notes} />

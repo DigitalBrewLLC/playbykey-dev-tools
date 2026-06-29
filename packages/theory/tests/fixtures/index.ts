@@ -1,4 +1,4 @@
-import { MODE_IDS } from '../../src';
+import { Modes } from '../../src';
 import type { Note, ModeName } from '../../src';
 
 /** The 7 natural (white key) notes in ascending keyboard order. */
@@ -28,11 +28,11 @@ export const ALTERATION = {
 
 /** All 7 modes of the major scale in brightness order (ionian = brightest). */
 export const ALL_MODES: ModeName[] = [
-  MODE_IDS.IONIAN,
-  MODE_IDS.DORIAN,
-  MODE_IDS.PHRYGIAN,
-  MODE_IDS.LYDIAN,
-  MODE_IDS.MIXOLYDIAN,
-  MODE_IDS.AEOLIAN,
-  MODE_IDS.LOCRIAN,
+  Modes.Ionian,
+  Modes.Dorian,
+  Modes.Phrygian,
+  Modes.Lydian,
+  Modes.Mixolydian,
+  Modes.Aeolian,
+  Modes.Locrian,
 ];

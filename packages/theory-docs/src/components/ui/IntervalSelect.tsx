@@ -1,4 +1,4 @@
-import { INTERVAL_ID_VALUES } from '@playbykey/theory';
+import { Intervals } from '@playbykey/theory';
 import type { IntervalId } from '@playbykey/theory';
 
 interface IntervalSelectProps {
@@ -46,7 +46,7 @@ const IntervalSelect = ({
         value={value}
         onChange={(event) => onChange(event.target.value as IntervalId)}
       >
-        {INTERVAL_ID_VALUES.map((intervalId) => (
+        {Object.values(Intervals).map((intervalId) => (
           <option key={intervalId} value={intervalId}>
             {formatIntervalLabel(intervalId)}
           </option>

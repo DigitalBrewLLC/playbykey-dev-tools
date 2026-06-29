@@ -1,4 +1,4 @@
-import { NOTES } from '@playbykey/theory';
+import { CHROMATIC_NOTES } from '@playbykey/theory';
 import type { Note } from '@playbykey/theory';
 
 interface NoteSelectProps {
@@ -36,7 +36,7 @@ const NoteSelect = ({ value, onChange, label = 'Root' }: NoteSelectProps) => {
         value={value}
         onChange={(event) => onChange(event.target.value as Note)}
       >
-        {NOTES.map((note) => (
+        {CHROMATIC_NOTES.map((note) => (
           <option key={note} value={note}>
             {note}
           </option>

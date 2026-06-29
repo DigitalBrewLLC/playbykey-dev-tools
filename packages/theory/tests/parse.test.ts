@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MODE_IDS } from '../src/constants';
+import { Modes } from '../src/constants';
 import { parseModeName, parseNote } from '../src/engine';
 
 describe('parseNote', () => {
@@ -21,8 +21,8 @@ describe('parseNote', () => {
 
 describe('parseModeName', () => {
   it('parses a mode slug', () => {
-    expect(parseModeName('ionian')).toBe(MODE_IDS.IONIAN);
-    expect(parseModeName(' Aeolian ')).toBe(MODE_IDS.AEOLIAN);
+    expect(parseModeName('ionian')).toBe(Modes.Ionian);
+    expect(parseModeName(' Aeolian ')).toBe(Modes.Aeolian);
   });
 
   it('returns null for unrecognized input', () => {

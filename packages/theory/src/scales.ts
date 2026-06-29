@@ -1,6 +1,6 @@
-import { MODE_IDS, NOTES } from './constants';
-import { getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
-import type { ModeName, Note, ScaleKind } from './types';
+import { Modes, CHROMATIC_NOTES, ScaleTypes } from './constants';
+import { elementAt, getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
+import type { ModeName, Note, ScaleType } from './types';
 
 /** Semitone offsets from the tonic for the six-note blues scale. */
 const BLUES_SEMITONE_OFFSETS = [0, 3, 5, 6, 7, 10] as const;
@@ -11,6 +11,12 @@ const PENTATONIC_DEGREES = [1, 2, 3, 5, 6] as const;
 /** All seven diatonic scale degrees. */
 const FULL_SCALE_DEGREES = [1, 2, 3, 4, 5, 6, 7] as const;
 
+/** Aeolian (natural minor) is the parent mode for harmonic minor derivation. */
+const HARMONIC_MINOR_PARENT_MODE: ModeName = Modes.Aeolian;
+
+/** Harmonic minor raises the 7th degree by one semitone. */
+const HARMONIC_MINOR_RAISE_DEGREE = 7;
+
 interface ScaleDefinition {
   label: string;
   semitoneOffsets?: readonly number[];
@@ -19,26 +25,26 @@ interface ScaleDefinition {
   pentatonicSubset?: boolean;
 }
 
-const SCALE_DEFINITIONS: Record<ScaleKind, ScaleDefinition> = {
-  mode: {
+const SCALE_DEFINITIONS: Record<ScaleType, ScaleDefinition> = {
+  [ScaleTypes.Mode]: {
     label: 'Mode scale',
   },
-  chromatic: {
+  [ScaleTypes.Chromatic]: {
     label: 'Chromatic scale',
     semitoneOffsets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   },
-  pentatonic: {
+  [ScaleTypes.Pentatonic]: {
     label: 'Pentatonic scale',
     pentatonicSubset: true,
   },
-  blues: {
+  [ScaleTypes.Blues]: {
     label: 'Blues scale',
     semitoneOffsets: BLUES_SEMITONE_OFFSETS,
   },
-  'harmonic-minor': {
+  [ScaleTypes.HarmonicMinor]: {
     label: 'Harmonic minor scale',
-    parentMode: MODE_IDS.AEOLIAN,
-    raiseDegree: 7,
+    parentMode: HARMONIC_MINOR_PARENT_MODE,
+    raiseDegree: HARMONIC_MINOR_RAISE_DEGREE,
   },
 };
 
@@ -51,64 +57,51 @@ const notesFromSemitoneOffsets = (
 };
 
 const getHarmonicMinorNotes = (root: Note): Note[] => {
-  const definition = SCALE_DEFINITIONS['harmonic-minor'];
-  const parentMode = definition.parentMode ?? MODE_IDS.AEOLIAN;
-  const parentNotes = getScaleNotes(root, parentMode);
-  const raiseDegree = definition.raiseDegree ?? 7;
-  const raisedIndex = raiseDegree - 1;
-  const naturalSeventh = parentNotes[raisedIndex];
-
-  if (naturalSeventh === undefined) {
-    return parentNotes;
-  }
-
+  const raisedIndex = HARMONIC_MINOR_RAISE_DEGREE - 1;
+  const parentNotes = getScaleNotes(root, HARMONIC_MINOR_PARENT_MODE);
+  const naturalSeventh = elementAt(parentNotes, raisedIndex);
   return [
     ...parentNotes.slice(0, raisedIndex),
     noteAtIndex(getNoteIndex(naturalSeventh) + 1),
   ];
 };
 
-const getBluesNotes = (root: Note): Note[] => {
-  const offsets = SCALE_DEFINITIONS.blues.semitoneOffsets;
-  if (offsets === undefined) {
-    return [];
-  }
-  return notesFromSemitoneOffsets(root, offsets);
-};
+const getBluesNotes = (root: Note): Note[] =>
+  notesFromSemitoneOffsets(root, BLUES_SEMITONE_OFFSETS);
 
 const getPentatonicDegrees = (): readonly number[] => PENTATONIC_DEGREES;
 
 const getFullScaleDegrees = (): readonly number[] => FULL_SCALE_DEGREES;
 
-const getScaleEmphasisDegrees = (scaleKind: ScaleKind): readonly number[] => {
-  if (scaleKind === 'blues') {
+const getScaleEmphasisDegrees = (scaleType: ScaleType): readonly number[] => {
+  if (scaleType === ScaleTypes.Blues) {
     return BLUES_SEMITONE_OFFSETS.map((_, index) => index + 1);
   }
-  if (scaleKind === 'pentatonic') {
+  if (scaleType === ScaleTypes.Pentatonic) {
     return PENTATONIC_DEGREES;
   }
-  if (scaleKind === 'chromatic') {
-    return NOTES.map((_, index) => index + 1);
+  if (scaleType === ScaleTypes.Chromatic) {
+    return CHROMATIC_NOTES.map((_, index) => index + 1);
   }
   return FULL_SCALE_DEGREES;
 };
 
 /**
- * Returns the pitch classes that define a scale kind from a root (and mode when
+ * Returns the pitch classes that define a scale type from a root (and mode when
  * the scale is mode-relative, e.g. diatonic or pentatonic subset).
  */
 const getDerivedScaleNotes = (
   root: Note,
   mode: ModeName,
-  scaleKind: ScaleKind
+  scaleType: ScaleType
 ): Note[] => {
-  const definition = SCALE_DEFINITIONS[scaleKind];
+  const definition = SCALE_DEFINITIONS[scaleType];
 
   if (definition.semitoneOffsets !== undefined) {
     return notesFromSemitoneOffsets(root, definition.semitoneOffsets);
   }
 
-  if (scaleKind === 'harmonic-minor') {
+  if (scaleType === ScaleTypes.HarmonicMinor) {
     return getHarmonicMinorNotes(root);
   }
 
@@ -123,21 +116,21 @@ const getDerivedScaleNotes = (
 };
 
 /**
- * Returns the wider note set used as harmonic context around a scale kind
+ * Returns the wider note set used as harmonic context around a scale type
  * (e.g. aeolian for blues, parent mode for pentatonic).
  */
 const getScaleContextNotes = (
   root: Note,
   mode: ModeName,
-  scaleKind: ScaleKind
+  scaleType: ScaleType
 ): Note[] => {
-  if (scaleKind === 'chromatic') {
-    return [...NOTES];
+  if (scaleType === ScaleTypes.Chromatic) {
+    return [...CHROMATIC_NOTES];
   }
-  if (scaleKind === 'blues') {
-    return getScaleNotes(root, MODE_IDS.AEOLIAN);
+  if (scaleType === ScaleTypes.Blues) {
+    return getScaleNotes(root, Modes.Aeolian);
   }
-  if (scaleKind === 'harmonic-minor') {
+  if (scaleType === ScaleTypes.HarmonicMinor) {
     return getHarmonicMinorNotes(root);
   }
   return getScaleNotes(root, mode);

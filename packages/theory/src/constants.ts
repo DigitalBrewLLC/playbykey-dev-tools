@@ -4,155 +4,161 @@ import type {
   ModeName,
   NotationType,
   IntervalId,
-  ScaleKind,
+  ScaleType,
   AccidentalType,
 } from './types';
 
-/** All 12 chromatic notes in ascending order from C. */
-const NOTES: readonly Note[] = [
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
-  'F',
-  'F#',
-  'G',
-  'G#',
-  'A',
-  'A#',
-  'B',
-] as const;
+/** All 12 chromatic notes with dot-notation access. Sharp notes use CSharp/DSharp style. */
+const Notes = {
+  C: 'C',
+  CSharp: 'C#',
+  D: 'D',
+  DSharp: 'D#',
+  E: 'E',
+  F: 'F',
+  FSharp: 'F#',
+  G: 'G',
+  GSharp: 'G#',
+  A: 'A',
+  ASharp: 'A#',
+  B: 'B',
+} as const satisfies Record<string, Note>;
 
-/** Named constants for each notation type, validated against NotationType. */
-const NOTATION_IDS = {
-  LETTER: 'letter',
-  NUMBER: 'number',
+/** All 12 chromatic notes in ascending order from C. */
+const CHROMATIC_NOTES: readonly Note[] = Object.values(
+  Notes
+) as readonly Note[];
+
+/** Named constants for each notation display type. */
+const Notations = {
+  Letter: 'letter',
+  Number: 'number',
 } as const satisfies Record<string, NotationType>;
 
-/** Named constants for each mode ID, validated against ModeName. */
-const MODE_IDS = {
-  IONIAN: 'ionian',
-  DORIAN: 'dorian',
-  PHRYGIAN: 'phrygian',
-  LYDIAN: 'lydian',
-  MIXOLYDIAN: 'mixolydian',
-  AEOLIAN: 'aeolian',
-  LOCRIAN: 'locrian',
+/** Named constants for each diatonic mode. */
+const Modes = {
+  Ionian: 'ionian',
+  Dorian: 'dorian',
+  Phrygian: 'phrygian',
+  Lydian: 'lydian',
+  Mixolydian: 'mixolydian',
+  Aeolian: 'aeolian',
+  Locrian: 'locrian',
 } as const satisfies Record<string, ModeName>;
 
-/** All mode names derived from MODE_IDS. */
-const MODE_NAMES = Object.values(MODE_IDS) as readonly ModeName[];
-
-/** Named constants for each interval id, validated against IntervalId. */
-const INTERVAL_IDS = {
-  HALF_STEP: 'half_step',
-  WHOLE_STEP: 'whole_step',
-  MAJOR_2ND: 'major_2nd',
-  MINOR_3RD: 'minor_3rd',
-  MAJOR_3RD: 'major_3rd',
-  PERFECT_4TH: 'perfect_4th',
-  TRITONE: 'tritone',
-  PERFECT_5TH: 'perfect_5th',
-  MINOR_6TH: 'minor_6th',
-  MAJOR_6TH: 'major_6th',
-  MINOR_7TH: 'minor_7th',
-  MAJOR_7TH: 'major_7th',
-  OCTAVE: 'octave',
+/** Named constants for each musical interval. */
+const Intervals = {
+  HalfStep: 'half_step',
+  WholeStep: 'whole_step',
+  Major2nd: 'major_2nd',
+  Minor3rd: 'minor_3rd',
+  Major3rd: 'major_3rd',
+  Perfect4th: 'perfect_4th',
+  Tritone: 'tritone',
+  Perfect5th: 'perfect_5th',
+  Minor6th: 'minor_6th',
+  Major6th: 'major_6th',
+  Minor7th: 'minor_7th',
+  Major7th: 'major_7th',
+  Octave: 'octave',
 } as const satisfies Record<string, IntervalId>;
 
-/** All interval ids derived from INTERVAL_IDS. */
-const INTERVAL_ID_VALUES = Object.values(INTERVAL_IDS) as readonly IntervalId[];
+/** Named constants for each derived scale type. */
+const ScaleTypes = {
+  Mode: 'mode',
+  Chromatic: 'chromatic',
+  Pentatonic: 'pentatonic',
+  Blues: 'blues',
+  HarmonicMinor: 'harmonic-minor',
+} as const satisfies Record<string, ScaleType>;
 
-/** Named constants for each scale kind, validated against ScaleKind. */
-const SCALE_KIND_IDS = {
-  MODE: 'mode',
-  CHROMATIC: 'chromatic',
-  PENTATONIC: 'pentatonic',
-  BLUES: 'blues',
-  HARMONIC_MINOR: 'harmonic-minor',
-} as const satisfies Record<string, ScaleKind>;
-
-/** All scale kinds derived from SCALE_KIND_IDS. */
-const SCALE_KIND_VALUES = Object.values(SCALE_KIND_IDS) as readonly ScaleKind[];
-
-/** Named constants for each accidental display preference, validated against AccidentalType. */
-const ACCIDENTAL_IDS = {
-  SHARP: 'sharp',
-  FLAT: 'flat',
-  BOTH: 'both',
+/** Named constants for each accidental display preference. */
+const Accidentals = {
+  Sharp: 'sharp',
+  Flat: 'flat',
+  Both: 'both',
 } as const satisfies Record<string, AccidentalType>;
 
 /** All 7 modes with display names, scale degrees, and characteristic descriptions. */
 const MODES: readonly ModeInfo[] = [
   {
-    id: MODE_IDS.IONIAN,
+    id: Modes.Ionian,
     name: 'Ionian',
     scaleDegree: 1,
     character: 'Bright and resolved - the familiar major sound',
   },
   {
-    id: MODE_IDS.DORIAN,
+    id: Modes.Dorian,
     name: 'Dorian',
     scaleDegree: 2,
     character: 'Smooth and soulful - minor with a bright 6th',
   },
   {
-    id: MODE_IDS.PHRYGIAN,
+    id: Modes.Phrygian,
     name: 'Phrygian',
     scaleDegree: 3,
     character: 'Dark and exotic - minor with a flat 2nd',
   },
   {
-    id: MODE_IDS.LYDIAN,
+    id: Modes.Lydian,
     name: 'Lydian',
     scaleDegree: 4,
     character: 'Dreamy and floating - major with a raised 4th',
   },
   {
-    id: MODE_IDS.MIXOLYDIAN,
+    id: Modes.Mixolydian,
     name: 'Mixolydian',
     scaleDegree: 5,
     character: 'Bright and bluesy - major with a flat 7th',
   },
   {
-    id: MODE_IDS.AEOLIAN,
+    id: Modes.Aeolian,
     name: 'Aeolian',
     scaleDegree: 6,
     character: 'Melancholic and natural - the natural minor sound',
   },
   {
-    id: MODE_IDS.LOCRIAN,
+    id: Modes.Locrian,
     name: 'Locrian',
     scaleDegree: 7,
     character: 'Unstable and tense - diminished with a flat 2nd and flat 5th',
   },
 ] as const;
 
+/** O(1) lookup for ModeInfo by ModeName. */
+const ModeInfoById: Record<ModeName, ModeInfo> = Object.fromEntries(
+  MODES.map((m) => [m.id, m])
+) as Record<ModeName, ModeInfo>;
+
 /**
  * Display labels for the five accidental notes, showing the flat name first
  * since flat spellings are more common in major scale contexts.
- * Used by the scale detail strip to avoid duplicate letter names in a scale
- * (e.g. D# Ionian contains both D and D#; showing "Eb/D#" makes them distinct).
+ * Natural notes return null.
  */
-const ENHARMONIC_LABELS: Partial<Record<Note, string>> = {
+const ENHARMONIC_LABELS: Record<Note, string | null> = {
+  C: null,
   'C#': 'Db/C#',
+  D: null,
   'D#': 'Eb/D#',
+  E: null,
+  F: null,
   'F#': 'Gb/F#',
+  G: null,
   'G#': 'Ab/G#',
+  A: null,
   'A#': 'Bb/A#',
+  B: null,
 };
 
 export {
-  NOTATION_IDS,
-  MODE_IDS,
-  MODE_NAMES,
-  INTERVAL_IDS,
-  INTERVAL_ID_VALUES,
-  SCALE_KIND_IDS,
-  SCALE_KIND_VALUES,
-  ACCIDENTAL_IDS,
-  NOTES,
+  Notes,
+  CHROMATIC_NOTES,
+  Notations,
+  Modes,
+  Intervals,
+  ScaleTypes,
+  Accidentals,
   MODES,
+  ModeInfoById,
   ENHARMONIC_LABELS,
 };
