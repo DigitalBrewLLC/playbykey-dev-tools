@@ -6,6 +6,8 @@ import {
   getPentatonicDegrees,
   getScaleContextNotes,
   getScaleEmphasisDegrees,
+  Modes,
+  Notes,
   ScaleTypes,
 } from '@playbykey/theory';
 import type { ModeName, Note, ScaleType } from '@playbykey/theory';
@@ -21,12 +23,12 @@ const containerStyle = {
 };
 
 const ScalesPlayground = () => {
-  const [root, setRoot] = useState<Note>('A');
+  const [root, setRoot] = useState<Note>(Notes.A);
   const [derivedType, setDerivedType] = useState<ScaleType>(
     ScaleTypes.Pentatonic
   );
-  const [derivedMode, setDerivedMode] = useState<ModeName>('ionian');
-  const [contextMode, setContextMode] = useState<ModeName>('aeolian');
+  const [derivedMode, setDerivedMode] = useState<ModeName>(Modes.Ionian);
+  const [contextMode, setContextMode] = useState<ModeName>(Modes.Aeolian);
   const [contextType, setContextType] = useState<ScaleType>(ScaleTypes.Blues);
   const [emphasisType, setEmphasisType] = useState<ScaleType>(ScaleTypes.Blues);
 

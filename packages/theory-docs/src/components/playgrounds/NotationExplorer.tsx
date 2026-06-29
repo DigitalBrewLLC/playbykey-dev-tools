@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { buildNoteMap } from '@playbykey/theory';
+import { buildNoteMap, Modes, Notes, Notations } from '@playbykey/theory';
 import type { ModeName, Note, NotationType } from '@playbykey/theory';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
@@ -78,9 +78,9 @@ const snippetCallStyle = {
 };
 
 const NotationExplorer = () => {
-  const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
-  const [notation, setNotation] = useState<NotationType>('letter');
+  const [root, setRoot] = useState<Note>(Notes.C);
+  const [mode, setMode] = useState<ModeName>(Modes.Ionian);
+  const [notation, setNotation] = useState<NotationType>(Notations.Letter);
 
   const noteMap = useMemo(
     () => buildNoteMap(root, mode, notation),
