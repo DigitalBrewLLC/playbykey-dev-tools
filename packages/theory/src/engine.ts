@@ -90,7 +90,10 @@ const getNoteIndex = (note: Note): number => {
 };
 
 /**
- * Returns the note at a given chromatic index, wrapping around at 12.
+ * Returns the pitch class at a given chromatic index.
+ * Pitches repeat every 12 semitones (one octave), so any index outside 0–11
+ * resolves to its enharmonic equivalent: 12 → C, 13 → C#, -1 → B.
+ * The double modulo handles negative indices correctly across JS runtimes.
  */
 const noteAtIndex = (index: number): Note => {
   return elementAt(CHROMATIC_NOTES, ((index % 12) + 12) % 12);
