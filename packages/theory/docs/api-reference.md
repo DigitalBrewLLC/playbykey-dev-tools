@@ -140,17 +140,17 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 #### `buildNoteMap`
 
-- **Signature:** `buildNoteMap(root: Note, scaleType: ScaleType, notation: NotationType): NoteDisplayInfo[]`
-- **Parameters:** `root`, `scaleType`, `notation`.
-- **Returns:** An array of 12 `NoteDisplayInfo` objects (one per chromatic
-  note, in `NOTES` order), each with `note`, `inScale`, `scaleDegree`,
-  `label`, and `isRoot`.
-- **Description:** The primary data structure consumed by visualization
-  views — produces display-ready note info for every chromatic pitch for
-  any scale type and notation mode.
-- **Use case:** Driving a keyboard or fretboard visualization where every
-  note needs to know whether it's in the active scale, what its label is,
-  and whether it's the root.
+- **Signature:** `buildNoteMap(root: Note, scaleType: ScaleType): NoteDisplayInfo[]`
+- **Parameters:** `root`, `scaleType`.
+- **Returns:** An array of `NoteDisplayInfo` objects — one per in-scale note,
+  in scale-degree order. Each entry contains `note`, `scaleDegree` (always
+  a number, 1-based), and `isRoot`. Notation (letter vs number) is left to
+  the consumer: use `entry.note` for letter labels, `String(entry.scaleDegree)`
+  for numeric labels.
+- **Description:** A richer alternative to `getScaleNotes` that also carries
+  degree position and root membership for each in-scale note.
+- **Use case:** Driving keyboard, fretboard, or degree-grid visualizations
+  where each note needs its degree number and root flag.
 
 #### `getParentScaleModes`
 

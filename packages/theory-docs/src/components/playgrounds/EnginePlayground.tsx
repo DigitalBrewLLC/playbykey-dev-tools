@@ -17,15 +17,9 @@ import {
   noteAtIndex,
   Modes,
   Notes,
-  Notations,
   ScaleTypes,
 } from '@playbykey/theory';
-import type {
-  ModeName,
-  Note,
-  NotationType,
-  ScaleType,
-} from '@playbykey/theory';
+import type { ModeName, Note, ScaleType } from '@playbykey/theory';
 import { FieldSelect } from '../ui/FieldSelect';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
@@ -58,7 +52,7 @@ type InputKind =
   | 'noteOnly'
   | 'indexOnly'
   | 'twoNotes'
-  | 'rootScaleTypeNotation'
+  | 'rootScaleType'
   | 'stringGuard'
   | 'none';
 
@@ -130,9 +124,10 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
   {
     id: 'buildNoteMap',
     signature:
-      'buildNoteMap(root: Note, scaleType: ScaleType, notation: NotationType): NoteDisplayInfo[]',
-    description: 'Builds display metadata for all 12 chromatic notes.',
-    inputKind: 'rootScaleTypeNotation',
+      'buildNoteMap(root: Note, scaleType: ScaleType): NoteDisplayInfo[]',
+    description:
+      'Returns one NoteDisplayInfo per in-scale note with note, scaleDegree, and isRoot.',
+    inputKind: 'rootScaleType',
   },
   {
     id: 'getNoteIndex',
@@ -221,7 +216,6 @@ const computeResult = (
   fromNote: Note,
   toNote: Note,
   index: number,
-  notation: NotationType,
   guardInput: string
 ): unknown => {
   switch (functionId) {
@@ -244,7 +238,7 @@ const computeResult = (
     case 'isNoteInScale':
       return isNoteInScale(root, mode, targetNote);
     case 'buildNoteMap':
-      return buildNoteMap(root, scaleType, notation);
+      return buildNoteMap(root, scaleType);
     case 'getNoteIndex':
       return getNoteIndex(targetNote);
     case 'noteAtIndex':
@@ -270,7 +264,6 @@ const EnginePlayground = () => {
   const [fromNote, setFromNote] = useState<Note>(Notes.C);
   const [toNote, setToNote] = useState<Note>(Notes.E);
   const [index, setIndex] = useState(6);
-  const [notation, setNotation] = useState<NotationType>(Notations.Letter);
   const [guardInput, setGuardInput] = useState('C');
 
   const result = useMemo(
@@ -284,7 +277,6 @@ const EnginePlayground = () => {
         fromNote,
         toNote,
         index,
-        notation,
         guardInput
       ),
     [
@@ -296,7 +288,6 @@ const EnginePlayground = () => {
       fromNote,
       toNote,
       index,
-      notation,
       guardInput,
     ]
   );
@@ -329,7 +320,7 @@ const EnginePlayground = () => {
         {(selected.inputKind === 'rootMode' ||
           selected.inputKind === 'rootModeNote' ||
           selected.inputKind === 'rootOnly' ||
-          selected.inputKind === 'rootScaleTypeNotation') && (
+          selected.inputKind === 'rootScaleType') && (
           <NoteSelect value={root} onChange={setRoot} label="Root" />
         )}
 
@@ -339,7 +330,7 @@ const EnginePlayground = () => {
           <ModeSelect value={mode} onChange={setMode} />
         )}
 
-        {selected.inputKind === 'rootScaleTypeNotation' && (
+        {selected.inputKind === 'rootScaleType' && (
           <ScaleTypeSelect value={scaleType} onChange={setScaleType} />
         )}
 
@@ -357,17 +348,6 @@ const EnginePlayground = () => {
             <NoteSelect value={fromNote} onChange={setFromNote} label="From" />
             <NoteSelect value={toNote} onChange={setToNote} label="To" />
           </>
-        )}
-
-        {selected.inputKind === 'rootScaleTypeNotation' && (
-          <FieldSelect
-            label="Notation"
-            value={notation}
-            onChange={(v) => setNotation(v as NotationType)}
-          >
-            <option value={Notations.Letter}>Letter</option>
-            <option value={Notations.Number}>Number</option>
-          </FieldSelect>
         )}
 
         {selected.inputKind === 'indexOnly' && (

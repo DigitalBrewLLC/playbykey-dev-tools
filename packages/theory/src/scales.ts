@@ -9,7 +9,6 @@ import type {
   ModeName,
   Note,
   NoteDisplayInfo,
-  NotationType,
   PentatonicType,
   ScaleType,
 } from './types';
@@ -157,36 +156,20 @@ const getScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
 };
 
 /**
- * Produces an array of 12 NoteDisplayInfo objects (one per chromatic note,
- * starting from C), each describing how to render that note for the current
- * root/scale-type/notation selection.
+ * Returns one NoteDisplayInfo entry per in-scale note, in scale-degree order.
+ * Every entry is guaranteed to be in the scale, so scaleDegree is always populated.
+ * Consumers derive their own labels using `note` (letter) or `scaleDegree` (number).
  *
- * This is the primary data structure consumed by all visualization views.
- *
- * Example: buildNoteMap('C', 'major', 'letter') => [{note:'C', inScale:true, ...}, ...]
+ * Example: buildNoteMap('C', 'major') =>
+ *   [{ note:'C', scaleDegree:1, isRoot:true }, { note:'D', scaleDegree:2, isRoot:false }, ...]
  */
-const buildNoteMap = (
-  root: Note,
-  scaleType: ScaleType,
-  notation: NotationType
-): NoteDisplayInfo[] => {
+const buildNoteMap = (root: Note, scaleType: ScaleType): NoteDisplayInfo[] => {
   const scaleNotes = getScaleNotes(root, scaleType);
-  return CHROMATIC_NOTES.map((note) => {
-    const index = scaleNotes.indexOf(note);
-    const scaleDegree = index === -1 ? null : index + 1;
-    return {
-      note,
-      inScale: scaleDegree !== null,
-      scaleDegree,
-      label:
-        notation === 'letter'
-          ? note
-          : scaleDegree !== null
-            ? String(scaleDegree)
-            : '',
-      isRoot: note === root,
-    };
-  });
+  return scaleNotes.map((note, index) => ({
+    note,
+    scaleDegree: index + 1,
+    isRoot: note === root,
+  }));
 };
 
 export type { ScaleDefinition };
