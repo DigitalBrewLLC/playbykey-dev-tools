@@ -46,7 +46,7 @@ const snippetStyle = {
 };
 
 const snippetCallStyle = {
-  color: 'var(--sl-color-accent)',
+  color: 'var(--sl-color-accent-high)',
 };
 
 const NotesExplorer = () => {

@@ -22,7 +22,7 @@ const cardStyle = {
 const headingStyle = {
   margin: 0,
   fontSize: '1.125rem',
-  color: 'var(--sl-color-accent)',
+  color: 'var(--sl-color-accent-high)',
 };
 
 const signatureStyle = {
@@ -33,7 +33,7 @@ const signatureStyle = {
   border: '1px solid var(--sl-color-gray-5)',
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.8125rem',
-  color: 'var(--sl-color-gray-1)',
+  color: '#e5e5e5',
   overflowX: 'auto' as const,
 };
 

@@ -40,7 +40,7 @@ const modeNameStyle = {
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '1rem',
   fontWeight: 600,
-  color: 'var(--sl-color-accent)',
+  color: 'var(--sl-color-accent-high)',
 };
 
 const degreeBadgeStyle = {
@@ -80,7 +80,7 @@ const snippetStyle = {
 };
 
 const snippetCallStyle = {
-  color: 'var(--sl-color-accent)',
+  color: 'var(--sl-color-accent-high)',
 };
 
 const ModeExplorer = () => {
