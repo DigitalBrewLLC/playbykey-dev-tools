@@ -21,9 +21,11 @@ import {
   Notations,
 } from '@playbykey/theory';
 import type { ModeName, Note, NotationType } from '@playbykey/theory';
+import { FieldSelect } from '../ui/FieldSelect';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
+import { controlsRowStyle } from './playgroundStyles';
 
 type EngineFunctionId =
   | 'getModeNotes'
@@ -184,14 +186,6 @@ const labelStyle = {
   color: 'var(--sl-color-gray-2)',
 };
 
-const selectStyle = {
-  padding: '0.375rem 0.5rem',
-  borderRadius: '0.375rem',
-  border: '1px solid var(--sl-color-gray-5)',
-  background: 'var(--sl-color-gray-6)',
-  color: 'var(--sl-color-gray-1)',
-};
-
 const inputStyle = {
   padding: '0.375rem 0.5rem',
   borderRadius: '0.375rem',
@@ -200,13 +194,6 @@ const inputStyle = {
   color: 'var(--sl-color-gray-1)',
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.875rem',
-};
-
-const controlsRowStyle = {
-  display: 'flex',
-  flexWrap: 'wrap' as const,
-  alignItems: 'flex-end',
-  gap: '0.75rem',
 };
 
 const signatureStyle = {
@@ -321,22 +308,17 @@ const EnginePlayground = () => {
 
   return (
     <div style={containerStyle}>
-      <label style={fieldStyle}>
-        <span style={labelStyle}>Function</span>
-        <select
-          style={selectStyle}
-          value={functionId}
-          onChange={(event) =>
-            setFunctionId(event.target.value as EngineFunctionId)
-          }
-        >
-          {ENGINE_FUNCTIONS.map((fn) => (
-            <option key={fn.id} value={fn.id}>
-              {fn.id}
-            </option>
-          ))}
-        </select>
-      </label>
+      <FieldSelect
+        label="Function"
+        value={functionId}
+        onChange={(v) => setFunctionId(v as EngineFunctionId)}
+      >
+        {ENGINE_FUNCTIONS.map((fn) => (
+          <option key={fn.id} value={fn.id}>
+            {fn.id}
+          </option>
+        ))}
+      </FieldSelect>
 
       <pre style={signatureStyle}>
         <code>{selected.signature}</code>
@@ -375,19 +357,14 @@ const EnginePlayground = () => {
         )}
 
         {selected.inputKind === 'rootModeNotation' && (
-          <label style={fieldStyle}>
-            <span style={labelStyle}>Notation</span>
-            <select
-              style={selectStyle}
-              value={notation}
-              onChange={(event) =>
-                setNotation(event.target.value as NotationType)
-              }
-            >
-              <option value={Notations.Letter}>Letter</option>
-              <option value={Notations.Number}>Number</option>
-            </select>
-          </label>
+          <FieldSelect
+            label="Notation"
+            value={notation}
+            onChange={(v) => setNotation(v as NotationType)}
+          >
+            <option value={Notations.Letter}>Letter</option>
+            <option value={Notations.Number}>Number</option>
+          </FieldSelect>
         )}
 
         {selected.inputKind === 'indexOnly' && (

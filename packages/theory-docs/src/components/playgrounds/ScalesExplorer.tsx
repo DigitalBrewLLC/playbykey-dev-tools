@@ -6,51 +6,12 @@ import {
   ScaleTypes,
 } from '@playbykey/theory';
 import type { Note, ScaleType } from '@playbykey/theory';
+import { CodeSnippet } from '../ui/CodeSnippet';
+import { InfoBlock, InfoTitle } from '../ui/InfoBlock';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
-
-const containerStyle = {
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: '1.5rem',
-};
-
-const controlsRowStyle = {
-  display: 'flex',
-  flexWrap: 'wrap' as const,
-  alignItems: 'flex-end',
-  gap: '0.75rem',
-};
-
-const infoBlockStyle = {
-  padding: '1rem',
-  borderRadius: '0.5rem',
-  border: '1px solid var(--sl-color-gray-5)',
-  background: 'var(--sl-color-gray-6)',
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: '0.5rem',
-};
-
-const modeNameStyle = {
-  margin: 0,
-  fontFamily: 'var(--sl-font-mono)',
-  fontSize: '1rem',
-  fontWeight: 600,
-  color: 'var(--sl-color-accent-high)',
-};
-
-const snippetStyle = {
-  margin: 0,
-  fontFamily: 'var(--sl-font-mono)',
-  fontSize: '0.875rem',
-  color: 'var(--sl-color-gray-2)',
-};
-
-const snippetCallStyle = {
-  color: 'var(--sl-color-accent-high)',
-};
+import { containerStyle, controlsRowStyle } from './playgroundStyles';
 
 const ScalesExplorer = () => {
   const [root, setRoot] = useState<Note>(Notes.C);
@@ -62,6 +23,11 @@ const ScalesExplorer = () => {
     [root, scaleType]
   );
 
+  const noteKey = Object.entries(Notes).find(([, v]) => v === root)?.[0];
+  const scaleKey = Object.entries(ScaleTypes).find(
+    ([, v]) => v === scaleType
+  )?.[0];
+
   return (
     <div style={containerStyle}>
       <div style={controlsRowStyle}>
@@ -69,15 +35,13 @@ const ScalesExplorer = () => {
         <ScaleTypeSelect value={scaleType} onChange={setScaleType} />
       </div>
 
-      <div style={infoBlockStyle}>
-        <p style={modeNameStyle}>{definition.label}</p>
-      </div>
+      <InfoBlock>
+        <InfoTitle>{definition.label}</InfoTitle>
+      </InfoBlock>
 
-      <p style={snippetStyle}>
-        <code
-          style={snippetCallStyle}
-        >{`getScaleNotes(Notes.${Object.entries(Notes).find(([, v]) => v === root)?.[0]}, ScaleTypes.${Object.entries(ScaleTypes).find(([, v]) => v === scaleType)?.[0]})`}</code>
-      </p>
+      <CodeSnippet
+        call={`getScaleNotes(Notes.${noteKey}, ScaleTypes.${scaleKey})`}
+      />
 
       <ResultPanel label="getScaleNotes result" value={notes} />
     </div>

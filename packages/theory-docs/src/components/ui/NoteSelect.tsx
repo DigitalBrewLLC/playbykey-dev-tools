@@ -1,5 +1,6 @@
 import { CHROMATIC_NOTES } from '@playbykey/theory';
 import type { Note } from '@playbykey/theory';
+import { FieldSelect } from './FieldSelect';
 
 interface NoteSelectProps {
   value: Note;
@@ -7,43 +8,18 @@ interface NoteSelectProps {
   label?: string;
 }
 
-const fieldStyle = {
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: '0.25rem',
-};
-
-const labelStyle = {
-  fontSize: '0.875rem',
-  fontWeight: 600,
-  color: 'var(--sl-color-gray-2)',
-};
-
-const selectStyle = {
-  padding: '0.375rem 0.5rem',
-  borderRadius: '0.375rem',
-  border: '1px solid var(--sl-color-gray-5)',
-  background: 'var(--sl-color-gray-6)',
-  color: 'var(--sl-color-gray-1)',
-};
-
-const NoteSelect = ({ value, onChange, label = 'Root' }: NoteSelectProps) => {
-  return (
-    <label style={fieldStyle}>
-      <span style={labelStyle}>{label}</span>
-      <select
-        style={selectStyle}
-        value={value}
-        onChange={(event) => onChange(event.target.value as Note)}
-      >
-        {CHROMATIC_NOTES.map((note) => (
-          <option key={note} value={note}>
-            {note}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-};
+const NoteSelect = ({ value, onChange, label = 'Root' }: NoteSelectProps) => (
+  <FieldSelect
+    label={label}
+    value={value}
+    onChange={(v) => onChange(v as Note)}
+  >
+    {CHROMATIC_NOTES.map((note) => (
+      <option key={note} value={note}>
+        {note}
+      </option>
+    ))}
+  </FieldSelect>
+);
 
 export { NoteSelect };
