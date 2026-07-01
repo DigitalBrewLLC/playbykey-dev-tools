@@ -1,10 +1,9 @@
-import { Intervals } from './constants';
-import { elementAt, getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
-import type { ModeName, Note, IntervalId } from './types';
+import { Intervals, Modes } from './constants';
+import { elementAt, getNoteIndex, getModeNotes, noteAtIndex } from './engine';
+import type { Note, IntervalId } from './types';
 
 interface IntervalContext {
   root: Note;
-  mode: ModeName;
   interval: IntervalId;
 }
 
@@ -87,19 +86,18 @@ const INTERVAL_VALUE_SET = new Set<string>(Object.values(Intervals));
 const isIntervalId = (value: string): value is IntervalId =>
   INTERVAL_VALUE_SET.has(value);
 
-const noteAtDegree = (root: Note, mode: ModeName, degree: number): Note => {
+const noteAtDegree = (root: Note, degree: number): Note => {
   if (degree === 8) {
     return root;
   }
-  return elementAt(getScaleNotes(root, mode), degree - 1);
+  return elementAt(getModeNotes(root, Modes.Ionian), degree - 1);
 };
 
 const resolveEndpointsFromSpec = (
   root: Note,
-  mode: ModeName,
   intervalSpec: IntervalSpec
 ): { from: Note; to: Note } => {
-  const from = noteAtDegree(root, mode, intervalSpec.fromDegree);
+  const from = noteAtDegree(root, intervalSpec.fromDegree);
 
   if (intervalSpec.chromaticTo === true) {
     return {
@@ -116,7 +114,7 @@ const resolveEndpointsFromSpec = (
 
   return {
     from,
-    to: noteAtDegree(root, mode, intervalSpec.toDegree),
+    to: noteAtDegree(root, intervalSpec.toDegree),
   };
 };
 
@@ -132,11 +130,7 @@ const resolveIntervalEndpoints = (
 ): ResolvedInterval => {
   const definition = INTERVAL_DEFINITIONS[context.interval];
   const { intervalSpec } = definition;
-  const { from, to } = resolveEndpointsFromSpec(
-    context.root,
-    context.mode,
-    intervalSpec
-  );
+  const { from, to } = resolveEndpointsFromSpec(context.root, intervalSpec);
 
   return {
     from,

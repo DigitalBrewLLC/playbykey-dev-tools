@@ -113,12 +113,12 @@ const getSemitoneDistance = (from: Note, to: Note): number => {
 };
 
 /**
- * Returns the 7 notes of a scale for a given root and mode.
+ * Returns the 7 notes of a diatonic mode for a given root.
  *
- * Example: getScaleNotes('C', 'ionian') => ['C', 'D', 'E', 'F', 'G', 'A', 'B']
- * Example: getScaleNotes('D', 'dorian') => ['D', 'E', 'F', 'G', 'A', 'B', 'C']
+ * Example: getModeNotes('C', 'ionian') => ['C', 'D', 'E', 'F', 'G', 'A', 'B']
+ * Example: getModeNotes('D', 'dorian') => ['D', 'E', 'F', 'G', 'A', 'B', 'C']
  */
-const getScaleNotes = (root: Note, mode: ModeName): Note[] => {
+const getModeNotes = (root: Note, mode: ModeName): Note[] => {
   const rootIndex = getNoteIndex(root);
   return MODE_SEMITONE_OFFSETS[mode].map((offset) =>
     noteAtIndex(rootIndex + offset)
@@ -137,7 +137,7 @@ const getScaleDegree = (
   mode: ModeName,
   note: Note
 ): number | null => {
-  const scaleNotes = getScaleNotes(root, mode);
+  const scaleNotes = getModeNotes(root, mode);
   const index = scaleNotes.indexOf(note);
   return index === -1 ? null : index + 1;
 };
@@ -182,7 +182,7 @@ const buildNoteMap = (
   mode: ModeName,
   notation: NotationType
 ): NoteDisplayInfo[] => {
-  const scaleNotes = getScaleNotes(root, mode);
+  const scaleNotes = getModeNotes(root, mode);
   return CHROMATIC_NOTES.map((note) => {
     const index = scaleNotes.indexOf(note);
     const scaleDegree = index === -1 ? null : index + 1;
@@ -243,7 +243,7 @@ const getParentScaleModes = (
       12) %
     12;
   const parentRoot = noteAtIndex(parentRootIndex);
-  const parentScaleNotes = getScaleNotes(parentRoot, Modes.Ionian);
+  const parentScaleNotes = getModeNotes(parentRoot, Modes.Ionian);
   return MODES.map((m, i) => ({
     root: elementAt(parentScaleNotes, i),
     mode: m.id,
@@ -261,7 +261,7 @@ const getParentScaleModes = (
  */
 const getModalRoot = (parentKey: Note, mode: ModeName): Note => {
   const modeInfo = ModeInfoById[mode];
-  const parentNotes = getScaleNotes(parentKey, Modes.Ionian);
+  const parentNotes = getModeNotes(parentKey, Modes.Ionian);
   return elementAt(parentNotes, modeInfo.scaleDegree - 1);
 };
 
@@ -346,7 +346,7 @@ export {
   getNoteIndex,
   noteAtIndex,
   getSemitoneDistance,
-  getScaleNotes,
+  getModeNotes,
   getScaleDegree,
   isNoteInScale,
   getNoteLabel,

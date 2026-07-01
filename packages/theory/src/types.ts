@@ -54,7 +54,7 @@ type IntervalId =
 
 /** Scale types supported by the scale-derivation functions. */
 type ScaleType =
-  | 'mode'
+  | 'major'
   | 'chromatic'
   | 'pentatonic-major'
   | 'pentatonic-minor'

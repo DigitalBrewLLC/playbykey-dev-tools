@@ -1,14 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { Modes, ScaleTypes } from '../src/constants';
-import { getScaleNotes } from '../src/engine';
+import { Modes, PentatonicTypes, ScaleTypes } from '../src/constants';
+import { getModeNotes } from '../src/engine';
 import {
   BLUES_SEMITONE_OFFSETS,
   getBluesNotes,
-  getDerivedScaleNotes,
   getHarmonicMinorNotes,
-  getPentatonicDegrees,
-  getScaleContextNotes,
-  getScaleEmphasisDegrees,
+  getPentatonicNotes,
+  getScaleDegrees,
+  getScaleNotes,
   PENTATONIC_MAJOR_DEGREES,
   PENTATONIC_MINOR_DEGREES,
   SCALE_DEFINITIONS,
@@ -20,35 +19,39 @@ describe('SCALE_DEFINITIONS', () => {
   });
 });
 
-describe('getDerivedScaleNotes', () => {
-  it('returns diatonic mode notes for mode type', () => {
-    expect(getDerivedScaleNotes('C', Modes.Ionian, ScaleTypes.Mode)).toEqual(
-      getScaleNotes('C', Modes.Ionian)
+describe('getScaleNotes', () => {
+  it('returns ionian notes for major type', () => {
+    expect(getScaleNotes('C', ScaleTypes.Major)).toEqual(
+      getModeNotes('C', Modes.Ionian)
     );
   });
 
   it('returns all 12 chromatic pitches for chromatic type', () => {
-    expect(
-      getDerivedScaleNotes('C', Modes.Ionian, ScaleTypes.Chromatic)
-    ).toHaveLength(12);
+    expect(getScaleNotes('C', ScaleTypes.Chromatic)).toHaveLength(12);
   });
 
-  it('returns major pentatonic from ionian regardless of mode arg', () => {
-    expect(
-      getDerivedScaleNotes('C', Modes.Dorian, ScaleTypes.PentatonicMajor)
-    ).toEqual(['C', 'D', 'E', 'G', 'A']);
+  it('returns major pentatonic from ionian', () => {
+    expect(getScaleNotes('C', ScaleTypes.PentatonicMajor)).toEqual([
+      'C',
+      'D',
+      'E',
+      'G',
+      'A',
+    ]);
   });
 
-  it('returns minor pentatonic from aeolian regardless of mode arg', () => {
-    expect(
-      getDerivedScaleNotes('C', Modes.Ionian, ScaleTypes.PentatonicMinor)
-    ).toEqual(['C', 'D#', 'F', 'G', 'A#']);
+  it('returns minor pentatonic from aeolian', () => {
+    expect(getScaleNotes('C', ScaleTypes.PentatonicMinor)).toEqual([
+      'C',
+      'D#',
+      'F',
+      'G',
+      'A#',
+    ]);
   });
 
   it('returns blues scale with blue note for blues type', () => {
-    expect(getDerivedScaleNotes('A', Modes.Aeolian, ScaleTypes.Blues)).toEqual(
-      getBluesNotes('A')
-    );
+    expect(getScaleNotes('A', ScaleTypes.Blues)).toEqual(getBluesNotes('A'));
     expect(getBluesNotes('A')).toContain('D#');
   });
 
@@ -65,59 +68,37 @@ describe('getDerivedScaleNotes', () => {
   });
 });
 
-describe('getScaleEmphasisDegrees', () => {
+describe('getScaleDegrees', () => {
   it('returns major pentatonic emphasis degrees', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.PentatonicMajor)).toEqual(
+    expect(getScaleDegrees(ScaleTypes.PentatonicMajor)).toEqual(
       PENTATONIC_MAJOR_DEGREES
     );
   });
 
   it('returns minor pentatonic emphasis degrees', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.PentatonicMinor)).toEqual(
+    expect(getScaleDegrees(ScaleTypes.PentatonicMinor)).toEqual(
       PENTATONIC_MINOR_DEGREES
     );
   });
 
   it('returns blues scale degrees', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.Blues)).toHaveLength(
+    expect(getScaleDegrees(ScaleTypes.Blues)).toHaveLength(
       BLUES_SEMITONE_OFFSETS.length
     );
   });
 
-  it('returns all 7 degrees for mode type', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.Mode)).toEqual([
-      1, 2, 3, 4, 5, 6, 7,
-    ]);
+  it('returns all 7 degrees for major type', () => {
+    expect(getScaleDegrees(ScaleTypes.Major)).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
 
   it('returns all 12 degrees for chromatic type', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.Chromatic)).toHaveLength(12);
+    expect(getScaleDegrees(ScaleTypes.Chromatic)).toHaveLength(12);
   });
 });
 
-describe('getScaleContextNotes', () => {
-  it('uses aeolian parent for blues harmonic context', () => {
-    expect(getScaleContextNotes('A', Modes.Aeolian, ScaleTypes.Blues)).toEqual(
-      getScaleNotes('A', Modes.Aeolian)
-    );
-  });
-
-  it('returns ionian scale as context for major pentatonic', () => {
-    expect(
-      getScaleContextNotes('C', Modes.Dorian, ScaleTypes.PentatonicMajor)
-    ).toEqual(getScaleNotes('C', Modes.Ionian));
-  });
-
-  it('returns aeolian scale as context for minor pentatonic', () => {
-    expect(
-      getScaleContextNotes('C', Modes.Ionian, ScaleTypes.PentatonicMinor)
-    ).toEqual(getScaleNotes('C', Modes.Aeolian));
-  });
-});
-
-describe('getPentatonicDegrees', () => {
+describe('getPentatonicNotes', () => {
   it('returns 5 major pentatonic notes for given root', () => {
-    expect(getPentatonicDegrees('C', 'major')).toEqual([
+    expect(getPentatonicNotes('C', PentatonicTypes.Major)).toEqual([
       'C',
       'D',
       'E',
@@ -127,7 +108,7 @@ describe('getPentatonicDegrees', () => {
   });
 
   it('returns 5 minor pentatonic notes for given root', () => {
-    expect(getPentatonicDegrees('C', 'minor')).toEqual([
+    expect(getPentatonicNotes('C', PentatonicTypes.Minor)).toEqual([
       'C',
       'D#',
       'F',
@@ -137,8 +118,8 @@ describe('getPentatonicDegrees', () => {
   });
 
   it('relative relationship: A minor pentatonic shares notes with C major pentatonic', () => {
-    const cMajor = new Set(getPentatonicDegrees('C', 'major'));
-    const aMinor = new Set(getPentatonicDegrees('A', 'minor'));
+    const cMajor = new Set(getPentatonicNotes('C', PentatonicTypes.Major));
+    const aMinor = new Set(getPentatonicNotes('A', PentatonicTypes.Minor));
     expect([...cMajor].sort()).toEqual([...aMinor].sort());
   });
 
@@ -158,8 +139,8 @@ describe('getPentatonicDegrees', () => {
       'B',
     ] as const;
     for (const root of roots) {
-      expect(getPentatonicDegrees(root, 'major')).toHaveLength(5);
-      expect(getPentatonicDegrees(root, 'minor')).toHaveLength(5);
+      expect(getPentatonicNotes(root, PentatonicTypes.Major)).toHaveLength(5);
+      expect(getPentatonicNotes(root, PentatonicTypes.Minor)).toHaveLength(5);
     }
   });
 });
