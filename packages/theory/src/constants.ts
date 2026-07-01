@@ -65,7 +65,7 @@ const Intervals = {
 
 /** Named constants for each derived scale type. */
 const ScaleTypes = {
-  Mode: 'mode',
+  Major: 'major',
   Chromatic: 'chromatic',
   PentatonicMajor: 'pentatonic-major',
   PentatonicMinor: 'pentatonic-minor',

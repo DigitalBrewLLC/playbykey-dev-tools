@@ -21,32 +21,38 @@ describe('SCALE_DEFINITIONS', () => {
 });
 
 describe('getDerivedScaleNotes', () => {
-  it('returns diatonic mode notes for mode type', () => {
-    expect(getDerivedScaleNotes('C', Modes.Ionian, ScaleTypes.Mode)).toEqual(
+  it('returns ionian notes for major type', () => {
+    expect(getDerivedScaleNotes('C', ScaleTypes.Major)).toEqual(
       getScaleNotes('C', Modes.Ionian)
     );
   });
 
   it('returns all 12 chromatic pitches for chromatic type', () => {
-    expect(
-      getDerivedScaleNotes('C', Modes.Ionian, ScaleTypes.Chromatic)
-    ).toHaveLength(12);
+    expect(getDerivedScaleNotes('C', ScaleTypes.Chromatic)).toHaveLength(12);
   });
 
-  it('returns major pentatonic from ionian regardless of mode arg', () => {
-    expect(
-      getDerivedScaleNotes('C', Modes.Dorian, ScaleTypes.PentatonicMajor)
-    ).toEqual(['C', 'D', 'E', 'G', 'A']);
+  it('returns major pentatonic from ionian', () => {
+    expect(getDerivedScaleNotes('C', ScaleTypes.PentatonicMajor)).toEqual([
+      'C',
+      'D',
+      'E',
+      'G',
+      'A',
+    ]);
   });
 
-  it('returns minor pentatonic from aeolian regardless of mode arg', () => {
-    expect(
-      getDerivedScaleNotes('C', Modes.Ionian, ScaleTypes.PentatonicMinor)
-    ).toEqual(['C', 'D#', 'F', 'G', 'A#']);
+  it('returns minor pentatonic from aeolian', () => {
+    expect(getDerivedScaleNotes('C', ScaleTypes.PentatonicMinor)).toEqual([
+      'C',
+      'D#',
+      'F',
+      'G',
+      'A#',
+    ]);
   });
 
   it('returns blues scale with blue note for blues type', () => {
-    expect(getDerivedScaleNotes('A', Modes.Aeolian, ScaleTypes.Blues)).toEqual(
+    expect(getDerivedScaleNotes('A', ScaleTypes.Blues)).toEqual(
       getBluesNotes('A')
     );
     expect(getBluesNotes('A')).toContain('D#');
@@ -84,8 +90,8 @@ describe('getScaleEmphasisDegrees', () => {
     );
   });
 
-  it('returns all 7 degrees for mode type', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.Mode)).toEqual([
+  it('returns all 7 degrees for major type', () => {
+    expect(getScaleEmphasisDegrees(ScaleTypes.Major)).toEqual([
       1, 2, 3, 4, 5, 6, 7,
     ]);
   });
@@ -97,21 +103,21 @@ describe('getScaleEmphasisDegrees', () => {
 
 describe('getScaleContextNotes', () => {
   it('uses aeolian parent for blues harmonic context', () => {
-    expect(getScaleContextNotes('A', Modes.Aeolian, ScaleTypes.Blues)).toEqual(
+    expect(getScaleContextNotes('A', ScaleTypes.Blues)).toEqual(
       getScaleNotes('A', Modes.Aeolian)
     );
   });
 
   it('returns ionian scale as context for major pentatonic', () => {
-    expect(
-      getScaleContextNotes('C', Modes.Dorian, ScaleTypes.PentatonicMajor)
-    ).toEqual(getScaleNotes('C', Modes.Ionian));
+    expect(getScaleContextNotes('C', ScaleTypes.PentatonicMajor)).toEqual(
+      getScaleNotes('C', Modes.Ionian)
+    );
   });
 
   it('returns aeolian scale as context for minor pentatonic', () => {
-    expect(
-      getScaleContextNotes('C', Modes.Ionian, ScaleTypes.PentatonicMinor)
-    ).toEqual(getScaleNotes('C', Modes.Aeolian));
+    expect(getScaleContextNotes('C', ScaleTypes.PentatonicMinor)).toEqual(
+      getScaleNotes('C', Modes.Aeolian)
+    );
   });
 });
 

@@ -34,8 +34,8 @@ interface ScaleDefinition {
 }
 
 const SCALE_DEFINITIONS: Record<ScaleType, ScaleDefinition> = {
-  [ScaleTypes.Mode]: {
-    label: 'Mode scale',
+  [ScaleTypes.Major]: {
+    label: 'Major scale',
   },
   [ScaleTypes.Chromatic]: {
     label: 'Chromatic scale',
@@ -116,11 +116,7 @@ const getScaleEmphasisDegrees = (scaleType: ScaleType): readonly number[] => {
   return FULL_SCALE_DEGREES;
 };
 
-const getDerivedScaleNotes = (
-  root: Note,
-  mode: ModeName,
-  scaleType: ScaleType
-): Note[] => {
+const getDerivedScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
   const definition = SCALE_DEFINITIONS[scaleType];
 
   if (definition.semitoneOffsets !== undefined) {
@@ -145,14 +141,10 @@ const getDerivedScaleNotes = (
     );
   }
 
-  return getScaleNotes(root, mode);
+  return getScaleNotes(root, Modes.Ionian);
 };
 
-const getScaleContextNotes = (
-  root: Note,
-  mode: ModeName,
-  scaleType: ScaleType
-): Note[] => {
+const getScaleContextNotes = (root: Note, scaleType: ScaleType): Note[] => {
   if (scaleType === ScaleTypes.Chromatic) {
     return [...CHROMATIC_NOTES];
   }
@@ -168,7 +160,7 @@ const getScaleContextNotes = (
   if (scaleType === ScaleTypes.PentatonicMinor) {
     return getScaleNotes(root, Modes.Aeolian);
   }
-  return getScaleNotes(root, mode);
+  return getScaleNotes(root, Modes.Ionian);
 };
 
 export type { ScaleDefinition };
