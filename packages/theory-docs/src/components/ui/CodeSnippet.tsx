@@ -7,12 +7,24 @@ const snippetStyle = {
 
 const snippetCallStyle = {
   color: 'var(--sl-color-accent-high)',
+  display: 'block' as const,
 };
 
-const CodeSnippet = ({ call }: { call: string }) => (
-  <p style={snippetStyle}>
-    <code style={snippetCallStyle}>{call}</code>
-  </p>
-);
+interface CodeSnippetProps {
+  call: string | string[];
+}
+
+const CodeSnippet = ({ call }: CodeSnippetProps) => {
+  const lines = Array.isArray(call) ? call : [call];
+  return (
+    <pre style={snippetStyle}>
+      {lines.map((line, i) => (
+        <code key={i} style={snippetCallStyle}>
+          {line}
+        </code>
+      ))}
+    </pre>
+  );
+};
 
 export { CodeSnippet };

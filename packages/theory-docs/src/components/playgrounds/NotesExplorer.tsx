@@ -4,7 +4,6 @@ import type { Note } from '@playbykey/theory';
 import { CodeSnippet } from '../ui/CodeSnippet';
 import { InfoBlock } from '../ui/InfoBlock';
 import { NoteSelect } from '../ui/NoteSelect';
-import { ResultPanel } from '../ui/ResultPanel';
 import {
   containerStyle,
   controlsRowStyle,
@@ -40,11 +39,12 @@ const NotesExplorer = () => {
         </div>
       </InfoBlock>
 
-      <CodeSnippet call={`ENHARMONIC_LABELS[Notes.${noteKey}]`} />
-      <ResultPanel label="ENHARMONIC_LABELS result" value={enharmonicLabel} />
-
-      <CodeSnippet call={`getNoteIndex(Notes.${noteKey})`} />
-      <ResultPanel label="getNoteIndex result" value={index} />
+      <CodeSnippet
+        call={[
+          `ENHARMONIC_LABELS[Notes.${noteKey}]`,
+          `getNoteIndex(Notes.${noteKey})`,
+        ]}
+      />
     </div>
   );
 };
