@@ -1,10 +1,5 @@
 import { useMemo, useState } from 'react';
-import {
-  SCALE_DEFINITIONS,
-  getScaleNotes,
-  Notes,
-  ScaleTypes,
-} from '@playbykey/theory';
+import { getScaleNotes, Notes, ScaleTypes } from '@playbykey/theory';
 import type { Note, ScaleType } from '@playbykey/theory';
 import { CodeSnippet } from '../ui/CodeSnippet';
 import { NoteSelect } from '../ui/NoteSelect';
@@ -16,7 +11,6 @@ const ScalesExplorer = () => {
   const [root, setRoot] = useState<Note>(Notes.C);
   const [scaleType, setScaleType] = useState<ScaleType>(ScaleTypes.Major);
 
-  const definition = useMemo(() => SCALE_DEFINITIONS[scaleType], [scaleType]);
   const notes = useMemo(
     () => getScaleNotes(root, scaleType),
     [root, scaleType]
@@ -36,7 +30,7 @@ const ScalesExplorer = () => {
 
       <CodeSnippet
         call={[
-          `SCALE_DEFINITIONS[ScaleTypes.${scaleKey}]  // { label: '${definition.label}' }`,
+          `SCALE_DEFINITIONS[ScaleTypes.${scaleKey}]`,
           `getScaleNotes(Notes.${noteKey}, ScaleTypes.${scaleKey})`,
         ]}
       />
