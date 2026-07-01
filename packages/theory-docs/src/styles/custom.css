@@ -40,6 +40,10 @@
   /* Absolute */
   --sl-color-white: #ffffff;
   --sl-color-black: #0a0a0a;
+
+  /* Code blocks always render on a near-black background (#0a0a0a) in both themes.
+     This token keeps that foreground color in one place instead of hardcoding it. */
+  --color-code-fg: #e5e5e5;
 }
 
 :root[data-theme='light'] {

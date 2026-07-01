@@ -33,7 +33,7 @@ const signatureStyle = {
   border: '1px solid var(--sl-color-gray-5)',
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.8125rem',
-  color: '#e5e5e5',
+  color: 'var(--color-code-fg)',
   overflowX: 'auto' as const,
 };
 
