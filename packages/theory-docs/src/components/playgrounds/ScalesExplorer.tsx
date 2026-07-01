@@ -19,6 +19,7 @@ const containerStyle = {
 const controlsRowStyle = {
   display: 'flex',
   flexWrap: 'wrap' as const,
+  alignItems: 'flex-end',
   gap: '0.75rem',
 };
 
