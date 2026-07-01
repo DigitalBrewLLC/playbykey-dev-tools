@@ -100,8 +100,8 @@ const ScalesPlayground = () => {
             value={pentType}
             onChange={(e) => setPentType(e.target.value as PentatonicType)}
           >
-            <option value={PentatonicTypes.Major}>major</option>
-            <option value={PentatonicTypes.Minor}>minor</option>
+            <option value={PentatonicTypes.Major}>Major</option>
+            <option value={PentatonicTypes.Minor}>Minor</option>
           </select>
         </label>
       </FunctionCard>
