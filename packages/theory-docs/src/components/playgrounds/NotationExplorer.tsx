@@ -113,7 +113,7 @@ const NotationExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`buildNoteMap('${root}', '${mode}', '${notation}')`}</code>
+        >{`buildNoteMap(Notes.${Object.entries(Notes).find(([, v]) => v === root)?.[0]}, Modes.${Object.entries(Modes).find(([, v]) => v === mode)?.[0]}, Notations.${Object.entries(Notations).find(([, v]) => v === notation)?.[0]})`}</code>
       </p>
 
       <ResultPanel label="buildNoteMap result" value={noteMap} />

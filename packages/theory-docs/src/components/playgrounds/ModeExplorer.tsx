@@ -2,9 +2,11 @@ import { useMemo, useState } from 'react';
 import {
   getModeAlterations,
   getModeNotes,
+  Modes,
   MODES,
   MODE_INTERVALS,
   MODE_SEMITONE_OFFSETS,
+  Notes,
 } from '@playbykey/theory';
 import type { ModeName, Note } from '@playbykey/theory';
 import { ModeSelect } from '../ui/ModeSelect';
@@ -84,8 +86,8 @@ const snippetCallStyle = {
 };
 
 const ModeExplorer = () => {
-  const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
+  const [root, setRoot] = useState<Note>(Notes.C);
+  const [mode, setMode] = useState<ModeName>(Modes.Ionian);
 
   // MODES contains all 7 modes; find with a valid ModeName is always defined
   const modeInfo = useMemo(() => MODES.find((m) => m.id === mode)!, [mode]);
@@ -122,7 +124,7 @@ const ModeExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`getModeNotes('${root}', '${mode}')`}</code>
+        >{`getModeNotes(Notes.${Object.entries(Notes).find(([, v]) => v === root)?.[0]}, Modes.${Object.entries(Modes).find(([, v]) => v === mode)?.[0]})`}</code>
       </p>
 
       <ResultPanel label="getModeNotes result" value={notes} />

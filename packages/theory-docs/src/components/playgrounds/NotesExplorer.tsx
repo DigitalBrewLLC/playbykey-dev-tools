@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ENHARMONIC_LABELS, getNoteIndex } from '@playbykey/theory';
+import { ENHARMONIC_LABELS, getNoteIndex, Notes } from '@playbykey/theory';
 import type { Note } from '@playbykey/theory';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
@@ -50,7 +50,7 @@ const snippetCallStyle = {
 };
 
 const NotesExplorer = () => {
-  const [note, setNote] = useState<Note>('C');
+  const [note, setNote] = useState<Note>(Notes.C);
 
   const index = useMemo(() => getNoteIndex(note), [note]);
   const enharmonicLabel = useMemo(() => ENHARMONIC_LABELS[note], [note]);
@@ -75,7 +75,9 @@ const NotesExplorer = () => {
       </div>
 
       <p style={snippetStyle}>
-        <code style={snippetCallStyle}>{`getNoteIndex('${note}')`}</code>
+        <code
+          style={snippetCallStyle}
+        >{`getNoteIndex(Notes.${Object.entries(Notes).find(([, v]) => v === note)?.[0]})`}</code>
       </p>
 
       <ResultPanel label="getNoteIndex result" value={index} />

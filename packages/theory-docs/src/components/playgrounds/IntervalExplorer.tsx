@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import {
   INTERVAL_DEFINITIONS,
+  Intervals,
+  Notes,
   resolveIntervalEndpoints,
 } from '@playbykey/theory';
 import type { IntervalId, Note } from '@playbykey/theory';
@@ -55,8 +57,8 @@ const snippetCallStyle = {
 };
 
 const IntervalExplorer = () => {
-  const [root, setRoot] = useState<Note>('C');
-  const [interval, setInterval] = useState<IntervalId>('perfect_5th');
+  const [root, setRoot] = useState<Note>(Notes.C);
+  const [interval, setInterval] = useState<IntervalId>(Intervals.Perfect5th);
 
   const definition = useMemo(() => INTERVAL_DEFINITIONS[interval], [interval]);
   const resolved = useMemo(
@@ -81,7 +83,7 @@ const IntervalExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`resolveIntervalEndpoints({ root: '${root}', interval: '${interval}' })`}</code>
+        >{`resolveIntervalEndpoints({ root: Notes.${Object.entries(Notes).find(([, v]) => v === root)?.[0]}, interval: Intervals.${Object.entries(Intervals).find(([, v]) => v === interval)?.[0]} })`}</code>
       </p>
 
       <ResultPanel label="resolveIntervalEndpoints result" value={resolved} />

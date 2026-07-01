@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import {
   SCALE_DEFINITIONS,
   getScaleNotes,
+  Notes,
   ScaleTypes,
 } from '@playbykey/theory';
 import type { Note, ScaleType } from '@playbykey/theory';
@@ -51,7 +52,7 @@ const snippetCallStyle = {
 };
 
 const ScalesExplorer = () => {
-  const [root, setRoot] = useState<Note>('C');
+  const [root, setRoot] = useState<Note>(Notes.C);
   const [scaleType, setScaleType] = useState<ScaleType>(ScaleTypes.Major);
 
   const definition = useMemo(() => SCALE_DEFINITIONS[scaleType], [scaleType]);
@@ -74,7 +75,7 @@ const ScalesExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`getScaleNotes('${root}', '${scaleType}')`}</code>
+        >{`getScaleNotes(Notes.${Object.entries(Notes).find(([, v]) => v === root)?.[0]}, ScaleTypes.${Object.entries(ScaleTypes).find(([, v]) => v === scaleType)?.[0]})`}</code>
       </p>
 
       <ResultPanel label="getScaleNotes result" value={notes} />
