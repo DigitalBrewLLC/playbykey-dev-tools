@@ -7,7 +7,6 @@ import {
 } from '@playbykey/theory';
 import type { Note, ScaleType } from '@playbykey/theory';
 import { CodeSnippet } from '../ui/CodeSnippet';
-import { InfoBlock, InfoTitle } from '../ui/InfoBlock';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
@@ -35,12 +34,11 @@ const ScalesExplorer = () => {
         <ScaleTypeSelect value={scaleType} onChange={setScaleType} />
       </div>
 
-      <InfoBlock>
-        <InfoTitle>{definition.label}</InfoTitle>
-      </InfoBlock>
-
       <CodeSnippet
-        call={`getScaleNotes(Notes.${noteKey}, ScaleTypes.${scaleKey})`}
+        call={[
+          `SCALE_DEFINITIONS[ScaleTypes.${scaleKey}]  // { label: '${definition.label}' }`,
+          `getScaleNotes(Notes.${noteKey}, ScaleTypes.${scaleKey})`,
+        ]}
       />
 
       <ResultPanel label="getScaleNotes result" value={notes} />

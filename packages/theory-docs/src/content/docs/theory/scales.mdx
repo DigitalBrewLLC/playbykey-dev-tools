@@ -26,9 +26,9 @@ head:
 
 import ScalesPlayground from '../../../components/playgrounds/ScalesPlayground';
 
-The scales module computes note sets for derived scale types: `'major'`, `'chromatic'`, `'pentatonic-major'`, `'pentatonic-minor'`, `'blues'`, and `'harmonic-minor'`.
+The scales module computes note sets for six scale types: `'major'`, `'chromatic'`, `'pentatonic-major'`, `'pentatonic-minor'`, `'blues'`, and `'harmonic-minor'`. Each type is described by a `SCALE_DEFINITIONS` entry that records its label and how its notes are derived.
 
-`getScaleNotes(root, scaleType)` is the general-purpose entry point; `getScaleDegrees(scaleType)` is its numeric parallel, returning active degree numbers instead of note names.
+`getScaleNotes(root, scaleType)` is the general-purpose entry point — it accepts any `ScaleType` and returns the corresponding notes for a given root. `getScaleDegrees(scaleType)` is its numeric parallel, returning the active scale-degree numbers instead of note names.
 
 ## Live Playground
 
