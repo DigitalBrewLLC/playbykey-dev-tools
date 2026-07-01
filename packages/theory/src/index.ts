@@ -43,7 +43,7 @@ export {
   isNoteInScale,
   getNoteLabel,
   buildNoteMap,
-  getModeAlterations,
+  getModeAccidentals,
   getModalRoot,
   getParentScaleModes,
   getRelativeMinorKey,

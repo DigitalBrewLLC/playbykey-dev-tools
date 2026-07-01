@@ -4,7 +4,7 @@ import {
   getCircleOfFifthsOrder,
   getKeySignatureCount,
   getModalRoot,
-  getModeAlterations,
+  getModeAccidentals,
   getNoteIndex,
   getParentScaleModes,
   getRelativeMajorKey,
@@ -34,7 +34,7 @@ type EngineFunctionId =
   | 'getRelativeMajorKey'
   | 'getCircleOfFifthsOrder'
   | 'getKeySignatureCount'
-  | 'getModeAlterations'
+  | 'getModeAccidentals'
   | 'getModalRoot'
   | 'getScaleDegree'
   | 'isNoteInScale'
@@ -104,9 +104,9 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     inputKind: 'rootOnly',
   },
   {
-    id: 'getModeAlterations',
+    id: 'getModeAccidentals',
     signature:
-      "getModeAlterations(mode: ModeName): Partial<Record<number, 'flat' | 'sharp'>>",
+      "getModeAccidentals(mode: ModeName): Partial<Record<number, 'flat' | 'sharp'>>",
     description: 'Returns scale-degree alterations relative to ionian.',
     inputKind: 'modeOnly',
   },
@@ -238,8 +238,8 @@ const computeResult = (
       return getCircleOfFifthsOrder();
     case 'getKeySignatureCount':
       return getKeySignatureCount(root);
-    case 'getModeAlterations':
-      return getModeAlterations(mode);
+    case 'getModeAccidentals':
+      return getModeAccidentals(mode);
     case 'getModalRoot':
       return getModalRoot(root, mode);
     case 'getScaleDegree':

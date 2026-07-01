@@ -202,12 +202,11 @@ const buildNoteMap = (
 };
 
 /**
- * Returns which scale degrees (1-7) are altered relative to Ionian.
- * Used by ModeIntervalGridView to populate grid cells (natural, flat, sharp).
+ * Returns which scale degrees (1-7) are accidentals relative to major (Ionian).
  *
- * Example: getModeAlterations('dorian') => { 3: 'flat', 7: 'flat' }
+ * Example: getModeAccidentals('dorian') => { 3: 'flat', 7: 'flat' }
  */
-const getModeAlterations = (
+const getModeAccidentals = (
   mode: ModeName
 ): Partial<Record<number, 'flat' | 'sharp'>> => {
   const ionianOffsets = MODE_SEMITONE_OFFSETS[Modes.Ionian];
@@ -351,7 +350,7 @@ export {
   isNoteInScale,
   getNoteLabel,
   buildNoteMap,
-  getModeAlterations,
+  getModeAccidentals,
   getModalRoot,
   getParentScaleModes,
   getRelativeMinorKey,

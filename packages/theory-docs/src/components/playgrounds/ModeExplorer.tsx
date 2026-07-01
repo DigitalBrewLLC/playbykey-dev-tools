@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
-  getModeAlterations,
+  getModeAccidentals,
   getModeNotes,
   Modes,
   MODES,
@@ -34,7 +34,7 @@ const ModeExplorer = () => {
   const modeInfo = useMemo(() => MODES.find((m) => m.id === mode)!, [mode]);
   const intervals = useMemo(() => MODE_INTERVALS[mode], [mode]);
   const offsets = useMemo(() => MODE_SEMITONE_OFFSETS[mode], [mode]);
-  const alterations = useMemo(() => getModeAlterations(mode), [mode]);
+  const alterations = useMemo(() => getModeAccidentals(mode), [mode]);
   const notes = useMemo(() => getModeNotes(root, mode), [root, mode]);
 
   const noteKey = Object.entries(Notes).find(([, v]) => v === root)?.[0];
@@ -60,7 +60,7 @@ const ModeExplorer = () => {
           <span style={dataValueStyle}>[{offsets.join(', ')}]</span>
         </div>
         <div style={dataRowStyle}>
-          <span style={dataLabelStyle}>Alterations from major</span>
+          <span style={dataLabelStyle}>Mode accidentals</span>
           <span style={dataValueStyle}>{JSON.stringify(alterations)}</span>
         </div>
         <div style={dataRowStyle}>
@@ -73,7 +73,7 @@ const ModeExplorer = () => {
         call={[
           `MODE_INTERVALS[Modes.${modeKey}]`,
           `MODE_SEMITONE_OFFSETS[Modes.${modeKey}]`,
-          `getModeAlterations(Modes.${modeKey})`,
+          `getModeAccidentals(Modes.${modeKey})`,
           `getModeNotes(Notes.${noteKey}, Modes.${modeKey})`,
         ]}
       />

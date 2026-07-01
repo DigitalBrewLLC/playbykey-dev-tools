@@ -20,7 +20,7 @@ export const ALL_NOTES: Note[] = [
   'B',
 ];
 
-/** Alteration direction constants used in getModeAlterations return values. */
+/** Accidental direction constants used in getModeAccidentals return values. */
 export const ALTERATION = {
   FLAT: 'flat',
   SHARP: 'sharp',

@@ -152,13 +152,13 @@ changed before v1, see [open-questions.md](./open-questions.md).
   note needs to know whether it's in the active scale, what its label is,
   and whether it's the root.
 
-#### `getModeAlterations`
+#### `getModeAccidentals`
 
-- **Signature:** `getModeAlterations(mode: ModeName): Partial<Record<number, 'flat' | 'sharp'>>`
+- **Signature:** `getModeAccidentals(mode: ModeName): Partial<Record<number, 'flat' | 'sharp'>>`
 - **Parameters:** `mode`.
 - **Returns:** A map from scale degree (1-7) to `'flat'` or `'sharp'` for
   degrees that differ from Ionian; degrees matching Ionian are omitted.
-- **Example:** `getModeAlterations('dorian') => { 3: 'flat', 7: 'flat' }`.
+- **Example:** `getModeAccidentals('dorian') => { 3: 'flat', 7: 'flat' }`.
 - **Use case:** Populating a mode/interval grid that shows which degrees
   of a mode are raised or lowered relative to the major scale.
 
