@@ -140,27 +140,17 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 #### `buildNoteMap`
 
-- **Signature:** `buildNoteMap(root: Note, mode: ModeName, notation: NotationType): NoteDisplayInfo[]`
-- **Parameters:** `root`, `mode`, `notation`.
-- **Returns:** An array of 12 `NoteDisplayInfo` objects (one per chromatic
-  note, in `NOTES` order), each with `note`, `inScale`, `scaleDegree`,
-  `label`, and `isRoot`.
-- **Description:** The primary data structure consumed by visualization
-  views - combines `getScaleDegree` and `getNoteLabel` with root/in-scale
-  flags for every chromatic note.
-- **Use case:** Driving a keyboard or fretboard visualization where every
-  note needs to know whether it's in the active scale, what its label is,
-  and whether it's the root.
-
-#### `getModeAlterations`
-
-- **Signature:** `getModeAlterations(mode: ModeName): Partial<Record<number, 'flat' | 'sharp'>>`
-- **Parameters:** `mode`.
-- **Returns:** A map from scale degree (1-7) to `'flat'` or `'sharp'` for
-  degrees that differ from Ionian; degrees matching Ionian are omitted.
-- **Example:** `getModeAlterations('dorian') => { 3: 'flat', 7: 'flat' }`.
-- **Use case:** Populating a mode/interval grid that shows which degrees
-  of a mode are raised or lowered relative to the major scale.
+- **Signature:** `buildNoteMap(root: Note, scaleType: ScaleType): NoteDisplayInfo[]`
+- **Parameters:** `root`, `scaleType`.
+- **Returns:** An array of `NoteDisplayInfo` objects — one per in-scale note,
+  in scale-degree order. Each entry contains `note`, `scaleDegree` (1-based),
+  and `semitoneOffset` (0–11, distance from root). Notation is left to the
+  consumer: use `entry.note` for letter labels, `String(entry.scaleDegree)`
+  for numeric labels.
+- **Description:** A richer alternative to `getScaleNotes` that also carries
+  degree position and root membership for each in-scale note.
+- **Use case:** Driving keyboard, fretboard, or degree-grid visualizations
+  where each note needs its degree number and root flag.
 
 #### `getParentScaleModes`
 

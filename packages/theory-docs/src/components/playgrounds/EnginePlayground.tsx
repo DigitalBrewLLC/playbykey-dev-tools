@@ -4,7 +4,6 @@ import {
   getCircleOfFifthsOrder,
   getKeySignatureCount,
   getModalRoot,
-  getModeAlterations,
   getNoteIndex,
   getParentScaleModes,
   getRelativeMajorKey,
@@ -18,13 +17,14 @@ import {
   noteAtIndex,
   Modes,
   Notes,
-  Notations,
+  ScaleTypes,
 } from '@playbykey/theory';
-import type { ModeName, Note, NotationType } from '@playbykey/theory';
+import type { ModeName, Note, ScaleType } from '@playbykey/theory';
 import { FieldSelect } from '../ui/FieldSelect';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
+import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
 import { controlsRowStyle } from './playgroundStyles';
 
 type EngineFunctionId =
@@ -34,7 +34,6 @@ type EngineFunctionId =
   | 'getRelativeMajorKey'
   | 'getCircleOfFifthsOrder'
   | 'getKeySignatureCount'
-  | 'getModeAlterations'
   | 'getModalRoot'
   | 'getScaleDegree'
   | 'isNoteInScale'
@@ -53,7 +52,7 @@ type InputKind =
   | 'noteOnly'
   | 'indexOnly'
   | 'twoNotes'
-  | 'rootModeNotation'
+  | 'rootScaleType'
   | 'stringGuard'
   | 'none';
 
@@ -104,13 +103,6 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     inputKind: 'rootOnly',
   },
   {
-    id: 'getModeAlterations',
-    signature:
-      "getModeAlterations(mode: ModeName): Partial<Record<number, 'flat' | 'sharp'>>",
-    description: 'Returns scale-degree alterations relative to ionian.',
-    inputKind: 'modeOnly',
-  },
-  {
     id: 'getModalRoot',
     signature: 'getModalRoot(parentKey: Note, mode: ModeName): Note',
     description: 'Returns the modal root for a parent key and mode.',
@@ -132,9 +124,10 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
   {
     id: 'buildNoteMap',
     signature:
-      'buildNoteMap(root: Note, mode: ModeName, notation: NotationType): NoteDisplayInfo[]',
-    description: 'Builds display metadata for all 12 chromatic notes.',
-    inputKind: 'rootModeNotation',
+      'buildNoteMap(root: Note, scaleType: ScaleType): NoteDisplayInfo[]',
+    description:
+      'Returns one NoteDisplayInfo per in-scale note with note, scaleDegree, and isRoot.',
+    inputKind: 'rootScaleType',
   },
   {
     id: 'getNoteIndex',
@@ -218,11 +211,11 @@ const computeResult = (
   functionId: EngineFunctionId,
   root: Note,
   mode: ModeName,
+  scaleType: ScaleType,
   targetNote: Note,
   fromNote: Note,
   toNote: Note,
   index: number,
-  notation: NotationType,
   guardInput: string
 ): unknown => {
   switch (functionId) {
@@ -238,8 +231,6 @@ const computeResult = (
       return getCircleOfFifthsOrder();
     case 'getKeySignatureCount':
       return getKeySignatureCount(root);
-    case 'getModeAlterations':
-      return getModeAlterations(mode);
     case 'getModalRoot':
       return getModalRoot(root, mode);
     case 'getScaleDegree':
@@ -247,7 +238,7 @@ const computeResult = (
     case 'isNoteInScale':
       return isNoteInScale(root, mode, targetNote);
     case 'buildNoteMap':
-      return buildNoteMap(root, mode, notation);
+      return buildNoteMap(root, scaleType);
     case 'getNoteIndex':
       return getNoteIndex(targetNote);
     case 'noteAtIndex':
@@ -268,11 +259,11 @@ const EnginePlayground = () => {
     useState<EngineFunctionId>('getModeNotes');
   const [root, setRoot] = useState<Note>(Notes.C);
   const [mode, setMode] = useState<ModeName>(Modes.Ionian);
+  const [scaleType, setScaleType] = useState<ScaleType>(ScaleTypes.Major);
   const [targetNote, setTargetNote] = useState<Note>(Notes.E);
   const [fromNote, setFromNote] = useState<Note>(Notes.C);
   const [toNote, setToNote] = useState<Note>(Notes.E);
   const [index, setIndex] = useState(6);
-  const [notation, setNotation] = useState<NotationType>(Notations.Letter);
   const [guardInput, setGuardInput] = useState('C');
 
   const result = useMemo(
@@ -281,22 +272,22 @@ const EnginePlayground = () => {
         functionId,
         root,
         mode,
+        scaleType,
         targetNote,
         fromNote,
         toNote,
         index,
-        notation,
         guardInput
       ),
     [
       functionId,
       root,
       mode,
+      scaleType,
       targetNote,
       fromNote,
       toNote,
       index,
-      notation,
       guardInput,
     ]
   );
@@ -328,16 +319,19 @@ const EnginePlayground = () => {
       <div style={controlsRowStyle}>
         {(selected.inputKind === 'rootMode' ||
           selected.inputKind === 'rootModeNote' ||
-          selected.inputKind === 'rootModeNotation' ||
-          selected.inputKind === 'rootOnly') && (
+          selected.inputKind === 'rootOnly' ||
+          selected.inputKind === 'rootScaleType') && (
           <NoteSelect value={root} onChange={setRoot} label="Root" />
         )}
 
         {(selected.inputKind === 'rootMode' ||
           selected.inputKind === 'rootModeNote' ||
-          selected.inputKind === 'rootModeNotation' ||
           selected.inputKind === 'modeOnly') && (
           <ModeSelect value={mode} onChange={setMode} />
+        )}
+
+        {selected.inputKind === 'rootScaleType' && (
+          <ScaleTypeSelect value={scaleType} onChange={setScaleType} />
         )}
 
         {(selected.inputKind === 'rootModeNote' ||
@@ -354,17 +348,6 @@ const EnginePlayground = () => {
             <NoteSelect value={fromNote} onChange={setFromNote} label="From" />
             <NoteSelect value={toNote} onChange={setToNote} label="To" />
           </>
-        )}
-
-        {selected.inputKind === 'rootModeNotation' && (
-          <FieldSelect
-            label="Notation"
-            value={notation}
-            onChange={(v) => setNotation(v as NotationType)}
-          >
-            <option value={Notations.Letter}>Letter</option>
-            <option value={Notations.Number}>Number</option>
-          </FieldSelect>
         )}
 
         {selected.inputKind === 'indexOnly' && (

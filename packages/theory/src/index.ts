@@ -42,8 +42,6 @@ export {
   getScaleDegree,
   isNoteInScale,
   getNoteLabel,
-  buildNoteMap,
-  getModeAlterations,
   getModalRoot,
   getParentScaleModes,
   getRelativeMinorKey,
@@ -84,5 +82,6 @@ export {
   getPentatonicNotes,
   getScaleDegrees,
   getScaleNotes,
+  buildNoteMap,
   notesFromSemitoneOffsets,
 } from './scales';

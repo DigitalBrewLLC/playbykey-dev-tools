@@ -12,6 +12,13 @@ A zero-dependency TypeScript music theory engine for computing scale notes, reso
 npm install @playbykey/theory
 # pnpm add @playbykey/theory
 # yarn add @playbykey/theory
+# bun add @playbykey/theory
+```
+
+**Agent / LLM context prompt:**
+
+```text
+I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (scales/modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getScaleDegree, isNoteInScale, getNoteIndex, noteAtIndex, getSemitoneDistance (note utilities); buildNoteMap, getScaleNotes, getScaleDegrees (scale/visualization); parseNote, parseModeName, isNote, isModeName (type guards); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db).
 ```
 
 ## Quickstart
@@ -29,9 +36,10 @@ const parent = parentModes.find((m) => m.mode === 'ionian');
 
 ## What's included
 
-- **Keys & Modes** — `getScaleNotes`, `getModeAlterations`, `getModalRoot`, `getParentScaleModes`
+- **Keys & Modes** — `getModeNotes`, `getModalRoot`, `getParentScaleModes`
 - **Key relationships** — `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, `getCircleOfFifthsOrder`
-- **Note utilities** — `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`, `buildNoteMap`
+- **Note utilities** — `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`
+- **Scale / Visualization** — `buildNoteMap`, `getScaleNotes`, `getScaleDegrees`
 - **Intervals** — `resolveIntervalEndpoints`, `INTERVAL_DEFINITIONS`
 - **Derived scales** — `getBluesNotes`, `getHarmonicMinorNotes`, `getDerivedScaleNotes`
 - **Type guards** — `isNote`, `isModeName`, `parseNote`, `parseModeName`

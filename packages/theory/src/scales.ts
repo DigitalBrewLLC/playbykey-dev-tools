@@ -5,7 +5,13 @@ import {
   PentatonicTypes,
 } from './constants';
 import { elementAt, getNoteIndex, getModeNotes, noteAtIndex } from './engine';
-import type { ModeName, Note, PentatonicType, ScaleType } from './types';
+import type {
+  ModeName,
+  Note,
+  NoteDisplayInfo,
+  PentatonicType,
+  ScaleType,
+} from './types';
 
 /** Semitone offsets from the tonic for the six-note blues scale. */
 const BLUES_SEMITONE_OFFSETS = [0, 3, 5, 6, 7, 10] as const;
@@ -149,6 +155,26 @@ const getScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
   return getModeNotes(root, Modes.Ionian);
 };
 
+/**
+ * Returns one NoteDisplayInfo entry per in-scale note, in scale-degree order.
+ * Every entry includes the note name, its 1-based scale degree, and its semitone
+ * offset from the root (0 = root, up to 11).
+ * Consumers derive their own labels: use `note` for letter labels or
+ * `String(scaleDegree)` for numeric labels.
+ *
+ * Example: buildNoteMap('C', 'major') =>
+ *   [{ note:'C', scaleDegree:1, semitoneOffset:0 }, { note:'D', scaleDegree:2, semitoneOffset:2 }, ...]
+ */
+const buildNoteMap = (root: Note, scaleType: ScaleType): NoteDisplayInfo[] => {
+  const rootIndex = getNoteIndex(root);
+  const scaleNotes = getScaleNotes(root, scaleType);
+  return scaleNotes.map((note, index) => ({
+    note,
+    scaleDegree: index + 1,
+    semitoneOffset: (getNoteIndex(note) - rootIndex + 12) % 12,
+  }));
+};
+
 export type { ScaleDefinition };
 
 export {
@@ -163,5 +189,6 @@ export {
   getPentatonicNotes,
   getScaleDegrees,
   getScaleNotes,
+  buildNoteMap,
   notesFromSemitoneOffsets,
 };

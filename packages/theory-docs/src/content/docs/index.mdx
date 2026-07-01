@@ -33,7 +33,7 @@ The music theory engine powering [PlayByKey](https://playbykey.com). No external
 <Aside type="tip" title="Using an AI agent or LLM?">
 Paste this into your agent to give it context about this package:
 
-<Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getScaleNotes, getParentScaleModes, getModeAlterations, getModalRoot (scales and modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getScaleDegree, isNoteInScale, getNoteIndex, noteAtIndex, getSemitoneDistance, buildNoteMap (note utilities); parseNote, parseModeName, isNote, isModeName (type guards); getBluesNotes, getHarmonicMinorNotes, getDerivedScaleNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db)." />
+<Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (scales and modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getScaleDegree, isNoteInScale, getNoteIndex, noteAtIndex, getSemitoneDistance (note utilities); buildNoteMap, getScaleNotes, getScaleDegrees (scale/visualization); parseNote, parseModeName, isNote, isModeName (type guards); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db)." />
 </Aside>
 
 ## Installation
@@ -52,7 +52,7 @@ Paste this into your agent to give it context about this package:
     <Code lang="sh" code="bun add @playbykey/theory" />
   </TabItem>
   <TabItem label="agent">
-    <Code lang="text" code="Install @playbykey/theory from npm and add it to my project. Docs: https://theory-engine.docs.playbykey.com. Functions: getScaleNotes, getParentScaleModes, getModeAlterations, getModalRoot (scales/modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getScaleDegree, isNoteInScale, getNoteIndex, noteAtIndex, getSemitoneDistance, buildNoteMap (note utilities); parseNote, parseModeName, isNote, isModeName (type guards); getBluesNotes, getHarmonicMinorNotes, getDerivedScaleNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db)." />
+    <Code lang="text" code="Install @playbykey/theory from npm and add it to my project. Docs: https://theory-engine.docs.playbykey.com. Functions: getModeNotes, getParentScaleModes, getModalRoot (scales/modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getScaleDegree, isNoteInScale, getNoteIndex, noteAtIndex, getSemitoneDistance (note utilities); buildNoteMap, getScaleNotes, getScaleDegrees (scale/visualization); parseNote, parseModeName, isNote, isModeName (type guards); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db)." />
   </TabItem>
 </Tabs>
 

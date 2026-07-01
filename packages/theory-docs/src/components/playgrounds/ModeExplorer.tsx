@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import {
-  getModeAlterations,
   getModeNotes,
   Modes,
   MODES,
@@ -13,7 +12,6 @@ import { CodeSnippet } from '../ui/CodeSnippet';
 import { InfoBadge, InfoBlock, InfoTitle } from '../ui/InfoBlock';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
-import { ResultPanel } from '../ui/ResultPanel';
 import {
   containerStyle,
   controlsRowStyle,
@@ -37,7 +35,6 @@ const ModeExplorer = () => {
   const modeInfo = useMemo(() => MODES.find((m) => m.id === mode)!, [mode]);
   const intervals = useMemo(() => MODE_INTERVALS[mode], [mode]);
   const offsets = useMemo(() => MODE_SEMITONE_OFFSETS[mode], [mode]);
-  const alterations = useMemo(() => getModeAlterations(mode), [mode]);
   const notes = useMemo(() => getModeNotes(root, mode), [root, mode]);
 
   const noteKey = Object.entries(Notes).find(([, v]) => v === root)?.[0];
@@ -54,23 +51,27 @@ const ModeExplorer = () => {
         <InfoTitle>{modeInfo.name}</InfoTitle>
         <InfoBadge>Degree {modeInfo.scaleDegree}</InfoBadge>
         <p style={characterStyle}>{modeInfo.character}</p>
+        <div style={dataRowStyle}>
+          <span style={dataLabelStyle}>Step intervals</span>
+          <span style={dataValueStyle}>{formatArray(intervals)}</span>
+        </div>
+        <div style={dataRowStyle}>
+          <span style={dataLabelStyle}>Semitone offsets</span>
+          <span style={dataValueStyle}>{formatArray(offsets)}</span>
+        </div>
+        <div style={dataRowStyle}>
+          <span style={dataLabelStyle}>Notes</span>
+          <span style={dataValueStyle}>{notes.join(', ')}</span>
+        </div>
       </InfoBlock>
 
-      <div style={dataRowStyle}>
-        <span style={dataLabelStyle}>Step intervals</span>
-        <span style={dataValueStyle}>{formatArray(intervals)}</span>
-      </div>
-
-      <div style={dataRowStyle}>
-        <span style={dataLabelStyle}>Semitone offsets</span>
-        <span style={dataValueStyle}>{formatArray(offsets)}</span>
-      </div>
-
-      <ResultPanel label="Alterations from Ionian" value={alterations} />
-
-      <CodeSnippet call={`getModeNotes(Notes.${noteKey}, Modes.${modeKey})`} />
-
-      <ResultPanel label="getModeNotes result" value={notes} />
+      <CodeSnippet
+        call={[
+          `MODE_INTERVALS[Modes.${modeKey}]`,
+          `MODE_SEMITONE_OFFSETS[Modes.${modeKey}]`,
+          `getModeNotes(Notes.${noteKey}, Modes.${modeKey})`,
+        ]}
+      />
     </div>
   );
 };

@@ -78,13 +78,11 @@ interface ModeInfo {
   character: string;
 }
 
-/** Computed display data for a single chromatic note, consumed by all visualization views. */
+/** Computed display data for a single in-scale note, consumed by all visualization views. */
 interface NoteDisplayInfo {
   note: Note;
-  inScale: boolean;
-  scaleDegree: number | null;
-  label: string;
-  isRoot: boolean;
+  scaleDegree: number;
+  semitoneOffset: number;
 }
 
 export type {

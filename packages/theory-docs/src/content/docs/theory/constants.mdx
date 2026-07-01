@@ -52,12 +52,12 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 ## Scales
 
-`SCALE_DEFINITIONS` maps each scale kind to a label and how its notes are computed. `getDerivedScaleNotes` uses this to return the correct note set for any root and scale kind.
+`SCALE_DEFINITIONS` maps each scale kind to a label and how its notes are computed. `getScaleNotes` uses this to return the correct note set for any root and scale type.
 
 <ScalesExplorer client:load />
 
 ## Notation and display
 
-`NOTATION_IDS` controls how `buildNoteMap` labels each note — by name or by scale degree. Switch notation types to see how the same root and mode produce different labels.
+`buildNoteMap(root, scaleType)` returns one entry per in-scale note with `note`, `scaleDegree` (1-based), and `semitoneOffset` (0–11, distance from root). Notation is left to the consumer — use `entry.note` for letter labels or `String(entry.scaleDegree)` for numeric labels.
 
 <NotationExplorer client:load />

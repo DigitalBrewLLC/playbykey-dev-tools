@@ -60,6 +60,10 @@
   --sl-color-purple-low: #fef3c7;
   --sl-color-purple: #f59e0b;
   --sl-color-purple-high: #b45309;
+
+  /* Code snippet blocks: light gray background instead of near-black */
+  --color-code-bg: #f3f4f6;
+  --color-code-fg: #111827;
 }
 
 /* ── Dark mode ──────────────────────────────────────────── */
