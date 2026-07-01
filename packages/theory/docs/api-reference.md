@@ -140,27 +140,17 @@ changed before v1, see [open-questions.md](./open-questions.md).
 
 #### `buildNoteMap`
 
-- **Signature:** `buildNoteMap(root: Note, mode: ModeName, notation: NotationType): NoteDisplayInfo[]`
-- **Parameters:** `root`, `mode`, `notation`.
+- **Signature:** `buildNoteMap(root: Note, scaleType: ScaleType, notation: NotationType): NoteDisplayInfo[]`
+- **Parameters:** `root`, `scaleType`, `notation`.
 - **Returns:** An array of 12 `NoteDisplayInfo` objects (one per chromatic
   note, in `NOTES` order), each with `note`, `inScale`, `scaleDegree`,
   `label`, and `isRoot`.
 - **Description:** The primary data structure consumed by visualization
-  views - combines `getScaleDegree` and `getNoteLabel` with root/in-scale
-  flags for every chromatic note.
+  views — produces display-ready note info for every chromatic pitch for
+  any scale type and notation mode.
 - **Use case:** Driving a keyboard or fretboard visualization where every
   note needs to know whether it's in the active scale, what its label is,
   and whether it's the root.
-
-#### `getModeAlterations`
-
-- **Signature:** `getModeAlterations(mode: ModeName): Partial<Record<number, 'flat' | 'sharp'>>`
-- **Parameters:** `mode`.
-- **Returns:** A map from scale degree (1-7) to `'flat'` or `'sharp'` for
-  degrees that differ from Ionian; degrees matching Ionian are omitted.
-- **Example:** `getModeAlterations('dorian') => { 3: 'flat', 7: 'flat' }`.
-- **Use case:** Populating a mode/interval grid that shows which degrees
-  of a mode are raised or lowered relative to the major scale.
 
 #### `getParentScaleModes`
 

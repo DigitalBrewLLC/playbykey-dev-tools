@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import {
-  getModeAlterations,
   getModeNotes,
   Modes,
   MODES,
@@ -37,7 +36,6 @@ const ModeExplorer = () => {
   const modeInfo = useMemo(() => MODES.find((m) => m.id === mode)!, [mode]);
   const intervals = useMemo(() => MODE_INTERVALS[mode], [mode]);
   const offsets = useMemo(() => MODE_SEMITONE_OFFSETS[mode], [mode]);
-  const alterations = useMemo(() => getModeAlterations(mode), [mode]);
   const notes = useMemo(() => getModeNotes(root, mode), [root, mode]);
 
   const noteKey = Object.entries(Notes).find(([, v]) => v === root)?.[0];
@@ -65,8 +63,6 @@ const ModeExplorer = () => {
         <span style={dataLabelStyle}>Semitone offsets</span>
         <span style={dataValueStyle}>{formatArray(offsets)}</span>
       </div>
-
-      <ResultPanel label="Alterations from Ionian" value={alterations} />
 
       <CodeSnippet call={`getModeNotes(Notes.${noteKey}, Modes.${modeKey})`} />
 

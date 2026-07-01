@@ -5,7 +5,14 @@ import {
   PentatonicTypes,
 } from './constants';
 import { elementAt, getNoteIndex, getModeNotes, noteAtIndex } from './engine';
-import type { ModeName, Note, PentatonicType, ScaleType } from './types';
+import type {
+  ModeName,
+  Note,
+  NoteDisplayInfo,
+  NotationType,
+  PentatonicType,
+  ScaleType,
+} from './types';
 
 /** Semitone offsets from the tonic for the six-note blues scale. */
 const BLUES_SEMITONE_OFFSETS = [0, 3, 5, 6, 7, 10] as const;
@@ -149,6 +156,39 @@ const getScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
   return getModeNotes(root, Modes.Ionian);
 };
 
+/**
+ * Produces an array of 12 NoteDisplayInfo objects (one per chromatic note,
+ * starting from C), each describing how to render that note for the current
+ * root/scale-type/notation selection.
+ *
+ * This is the primary data structure consumed by all visualization views.
+ *
+ * Example: buildNoteMap('C', 'major', 'letter') => [{note:'C', inScale:true, ...}, ...]
+ */
+const buildNoteMap = (
+  root: Note,
+  scaleType: ScaleType,
+  notation: NotationType
+): NoteDisplayInfo[] => {
+  const scaleNotes = getScaleNotes(root, scaleType);
+  return CHROMATIC_NOTES.map((note) => {
+    const index = scaleNotes.indexOf(note);
+    const scaleDegree = index === -1 ? null : index + 1;
+    return {
+      note,
+      inScale: scaleDegree !== null,
+      scaleDegree,
+      label:
+        notation === 'letter'
+          ? note
+          : scaleDegree !== null
+            ? String(scaleDegree)
+            : '',
+      isRoot: note === root,
+    };
+  });
+};
+
 export type { ScaleDefinition };
 
 export {
@@ -163,5 +203,6 @@ export {
   getPentatonicNotes,
   getScaleDegrees,
   getScaleNotes,
+  buildNoteMap,
   notesFromSemitoneOffsets,
 };

@@ -20,12 +20,6 @@ export const ALL_NOTES: Note[] = [
   'B',
 ];
 
-/** Alteration direction constants used in getModeAlterations return values. */
-export const ALTERATION = {
-  FLAT: 'flat',
-  SHARP: 'sharp',
-} as const;
-
 /** All 7 modes of the major scale in brightness order (ionian = brightest). */
 export const ALL_MODES: ModeName[] = [
   Modes.Ionian,

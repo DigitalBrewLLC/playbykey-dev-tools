@@ -29,9 +29,10 @@ const parent = parentModes.find((m) => m.mode === 'ionian');
 
 ## What's included
 
-- **Keys & Modes** — `getScaleNotes`, `getModeAlterations`, `getModalRoot`, `getParentScaleModes`
+- **Keys & Modes** — `getModeNotes`, `getModalRoot`, `getParentScaleModes`
 - **Key relationships** — `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, `getCircleOfFifthsOrder`
-- **Note utilities** — `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`, `buildNoteMap`
+- **Note utilities** — `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`
+- **Scale / Visualization** — `buildNoteMap`, `getScaleNotes`, `getScaleDegrees`
 - **Intervals** — `resolveIntervalEndpoints`, `INTERVAL_DEFINITIONS`
 - **Derived scales** — `getBluesNotes`, `getHarmonicMinorNotes`, `getDerivedScaleNotes`
 - **Type guards** — `isNote`, `isModeName`, `parseNote`, `parseModeName`

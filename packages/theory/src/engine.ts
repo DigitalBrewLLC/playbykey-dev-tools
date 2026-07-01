@@ -6,14 +6,8 @@
  * zero dependencies beyond local types and constants.
  */
 
-import type { Note, ModeName, NotationType, NoteDisplayInfo } from './types';
-import {
-  Accidentals,
-  Modes,
-  CHROMATIC_NOTES,
-  MODES,
-  ModeInfoById,
-} from './constants';
+import type { Note, ModeName, NotationType } from './types';
+import { Modes, CHROMATIC_NOTES, MODES, ModeInfoById } from './constants';
 
 const KEY_SIGNATURE_COUNT: Record<
   Note,
@@ -171,61 +165,6 @@ const getNoteLabel = (
 };
 
 /**
- * Produces an array of 12 NoteDisplayInfo objects (one per chromatic note,
- * starting from C), each describing how to render that note for the current
- * key/mode/notation selection.
- *
- * This is the primary data structure consumed by all visualization views.
- */
-const buildNoteMap = (
-  root: Note,
-  mode: ModeName,
-  notation: NotationType
-): NoteDisplayInfo[] => {
-  const scaleNotes = getModeNotes(root, mode);
-  return CHROMATIC_NOTES.map((note) => {
-    const index = scaleNotes.indexOf(note);
-    const scaleDegree = index === -1 ? null : index + 1;
-    return {
-      note,
-      inScale: scaleDegree !== null,
-      scaleDegree,
-      label:
-        notation === 'letter'
-          ? note
-          : scaleDegree !== null
-            ? String(scaleDegree)
-            : '',
-      isRoot: note === root,
-    };
-  });
-};
-
-/**
- * Returns which scale degrees (1-7) are altered relative to Ionian.
- * Used by ModeIntervalGridView to populate grid cells (natural, flat, sharp).
- *
- * Example: getModeAlterations('dorian') => { 3: 'flat', 7: 'flat' }
- */
-const getModeAlterations = (
-  mode: ModeName
-): Partial<Record<number, 'flat' | 'sharp'>> => {
-  const ionianOffsets = MODE_SEMITONE_OFFSETS[Modes.Ionian];
-  const modeOffsets = MODE_SEMITONE_OFFSETS[mode];
-  const result: Partial<Record<number, 'flat' | 'sharp'>> = {};
-  for (let degreeIndex = 0; degreeIndex < 7; degreeIndex++) {
-    const ionian = elementAt(ionianOffsets, degreeIndex);
-    const current = elementAt(modeOffsets, degreeIndex);
-    if (current < ionian) {
-      result[degreeIndex + 1] = Accidentals.Flat;
-    } else if (current > ionian) {
-      result[degreeIndex + 1] = Accidentals.Sharp;
-    }
-  }
-  return result;
-};
-
-/**
  * Given any root+mode, finds the parent major (Ionian) key and returns all
  * 7 rotation pairs in scale degree order.
  *
@@ -350,8 +289,6 @@ export {
   getScaleDegree,
   isNoteInScale,
   getNoteLabel,
-  buildNoteMap,
-  getModeAlterations,
   getModalRoot,
   getParentScaleModes,
   getRelativeMinorKey,

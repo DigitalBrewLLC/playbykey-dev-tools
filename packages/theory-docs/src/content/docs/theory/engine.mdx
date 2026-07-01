@@ -34,10 +34,10 @@ Compute scale notes for any root and diatonic mode, traverse key relationships, 
 
 ## Scale & Mode Functions
 
-**Scale and mode:** `getScaleNotes`, `getParentScaleModes`, `getModeAlterations`, and `getModalRoot` compute the note set, degree alterations, and modal rotations for any root and mode combination.
+**Scale and mode:** `getModeNotes`, `getParentScaleModes`, and `getModalRoot` compute the note set and modal rotations for any root and mode combination.
 
 **Key relationships:** `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, and `getCircleOfFifthsOrder` find relative keys, sharp and flat counts, and traverse all 12 keys in fifth order.
 
-**Note utilities:** `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`, and `buildNoteMap` look up scale degrees, check note membership, convert between note names and chromatic indices, and compute semitone distances. See the [Constants](/theory/constants/) page for the full note and mode constant catalog.
+**Note utilities:** `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, and `getSemitoneDistance` look up scale degrees, check note membership, convert between note names and chromatic indices, and compute semitone distances. See the [Constants](/theory/constants/) page for the full note and mode constant catalog.
 
 **Type guards:** `isNote`, `isModeName`, `parseNote`, and `parseModeName` narrow untrusted strings - URL params, user input, or external data - to typed `Note` or `ModeName` values before passing them to engine functions.
