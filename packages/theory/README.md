@@ -12,6 +12,13 @@ A zero-dependency TypeScript music theory engine for computing scale notes, reso
 npm install @playbykey/theory
 # pnpm add @playbykey/theory
 # yarn add @playbykey/theory
+# bun add @playbykey/theory
+```
+
+**Agent / LLM context prompt:**
+
+```text
+I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (scales/modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getScaleDegree, isNoteInScale, getNoteIndex, noteAtIndex, getSemitoneDistance (note utilities); buildNoteMap, getScaleNotes, getScaleDegrees (scale/visualization); parseNote, parseModeName, isNote, isModeName (type guards); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db).
 ```
 
 ## Quickstart
