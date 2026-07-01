@@ -62,7 +62,7 @@ type ScaleType =
   | 'harmonic-minor';
 
 /** Pentatonic variant: major (degrees 1,2,3,5,6 of ionian) or minor (degrees 1,3,4,5,7 of aeolian). */
-type PentatonicType = 'major' | 'minor';
+type PentatonicType = 'pentatonic-major' | 'pentatonic-minor';
 
 /** Scale degree notation: numbers (1-7) or letter names (C, D, E...). */
 type NotationType = 'number' | 'letter';

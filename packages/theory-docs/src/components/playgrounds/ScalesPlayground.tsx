@@ -10,6 +10,7 @@ import {
   ScaleTypes,
 } from '@playbykey/theory';
 import type { Note, PentatonicType, ScaleType } from '@playbykey/theory';
+import { FieldSelect } from '../ui/FieldSelect';
 import { FunctionCard } from '../ui/FunctionCard';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
@@ -18,26 +19,6 @@ const containerStyle = {
   display: 'flex',
   flexDirection: 'column' as const,
   gap: '0.5rem',
-};
-
-const fieldStyle = {
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: '0.25rem',
-};
-
-const labelStyle = {
-  fontSize: '0.875rem',
-  fontWeight: 600,
-  color: 'var(--sl-color-gray-2)',
-};
-
-const selectStyle = {
-  padding: '0.375rem 0.5rem',
-  borderRadius: '0.375rem',
-  border: '1px solid var(--sl-color-gray-5)',
-  background: 'var(--sl-color-gray-6)',
-  color: 'var(--sl-color-gray-1)',
 };
 
 const ScalesPlayground = () => {
@@ -93,17 +74,14 @@ const ScalesPlayground = () => {
         result={pentatonicNotes}
       >
         <NoteSelect value={pentRoot} onChange={setPentRoot} label="Root" />
-        <label style={fieldStyle}>
-          <span style={labelStyle}>Type</span>
-          <select
-            style={selectStyle}
-            value={pentType}
-            onChange={(e) => setPentType(e.target.value as PentatonicType)}
-          >
-            <option value={PentatonicTypes.Major}>Major</option>
-            <option value={PentatonicTypes.Minor}>Minor</option>
-          </select>
-        </label>
+        <FieldSelect
+          label="Type"
+          value={pentType}
+          onChange={(v) => setPentType(v as PentatonicType)}
+        >
+          <option value={PentatonicTypes.Major}>Major</option>
+          <option value={PentatonicTypes.Minor}>Minor</option>
+        </FieldSelect>
       </FunctionCard>
 
       <FunctionCard
