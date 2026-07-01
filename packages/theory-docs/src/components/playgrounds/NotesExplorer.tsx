@@ -40,8 +40,10 @@ const NotesExplorer = () => {
         </div>
       </InfoBlock>
 
-      <CodeSnippet call={`getNoteIndex(Notes.${noteKey})`} />
+      <CodeSnippet call={`ENHARMONIC_LABELS[Notes.${noteKey}]`} />
+      <ResultPanel label="ENHARMONIC_LABELS result" value={enharmonicLabel} />
 
+      <CodeSnippet call={`getNoteIndex(Notes.${noteKey})`} />
       <ResultPanel label="getNoteIndex result" value={index} />
     </div>
   );

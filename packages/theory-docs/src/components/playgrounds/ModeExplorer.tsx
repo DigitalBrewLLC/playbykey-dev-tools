@@ -14,15 +14,7 @@ import { InfoBadge, InfoBlock, InfoTitle } from '../ui/InfoBlock';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
-import {
-  containerStyle,
-  controlsRowStyle,
-  dataLabelStyle,
-  dataRowStyle,
-  dataValueStyle,
-} from './playgroundStyles';
-
-const formatArray = (arr: readonly number[]): string => `[${arr.join(', ')}]`;
+import { containerStyle, controlsRowStyle } from './playgroundStyles';
 
 const characterStyle = {
   margin: 0,
@@ -56,20 +48,15 @@ const ModeExplorer = () => {
         <p style={characterStyle}>{modeInfo.character}</p>
       </InfoBlock>
 
-      <div style={dataRowStyle}>
-        <span style={dataLabelStyle}>Step intervals</span>
-        <span style={dataValueStyle}>{formatArray(intervals)}</span>
-      </div>
+      <CodeSnippet call={`MODE_INTERVALS[Modes.${modeKey}]`} />
+      <ResultPanel label="MODE_INTERVALS result" value={[...intervals]} />
 
-      <div style={dataRowStyle}>
-        <span style={dataLabelStyle}>Semitone offsets</span>
-        <span style={dataValueStyle}>{formatArray(offsets)}</span>
-      </div>
+      <CodeSnippet call={`MODE_SEMITONE_OFFSETS[Modes.${modeKey}]`} />
+      <ResultPanel label="MODE_SEMITONE_OFFSETS result" value={[...offsets]} />
 
       <ResultPanel label="Alterations from Ionian" value={alterations} />
 
       <CodeSnippet call={`getModeNotes(Notes.${noteKey}, Modes.${modeKey})`} />
-
       <ResultPanel label="getModeNotes result" value={notes} />
     </div>
   );
