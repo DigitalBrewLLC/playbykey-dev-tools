@@ -3,7 +3,7 @@ import {
   getBluesNotes,
   getDerivedScaleNotes,
   getHarmonicMinorNotes,
-  getPentatonicDegrees,
+  getPentatonicNotes,
   getScaleContextNotes,
   getScaleEmphasisDegrees,
   Notes,
@@ -55,7 +55,7 @@ const ScalesPlayground = () => {
   const bluesNotes = useMemo(() => getBluesNotes(root), [root]);
   const harmonicMinorNotes = useMemo(() => getHarmonicMinorNotes(root), [root]);
   const pentatonicNotes = useMemo(
-    () => getPentatonicDegrees(pentRoot, pentType),
+    () => getPentatonicNotes(pentRoot, pentType),
     [pentRoot, pentType]
   );
   const derivedNotes = useMemo(
@@ -92,9 +92,9 @@ const ScalesPlayground = () => {
       </FunctionCard>
 
       <FunctionCard
-        name="getPentatonicDegrees"
-        signature="getPentatonicDegrees(root: Note, type: PentatonicType): Note[]"
-        description="Returns the five notes of a major or minor pentatonic scale. Major uses degrees 1,2,3,5,6 of ionian; minor uses degrees 1,3,4,5,7 of aeolian."
+        name="getPentatonicNotes"
+        signature="getPentatonicNotes(root: Note, type: PentatonicType): Note[]"
+        description="Returns the five notes of a major or minor pentatonic scale for a given root."
         result={pentatonicNotes}
       >
         <NoteSelect value={pentRoot} onChange={setPentRoot} label="Root" />

@@ -81,7 +81,7 @@ export {
   getDerivedScaleNotes,
   getFullScaleDegrees,
   getHarmonicMinorNotes,
-  getPentatonicDegrees,
+  getPentatonicNotes,
   getScaleContextNotes,
   getScaleEmphasisDegrees,
   notesFromSemitoneOffsets,

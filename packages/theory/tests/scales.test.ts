@@ -6,7 +6,7 @@ import {
   getBluesNotes,
   getDerivedScaleNotes,
   getHarmonicMinorNotes,
-  getPentatonicDegrees,
+  getPentatonicNotes,
   getScaleContextNotes,
   getScaleEmphasisDegrees,
   PENTATONIC_MAJOR_DEGREES,
@@ -121,19 +121,13 @@ describe('getScaleContextNotes', () => {
   });
 });
 
-describe('getPentatonicDegrees', () => {
+describe('getPentatonicNotes', () => {
   it('returns 5 major pentatonic notes for given root', () => {
-    expect(getPentatonicDegrees('C', 'major')).toEqual([
-      'C',
-      'D',
-      'E',
-      'G',
-      'A',
-    ]);
+    expect(getPentatonicNotes('C', 'major')).toEqual(['C', 'D', 'E', 'G', 'A']);
   });
 
   it('returns 5 minor pentatonic notes for given root', () => {
-    expect(getPentatonicDegrees('C', 'minor')).toEqual([
+    expect(getPentatonicNotes('C', 'minor')).toEqual([
       'C',
       'D#',
       'F',
@@ -143,8 +137,8 @@ describe('getPentatonicDegrees', () => {
   });
 
   it('relative relationship: A minor pentatonic shares notes with C major pentatonic', () => {
-    const cMajor = new Set(getPentatonicDegrees('C', 'major'));
-    const aMinor = new Set(getPentatonicDegrees('A', 'minor'));
+    const cMajor = new Set(getPentatonicNotes('C', 'major'));
+    const aMinor = new Set(getPentatonicNotes('A', 'minor'));
     expect([...cMajor].sort()).toEqual([...aMinor].sort());
   });
 
@@ -164,8 +158,8 @@ describe('getPentatonicDegrees', () => {
       'B',
     ] as const;
     for (const root of roots) {
-      expect(getPentatonicDegrees(root, 'major')).toHaveLength(5);
-      expect(getPentatonicDegrees(root, 'minor')).toHaveLength(5);
+      expect(getPentatonicNotes(root, 'major')).toHaveLength(5);
+      expect(getPentatonicNotes(root, 'minor')).toHaveLength(5);
     }
   });
 });

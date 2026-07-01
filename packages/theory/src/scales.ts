@@ -88,11 +88,11 @@ const getBluesNotes = (root: Note): Note[] =>
  * Returns the five notes of a pentatonic scale rooted at `root`.
  *
  * - `'major'` — degrees 1,2,3,5,6 of the ionian (major) scale
- *   e.g. `getPentatonicDegrees('C', 'major')` → `['C','D','E','G','A']`
+ *   e.g. `getPentatonicNotes('C', 'major')` → `['C','D','E','G','A']`
  * - `'minor'` — degrees 1,3,4,5,7 of the aeolian (natural minor) scale
- *   e.g. `getPentatonicDegrees('C', 'minor')` → `['C','D#','F','G','A#']`
+ *   e.g. `getPentatonicNotes('C', 'minor')` → `['C','D#','F','G','A#']`
  */
-const getPentatonicDegrees = (root: Note, type: PentatonicType): Note[] => {
+const getPentatonicNotes = (root: Note, type: PentatonicType): Note[] => {
   if (type === PentatonicTypes.Major) {
     const scale = getScaleNotes(root, Modes.Ionian);
     const degrees = new Set<number>(PENTATONIC_MAJOR_DEGREES);
@@ -180,7 +180,7 @@ export {
   getDerivedScaleNotes,
   getFullScaleDegrees,
   getHarmonicMinorNotes,
-  getPentatonicDegrees,
+  getPentatonicNotes,
   getScaleContextNotes,
   getScaleEmphasisDegrees,
   notesFromSemitoneOffsets,

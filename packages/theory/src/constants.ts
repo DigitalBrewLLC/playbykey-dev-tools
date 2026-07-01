@@ -76,8 +76,8 @@ const ScaleTypes = {
 
 /** Named constants for pentatonic types. */
 const PentatonicTypes = {
-  Major: 'pentatonic-major',
-  Minor: 'pentatonic-minor',
+  Major: 'major',
+  Minor: 'minor',
 } as const satisfies Record<string, PentatonicType>;
 
 /** Named constants for each accidental display preference. */
