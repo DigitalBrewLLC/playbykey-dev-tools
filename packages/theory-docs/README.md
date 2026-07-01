@@ -1,37 +1,78 @@
-# PlayByKey Developers
+# theory-docs
 
-Documentation site for all PlayByKey developer tooling: `@playbykey/theory`
-(displayed as **Theory Engine**), `@playbykey/songs`, `playbykey-mcp`, and the
-`playbykey` CLI. Also home for FAQ content aimed at developers building music
-tools.
+Documentation site for [`@playbykey/theory`](../theory) — the PlayByKey music theory engine.
 
----
-
-## Status
-
-Planning. This package reserves the workspace location for the site. The
-Astro Starlight scaffold, site structure, and content are tracked as a
-follow-up task once `@playbykey/theory` has a stable public API to document.
+Live at **[theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com)**.
 
 ---
 
-## Planned stack
+## What this is
 
-- **Framework:** Astro + Starlight
-- **Language:** TypeScript
+`theory-docs` is an [Astro Starlight](https://starlight.astro.build) site that documents the public API of `@playbykey/theory`. It includes:
+
+- Full function reference for every exported function and constant
+- Live interactive playgrounds that call `@playbykey/theory` directly in the browser
+- TypeScript type documentation and usage examples
+- AI-agent context block for LLM-assisted development
+
+---
+
+## Docs structure
+
+| Page         | Path                 | Contents                                                             |
+| ------------ | -------------------- | -------------------------------------------------------------------- |
+| Overview     | `/`                  | Install, quickstart, package map, notation notes                     |
+| Keys & Modes | `/theory/engine/`    | Scale/mode functions, key relationships, note utilities, type guards |
+| Intervals    | `/theory/intervals/` | `IntervalId`, `resolveIntervalEndpoints`, `INTERVAL_DEFINITIONS`     |
+| Scales       | `/theory/scales/`    | Blues, pentatonic, harmonic minor, derived scale functions           |
+| Constants    | `/theory/constants/` | All exported constants with live explorers                           |
+
+---
+
+## Local development
+
+```sh
+# From the monorepo root
+pnpm install
+
+# Run the docs site
+pnpm --filter theory-docs dev
+```
+
+Or from this directory:
+
+```sh
+pnpm dev
+```
+
+The docs site consumes `@playbykey/theory` as a workspace dependency (`workspace:*`), so any changes to the theory package are reflected immediately without a separate build step.
+
+---
+
+## Stack
+
+- **Framework:** [Astro 7](https://astro.build) + [Starlight](https://starlight.astro.build)
+- **Interactivity:** React 19 (playground islands)
+- **Language:** TypeScript (strict)
 - **Deployment:** Cloudflare Pages (static)
-- **Search:** Starlight's built-in Pagefind
+- **Search:** Starlight built-in Pagefind
 
 ---
 
-## Planned structure
+## Deployment
 
+The site is deployed to Cloudflare Pages at `theory-engine.docs.playbykey.com`. Build command:
+
+```sh
+pnpm --filter theory-docs build
 ```
-docs.playbykey.com/
-├── /                Getting started
-├── /theory/         Theory Engine (@playbykey/theory)
-├── /songs/          @playbykey/songs
-├── /mcp/            MCP server
-├── /cli/            CLI
-└── /faq/            Music theory FAQ for developers
-```
+
+Output directory: `dist/`
+
+---
+
+## Related
+
+- [`@playbykey/theory`](../theory) — the npm package this site documents
+- [PlayByKey](https://playbykey.com) — the app that uses this engine
+- [playbykey-dev-tools](../../) — the monorepo
