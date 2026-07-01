@@ -83,6 +83,6 @@ export {
   getHarmonicMinorNotes,
   getPentatonicNotes,
   getScaleContextNotes,
-  getScaleEmphasisDegrees,
+  getScaleDegrees,
   notesFromSemitoneOffsets,
 } from './scales';

@@ -38,6 +38,9 @@ const preStyle = {
 const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((item) => typeof item === 'string');
 
+const isNumberArray = (value: unknown): value is number[] =>
+  Array.isArray(value) && value.every((item) => typeof item === 'number');
+
 const ResultPanel = ({ label, value }: ResultPanelProps) => {
   if (value === null || value === undefined) {
     return null;
@@ -47,6 +50,8 @@ const ResultPanel = ({ label, value }: ResultPanelProps) => {
 
   if (isStringArray(value)) {
     content = <code style={codeStyle}>{value.join(', ')}</code>;
+  } else if (isNumberArray(value)) {
+    content = <code style={codeStyle}>[{value.join(', ')}]</code>;
   } else if (typeof value === 'number' || typeof value === 'boolean') {
     content = <code style={codeStyle}>{String(value)}</code>;
   } else {

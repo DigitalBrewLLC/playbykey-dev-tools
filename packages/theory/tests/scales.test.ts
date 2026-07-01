@@ -8,7 +8,7 @@ import {
   getHarmonicMinorNotes,
   getPentatonicNotes,
   getScaleContextNotes,
-  getScaleEmphasisDegrees,
+  getScaleDegrees,
   PENTATONIC_MAJOR_DEGREES,
   PENTATONIC_MINOR_DEGREES,
   SCALE_DEFINITIONS,
@@ -71,33 +71,31 @@ describe('getDerivedScaleNotes', () => {
   });
 });
 
-describe('getScaleEmphasisDegrees', () => {
+describe('getScaleDegrees', () => {
   it('returns major pentatonic emphasis degrees', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.PentatonicMajor)).toEqual(
+    expect(getScaleDegrees(ScaleTypes.PentatonicMajor)).toEqual(
       PENTATONIC_MAJOR_DEGREES
     );
   });
 
   it('returns minor pentatonic emphasis degrees', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.PentatonicMinor)).toEqual(
+    expect(getScaleDegrees(ScaleTypes.PentatonicMinor)).toEqual(
       PENTATONIC_MINOR_DEGREES
     );
   });
 
   it('returns blues scale degrees', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.Blues)).toHaveLength(
+    expect(getScaleDegrees(ScaleTypes.Blues)).toHaveLength(
       BLUES_SEMITONE_OFFSETS.length
     );
   });
 
   it('returns all 7 degrees for major type', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.Major)).toEqual([
-      1, 2, 3, 4, 5, 6, 7,
-    ]);
+    expect(getScaleDegrees(ScaleTypes.Major)).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
 
   it('returns all 12 degrees for chromatic type', () => {
-    expect(getScaleEmphasisDegrees(ScaleTypes.Chromatic)).toHaveLength(12);
+    expect(getScaleDegrees(ScaleTypes.Chromatic)).toHaveLength(12);
   });
 });
 

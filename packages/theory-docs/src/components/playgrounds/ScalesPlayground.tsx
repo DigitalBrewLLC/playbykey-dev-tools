@@ -5,7 +5,7 @@ import {
   getHarmonicMinorNotes,
   getPentatonicNotes,
   getScaleContextNotes,
-  getScaleEmphasisDegrees,
+  getScaleDegrees,
   Notes,
   ScaleTypes,
 } from '@playbykey/theory';
@@ -67,7 +67,7 @@ const ScalesPlayground = () => {
     [root, contextType]
   );
   const emphasisDegrees = useMemo(
-    () => getScaleEmphasisDegrees(emphasisType),
+    () => getScaleDegrees(emphasisType),
     [emphasisType]
   );
 
@@ -132,9 +132,9 @@ const ScalesPlayground = () => {
       </FunctionCard>
 
       <FunctionCard
-        name="getScaleEmphasisDegrees"
-        signature="getScaleEmphasisDegrees(scaleType: ScaleType): number[]"
-        description="Returns emphasized scale degrees for a derived scale type."
+        name="getScaleDegrees"
+        signature="getScaleDegrees(scaleType: ScaleType): number[]"
+        description="Returns the active scale degrees for a given scale type."
         result={emphasisDegrees}
       >
         <ScaleTypeSelect value={emphasisType} onChange={setEmphasisType} />

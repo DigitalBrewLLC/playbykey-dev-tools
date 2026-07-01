@@ -36,6 +36,6 @@ The scales module computes note sets for derived scale types — blues scale, pe
 
 **Note arrays:** `getBluesNotes`, `getHarmonicMinorNotes`, and `getDerivedScaleNotes` return concrete note lists for a root (and scale kind where applicable).
 
-**Context and degrees:** `getScaleContextNotes` returns the parent diatonic context for a derived scale. `getPentatonicNotes` returns the five notes for a given root and pentatonic type. `getScaleEmphasisDegrees` returns scale-degree numbers.
+**Context and degrees:** `getScaleContextNotes` returns the parent diatonic context for a derived scale. `getPentatonicNotes` returns the five notes for a given root and pentatonic type. `getScaleDegrees` returns the active scale-degree numbers for a given scale type.
 
 **Utility:** `notesFromSemitoneOffsets` builds a custom note array from semitone offsets — useful when defining your own scale patterns programmatically.

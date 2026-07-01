@@ -105,7 +105,7 @@ const getPentatonicNotes = (root: Note, type: PentatonicType): Note[] => {
 
 const getFullScaleDegrees = (): readonly number[] => FULL_SCALE_DEGREES;
 
-const getScaleEmphasisDegrees = (scaleType: ScaleType): readonly number[] => {
+const getScaleDegrees = (scaleType: ScaleType): readonly number[] => {
   if (scaleType === ScaleTypes.Blues) {
     return BLUES_SEMITONE_OFFSETS.map((_, index) => index + 1);
   }
@@ -182,6 +182,6 @@ export {
   getHarmonicMinorNotes,
   getPentatonicNotes,
   getScaleContextNotes,
-  getScaleEmphasisDegrees,
+  getScaleDegrees,
   notesFromSemitoneOffsets,
 };
