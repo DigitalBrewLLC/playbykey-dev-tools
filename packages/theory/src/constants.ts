@@ -67,7 +67,8 @@ const Intervals = {
 const ScaleTypes = {
   Mode: 'mode',
   Chromatic: 'chromatic',
-  Pentatonic: 'pentatonic',
+  PentatonicMajor: 'pentatonic-major',
+  PentatonicMinor: 'pentatonic-minor',
   Blues: 'blues',
   HarmonicMinor: 'harmonic-minor',
 } as const satisfies Record<string, ScaleType>;
