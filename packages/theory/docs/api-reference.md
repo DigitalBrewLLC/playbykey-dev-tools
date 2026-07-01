@@ -143,9 +143,9 @@ changed before v1, see [open-questions.md](./open-questions.md).
 - **Signature:** `buildNoteMap(root: Note, scaleType: ScaleType): NoteDisplayInfo[]`
 - **Parameters:** `root`, `scaleType`.
 - **Returns:** An array of `NoteDisplayInfo` objects — one per in-scale note,
-  in scale-degree order. Each entry contains `note`, `scaleDegree` (always
-  a number, 1-based), and `isRoot`. Notation (letter vs number) is left to
-  the consumer: use `entry.note` for letter labels, `String(entry.scaleDegree)`
+  in scale-degree order. Each entry contains `note`, `scaleDegree` (1-based),
+  and `semitoneOffset` (0–11, distance from root). Notation is left to the
+  consumer: use `entry.note` for letter labels, `String(entry.scaleDegree)`
   for numeric labels.
 - **Description:** A richer alternative to `getScaleNotes` that also carries
   degree position and root membership for each in-scale note.

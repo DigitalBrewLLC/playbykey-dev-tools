@@ -4,7 +4,7 @@ import { ALL_NOTES } from './fixtures';
 
 // buildNoteMap returns one NoteDisplayInfo per in-scale note, in scale-degree order.
 // Every entry is guaranteed to be in the scale.
-// Key fields: note (Note), scaleDegree (number, 1-based), isRoot (boolean).
+// Key fields: note (Note), scaleDegree (number, 1-based), semitoneOffset (0-11 from root).
 
 const ALL_SCALE_TYPES = [
   ScaleTypes.Major,
@@ -63,20 +63,23 @@ describe('buildNoteMap', () => {
     });
   });
 
-  describe('exactly one entry has isRoot=true, matching the root note', () => {
+  describe('root is always the first entry with scaleDegree=1 and semitoneOffset=0', () => {
     it.each(ALL_COMBINATIONS)('$root $scaleType', ({ root, scaleType }) => {
       const map = buildNoteMap(root, scaleType);
-      const rootEntries = map.filter((e) => e.isRoot);
-      expect(rootEntries).toHaveLength(1);
-      expect(rootEntries[0]?.note).toBe(root);
+      const first = map[0];
+      expect(first?.note).toBe(root);
+      expect(first?.scaleDegree).toBe(1);
+      expect(first?.semitoneOffset).toBe(0);
     });
   });
 
-  describe('root entry has scaleDegree=1', () => {
-    it.each(ALL_NOTES.map((r) => ({ root: r })))('$root major', ({ root }) => {
-      const map = buildNoteMap(root, ScaleTypes.Major);
-      const rootEntry = map.find((e) => e.isRoot);
-      expect(rootEntry?.scaleDegree).toBe(1);
+  describe('semitoneOffset is always in range 0-11', () => {
+    it.each(ALL_COMBINATIONS)('$root $scaleType', ({ root, scaleType }) => {
+      const map = buildNoteMap(root, scaleType);
+      for (const entry of map) {
+        expect(entry.semitoneOffset).toBeGreaterThanOrEqual(0);
+        expect(entry.semitoneOffset).toBeLessThanOrEqual(11);
+      }
     });
   });
 
@@ -92,6 +95,11 @@ describe('buildNoteMap', () => {
         'A',
         'B',
       ]);
+    });
+
+    it('semitoneOffsets match ionian pattern', () => {
+      const map = buildNoteMap('C', ScaleTypes.Major);
+      expect(map.map((e) => e.semitoneOffset)).toEqual([0, 2, 4, 5, 7, 9, 11]);
     });
 
     it('no chromatic note appears that is not in C major', () => {

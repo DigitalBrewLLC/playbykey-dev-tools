@@ -58,6 +58,6 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 ## Notation and display
 
-`buildNoteMap(root, scaleType)` returns one entry per in-scale note with `note`, `scaleDegree` (always a number), and `isRoot`. Notation is left to the consumer — use `entry.note` for letter labels or `String(entry.scaleDegree)` for numeric labels.
+`buildNoteMap(root, scaleType)` returns one entry per in-scale note with `note`, `scaleDegree` (1-based), and `semitoneOffset` (0–11, distance from root). Notation is left to the consumer — use `entry.note` for letter labels or `String(entry.scaleDegree)` for numeric labels.
 
 <NotationExplorer client:load />

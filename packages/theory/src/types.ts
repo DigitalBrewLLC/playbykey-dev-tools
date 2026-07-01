@@ -82,7 +82,7 @@ interface ModeInfo {
 interface NoteDisplayInfo {
   note: Note;
   scaleDegree: number;
-  isRoot: boolean;
+  semitoneOffset: number;
 }
 
 export type {
