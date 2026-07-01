@@ -41,16 +41,20 @@
   --sl-color-white: #ffffff;
   --sl-color-black: #0a0a0a;
 
-  /* Code blocks always render on a near-black background (#0a0a0a) in both themes.
-     This token keeps that foreground color in one place instead of hardcoding it. */
+  /* Code blocks always render on a near-black background in both themes.
+     These tokens keep code block colors in one place and decouple them from
+     --sl-color-black, which Starlight inverts to #fff in light mode. */
+  --color-code-bg: #0a0a0a;
   --color-code-fg: #e5e5e5;
 }
 
 :root[data-theme='light'] {
   /* Restore Starlight's light-mode semantic inversion.
      Our unlayered :root wins over Starlight's layered [data-theme='light'] rule.
-     We must re-declare the correct value in unlayered CSS. */
+     We must re-declare the correct values in unlayered CSS.
+     Starlight light mode: --sl-color-white = dark text, --sl-color-black = white bg. */
   --sl-color-white: #171717;
+  --sl-color-black: #ffffff;
 
   /* Brand: redirect tip Aside from Starlight's default purple to amber */
   --sl-color-purple-low: #fef3c7;
