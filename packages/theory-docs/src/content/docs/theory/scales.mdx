@@ -26,16 +26,8 @@ head:
 
 import ScalesPlayground from '../../../components/playgrounds/ScalesPlayground';
 
-The scales module computes note sets for derived scale types — blues scale, pentatonic, harmonic minor, and other patterns beyond the seven diatonic modes. Use these functions when you need concrete note arrays for non-modal scale types or scale metadata like emphasis degrees.
+The scales module computes note sets for derived scale types — blues scale, pentatonic, harmonic minor, and other patterns beyond the seven diatonic modes. `getScaleNotes(root, scaleType)` is the general-purpose entry point; `getScaleDegrees(scaleType)` is its numeric parallel, returning active degree numbers instead of note names. Variant-specific helpers (`getBluesNotes`, `getHarmonicMinorNotes`, `getPentatonicNotes`) and `notesFromSemitoneOffsets` are available for direct or custom use.
 
 ## Live Playground
 
 <ScalesPlayground client:load />
-
-## Derived Scale Functions
-
-**Note arrays:** `getBluesNotes`, `getHarmonicMinorNotes`, and `getPentatonicNotes` return notes for a specific scale variant. `getScaleNotes` is the general-purpose function — it accepts any `ScaleType` and returns the corresponding notes for a given root.
-
-**Degrees:** `getScaleDegrees` returns the active scale-degree numbers for any scale type — the numeric parallel to `getScaleNotes`.
-
-**Utility:** `notesFromSemitoneOffsets` builds a custom note array from semitone offsets — useful when defining your own scale patterns programmatically.
