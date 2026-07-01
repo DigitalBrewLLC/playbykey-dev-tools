@@ -54,7 +54,7 @@ const ModeExplorer = () => {
       <CodeSnippet call={`MODE_SEMITONE_OFFSETS[Modes.${modeKey}]`} />
       <ResultPanel label="MODE_SEMITONE_OFFSETS result" value={[...offsets]} />
 
-      <ResultPanel label="Alterations from Ionian" value={alterations} />
+      <ResultPanel label="Alterations from major" value={alterations} />
 
       <CodeSnippet call={`getModeNotes(Notes.${noteKey}, Modes.${modeKey})`} />
       <ResultPanel label="getModeNotes result" value={notes} />
