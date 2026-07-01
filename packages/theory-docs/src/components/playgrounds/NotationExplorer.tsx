@@ -3,17 +3,10 @@ import { buildNoteMap, Notes, Notations, ScaleTypes } from '@playbykey/theory';
 import type { Note, NotationType, ScaleType } from '@playbykey/theory';
 import { CodeSnippet } from '../ui/CodeSnippet';
 import { FieldSelect } from '../ui/FieldSelect';
-import { InfoBadge, InfoBlock, InfoTitle } from '../ui/InfoBlock';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
 import { containerStyle, controlsRowStyle } from './playgroundStyles';
-
-const NOTATION_DESCRIPTIONS: Record<NotationType, string> = {
-  letter: 'In-scale and out-of-scale notes labeled by name',
-  number:
-    'In-scale notes labeled by scale degree; out-of-scale notes as empty string',
-};
 
 const NotationExplorer = () => {
   const [root, setRoot] = useState<Note>(Notes.C);
@@ -47,11 +40,6 @@ const NotationExplorer = () => {
           <option value={Notations.Number}>Number</option>
         </FieldSelect>
       </div>
-
-      <InfoBlock>
-        <InfoTitle>{notation}</InfoTitle>
-        <InfoBadge>{NOTATION_DESCRIPTIONS[notation]}</InfoBadge>
-      </InfoBlock>
 
       <CodeSnippet
         call={`buildNoteMap(Notes.${noteKey}, ScaleTypes.${scaleKey}, Notations.${notationKey})`}

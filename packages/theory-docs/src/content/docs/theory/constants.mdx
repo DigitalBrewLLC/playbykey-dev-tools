@@ -58,6 +58,6 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 ## Notation and display
 
-`NOTATION_IDS` controls how `buildNoteMap` labels each note — by name or by scale degree. Switch notation types to see how the same root and mode produce different labels.
+`buildNoteMap` supports two notation modes. `'letter'` labels every note by name. `'number'` labels in-scale notes by their scale degree; out-of-scale notes get `scaleDegree: null` and an empty label string. Switch notation types to see how the same root and scale type produce different output.
 
 <NotationExplorer client:load />
