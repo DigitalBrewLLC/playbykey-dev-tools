@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test:a11y": "playwright test tests/accessibility/",
+    "test:a11y:ui": "playwright test tests/accessibility/ --ui"
   },
   "dependencies": {
     "@playbykey/theory": "workspace:*",
@@ -20,6 +22,8 @@
   "devDependencies": {
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "@playwright/test": "latest",
+    "@axe-core/playwright": "latest"
   }
 }
