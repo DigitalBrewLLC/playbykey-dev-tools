@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   SCALE_DEFINITIONS,
-  getDerivedScaleNotes,
+  getScaleNotes,
   ScaleTypes,
 } from '@playbykey/theory';
 import type { Note, ScaleType } from '@playbykey/theory';
@@ -56,7 +56,7 @@ const ScalesExplorer = () => {
 
   const definition = useMemo(() => SCALE_DEFINITIONS[scaleType], [scaleType]);
   const notes = useMemo(
-    () => getDerivedScaleNotes(root, scaleType),
+    () => getScaleNotes(root, scaleType),
     [root, scaleType]
   );
 
@@ -74,10 +74,10 @@ const ScalesExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`getDerivedScaleNotes('${root}', '${scaleType}')`}</code>
+        >{`getScaleNotes('${root}', '${scaleType}')`}</code>
       </p>
 
-      <ResultPanel label="getDerivedScaleNotes result" value={notes} />
+      <ResultPanel label="getScaleNotes result" value={notes} />
     </div>
   );
 };

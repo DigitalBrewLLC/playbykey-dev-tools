@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   getModeAlterations,
-  getScaleNotes,
+  getModeNotes,
   MODES,
   MODE_INTERVALS,
   MODE_SEMITONE_OFFSETS,
@@ -92,7 +92,7 @@ const ModeExplorer = () => {
   const intervals = useMemo(() => MODE_INTERVALS[mode], [mode]);
   const offsets = useMemo(() => MODE_SEMITONE_OFFSETS[mode], [mode]);
   const alterations = useMemo(() => getModeAlterations(mode), [mode]);
-  const notes = useMemo(() => getScaleNotes(root, mode), [root, mode]);
+  const notes = useMemo(() => getModeNotes(root, mode), [root, mode]);
 
   return (
     <div style={containerStyle}>
@@ -122,10 +122,10 @@ const ModeExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`getScaleNotes('${root}', '${mode}')`}</code>
+        >{`getModeNotes('${root}', '${mode}')`}</code>
       </p>
 
-      <ResultPanel label="getScaleNotes result" value={notes} />
+      <ResultPanel label="getModeNotes result" value={notes} />
     </div>
   );
 };

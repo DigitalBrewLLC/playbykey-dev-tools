@@ -6,10 +6,10 @@ import {
   getScaleDegrees,
   getScaleNotes,
   Notes,
-  PentatonicType,
+  PentatonicTypes,
   ScaleTypes,
 } from '@playbykey/theory';
-import type { Note, ScaleType } from '@playbykey/theory';
+import type { Note, PentatonicType, ScaleType } from '@playbykey/theory';
 import { FunctionCard } from '../ui/FunctionCard';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';

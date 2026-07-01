@@ -10,7 +10,7 @@ import {
   getRelativeMajorKey,
   getRelativeMinorKey,
   getScaleDegree,
-  getScaleNotes,
+  getModeNotes,
   getSemitoneDistance,
   isModeName,
   isNote,
@@ -26,7 +26,7 @@ import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
 
 type EngineFunctionId =
-  | 'getScaleNotes'
+  | 'getModeNotes'
   | 'getParentScaleModes'
   | 'getRelativeMinorKey'
   | 'getRelativeMajorKey'
@@ -64,9 +64,9 @@ interface EngineFunctionSpec {
 
 const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
   {
-    id: 'getScaleNotes',
-    signature: 'getScaleNotes(root: Note, mode: ModeName): Note[]',
-    description: 'Returns all notes in a scale for the given root and mode.',
+    id: 'getModeNotes',
+    signature: 'getModeNotes(root: Note, mode: ModeName): Note[]',
+    description: 'Returns all notes in a diatonic mode for the given root.',
     inputKind: 'rootMode',
   },
   {
@@ -238,8 +238,8 @@ const computeResult = (
   guardInput: string
 ): unknown => {
   switch (functionId) {
-    case 'getScaleNotes':
-      return getScaleNotes(root, mode);
+    case 'getModeNotes':
+      return getModeNotes(root, mode);
     case 'getParentScaleModes':
       return getParentScaleModes(root, mode);
     case 'getRelativeMinorKey':
@@ -277,7 +277,7 @@ const computeResult = (
 
 const EnginePlayground = () => {
   const [functionId, setFunctionId] =
-    useState<EngineFunctionId>('getScaleNotes');
+    useState<EngineFunctionId>('getModeNotes');
   const [root, setRoot] = useState<Note>(Notes.C);
   const [mode, setMode] = useState<ModeName>(Modes.Ionian);
   const [targetNote, setTargetNote] = useState<Note>(Notes.E);

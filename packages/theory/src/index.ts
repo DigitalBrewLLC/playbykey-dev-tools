@@ -24,6 +24,7 @@ export {
   Modes,
   Intervals,
   ScaleTypes,
+  PentatonicTypes,
   Accidentals,
   MODES,
   ModeInfoById,
