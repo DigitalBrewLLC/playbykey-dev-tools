@@ -6,6 +6,7 @@ import type {
   IntervalId,
   ScaleType,
   AccidentalType,
+  PentatonicType,
 } from './types';
 
 /** All 12 chromatic notes with dot-notation access. Sharp notes use CSharp/DSharp style. */
@@ -72,6 +73,12 @@ const ScaleTypes = {
   Blues: 'blues',
   HarmonicMinor: 'harmonic-minor',
 } as const satisfies Record<string, ScaleType>;
+
+/** Named constants for pentatonic types. */
+const PentatonicTypes = {
+  Major: 'pentatonic-major',
+  Minor: 'pentatonic-minor',
+} as const satisfies Record<string, PentatonicType>;
 
 /** Named constants for each accidental display preference. */
 const Accidentals = {
@@ -158,6 +165,7 @@ export {
   Modes,
   Intervals,
   ScaleTypes,
+  PentatonicTypes,
   Accidentals,
   MODES,
   ModeInfoById,

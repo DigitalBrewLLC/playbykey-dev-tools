@@ -1,4 +1,9 @@
-import { Modes, CHROMATIC_NOTES, ScaleTypes } from './constants';
+import {
+  Modes,
+  CHROMATIC_NOTES,
+  ScaleTypes,
+  PentatonicTypes,
+} from './constants';
 import { elementAt, getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
 import type { ModeName, Note, PentatonicType, ScaleType } from './types';
 
@@ -88,7 +93,7 @@ const getBluesNotes = (root: Note): Note[] =>
  *   e.g. `getPentatonicDegrees('C', 'minor')` → `['C','D#','F','G','A#']`
  */
 const getPentatonicDegrees = (root: Note, type: PentatonicType): Note[] => {
-  if (type === 'major') {
+  if (type === PentatonicTypes.Major) {
     const scale = getScaleNotes(root, Modes.Ionian);
     const degrees = new Set<number>(PENTATONIC_MAJOR_DEGREES);
     return scale.filter((_, i) => degrees.has(i + 1));
