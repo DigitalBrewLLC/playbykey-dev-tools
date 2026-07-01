@@ -13,8 +13,13 @@ import { CodeSnippet } from '../ui/CodeSnippet';
 import { InfoBadge, InfoBlock, InfoTitle } from '../ui/InfoBlock';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
-import { ResultPanel } from '../ui/ResultPanel';
-import { containerStyle, controlsRowStyle } from './playgroundStyles';
+import {
+  containerStyle,
+  controlsRowStyle,
+  dataLabelStyle,
+  dataRowStyle,
+  dataValueStyle,
+} from './playgroundStyles';
 
 const characterStyle = {
   margin: 0,
@@ -46,18 +51,32 @@ const ModeExplorer = () => {
         <InfoTitle>{modeInfo.name}</InfoTitle>
         <InfoBadge>Degree {modeInfo.scaleDegree}</InfoBadge>
         <p style={characterStyle}>{modeInfo.character}</p>
+        <div style={dataRowStyle}>
+          <span style={dataLabelStyle}>Step intervals</span>
+          <span style={dataValueStyle}>[{intervals.join(', ')}]</span>
+        </div>
+        <div style={dataRowStyle}>
+          <span style={dataLabelStyle}>Semitone offsets</span>
+          <span style={dataValueStyle}>[{offsets.join(', ')}]</span>
+        </div>
+        <div style={dataRowStyle}>
+          <span style={dataLabelStyle}>Alterations from major</span>
+          <span style={dataValueStyle}>{JSON.stringify(alterations)}</span>
+        </div>
+        <div style={dataRowStyle}>
+          <span style={dataLabelStyle}>Notes</span>
+          <span style={dataValueStyle}>{notes.join(', ')}</span>
+        </div>
       </InfoBlock>
 
-      <CodeSnippet call={`MODE_INTERVALS[Modes.${modeKey}]`} />
-      <ResultPanel label="MODE_INTERVALS result" value={[...intervals]} />
-
-      <CodeSnippet call={`MODE_SEMITONE_OFFSETS[Modes.${modeKey}]`} />
-      <ResultPanel label="MODE_SEMITONE_OFFSETS result" value={[...offsets]} />
-
-      <ResultPanel label="Alterations from major" value={alterations} />
-
-      <CodeSnippet call={`getModeNotes(Notes.${noteKey}, Modes.${modeKey})`} />
-      <ResultPanel label="getModeNotes result" value={notes} />
+      <CodeSnippet
+        call={[
+          `MODE_INTERVALS[Modes.${modeKey}]`,
+          `MODE_SEMITONE_OFFSETS[Modes.${modeKey}]`,
+          `getModeAlterations(Modes.${modeKey})`,
+          `getModeNotes(Notes.${noteKey}, Modes.${modeKey})`,
+        ]}
+      />
     </div>
   );
 };
