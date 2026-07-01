@@ -3,10 +3,9 @@ import {
   getIntervalSemitones,
   resolveIntervalEndpoints,
 } from '@playbykey/theory';
-import type { IntervalId, ModeName, Note } from '@playbykey/theory';
+import type { IntervalId, Note } from '@playbykey/theory';
 import { FunctionCard } from '../ui/FunctionCard';
 import { IntervalSelect } from '../ui/IntervalSelect';
-import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 
 const containerStyle = {
@@ -19,7 +18,6 @@ const IntervalsPlayground = () => {
   const [semitonesInterval, setSemitonesInterval] =
     useState<IntervalId>('perfect_5th');
   const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
   const [resolveInterval, setResolveInterval] =
     useState<IntervalId>('major_3rd');
 
@@ -29,13 +27,8 @@ const IntervalsPlayground = () => {
   );
 
   const resolvedResult = useMemo(
-    () =>
-      resolveIntervalEndpoints({
-        root,
-        mode,
-        interval: resolveInterval,
-      }),
-    [root, mode, resolveInterval]
+    () => resolveIntervalEndpoints({ root, interval: resolveInterval }),
+    [root, resolveInterval]
   );
 
   return (
@@ -55,11 +48,10 @@ const IntervalsPlayground = () => {
       <FunctionCard
         name="resolveIntervalEndpoints"
         signature="resolveIntervalEndpoints(context: IntervalContext): ResolvedInterval"
-        description="Resolves from/to notes for an interval in the context of a root and mode."
+        description="Resolves the from/to notes for an interval anchored at a root, always within the major scale."
         result={resolvedResult}
       >
         <NoteSelect value={root} onChange={setRoot} label="Root" />
-        <ModeSelect value={mode} onChange={setMode} />
         <IntervalSelect value={resolveInterval} onChange={setResolveInterval} />
       </FunctionCard>
     </div>

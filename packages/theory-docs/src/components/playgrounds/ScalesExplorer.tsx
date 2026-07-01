@@ -4,8 +4,7 @@ import {
   getDerivedScaleNotes,
   ScaleTypes,
 } from '@playbykey/theory';
-import type { ModeName, Note, ScaleType } from '@playbykey/theory';
-import { ModeSelect } from '../ui/ModeSelect';
+import type { Note, ScaleType } from '@playbykey/theory';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
@@ -53,14 +52,12 @@ const snippetCallStyle = {
 
 const ScalesExplorer = () => {
   const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
-  const [scaleType, setScaleType] = useState<ScaleType>(ScaleTypes.Mode);
+  const [scaleType, setScaleType] = useState<ScaleType>(ScaleTypes.Major);
 
-  const modeIsRelevant = scaleType === ScaleTypes.Mode;
   const definition = useMemo(() => SCALE_DEFINITIONS[scaleType], [scaleType]);
   const notes = useMemo(
-    () => getDerivedScaleNotes(root, mode, scaleType),
-    [root, mode, scaleType]
+    () => getDerivedScaleNotes(root, scaleType),
+    [root, scaleType]
   );
 
   return (
@@ -68,7 +65,6 @@ const ScalesExplorer = () => {
       <div style={controlsRowStyle}>
         <NoteSelect value={root} onChange={setRoot} />
         <ScaleTypeSelect value={scaleType} onChange={setScaleType} />
-        {modeIsRelevant && <ModeSelect value={mode} onChange={setMode} />}
       </div>
 
       <div style={infoBlockStyle}>
@@ -78,7 +74,7 @@ const ScalesExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`getDerivedScaleNotes('${root}', '${mode}', '${scaleType}')`}</code>
+        >{`getDerivedScaleNotes('${root}', '${scaleType}')`}</code>
       </p>
 
       <ResultPanel label="getDerivedScaleNotes result" value={notes} />

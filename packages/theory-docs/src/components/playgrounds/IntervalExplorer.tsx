@@ -3,9 +3,8 @@ import {
   INTERVAL_DEFINITIONS,
   resolveIntervalEndpoints,
 } from '@playbykey/theory';
-import type { IntervalId, ModeName, Note } from '@playbykey/theory';
+import type { IntervalId, Note } from '@playbykey/theory';
 import { IntervalSelect } from '../ui/IntervalSelect';
-import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
 
@@ -57,20 +56,18 @@ const snippetCallStyle = {
 
 const IntervalExplorer = () => {
   const [root, setRoot] = useState<Note>('C');
-  const [mode, setMode] = useState<ModeName>('ionian');
   const [interval, setInterval] = useState<IntervalId>('perfect_5th');
 
   const definition = useMemo(() => INTERVAL_DEFINITIONS[interval], [interval]);
   const resolved = useMemo(
-    () => resolveIntervalEndpoints({ root, mode, interval }),
-    [root, mode, interval]
+    () => resolveIntervalEndpoints({ root, interval }),
+    [root, interval]
   );
 
   return (
     <div style={containerStyle}>
       <div style={controlsRowStyle}>
         <NoteSelect value={root} onChange={setRoot} />
-        <ModeSelect value={mode} onChange={setMode} />
         <IntervalSelect value={interval} onChange={setInterval} />
       </div>
 
@@ -84,7 +81,7 @@ const IntervalExplorer = () => {
       <p style={snippetStyle}>
         <code
           style={snippetCallStyle}
-        >{`resolveIntervalEndpoints({ root: '${root}', mode: '${mode}', interval: '${interval}' })`}</code>
+        >{`resolveIntervalEndpoints({ root: '${root}', interval: '${interval}' })`}</code>
       </p>
 
       <ResultPanel label="resolveIntervalEndpoints result" value={resolved} />
