@@ -6,10 +6,10 @@ import {
   getScaleDegrees,
   getScaleNotes,
   Notes,
-  PentatonicTypes,
+  PentatonicType,
   ScaleTypes,
 } from '@playbykey/theory';
-import type { Note, PentatonicType, ScaleType } from '@playbykey/theory';
+import type { Note, ScaleType } from '@playbykey/theory';
 import { FunctionCard } from '../ui/FunctionCard';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
@@ -27,19 +27,17 @@ const fieldStyle = {
 };
 
 const labelStyle = {
-  fontSize: '0.75rem',
-  color: 'var(--sl-color-gray-3)',
-  fontWeight: 500,
+  fontSize: '0.875rem',
+  fontWeight: 600,
+  color: 'var(--sl-color-gray-2)',
 };
 
 const selectStyle = {
   padding: '0.375rem 0.5rem',
   borderRadius: '0.375rem',
   border: '1px solid var(--sl-color-gray-5)',
-  background: 'var(--sl-color-bg)',
-  color: 'var(--sl-color-text)',
-  fontSize: '0.875rem',
-  cursor: 'pointer',
+  background: 'var(--sl-color-gray-6)',
+  color: 'var(--sl-color-gray-1)',
 };
 
 const ScalesPlayground = () => {
