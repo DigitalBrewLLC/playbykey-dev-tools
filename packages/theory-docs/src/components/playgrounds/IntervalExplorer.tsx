@@ -7,7 +7,6 @@ import {
 } from '@playbykey/theory';
 import type { IntervalId, Note } from '@playbykey/theory';
 import { CodeSnippet } from '../ui/CodeSnippet';
-import { InfoBadge, InfoBlock, InfoTitle } from '../ui/InfoBlock';
 import { IntervalSelect } from '../ui/IntervalSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
@@ -35,13 +34,11 @@ const IntervalExplorer = () => {
         <IntervalSelect value={interval} onChange={setInterval} />
       </div>
 
-      <InfoBlock>
-        <InfoTitle>{definition.label}</InfoTitle>
-        <InfoBadge>{definition.intervalSpec.semitones} semitones</InfoBadge>
-      </InfoBlock>
-
       <CodeSnippet
-        call={`resolveIntervalEndpoints({ root: Notes.${noteKey}, interval: Intervals.${intervalKey} })`}
+        call={[
+          `INTERVAL_DEFINITIONS[Intervals.${intervalKey}]  // { label: '${definition.label}', semitones: ${definition.intervalSpec.semitones} }`,
+          `resolveIntervalEndpoints({ root: Notes.${noteKey}, interval: Intervals.${intervalKey} })`,
+        ]}
       />
 
       <ResultPanel label="resolveIntervalEndpoints result" value={resolved} />
