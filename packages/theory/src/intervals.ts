@@ -1,5 +1,5 @@
 import { Intervals, Modes } from './constants';
-import { elementAt, getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
+import { elementAt, getNoteIndex, getModeNotes, noteAtIndex } from './engine';
 import type { Note, IntervalId } from './types';
 
 interface IntervalContext {
@@ -90,7 +90,7 @@ const noteAtDegree = (root: Note, degree: number): Note => {
   if (degree === 8) {
     return root;
   }
-  return elementAt(getScaleNotes(root, Modes.Ionian), degree - 1);
+  return elementAt(getModeNotes(root, Modes.Ionian), degree - 1);
 };
 
 const resolveEndpointsFromSpec = (

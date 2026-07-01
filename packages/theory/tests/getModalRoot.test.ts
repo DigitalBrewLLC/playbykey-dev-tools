@@ -9,7 +9,7 @@ import type { Note, ModeName } from '../src';
 // Example: getModalRoot('C', Modes.Dorian) → 'D'
 //   C ionian = [C, D, E, F, G, A, B]; dorian is scale degree 2 → index 1 → D
 //
-// All 84 cases below are derived from: getScaleNotes(parentKey, 'ionian')[scaleDegree - 1]
+// All 84 cases below are derived from: getModeNotes(parentKey, 'ionian')[scaleDegree - 1]
 
 const ALL_MODAL_ROOTS: Array<{
   parentKey: Note;

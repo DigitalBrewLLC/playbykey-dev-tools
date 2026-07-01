@@ -4,7 +4,7 @@ import {
   ScaleTypes,
   PentatonicTypes,
 } from './constants';
-import { elementAt, getNoteIndex, getScaleNotes, noteAtIndex } from './engine';
+import { elementAt, getNoteIndex, getModeNotes, noteAtIndex } from './engine';
 import type { ModeName, Note, PentatonicType, ScaleType } from './types';
 
 /** Semitone offsets from the tonic for the six-note blues scale. */
@@ -73,7 +73,7 @@ const notesFromSemitoneOffsets = (
 
 const getHarmonicMinorNotes = (root: Note): Note[] => {
   const raisedIndex = HARMONIC_MINOR_RAISE_DEGREE - 1;
-  const parentNotes = getScaleNotes(root, HARMONIC_MINOR_PARENT_MODE);
+  const parentNotes = getModeNotes(root, HARMONIC_MINOR_PARENT_MODE);
   const naturalSeventh = elementAt(parentNotes, raisedIndex);
   return [
     ...parentNotes.slice(0, raisedIndex),
@@ -94,11 +94,11 @@ const getBluesNotes = (root: Note): Note[] =>
  */
 const getPentatonicNotes = (root: Note, type: PentatonicType): Note[] => {
   if (type === PentatonicTypes.Major) {
-    const scale = getScaleNotes(root, Modes.Ionian);
+    const scale = getModeNotes(root, Modes.Ionian);
     const degrees = new Set<number>(PENTATONIC_MAJOR_DEGREES);
     return scale.filter((_, i) => degrees.has(i + 1));
   }
-  const scale = getScaleNotes(root, Modes.Aeolian);
+  const scale = getModeNotes(root, Modes.Aeolian);
   const degrees = new Set<number>(PENTATONIC_MINOR_DEGREES);
   return scale.filter((_, i) => degrees.has(i + 1));
 };
@@ -121,7 +121,7 @@ const getScaleDegrees = (scaleType: ScaleType): readonly number[] => {
   return FULL_SCALE_DEGREES;
 };
 
-const getDerivedScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
+const getScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
   const definition = SCALE_DEFINITIONS[scaleType];
 
   if (definition.semitoneOffsets !== undefined) {
@@ -134,38 +134,19 @@ const getDerivedScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
 
   if (scaleType === ScaleTypes.PentatonicMajor) {
     const degrees = new Set<number>(PENTATONIC_MAJOR_DEGREES);
-    return getScaleNotes(root, Modes.Ionian).filter((_, i) =>
+    return getModeNotes(root, Modes.Ionian).filter((_, i) =>
       degrees.has(i + 1)
     );
   }
 
   if (scaleType === ScaleTypes.PentatonicMinor) {
     const degrees = new Set<number>(PENTATONIC_MINOR_DEGREES);
-    return getScaleNotes(root, Modes.Aeolian).filter((_, i) =>
+    return getModeNotes(root, Modes.Aeolian).filter((_, i) =>
       degrees.has(i + 1)
     );
   }
 
-  return getScaleNotes(root, Modes.Ionian);
-};
-
-const getScaleContextNotes = (root: Note, scaleType: ScaleType): Note[] => {
-  if (scaleType === ScaleTypes.Chromatic) {
-    return [...CHROMATIC_NOTES];
-  }
-  if (scaleType === ScaleTypes.Blues) {
-    return getScaleNotes(root, Modes.Aeolian);
-  }
-  if (scaleType === ScaleTypes.HarmonicMinor) {
-    return getHarmonicMinorNotes(root);
-  }
-  if (scaleType === ScaleTypes.PentatonicMajor) {
-    return getScaleNotes(root, Modes.Ionian);
-  }
-  if (scaleType === ScaleTypes.PentatonicMinor) {
-    return getScaleNotes(root, Modes.Aeolian);
-  }
-  return getScaleNotes(root, Modes.Ionian);
+  return getModeNotes(root, Modes.Ionian);
 };
 
 export type { ScaleDefinition };
@@ -177,11 +158,10 @@ export {
   PENTATONIC_MINOR_DEGREES,
   FULL_SCALE_DEGREES,
   getBluesNotes,
-  getDerivedScaleNotes,
   getFullScaleDegrees,
   getHarmonicMinorNotes,
   getPentatonicNotes,
-  getScaleContextNotes,
   getScaleDegrees,
+  getScaleNotes,
   notesFromSemitoneOffsets,
 };

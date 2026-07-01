@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getScaleNotes, Modes } from '../src';
+import { getModeNotes, Modes } from '../src';
 import type { Note, ModeName } from '../src';
 import { ALL_NOTES, ALL_MODES } from './fixtures';
 
@@ -36,16 +36,16 @@ const C_MODES: Array<{ mode: ModeName; expected: Note[] }> = [
   },
 ];
 
-describe('getScaleNotes', () => {
+describe('getModeNotes', () => {
   describe('all 12 keys in ionian mode — full output verified', () => {
     it.each(IONIAN_KEYS)('$root ionian', ({ root, expected }) => {
-      expect(getScaleNotes(root, Modes.Ionian)).toEqual(expected);
+      expect(getModeNotes(root, Modes.Ionian)).toEqual(expected);
     });
   });
 
   describe('all 7 modes from C root — full output verified', () => {
     it.each(C_MODES)('C $mode', ({ mode, expected }) => {
-      expect(getScaleNotes('C', mode)).toEqual(expected);
+      expect(getModeNotes('C', mode)).toEqual(expected);
     });
   });
 
@@ -55,7 +55,7 @@ describe('getScaleNotes', () => {
     it.each(
       ALL_NOTES.flatMap((root) => ALL_MODES.map((mode) => ({ root, mode })))
     )('$root $mode returns 7 notes with root first', ({ root, mode }) => {
-      const notes = getScaleNotes(root, mode);
+      const notes = getModeNotes(root, mode);
       expect(notes).toHaveLength(7);
       expect(notes[0]).toBe(root);
     });

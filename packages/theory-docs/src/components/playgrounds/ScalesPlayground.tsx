@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react';
 import {
   getBluesNotes,
-  getDerivedScaleNotes,
   getHarmonicMinorNotes,
   getPentatonicNotes,
-  getScaleContextNotes,
   getScaleDegrees,
+  getScaleNotes,
   Notes,
+  PentatonicTypes,
   ScaleTypes,
 } from '@playbykey/theory';
 import type { Note, PentatonicType, ScaleType } from '@playbykey/theory';
@@ -47,10 +47,11 @@ const ScalesPlayground = () => {
   const [derivedType, setDerivedType] = useState<ScaleType>(
     ScaleTypes.PentatonicMajor
   );
-  const [contextType, setContextType] = useState<ScaleType>(ScaleTypes.Blues);
   const [emphasisType, setEmphasisType] = useState<ScaleType>(ScaleTypes.Blues);
   const [pentRoot, setPentRoot] = useState<Note>(Notes.C);
-  const [pentType, setPentType] = useState<PentatonicType>('major');
+  const [pentType, setPentType] = useState<PentatonicType>(
+    PentatonicTypes.Major
+  );
 
   const bluesNotes = useMemo(() => getBluesNotes(root), [root]);
   const harmonicMinorNotes = useMemo(() => getHarmonicMinorNotes(root), [root]);
@@ -59,12 +60,8 @@ const ScalesPlayground = () => {
     [pentRoot, pentType]
   );
   const derivedNotes = useMemo(
-    () => getDerivedScaleNotes(root, derivedType),
+    () => getScaleNotes(root, derivedType),
     [root, derivedType]
-  );
-  const contextNotes = useMemo(
-    () => getScaleContextNotes(root, contextType),
-    [root, contextType]
   );
   const emphasisDegrees = useMemo(
     () => getScaleDegrees(emphasisType),
@@ -105,30 +102,20 @@ const ScalesPlayground = () => {
             value={pentType}
             onChange={(e) => setPentType(e.target.value as PentatonicType)}
           >
-            <option value="major">major</option>
-            <option value="minor">minor</option>
+            <option value={PentatonicTypes.Major}>major</option>
+            <option value={PentatonicTypes.Minor}>minor</option>
           </select>
         </label>
       </FunctionCard>
 
       <FunctionCard
-        name="getDerivedScaleNotes"
-        signature="getDerivedScaleNotes(root: Note, scaleType: ScaleType): Note[]"
-        description="Derives scale notes for major, blues, pentatonic, harmonic minor, and other types."
+        name="getScaleNotes"
+        signature="getScaleNotes(root: Note, scaleType: ScaleType): Note[]"
+        description="Returns the notes for any scale type — major, blues, pentatonic, harmonic minor, and chromatic."
         result={derivedNotes}
       >
         <NoteSelect value={root} onChange={setRoot} label="Root" />
         <ScaleTypeSelect value={derivedType} onChange={setDerivedType} />
-      </FunctionCard>
-
-      <FunctionCard
-        name="getScaleContextNotes"
-        signature="getScaleContextNotes(root: Note, scaleType: ScaleType): Note[]"
-        description="Returns the parent context scale for a derived scale type."
-        result={contextNotes}
-      >
-        <NoteSelect value={root} onChange={setRoot} label="Root" />
-        <ScaleTypeSelect value={contextType} onChange={setContextType} />
       </FunctionCard>
 
       <FunctionCard

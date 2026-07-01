@@ -1,14 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { Modes, ScaleTypes } from '../src/constants';
-import { getScaleNotes } from '../src/engine';
+import { Modes, PentatonicTypes, ScaleTypes } from '../src/constants';
+import { getModeNotes } from '../src/engine';
 import {
   BLUES_SEMITONE_OFFSETS,
   getBluesNotes,
-  getDerivedScaleNotes,
   getHarmonicMinorNotes,
   getPentatonicNotes,
-  getScaleContextNotes,
   getScaleDegrees,
+  getScaleNotes,
   PENTATONIC_MAJOR_DEGREES,
   PENTATONIC_MINOR_DEGREES,
   SCALE_DEFINITIONS,
@@ -20,19 +19,19 @@ describe('SCALE_DEFINITIONS', () => {
   });
 });
 
-describe('getDerivedScaleNotes', () => {
+describe('getScaleNotes', () => {
   it('returns ionian notes for major type', () => {
-    expect(getDerivedScaleNotes('C', ScaleTypes.Major)).toEqual(
-      getScaleNotes('C', Modes.Ionian)
+    expect(getScaleNotes('C', ScaleTypes.Major)).toEqual(
+      getModeNotes('C', Modes.Ionian)
     );
   });
 
   it('returns all 12 chromatic pitches for chromatic type', () => {
-    expect(getDerivedScaleNotes('C', ScaleTypes.Chromatic)).toHaveLength(12);
+    expect(getScaleNotes('C', ScaleTypes.Chromatic)).toHaveLength(12);
   });
 
   it('returns major pentatonic from ionian', () => {
-    expect(getDerivedScaleNotes('C', ScaleTypes.PentatonicMajor)).toEqual([
+    expect(getScaleNotes('C', ScaleTypes.PentatonicMajor)).toEqual([
       'C',
       'D',
       'E',
@@ -42,7 +41,7 @@ describe('getDerivedScaleNotes', () => {
   });
 
   it('returns minor pentatonic from aeolian', () => {
-    expect(getDerivedScaleNotes('C', ScaleTypes.PentatonicMinor)).toEqual([
+    expect(getScaleNotes('C', ScaleTypes.PentatonicMinor)).toEqual([
       'C',
       'D#',
       'F',
@@ -52,9 +51,7 @@ describe('getDerivedScaleNotes', () => {
   });
 
   it('returns blues scale with blue note for blues type', () => {
-    expect(getDerivedScaleNotes('A', ScaleTypes.Blues)).toEqual(
-      getBluesNotes('A')
-    );
+    expect(getScaleNotes('A', ScaleTypes.Blues)).toEqual(getBluesNotes('A'));
     expect(getBluesNotes('A')).toContain('D#');
   });
 
@@ -99,33 +96,19 @@ describe('getScaleDegrees', () => {
   });
 });
 
-describe('getScaleContextNotes', () => {
-  it('uses aeolian parent for blues harmonic context', () => {
-    expect(getScaleContextNotes('A', ScaleTypes.Blues)).toEqual(
-      getScaleNotes('A', Modes.Aeolian)
-    );
-  });
-
-  it('returns ionian scale as context for major pentatonic', () => {
-    expect(getScaleContextNotes('C', ScaleTypes.PentatonicMajor)).toEqual(
-      getScaleNotes('C', Modes.Ionian)
-    );
-  });
-
-  it('returns aeolian scale as context for minor pentatonic', () => {
-    expect(getScaleContextNotes('C', ScaleTypes.PentatonicMinor)).toEqual(
-      getScaleNotes('C', Modes.Aeolian)
-    );
-  });
-});
-
 describe('getPentatonicNotes', () => {
   it('returns 5 major pentatonic notes for given root', () => {
-    expect(getPentatonicNotes('C', 'major')).toEqual(['C', 'D', 'E', 'G', 'A']);
+    expect(getPentatonicNotes('C', PentatonicTypes.Major)).toEqual([
+      'C',
+      'D',
+      'E',
+      'G',
+      'A',
+    ]);
   });
 
   it('returns 5 minor pentatonic notes for given root', () => {
-    expect(getPentatonicNotes('C', 'minor')).toEqual([
+    expect(getPentatonicNotes('C', PentatonicTypes.Minor)).toEqual([
       'C',
       'D#',
       'F',
@@ -135,8 +118,8 @@ describe('getPentatonicNotes', () => {
   });
 
   it('relative relationship: A minor pentatonic shares notes with C major pentatonic', () => {
-    const cMajor = new Set(getPentatonicNotes('C', 'major'));
-    const aMinor = new Set(getPentatonicNotes('A', 'minor'));
+    const cMajor = new Set(getPentatonicNotes('C', PentatonicTypes.Major));
+    const aMinor = new Set(getPentatonicNotes('A', PentatonicTypes.Minor));
     expect([...cMajor].sort()).toEqual([...aMinor].sort());
   });
 
@@ -156,8 +139,8 @@ describe('getPentatonicNotes', () => {
       'B',
     ] as const;
     for (const root of roots) {
-      expect(getPentatonicNotes(root, 'major')).toHaveLength(5);
-      expect(getPentatonicNotes(root, 'minor')).toHaveLength(5);
+      expect(getPentatonicNotes(root, PentatonicTypes.Major)).toHaveLength(5);
+      expect(getPentatonicNotes(root, PentatonicTypes.Minor)).toHaveLength(5);
     }
   });
 });
