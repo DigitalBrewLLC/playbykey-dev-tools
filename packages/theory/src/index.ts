@@ -10,6 +10,7 @@ export type {
   ModeName,
   IntervalId,
   ScaleType,
+  PentatonicType,
   NotationType,
   AccidentalType,
   ModeInfo,
@@ -73,7 +74,8 @@ export type { ScaleDefinition } from './scales';
 export {
   SCALE_DEFINITIONS,
   BLUES_SEMITONE_OFFSETS,
-  PENTATONIC_DEGREES,
+  PENTATONIC_MAJOR_DEGREES,
+  PENTATONIC_MINOR_DEGREES,
   FULL_SCALE_DEGREES,
   getBluesNotes,
   getDerivedScaleNotes,

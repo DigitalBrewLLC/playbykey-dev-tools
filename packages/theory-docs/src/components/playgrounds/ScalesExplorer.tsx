@@ -56,8 +56,7 @@ const ScalesExplorer = () => {
   const [mode, setMode] = useState<ModeName>('ionian');
   const [scaleType, setScaleType] = useState<ScaleType>(ScaleTypes.Mode);
 
-  const modeIsRelevant =
-    scaleType === ScaleTypes.Mode || scaleType === ScaleTypes.Pentatonic;
+  const modeIsRelevant = scaleType === ScaleTypes.Mode;
   const definition = useMemo(() => SCALE_DEFINITIONS[scaleType], [scaleType]);
   const notes = useMemo(
     () => getDerivedScaleNotes(root, mode, scaleType),
