@@ -22,18 +22,18 @@ const cardStyle = {
 const headingStyle = {
   margin: 0,
   fontSize: '1.125rem',
-  color: 'var(--sl-color-accent)',
+  color: 'var(--sl-color-accent-high)',
 };
 
 const signatureStyle = {
   margin: 0,
   padding: '0.5rem 0.75rem',
   borderRadius: '0.375rem',
-  background: 'var(--sl-color-black)',
+  background: 'var(--color-code-bg)',
   border: '1px solid var(--sl-color-gray-5)',
   fontFamily: 'var(--sl-font-mono)',
   fontSize: '0.8125rem',
-  color: 'var(--sl-color-gray-1)',
+  color: 'var(--color-code-fg)',
   overflowX: 'auto' as const,
 };
 
