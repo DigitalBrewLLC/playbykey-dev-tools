@@ -204,7 +204,13 @@ const getKeySignatureCount = (
   key: Note
 ): { sharps: number } | { flats: number } => KEY_SIGNATURE_COUNT[key];
 
-const isNote = (value: string): value is Note => NOTE_SET.has(value);
+const normalizeNoteInput = (value: string): Note | null => {
+  const normalized = value.toUpperCase();
+  return NOTE_SET.has(normalized) ? (normalized as Note) : null;
+};
+
+const isNote = (value: string): value is Note =>
+  normalizeNoteInput(value) !== null;
 
 const isModeName = (value: string): value is ModeName =>
   MODE_NAME_SET.has(value.toLowerCase());
@@ -224,7 +230,7 @@ const firstToken = (value: string): string => {
 /** Parse a display key string into a chromatic Note, or null when not recognized. */
 const parseNote = (value: string): Note | null => {
   const token = firstToken(value);
-  return isNote(token) ? token : null;
+  return normalizeNoteInput(token);
 };
 
 /** Parse a mode slug into a ModeName, or null when not recognized. */
