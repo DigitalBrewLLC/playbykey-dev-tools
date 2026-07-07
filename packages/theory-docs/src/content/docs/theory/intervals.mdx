@@ -34,7 +34,7 @@ An `IntervalId` names one of the 13 standard intervals in the catalog, from half
 
 ## Interval Types
 
-**`IntervalContext`** — `{ root: Note; mode: ModeName; interval: IntervalId }`. Passed to `resolveIntervalEndpoints` to anchor interval resolution in a scale.
+**`IntervalContext`** — `{ root: Note; interval: IntervalId }`. Passed to `resolveIntervalEndpoints` to resolve the two notes bounding the interval.
 
 **`ResolvedInterval`** — `{ from: Note; to: Note; semitones: number; label: string }`. The resolved endpoints plus the catalog label for the interval.
 
