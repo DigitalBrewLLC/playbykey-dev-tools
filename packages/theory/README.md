@@ -18,15 +18,15 @@ npm install @playbykey/theory
 **Agent / LLM context prompt:**
 
 ```text
-I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (scales/modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getScaleDegree, isNoteInScale, getNoteIndex, noteAtIndex, getSemitoneDistance (note utilities); buildNoteMap, getScaleNotes, getScaleDegrees (scale/visualization); parseNote, parseModeName, isNote, isModeName (type guards); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db).
+I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals — half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db).
 ```
 
 ## Quickstart
 
 ```typescript
-import { getScaleNotes, getParentScaleModes } from '@playbykey/theory';
+import { getModeNotes, getParentScaleModes } from '@playbykey/theory';
 
-const notes = getScaleNotes('D', 'dorian');
+const notes = getModeNotes('D', 'dorian');
 // ['D', 'E', 'F', 'G', 'A', 'B', 'C']
 
 const parentModes = getParentScaleModes('D', 'dorian');
@@ -38,11 +38,11 @@ const parent = parentModes.find((m) => m.mode === 'ionian');
 
 - **Keys & Modes** — `getModeNotes`, `getModalRoot`, `getParentScaleModes`
 - **Key relationships** — `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, `getCircleOfFifthsOrder`
-- **Note utilities** — `getScaleDegree`, `isNoteInScale`, `getNoteIndex`, `noteAtIndex`, `getSemitoneDistance`
-- **Scale / Visualization** — `buildNoteMap`, `getScaleNotes`, `getScaleDegrees`
-- **Intervals** — `resolveIntervalEndpoints`, `INTERVAL_DEFINITIONS`
-- **Derived scales** — `getBluesNotes`, `getHarmonicMinorNotes`, `getDerivedScaleNotes`
-- **Type guards** — `isNote`, `isModeName`, `parseNote`, `parseModeName`
+- **Note utilities** — `getSemitoneDistance`
+- **Scales** — `getScaleNotes`, `getScaleDegrees`, `getScaleDegree`, `isNoteInScale`, `buildNoteMap`
+- **Intervals** — `resolveIntervalEndpoints`, `getIntervalSemitones`, `INTERVAL_DEFINITIONS` (14 intervals; scale motion vs from-root 2nds)
+- **Derived scales** — `getBluesNotes`, `getHarmonicMinorNotes`, `getPentatonicNotes`
+- **Type guards** — `isNote`, `isModeName`, `parseNote`, `parseModeName` (case-insensitive)
 
 **[Full API reference →](https://theory-engine.docs.playbykey.com)**
 

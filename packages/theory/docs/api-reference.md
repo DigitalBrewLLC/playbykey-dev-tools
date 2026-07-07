@@ -62,17 +62,6 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 
 ### Note utilities
 
-#### `getNoteIndex`
-
-- **Signature:** `getNoteIndex(note: Note): number`
-- **Returns:** Chromatic index (0–11) of `note`. C = 0, C# = 1, … B = 11.
-- **Throws:** `RangeError` if the value is not a recognized note.
-
-#### `noteAtIndex`
-
-- **Signature:** `noteAtIndex(index: number): Note`
-- **Returns:** The note at a chromatic index. Wraps with modulo 12, handles negatives.
-
 #### `getSemitoneDistance`
 
 - **Signature:** `getSemitoneDistance(from: Note, to: Note): number`
@@ -85,21 +74,6 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 - **Signature:** `getModeNotes(root: Note, mode: ModeName): Note[]`
 - **Returns:** The 7 notes of a diatonic mode for a given root, in scale-degree order.
 - **Example:** `getModeNotes('C', 'ionian')` → `['C','D','E','F','G','A','B']`
-
-#### `getScaleDegree`
-
-- **Signature:** `getScaleDegree(root: Note, mode: ModeName, note: Note): number | null`
-- **Returns:** Scale degree (1–7) of `note` in the given mode, or `null` if not in scale.
-
-#### `isNoteInScale`
-
-- **Signature:** `isNoteInScale(root: Note, mode: ModeName, note: Note): boolean`
-- **Returns:** `true` if `note` belongs to the given key/mode scale.
-
-#### `getNoteLabel`
-
-- **Signature:** `getNoteLabel(note: Note, root: Note, mode: ModeName, notation: NotationType): string`
-- **Returns:** Display label for `note` — the note name in `'letter'` mode, or scale degree string in `'number'` mode (empty string if out of scale).
 
 #### `getModalRoot`
 
@@ -139,24 +113,28 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 #### `isNote`
 
 - **Signature:** `isNote(value: string): value is Note`
+- **Returns:** `true` when `value` is a recognized note. Case-insensitive (`'c'`, `'f#'`).
 
 #### `isModeName`
 
 - **Signature:** `isModeName(value: string): value is ModeName`
+- **Returns:** `true` when `value` is a recognized mode slug. Case-insensitive (`'Ionian'`).
 
 #### `parseNote`
 
 - **Signature:** `parseNote(value: string): Note | null`
-- **Returns:** First token of `value` parsed as a `Note`, or `null`.
+- **Returns:** First token of `value` parsed as a canonical `Note`, or `null`. Case-insensitive input.
 
 #### `parseModeName`
 
 - **Signature:** `parseModeName(value: string): ModeName | null`
-- **Returns:** First token of `value` parsed as a `ModeName`, or `null`.
+- **Returns:** First token of `value` parsed as a `ModeName`, or `null`. Case-insensitive input.
 
 ---
 
 ## Interval functions
+
+The catalog contains 14 intervals. `half_step` and `whole_step` resolve **scale motion** between adjacent degrees in the major scale. `minor_2nd` and `major_2nd` are **named intervals from the root** with the same semitone distances (1 and 2). All other entries resolve from the root using diatonic degree targets, except `minor_7th` which uses a chromatic upper note.
 
 #### `isIntervalId`
 
@@ -187,6 +165,17 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 
 - **Signature:** `getScaleDegrees(scaleType: ScaleType): readonly number[]`
 - **Returns:** The active scale-degree numbers for a given scale type — the numeric parallel to `getScaleNotes`.
+
+#### `getScaleDegree`
+
+- **Signature:** `getScaleDegree(root: Note, scaleType: ScaleType, note: Note): number | null`
+- **Returns:** The 1-based position of `note` within the scale, or `null` if absent.
+- **Example:** `getScaleDegree('C', 'major', 'E')` → `3`
+
+#### `isNoteInScale`
+
+- **Signature:** `isNoteInScale(root: Note, scaleType: ScaleType, note: Note): boolean`
+- **Returns:** `true` when `note` is present in the given root + scale type.
 
 #### `buildNoteMap`
 

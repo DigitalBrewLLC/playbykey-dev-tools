@@ -46,7 +46,7 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 ## Intervals
 
-`INTERVAL_DEFINITIONS` maps each interval ID to a label and semitone count. `resolveIntervalEndpoints` uses this data to find the actual notes that bound an interval in a given key and mode. See the [Intervals](/theory/intervals/) page for live resolution and the full type reference.
+`INTERVAL_DEFINITIONS` maps each of the 14 interval IDs to a label and semitone count. `half_step` and `whole_step` describe **scale motion** between adjacent degrees; `minor_2nd` and `major_2nd` are **named intervals from the root** with the same semitone distances. `resolveIntervalEndpoints` uses this data to find the actual notes that bound an interval at a given root. See the [Intervals](/theory/intervals/) page for the full distinction and live resolution.
 
 <IntervalExplorer client:load />
 
