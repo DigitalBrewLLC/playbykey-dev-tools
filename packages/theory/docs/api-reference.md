@@ -14,7 +14,7 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 | `ModeName`        | The 7 diatonic modes: `'ionian' \| 'dorian' \| 'phrygian' \| 'lydian' \| 'mixolydian' \| 'aeolian' \| 'locrian'`.                                                 |
 | `ScaleType`       | Scale types supported by `getScaleNotes` and `buildNoteMap`: `'major' \| 'chromatic' \| 'pentatonic-major' \| 'pentatonic-minor' \| 'blues' \| 'harmonic-minor'`. |
 | `PentatonicType`  | Pentatonic variant: `'pentatonic-major' \| 'pentatonic-minor'`.                                                                                                   |
-| `IntervalId`      | Identifiers for the 13 intervals in the catalog, from `'half_step'` to `'octave'`.                                                                                |
+| `IntervalId`      | Identifiers for the 14 intervals in the catalog, from `'half_step'` to `'octave'`.                                                                                |
 | `NotationType`    | Display notation: `'letter'` (note names) or `'number'` (scale degrees).                                                                                          |
 | `AccidentalType`  | Accidental display: `'sharp' \| 'flat' \| 'both'`.                                                                                                                |
 | `ModeInfo`        | Mode metadata: `{ id: ModeName; name: string; scaleDegree: number; character: string }`.                                                                          |
@@ -49,7 +49,7 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 | `ENHARMONIC_LABELS`        | `Partial<Record<Note, string>>` — flat/sharp display labels for the 5 black-key notes (e.g. `'C#': 'Db/C#'`).       |
 | `MODE_INTERVALS`           | `Record<ModeName, readonly number[]>` — step intervals (semitones) between consecutive scale degrees for each mode. |
 | `MODE_SEMITONE_OFFSETS`    | `Record<ModeName, readonly number[]>` — absolute semitone offsets from root for each scale degree, per mode.        |
-| `INTERVAL_DEFINITIONS`     | `Record<IntervalId, IntervalDefinition>` — the full interval catalog (label + spec) for all 13 intervals.           |
+| `INTERVAL_DEFINITIONS`     | `Record<IntervalId, IntervalDefinition>` — the full interval catalog (label + spec) for all 14 intervals.           |
 | `SCALE_DEFINITIONS`        | `Record<ScaleType, ScaleDefinition>` — definitions for each scale type (label + derivation strategy).               |
 | `BLUES_SEMITONE_OFFSETS`   | `readonly number[]` — `[0, 3, 5, 6, 7, 10]`, semitone offsets for the 6-note blues scale.                           |
 | `PENTATONIC_MAJOR_DEGREES` | `readonly number[]` — `[1, 2, 3, 5, 6]`, scale degrees in the major pentatonic subset.                              |

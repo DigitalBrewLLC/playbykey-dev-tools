@@ -26,7 +26,17 @@ head:
 
 import IntervalsPlayground from '../../../components/playgrounds/IntervalsPlayground';
 
-An `IntervalId` names one of the 13 standard intervals in the catalog, from half steps through the octave. Use `resolveIntervalEndpoints` to find the exact from/to notes for any interval in a given root and mode, or look up semitone distances directly from `INTERVAL_DEFINITIONS`.
+An `IntervalId` names one of the 14 intervals in the catalog, from half steps through the octave. Use `resolveIntervalEndpoints` to find the exact from/to notes for any interval anchored at a root, or look up semitone distances directly from `INTERVAL_DEFINITIONS`.
+
+## Scale motion vs named intervals
+
+The catalog distinguishes two ways of describing the same semitone distances:
+
+**Scale motion** — `half_step` and `whole_step` resolve between **adjacent scale degrees** within the major scale (e.g. in C major: E→F is a half step, D→E is a whole step). These are pedagogical step names for diatonic motion.
+
+**Named intervals from root** — `minor_2nd` and `major_2nd` resolve **from degree 1** at the given root. A minor 2nd is one semitone above the root (chromatic); a major 2nd is the diatonic 2nd scale degree (two semitones). Same distances as a half step and whole step, but anchored at the tonic rather than mid-scale.
+
+All other catalog entries (`minor_3rd` through `octave`) are named intervals from the root using diatonic degree targets, except `minor_7th` which uses a chromatic upper note like `minor_2nd`.
 
 ## Live Playground
 

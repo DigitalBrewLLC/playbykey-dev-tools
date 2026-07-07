@@ -40,6 +40,7 @@ type ModeName =
 type IntervalId =
   | 'half_step'
   | 'whole_step'
+  | 'minor_2nd'
   | 'major_2nd'
   | 'minor_3rd'
   | 'major_3rd'

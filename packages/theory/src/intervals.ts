@@ -27,16 +27,22 @@ interface ResolvedInterval {
 }
 
 const INTERVAL_DEFINITIONS: Record<IntervalId, IntervalDefinition> = {
+  // Scale-degree motion: adjacent degrees within the major scale (pedagogical step names).
   [Intervals.HalfStep]: {
-    label: 'Half step',
+    label: 'Half step — scale motion',
     intervalSpec: { fromDegree: 3, toDegree: 4, semitones: 1 },
   },
   [Intervals.WholeStep]: {
-    label: 'Whole step',
+    label: 'Whole step — scale motion',
     intervalSpec: { fromDegree: 2, toDegree: 3, semitones: 2 },
   },
+  // Named intervals from the root: chromatic or diatonic degree-1 anchors.
+  [Intervals.Minor2nd]: {
+    label: 'Minor 2nd — from root',
+    intervalSpec: { fromDegree: 1, semitones: 1, chromaticTo: true },
+  },
   [Intervals.Major2nd]: {
-    label: 'Major 2nd',
+    label: 'Major 2nd — from root',
     intervalSpec: { fromDegree: 1, toDegree: 2, semitones: 2 },
   },
   [Intervals.Minor3rd]: {

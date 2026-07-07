@@ -51,6 +51,7 @@ const Modes = {
 const Intervals = {
   HalfStep: 'half_step',
   WholeStep: 'whole_step',
+  Minor2nd: 'minor_2nd',
   Major2nd: 'major_2nd',
   Minor3rd: 'minor_3rd',
   Major3rd: 'major_3rd',
