@@ -30,6 +30,8 @@ The scales module computes note sets for six scale types: `'major'`, `'chromatic
 
 `getScaleNotes(root, scaleType)` is the general-purpose entry point — it accepts any `ScaleType` and returns the corresponding notes for a given root. `getScaleDegrees(scaleType)` is its numeric parallel, returning the active scale-degree numbers instead of note names.
 
+`getScaleDegree(root, scaleType, note)` returns the 1-based position of a note within a scale, or `null` if the note is absent. `isNoteInScale(root, scaleType, note)` is its boolean shorthand — both work across every `ScaleType`.
+
 ## Live Playground
 
 <ScalesPlayground client:load />

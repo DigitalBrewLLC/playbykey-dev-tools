@@ -3,8 +3,10 @@ import {
   getBluesNotes,
   getHarmonicMinorNotes,
   getPentatonicNotes,
+  getScaleDegree,
   getScaleDegrees,
   getScaleNotes,
+  isNoteInScale,
   Notes,
   PentatonicTypes,
   ScaleTypes,
@@ -27,6 +29,9 @@ const ScalesPlayground = () => {
     ScaleTypes.PentatonicMajor
   );
   const [emphasisType, setEmphasisType] = useState<ScaleType>(ScaleTypes.Blues);
+  const [memberRoot, setMemberRoot] = useState<Note>(Notes.C);
+  const [memberType, setMemberType] = useState<ScaleType>(ScaleTypes.Major);
+  const [memberNote, setMemberNote] = useState<Note>(Notes.E);
   const [pentRoot, setPentRoot] = useState<Note>(Notes.C);
   const [pentType, setPentType] = useState<PentatonicType>(
     PentatonicTypes.Major
@@ -45,6 +50,14 @@ const ScalesPlayground = () => {
   const emphasisDegrees = useMemo(
     () => getScaleDegrees(emphasisType),
     [emphasisType]
+  );
+  const scaleDegreeResult = useMemo(
+    () => getScaleDegree(memberRoot, memberType, memberNote),
+    [memberRoot, memberType, memberNote]
+  );
+  const inScaleResult = useMemo(
+    () => isNoteInScale(memberRoot, memberType, memberNote),
+    [memberRoot, memberType, memberNote]
   );
 
   return (
@@ -101,6 +114,28 @@ const ScalesPlayground = () => {
         result={emphasisDegrees}
       >
         <ScaleTypeSelect value={emphasisType} onChange={setEmphasisType} />
+      </FunctionCard>
+
+      <FunctionCard
+        name="getScaleDegree"
+        signature="getScaleDegree(root: Note, scaleType: ScaleType, note: Note): number | null"
+        description="Returns the 1-based scale degree of a note within a scale, or null if the note is not present."
+        result={scaleDegreeResult}
+      >
+        <NoteSelect value={memberRoot} onChange={setMemberRoot} label="Root" />
+        <ScaleTypeSelect value={memberType} onChange={setMemberType} />
+        <NoteSelect value={memberNote} onChange={setMemberNote} label="Note" />
+      </FunctionCard>
+
+      <FunctionCard
+        name="isNoteInScale"
+        signature="isNoteInScale(root: Note, scaleType: ScaleType, note: Note): boolean"
+        description="Returns true if the note is present in the given root + scale type."
+        result={inScaleResult}
+      >
+        <NoteSelect value={memberRoot} onChange={setMemberRoot} label="Root" />
+        <ScaleTypeSelect value={memberType} onChange={setMemberType} />
+        <NoteSelect value={memberNote} onChange={setMemberNote} label="Note" />
       </FunctionCard>
     </div>
   );
