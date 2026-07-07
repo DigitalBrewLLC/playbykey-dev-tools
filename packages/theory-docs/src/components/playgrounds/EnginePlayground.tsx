@@ -4,7 +4,6 @@ import {
   getCircleOfFifthsOrder,
   getKeySignatureCount,
   getModalRoot,
-  getNoteIndex,
   getParentScaleModes,
   getRelativeMajorKey,
   getRelativeMinorKey,
@@ -14,7 +13,6 @@ import {
   isModeName,
   isNote,
   isNoteInScale,
-  noteAtIndex,
   Modes,
   Notes,
   ScaleTypes,
@@ -38,8 +36,6 @@ type EngineFunctionId =
   | 'getScaleDegree'
   | 'isNoteInScale'
   | 'buildNoteMap'
-  | 'getNoteIndex'
-  | 'noteAtIndex'
   | 'getSemitoneDistance'
   | 'isNote'
   | 'isModeName';
@@ -50,9 +46,9 @@ type InputKind =
   | 'rootOnly'
   | 'modeOnly'
   | 'noteOnly'
-  | 'indexOnly'
   | 'twoNotes'
   | 'rootScaleType'
+  | 'rootScaleTypeNote'
   | 'stringGuard'
   | 'none';
 
@@ -111,35 +107,25 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
   {
     id: 'getScaleDegree',
     signature:
-      'getScaleDegree(root: Note, mode: ModeName, note: Note): number | null',
-    description: 'Returns the scale degree of a note, or null if not in scale.',
-    inputKind: 'rootModeNote',
+      'getScaleDegree(root: Note, scaleType: ScaleType, note: Note): number | null',
+    description:
+      'Returns the 1-based scale degree of a note in a scale, or null if not present.',
+    inputKind: 'rootScaleTypeNote',
   },
   {
     id: 'isNoteInScale',
-    signature: 'isNoteInScale(root: Note, mode: ModeName, note: Note): boolean',
-    description: 'Checks whether a note belongs to the scale.',
-    inputKind: 'rootModeNote',
+    signature:
+      'isNoteInScale(root: Note, scaleType: ScaleType, note: Note): boolean',
+    description: 'Checks whether a note belongs to a scale.',
+    inputKind: 'rootScaleTypeNote',
   },
   {
     id: 'buildNoteMap',
     signature:
       'buildNoteMap(root: Note, scaleType: ScaleType): NoteDisplayInfo[]',
     description:
-      'Returns one NoteDisplayInfo per in-scale note with note, scaleDegree, and isRoot.',
+      'Returns one NoteDisplayInfo per in-scale note with note, scaleDegree, and semitoneOffset.',
     inputKind: 'rootScaleType',
-  },
-  {
-    id: 'getNoteIndex',
-    signature: 'getNoteIndex(note: Note): number',
-    description: 'Returns the chromatic index (0-11) for a note.',
-    inputKind: 'noteOnly',
-  },
-  {
-    id: 'noteAtIndex',
-    signature: 'noteAtIndex(index: number): Note',
-    description: 'Returns the note at a chromatic index (0-11).',
-    inputKind: 'indexOnly',
   },
   {
     id: 'getSemitoneDistance',
@@ -215,7 +201,6 @@ const computeResult = (
   targetNote: Note,
   fromNote: Note,
   toNote: Note,
-  index: number,
   guardInput: string
 ): unknown => {
   switch (functionId) {
@@ -234,15 +219,11 @@ const computeResult = (
     case 'getModalRoot':
       return getModalRoot(root, mode);
     case 'getScaleDegree':
-      return getScaleDegree(root, mode, targetNote);
+      return getScaleDegree(root, scaleType, targetNote);
     case 'isNoteInScale':
-      return isNoteInScale(root, mode, targetNote);
+      return isNoteInScale(root, scaleType, targetNote);
     case 'buildNoteMap':
       return buildNoteMap(root, scaleType);
-    case 'getNoteIndex':
-      return getNoteIndex(targetNote);
-    case 'noteAtIndex':
-      return noteAtIndex(index);
     case 'getSemitoneDistance':
       return getSemitoneDistance(fromNote, toNote);
     case 'isNote':
@@ -263,7 +244,6 @@ const EnginePlayground = () => {
   const [targetNote, setTargetNote] = useState<Note>(Notes.E);
   const [fromNote, setFromNote] = useState<Note>(Notes.C);
   const [toNote, setToNote] = useState<Note>(Notes.E);
-  const [index, setIndex] = useState(6);
   const [guardInput, setGuardInput] = useState('C');
 
   const result = useMemo(
@@ -276,7 +256,6 @@ const EnginePlayground = () => {
         targetNote,
         fromNote,
         toNote,
-        index,
         guardInput
       ),
     [
@@ -287,7 +266,6 @@ const EnginePlayground = () => {
       targetNote,
       fromNote,
       toNote,
-      index,
       guardInput,
     ]
   );
@@ -320,7 +298,8 @@ const EnginePlayground = () => {
         {(selected.inputKind === 'rootMode' ||
           selected.inputKind === 'rootModeNote' ||
           selected.inputKind === 'rootOnly' ||
-          selected.inputKind === 'rootScaleType') && (
+          selected.inputKind === 'rootScaleType' ||
+          selected.inputKind === 'rootScaleTypeNote') && (
           <NoteSelect value={root} onChange={setRoot} label="Root" />
         )}
 
@@ -330,11 +309,13 @@ const EnginePlayground = () => {
           <ModeSelect value={mode} onChange={setMode} />
         )}
 
-        {selected.inputKind === 'rootScaleType' && (
+        {(selected.inputKind === 'rootScaleType' ||
+          selected.inputKind === 'rootScaleTypeNote') && (
           <ScaleTypeSelect value={scaleType} onChange={setScaleType} />
         )}
 
         {(selected.inputKind === 'rootModeNote' ||
+          selected.inputKind === 'rootScaleTypeNote' ||
           selected.inputKind === 'noteOnly') && (
           <NoteSelect
             value={targetNote}
@@ -348,20 +329,6 @@ const EnginePlayground = () => {
             <NoteSelect value={fromNote} onChange={setFromNote} label="From" />
             <NoteSelect value={toNote} onChange={setToNote} label="To" />
           </>
-        )}
-
-        {selected.inputKind === 'indexOnly' && (
-          <label style={fieldStyle}>
-            <span style={labelStyle}>Index</span>
-            <input
-              style={inputStyle}
-              type="number"
-              min={0}
-              max={11}
-              value={index}
-              onChange={(event) => setIndex(Number(event.target.value))}
-            />
-          </label>
         )}
 
         {selected.inputKind === 'stringGuard' && (

@@ -156,6 +156,32 @@ const getScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
 };
 
 /**
+ * Returns the scale degree (1-based position) of a note within a scale, or null
+ * if the note is not present in that scale.
+ *
+ * Example: getScaleDegree('C', 'major', 'E') => 3
+ * Example: getScaleDegree('C', 'pentatonic-major', 'F') => null
+ */
+const getScaleDegree = (
+  root: Note,
+  scaleType: ScaleType,
+  note: Note
+): number | null => {
+  const scaleNotes = getScaleNotes(root, scaleType);
+  const index = scaleNotes.indexOf(note);
+  return index === -1 ? null : index + 1;
+};
+
+/**
+ * Returns true if the note is present in the given root + scale type.
+ *
+ * Example: isNoteInScale('C', 'major', 'E') => true
+ * Example: isNoteInScale('C', 'major', 'F#') => false
+ */
+const isNoteInScale = (root: Note, scaleType: ScaleType, note: Note): boolean =>
+  getScaleDegree(root, scaleType, note) !== null;
+
+/**
  * Returns one NoteDisplayInfo entry per in-scale note, in scale-degree order.
  * Every entry includes the note name, its 1-based scale degree, and its semitone
  * offset from the root (0 = root, up to 11).
@@ -187,8 +213,10 @@ export {
   getFullScaleDegrees,
   getHarmonicMinorNotes,
   getPentatonicNotes,
+  getScaleDegree,
   getScaleDegrees,
   getScaleNotes,
+  isNoteInScale,
   buildNoteMap,
   notesFromSemitoneOffsets,
 };

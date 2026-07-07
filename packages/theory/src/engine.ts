@@ -6,7 +6,7 @@
  * zero dependencies beyond local types and constants.
  */
 
-import type { Note, ModeName, NotationType } from './types';
+import type { Note, ModeName } from './types';
 import { Modes, CHROMATIC_NOTES, MODES, ModeInfoById } from './constants';
 
 const KEY_SIGNATURE_COUNT: Record<
@@ -120,51 +120,6 @@ const getModeNotes = (root: Note, mode: ModeName): Note[] => {
 };
 
 /**
- * Returns the scale degree (1-7) of a note within a key/mode, or null
- * if the note is not in the scale.
- *
- * Example: getScaleDegree('C', 'ionian', 'E') => 3
- * Example: getScaleDegree('C', 'ionian', 'F#') => null
- */
-const getScaleDegree = (
-  root: Note,
-  mode: ModeName,
-  note: Note
-): number | null => {
-  const scaleNotes = getModeNotes(root, mode);
-  const index = scaleNotes.indexOf(note);
-  return index === -1 ? null : index + 1;
-};
-
-/**
- * Returns true if the note belongs to the given key/mode scale.
- */
-const isNoteInScale = (root: Note, mode: ModeName, note: Note): boolean => {
-  return getScaleDegree(root, mode, note) !== null;
-};
-
-/**
- * Returns a display label for a note based on the selected notation type.
- *
- * - 'number' notation: returns the scale degree as a string ("1"-"7"),
- *   or an empty string if the note is not in the scale.
- * - 'letter' notation: returns the note name (e.g. "C#").
- */
-const getNoteLabel = (
-  note: Note,
-  root: Note,
-  mode: ModeName,
-  notation: NotationType
-): string => {
-  if (notation === 'letter') {
-    return note;
-  }
-
-  const degree = getScaleDegree(root, mode, note);
-  return degree !== null ? String(degree) : '';
-};
-
-/**
  * Given any root+mode, finds the parent major (Ionian) key and returns all
  * 7 rotation pairs in scale degree order.
  *
@@ -252,7 +207,7 @@ const getKeySignatureCount = (
 const isNote = (value: string): value is Note => NOTE_SET.has(value);
 
 const isModeName = (value: string): value is ModeName =>
-  MODE_NAME_SET.has(value);
+  MODE_NAME_SET.has(value.toLowerCase());
 
 /** First token before a space or comma (e.g. "C ionian" -> "C"). */
 const firstToken = (value: string): string => {
@@ -286,9 +241,6 @@ export {
   noteAtIndex,
   getSemitoneDistance,
   getModeNotes,
-  getScaleDegree,
-  isNoteInScale,
-  getNoteLabel,
   getModalRoot,
   getParentScaleModes,
   getRelativeMinorKey,
