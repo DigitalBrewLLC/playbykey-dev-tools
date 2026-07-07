@@ -42,13 +42,15 @@ const isNumberArray = (value: unknown): value is number[] =>
   Array.isArray(value) && value.every((item) => typeof item === 'number');
 
 const ResultPanel = ({ label, value }: ResultPanelProps) => {
-  if (value === null || value === undefined) {
+  if (value === undefined) {
     return null;
   }
 
   let content: React.ReactNode;
 
-  if (isStringArray(value)) {
+  if (value === null) {
+    content = <code style={codeStyle}>null</code>;
+  } else if (isStringArray(value)) {
     content = <code style={codeStyle}>{value.join(', ')}</code>;
   } else if (isNumberArray(value)) {
     content = <code style={codeStyle}>[{value.join(', ')}]</code>;
