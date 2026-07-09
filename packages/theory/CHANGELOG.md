@@ -7,6 +7,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.0.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.0.0...theory-v1.0.0) (2026-07-09)
+
+
+### Bug Fixes
+
+* **theory:** improve README for npm and monorepo landing ([2adcff3](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/2adcff32185e9588480a11559400fa5fb5b0ff35))
+* **theory:** update README for npm and include in published files ([7704082](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/77040827005312fab88d5f8b3d8bb97f043df93c))
+
 ## 1.0.0 (2026-07-09)
 
 
