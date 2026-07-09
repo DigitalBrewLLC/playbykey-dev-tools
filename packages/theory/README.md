@@ -2,7 +2,8 @@
 
 A zero-dependency TypeScript music theory engine for computing scale notes, resolving diatonic modes, navigating key relationships, and building note display maps.
 
-**Full documentation:** [theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com)
+- **npm:** [npmjs.com/package/@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)
+- **Documentation:** [theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com)
 
 ---
 
@@ -61,10 +62,6 @@ import type { Note, ModeName, IntervalId } from '@playbykey/theory';
 Sharps-only: `C#` not `Db`. Reference `ENHARMONIC_LABELS` for flat/sharp display strings.
 
 ---
-
-## Status
-
-**v1.0.0** — [Published on npm](https://www.npmjs.com/package/@playbykey/theory). Docs at [theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com).
 
 ## Structure
 
