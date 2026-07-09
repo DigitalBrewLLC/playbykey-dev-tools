@@ -3,8 +3,10 @@ import {
   getBluesNotes,
   getHarmonicMinorNotes,
   getPentatonicNotes,
+  getScaleDegree,
   getScaleDegrees,
   getScaleNotes,
+  isNoteInScale,
   Notes,
   PentatonicTypes,
   ScaleTypes,
@@ -22,29 +24,48 @@ const containerStyle = {
 };
 
 const ScalesPlayground = () => {
-  const [root, setRoot] = useState<Note>(Notes.A);
-  const [derivedType, setDerivedType] = useState<ScaleType>(
-    ScaleTypes.PentatonicMajor
-  );
-  const [emphasisType, setEmphasisType] = useState<ScaleType>(ScaleTypes.Blues);
+  const [bluesRoot, setBluesRoot] = useState<Note>(Notes.A);
+  const [harmonicRoot, setHarmonicRoot] = useState<Note>(Notes.A);
   const [pentRoot, setPentRoot] = useState<Note>(Notes.C);
   const [pentType, setPentType] = useState<PentatonicType>(
     PentatonicTypes.Major
   );
+  const [scaleNotesRoot, setScaleNotesRoot] = useState<Note>(Notes.A);
+  const [scaleNotesType, setScaleNotesType] = useState<ScaleType>(
+    ScaleTypes.PentatonicMajor
+  );
+  const [degreesType, setDegreesType] = useState<ScaleType>(ScaleTypes.Blues);
+  const [degreeRoot, setDegreeRoot] = useState<Note>(Notes.C);
+  const [degreeType, setDegreeType] = useState<ScaleType>(ScaleTypes.Major);
+  const [degreeNote, setDegreeNote] = useState<Note>(Notes.E);
+  const [inScaleRoot, setInScaleRoot] = useState<Note>(Notes.C);
+  const [inScaleType, setInScaleType] = useState<ScaleType>(ScaleTypes.Major);
+  const [inScaleNote, setInScaleNote] = useState<Note>(Notes.E);
 
-  const bluesNotes = useMemo(() => getBluesNotes(root), [root]);
-  const harmonicMinorNotes = useMemo(() => getHarmonicMinorNotes(root), [root]);
+  const bluesNotes = useMemo(() => getBluesNotes(bluesRoot), [bluesRoot]);
+  const harmonicMinorNotes = useMemo(
+    () => getHarmonicMinorNotes(harmonicRoot),
+    [harmonicRoot]
+  );
   const pentatonicNotes = useMemo(
     () => getPentatonicNotes(pentRoot, pentType),
     [pentRoot, pentType]
   );
   const derivedNotes = useMemo(
-    () => getScaleNotes(root, derivedType),
-    [root, derivedType]
+    () => getScaleNotes(scaleNotesRoot, scaleNotesType),
+    [scaleNotesRoot, scaleNotesType]
   );
   const emphasisDegrees = useMemo(
-    () => getScaleDegrees(emphasisType),
-    [emphasisType]
+    () => getScaleDegrees(degreesType),
+    [degreesType]
+  );
+  const scaleDegreeResult = useMemo(
+    () => getScaleDegree(degreeRoot, degreeType, degreeNote),
+    [degreeRoot, degreeType, degreeNote]
+  );
+  const inScaleResult = useMemo(
+    () => isNoteInScale(inScaleRoot, inScaleType, inScaleNote),
+    [inScaleRoot, inScaleType, inScaleNote]
   );
 
   return (
@@ -55,7 +76,7 @@ const ScalesPlayground = () => {
         description="Returns the six-note blues scale for a root."
         result={bluesNotes}
       >
-        <NoteSelect value={root} onChange={setRoot} label="Root" />
+        <NoteSelect value={bluesRoot} onChange={setBluesRoot} label="Root" />
       </FunctionCard>
 
       <FunctionCard
@@ -64,7 +85,11 @@ const ScalesPlayground = () => {
         description="Returns the seven-note harmonic minor scale for a root."
         result={harmonicMinorNotes}
       >
-        <NoteSelect value={root} onChange={setRoot} label="Root" />
+        <NoteSelect
+          value={harmonicRoot}
+          onChange={setHarmonicRoot}
+          label="Root"
+        />
       </FunctionCard>
 
       <FunctionCard
@@ -90,8 +115,12 @@ const ScalesPlayground = () => {
         description="Returns the notes for any scale type — major, blues, pentatonic, harmonic minor, and chromatic."
         result={derivedNotes}
       >
-        <NoteSelect value={root} onChange={setRoot} label="Root" />
-        <ScaleTypeSelect value={derivedType} onChange={setDerivedType} />
+        <NoteSelect
+          value={scaleNotesRoot}
+          onChange={setScaleNotesRoot}
+          label="Root"
+        />
+        <ScaleTypeSelect value={scaleNotesType} onChange={setScaleNotesType} />
       </FunctionCard>
 
       <FunctionCard
@@ -100,7 +129,37 @@ const ScalesPlayground = () => {
         description="Returns the active scale degrees for a given scale type."
         result={emphasisDegrees}
       >
-        <ScaleTypeSelect value={emphasisType} onChange={setEmphasisType} />
+        <ScaleTypeSelect value={degreesType} onChange={setDegreesType} />
+      </FunctionCard>
+
+      <FunctionCard
+        name="getScaleDegree"
+        signature="getScaleDegree(root: Note, scaleType: ScaleType, note: Note): number | null"
+        description="Returns the 1-based scale degree of a note within a scale, or null if the note is not present."
+        result={scaleDegreeResult}
+      >
+        <NoteSelect value={degreeRoot} onChange={setDegreeRoot} label="Root" />
+        <ScaleTypeSelect value={degreeType} onChange={setDegreeType} />
+        <NoteSelect value={degreeNote} onChange={setDegreeNote} label="Note" />
+      </FunctionCard>
+
+      <FunctionCard
+        name="isNoteInScale"
+        signature="isNoteInScale(root: Note, scaleType: ScaleType, note: Note): boolean"
+        description="Returns true if the note is present in the given root + scale type."
+        result={inScaleResult}
+      >
+        <NoteSelect
+          value={inScaleRoot}
+          onChange={setInScaleRoot}
+          label="Root"
+        />
+        <ScaleTypeSelect value={inScaleType} onChange={setInScaleType} />
+        <NoteSelect
+          value={inScaleNote}
+          onChange={setInScaleNote}
+          label="Note"
+        />
       </FunctionCard>
     </div>
   );

@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { isNoteInScale, Modes } from '../src';
-import type { Note, ModeName } from '../src';
+import { isNoteInScale, ScaleTypes } from '../src';
+import type { Note } from '../src';
 import { ALL_NOTES } from './fixtures';
 
-// Known in-scale notes for each of the 12 ionian keys
-const IONIAN_IN_SCALE: Array<{ root: Note; inScale: Note[] }> = [
+// Known in-scale notes for each of the 12 major keys
+const MAJOR_IN_SCALE: Array<{ root: Note; inScale: Note[] }> = [
   { root: 'C', inScale: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
   { root: 'C#', inScale: ['C#', 'D#', 'F', 'F#', 'G#', 'A#', 'C'] },
   { root: 'D', inScale: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'] },
@@ -19,42 +19,71 @@ const IONIAN_IN_SCALE: Array<{ root: Note; inScale: Note[] }> = [
   { root: 'B', inScale: ['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#'] },
 ];
 
-// All 7 modes from C with their in-scale notes
-const C_MODES_IN_SCALE: Array<{ mode: ModeName; inScale: Note[] }> = [
-  { mode: Modes.Ionian, inScale: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
-  { mode: Modes.Dorian, inScale: ['C', 'D', 'D#', 'F', 'G', 'A', 'A#'] },
-  { mode: Modes.Phrygian, inScale: ['C', 'C#', 'D#', 'F', 'G', 'G#', 'A#'] },
-  { mode: Modes.Lydian, inScale: ['C', 'D', 'E', 'F#', 'G', 'A', 'B'] },
-  { mode: Modes.Mixolydian, inScale: ['C', 'D', 'E', 'F', 'G', 'A', 'A#'] },
-  { mode: Modes.Aeolian, inScale: ['C', 'D', 'D#', 'F', 'G', 'G#', 'A#'] },
-  { mode: Modes.Locrian, inScale: ['C', 'C#', 'D#', 'F', 'F#', 'G#', 'A#'] },
-];
-
-describe('isNoteInScale', () => {
-  // Each case asserts all 12 chromatic notes:
-  //   - the 7 listed in `inScale` must return true
-  //   - the remaining 5 (derived by exclusion) must return false
-  describe('all 12 ionian keys', () => {
-    it.each(IONIAN_IN_SCALE)('$root ionian', ({ root, inScale }) => {
-      const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
-      for (const note of inScale) {
-        expect(isNoteInScale(root, Modes.Ionian, note)).toBe(true);
-      }
-      for (const note of outOfScale) {
-        expect(isNoteInScale(root, Modes.Ionian, note)).toBe(false);
-      }
-    });
+describe('isNoteInScale — all 12 major keys', () => {
+  it.each(MAJOR_IN_SCALE)('$root major', ({ root, inScale }) => {
+    const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
+    for (const note of inScale) {
+      expect(isNoteInScale(root, ScaleTypes.Major, note)).toBe(true);
+    }
+    for (const note of outOfScale) {
+      expect(isNoteInScale(root, ScaleTypes.Major, note)).toBe(false);
+    }
   });
+});
 
-  describe('all 7 modes from C root', () => {
-    it.each(C_MODES_IN_SCALE)('C $mode', ({ mode, inScale }) => {
-      const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
-      for (const note of inScale) {
-        expect(isNoteInScale('C', mode, note)).toBe(true);
-      }
-      for (const note of outOfScale) {
-        expect(isNoteInScale('C', mode, note)).toBe(false);
-      }
-    });
-  });
+describe('isNoteInScale — pentatonic major (C D E G A)', () => {
+  const inScale: Note[] = ['C', 'D', 'E', 'G', 'A'];
+  const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
+
+  it.each(inScale.map((n) => ({ note: n })))(
+    '$note in C pentatonic-major → true',
+    ({ note }) => {
+      expect(isNoteInScale('C', ScaleTypes.PentatonicMajor, note)).toBe(true);
+    }
+  );
+
+  it.each(outOfScale.map((n) => ({ note: n })))(
+    '$note not in C pentatonic-major → false',
+    ({ note }) => {
+      expect(isNoteInScale('C', ScaleTypes.PentatonicMajor, note)).toBe(false);
+    }
+  );
+});
+
+describe('isNoteInScale — pentatonic minor (C D# F G A#)', () => {
+  const inScale: Note[] = ['C', 'D#', 'F', 'G', 'A#'];
+  const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
+
+  it.each(inScale.map((n) => ({ note: n })))(
+    '$note in C pentatonic-minor → true',
+    ({ note }) => {
+      expect(isNoteInScale('C', ScaleTypes.PentatonicMinor, note)).toBe(true);
+    }
+  );
+
+  it.each(outOfScale.map((n) => ({ note: n })))(
+    '$note not in C pentatonic-minor → false',
+    ({ note }) => {
+      expect(isNoteInScale('C', ScaleTypes.PentatonicMinor, note)).toBe(false);
+    }
+  );
+});
+
+describe('isNoteInScale — blues (C D# F F# G A#)', () => {
+  const inScale: Note[] = ['C', 'D#', 'F', 'F#', 'G', 'A#'];
+  const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
+
+  it.each(inScale.map((n) => ({ note: n })))(
+    '$note in C blues → true',
+    ({ note }) => {
+      expect(isNoteInScale('C', ScaleTypes.Blues, note)).toBe(true);
+    }
+  );
+
+  it.each(outOfScale.map((n) => ({ note: n })))(
+    '$note not in C blues → false',
+    ({ note }) => {
+      expect(isNoteInScale('C', ScaleTypes.Blues, note)).toBe(false);
+    }
+  );
 });

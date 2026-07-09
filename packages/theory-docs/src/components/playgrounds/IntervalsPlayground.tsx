@@ -52,7 +52,7 @@ const IntervalsPlayground = () => {
       <FunctionCard
         name="resolveIntervalEndpoints"
         signature="resolveIntervalEndpoints(context: IntervalContext): ResolvedInterval"
-        description="Resolves the from/to notes for an interval anchored at a root, always within the major scale."
+        description="Resolves the from/to notes for an interval anchored at a root. Scale-motion entries (half_step, whole_step) use adjacent degrees; named intervals (minor_2nd, major_2nd, etc.) anchor from the root."
         result={resolvedResult}
       >
         <NoteSelect value={root} onChange={setRoot} label="Root" />

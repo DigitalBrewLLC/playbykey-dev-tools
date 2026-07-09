@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ENHARMONIC_LABELS, getNoteIndex, Notes } from '@playbykey/theory';
+import { ENHARMONIC_LABELS, Notes } from '@playbykey/theory';
 import type { Note } from '@playbykey/theory';
 import { CodeSnippet } from '../ui/CodeSnippet';
 import { InfoBlock } from '../ui/InfoBlock';
@@ -15,7 +15,6 @@ import {
 const NotesExplorer = () => {
   const [note, setNote] = useState<Note>(Notes.C);
 
-  const index = useMemo(() => getNoteIndex(note), [note]);
   const enharmonicLabel = useMemo(() => ENHARMONIC_LABELS[note], [note]);
 
   const noteKey = Object.entries(Notes).find(([, v]) => v === note)?.[0];
@@ -28,10 +27,6 @@ const NotesExplorer = () => {
 
       <InfoBlock>
         <div style={dataRowStyle}>
-          <span style={dataLabelStyle}>Chromatic index</span>
-          <div style={dataValueStyle}>{index}</div>
-        </div>
-        <div style={dataRowStyle}>
           <span style={dataLabelStyle}>Enharmonic label</span>
           <div style={dataValueStyle}>
             {enharmonicLabel ?? 'Natural — no enharmonic equivalent'}
@@ -39,12 +34,7 @@ const NotesExplorer = () => {
         </div>
       </InfoBlock>
 
-      <CodeSnippet
-        call={[
-          `ENHARMONIC_LABELS[Notes.${noteKey}]`,
-          `getNoteIndex(Notes.${noteKey})`,
-        ]}
-      />
+      <CodeSnippet call={`ENHARMONIC_LABELS[Notes.${noteKey}]`} />
     </div>
   );
 };

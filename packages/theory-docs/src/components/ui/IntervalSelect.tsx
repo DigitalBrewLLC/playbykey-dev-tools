@@ -1,4 +1,4 @@
-import { Intervals } from '@playbykey/theory';
+import { Intervals, INTERVAL_DEFINITIONS } from '@playbykey/theory';
 import type { IntervalId } from '@playbykey/theory';
 import { FieldSelect } from './FieldSelect';
 
@@ -7,12 +7,6 @@ interface IntervalSelectProps {
   onChange: (interval: IntervalId) => void;
   label?: string;
 }
-
-const formatIntervalLabel = (intervalId: IntervalId) =>
-  intervalId
-    .split('_')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
 
 const IntervalSelect = ({
   value,
@@ -26,7 +20,7 @@ const IntervalSelect = ({
   >
     {Object.values(Intervals).map((intervalId) => (
       <option key={intervalId} value={intervalId}>
-        {formatIntervalLabel(intervalId)}
+        {INTERVAL_DEFINITIONS[intervalId].label}
       </option>
     ))}
   </FieldSelect>
