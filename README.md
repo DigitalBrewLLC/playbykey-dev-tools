@@ -1,39 +1,55 @@
 # PlayByKey Developer Tools
 
-Monorepo for PlayByKey's developer-facing packages: the music theory engine,
-the song dataset, an MCP server, a CLI, and the PlayByKey Developers
-documentation site.
+Developer-facing packages for [PlayByKey](https://playbykey.com). The first shipped package is **[@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)** — a zero-dependency TypeScript music theory engine for scales, modes, intervals, key relationships, and note display maps.
+
+- **npm:** [npmjs.com/package/@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)
+- **Documentation:** [theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com) — interactive playgrounds
+- **Changelog:** [GitHub Releases](https://github.com/DigitalBrewLLC/playbykey-dev-tools/releases)
+
+---
+
+## Install
+
+```sh
+npm install @playbykey/theory
+pnpm add @playbykey/theory
+yarn add @playbykey/theory
+bun add @playbykey/theory
+```
+
+Quickstart and API examples: [packages/theory/README.md](./packages/theory)
+
+---
+
+## Why @playbykey/theory
+
+- **Zero dependencies** — no transitive baggage; safe for agents, edge runtimes, and tight bundles
+- **TypeScript-first** — strict types exported alongside functions
+- **Agent-ready** — copy-paste LLM context prompt and [interactive docs](https://theory-engine.docs.playbykey.com)
+- **Sharps-only notation** — predictable API contract (`C#` not `Db`)
+- **Scale types beyond diatonic** — major, chromatic, pentatonic major/minor, blues, harmonic minor
 
 ---
 
 ## Packages
 
-| Package                                  | Description                                                                                                           | Status         |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------- |
-| [`@playbykey/theory`](./packages/theory) | Music theory engine - scales, modes, intervals, and key relationships. Displayed on the docs site as "Theory Engine". | In development |
-| [`docs`](./packages/docs)                | PlayByKey Developers - documentation site for all PlayByKey developer tooling (`docs.playbykey.com`).                 | Planning       |
+| Package                                  | Description                                              | Links                                                                                                                                                                                   |
+| ---------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@playbykey/theory`](./packages/theory) | Music theory engine (Theory Engine on the docs site)     | [npm](https://www.npmjs.com/package/@playbykey/theory) · [docs](https://theory-engine.docs.playbykey.com) · [changelog](https://github.com/DigitalBrewLLC/playbykey-dev-tools/releases) |
+| [`theory-docs`](./packages/theory-docs)  | Starlight documentation site (private workspace package) | [live site](https://theory-engine.docs.playbykey.com) · [README](./packages/theory-docs)                                                                                                |
 
-More packages (`@playbykey/songs`, `playbykey-mcp`, `playbykey` CLI) will be
-added as the Developer Tooling epic progresses.
-
----
-
-## Requirements
-
-- Node.js
-- pnpm 10.13.1 (see `packageManager` in `package.json`)
+**Roadmap** — not in this repo yet: `@playbykey/songs`, `playbykey-mcp`, `playbykey` CLI, and a broader developer portal at `docs.playbykey.com`.
 
 ---
 
-## Commands
+## Contributing
 
-| Command           | Description                        |
-| ----------------- | ---------------------------------- |
-| `pnpm install`    | Install all workspace dependencies |
-| `pnpm test`       | Run all Vitest unit tests          |
-| `pnpm test:watch` | Run Vitest in watch mode           |
-| `pnpm lint`       | Run ESLint across the workspace    |
-| `pnpm format`     | Run Prettier across the workspace  |
+```sh
+pnpm install
+pnpm test
+```
+
+Local docs development and deployment: [packages/theory-docs/README.md](./packages/theory-docs)
 
 ---
 
