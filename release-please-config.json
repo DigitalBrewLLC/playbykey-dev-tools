@@ -4,14 +4,12 @@
     "packages/theory": {
       "release-type": "node",
       "package-name": "@playbykey/theory",
-      "changelog-path": "CHANGELOG.md",
-      "release-as": "1.0.0"
+      "changelog-path": "CHANGELOG.md"
     },
     "packages/theory-docs": {
       "release-type": "node",
       "package-name": "theory-docs",
-      "changelog-path": "CHANGELOG.md",
-      "release-as": "1.0.0"
+      "changelog-path": "CHANGELOG.md"
     }
   }
 }
