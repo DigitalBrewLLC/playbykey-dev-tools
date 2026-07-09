@@ -1,6 +1,6 @@
 {
   "name": "theory-docs",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Documentation site for @playbykey/theory — the PlayByKey music theory engine",
   "private": true,
   "type": "module",

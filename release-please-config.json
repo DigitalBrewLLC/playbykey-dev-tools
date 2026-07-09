@@ -5,15 +5,13 @@
       "release-type": "node",
       "package-name": "@playbykey/theory",
       "changelog-path": "CHANGELOG.md",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true
+      "release-as": "1.0.0"
     },
     "packages/theory-docs": {
       "release-type": "node",
       "package-name": "theory-docs",
       "changelog-path": "CHANGELOG.md",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true
+      "release-as": "1.0.0"
     }
   }
 }
