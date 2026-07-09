@@ -64,7 +64,7 @@ Sharps-only: `C#` not `Db`. Reference `ENHARMONIC_LABELS` for flat/sharp display
 
 ## Status
 
-In development. Not yet published to npm.
+**v1.0.0** — [Published on npm](https://www.npmjs.com/package/@playbykey/theory). Docs at [theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com).
 
 ## Structure
 

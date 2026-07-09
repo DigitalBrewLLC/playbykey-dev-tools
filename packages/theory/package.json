@@ -34,7 +34,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
   ],
   "devDependencies": {
     "tsup": "^8.5.1"
