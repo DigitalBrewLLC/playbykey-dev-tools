@@ -5,7 +5,7 @@ import type { Note } from '../src';
 // Degree is the 1-based position of a note in the ordered note array returned
 // by getScaleNotes for the given root + scaleType. Absent notes return null.
 
-describe('getScaleDegree - major scale (12 roots, 7 degrees each = 84 cases)', () => {
+describe('getScaleDegree — major scale (12 roots, 7 degrees each = 84 cases)', () => {
   const MAJOR_DEGREES: Array<{ root: Note; note: Note; degree: number }> = [
     { root: 'C', note: 'C', degree: 1 },
     { root: 'C', note: 'D', degree: 2 },
@@ -112,7 +112,7 @@ describe('getScaleDegree - major scale (12 roots, 7 degrees each = 84 cases)', (
   );
 });
 
-describe('getScaleDegree - out-of-scale returns null', () => {
+describe('getScaleDegree — out-of-scale returns null', () => {
   it.each(['C#', 'D#', 'F#', 'G#', 'A#'].map((n) => ({ note: n as Note })))(
     '$note is not in C major → null',
     ({ note }) => {
@@ -121,7 +121,7 @@ describe('getScaleDegree - out-of-scale returns null', () => {
   );
 });
 
-describe('getScaleDegree - pentatonic major (C D E G A)', () => {
+describe('getScaleDegree — pentatonic major (C D E G A)', () => {
   it('C → 1', () =>
     expect(getScaleDegree('C', ScaleTypes.PentatonicMajor, 'C')).toBe(1));
   it('D → 2', () =>
@@ -138,7 +138,7 @@ describe('getScaleDegree - pentatonic major (C D E G A)', () => {
     expect(getScaleDegree('C', ScaleTypes.PentatonicMajor, 'B')).toBeNull());
 });
 
-describe('getScaleDegree - pentatonic minor (C D# F G A#)', () => {
+describe('getScaleDegree — pentatonic minor (C D# F G A#)', () => {
   it('C → 1', () =>
     expect(getScaleDegree('C', ScaleTypes.PentatonicMinor, 'C')).toBe(1));
   it('D# → 2', () =>
@@ -153,7 +153,7 @@ describe('getScaleDegree - pentatonic minor (C D# F G A#)', () => {
     expect(getScaleDegree('C', ScaleTypes.PentatonicMinor, 'D')).toBeNull());
 });
 
-describe('getScaleDegree - blues (C D# F F# G A#)', () => {
+describe('getScaleDegree — blues (C D# F F# G A#)', () => {
   it('C → 1', () => expect(getScaleDegree('C', ScaleTypes.Blues, 'C')).toBe(1));
   it('D# → 2', () =>
     expect(getScaleDegree('C', ScaleTypes.Blues, 'D#')).toBe(2));
@@ -167,7 +167,7 @@ describe('getScaleDegree - blues (C D# F F# G A#)', () => {
     expect(getScaleDegree('C', ScaleTypes.Blues, 'D')).toBeNull());
 });
 
-describe('getScaleDegree - harmonic minor (C D D# F G G# B)', () => {
+describe('getScaleDegree — harmonic minor (C D D# F G G# B)', () => {
   it('C → 1', () =>
     expect(getScaleDegree('C', ScaleTypes.HarmonicMinor, 'C')).toBe(1));
   it('D → 2', () =>

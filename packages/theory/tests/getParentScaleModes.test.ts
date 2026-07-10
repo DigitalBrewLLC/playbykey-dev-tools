@@ -33,7 +33,7 @@ const C_PARENT_INPUTS: Array<{
   { key: 'B', mode: Modes.Locrian, degreeIndex: 6 },
 ];
 
-// All 12 keys with dorian mode - exercises the parent-resolution logic across every transposition.
+// All 12 keys with dorian mode — exercises the parent-resolution logic across every transposition.
 // Dorian is always scale degree 2, so the parent root is always 2 semitones below the input key.
 const DORIAN_ALL_KEYS: Array<{ key: Note; parentIonian: Note }> = [
   { key: 'C', parentIonian: 'A#' },
@@ -81,7 +81,7 @@ describe('getParentScaleModes', () => {
     );
   });
 
-  describe('all 12 keys in dorian - correct parent Ionian root resolved for every transposition', () => {
+  describe('all 12 keys in dorian — correct parent Ionian root resolved for every transposition', () => {
     it.each(DORIAN_ALL_KEYS)(
       '$key dorian → parent is $parentIonian ionian',
       ({ key, parentIonian }) => {

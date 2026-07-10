@@ -29,20 +29,20 @@ interface ResolvedInterval {
 const INTERVAL_DEFINITIONS: Record<IntervalId, IntervalDefinition> = {
   // Scale-degree motion: adjacent degrees within the major scale (pedagogical step names).
   [Intervals.HalfStep]: {
-    label: 'Half step (scale motion)',
+    label: 'Half step — scale motion',
     intervalSpec: { fromDegree: 3, toDegree: 4, semitones: 1 },
   },
   [Intervals.WholeStep]: {
-    label: 'Whole step (scale motion)',
+    label: 'Whole step — scale motion',
     intervalSpec: { fromDegree: 2, toDegree: 3, semitones: 2 },
   },
   // Named intervals from the root: chromatic or diatonic degree-1 anchors.
   [Intervals.Minor2nd]: {
-    label: 'Minor 2nd (from root)',
+    label: 'Minor 2nd — from root',
     intervalSpec: { fromDegree: 1, semitones: 1, chromaticTo: true },
   },
   [Intervals.Major2nd]: {
-    label: 'Major 2nd (from root)',
+    label: 'Major 2nd — from root',
     intervalSpec: { fromDegree: 1, toDegree: 2, semitones: 2 },
   },
   [Intervals.Minor3rd]: {
@@ -126,7 +126,7 @@ const resolveEndpointsFromSpec = (
 
 /**
  * Returns the fixed semitone count for a given interval.
- * The count is a property of the interval itself - root and mode do not affect it.
+ * The count is a property of the interval itself — root and mode do not affect it.
  */
 const getIntervalSemitones = (interval: IntervalId): number =>
   INTERVAL_DEFINITIONS[interval].intervalSpec.semitones;

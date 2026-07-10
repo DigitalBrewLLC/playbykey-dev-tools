@@ -3,7 +3,7 @@ import { getModeNotes, Modes } from '../src';
 import type { Note, ModeName } from '../src';
 import { ALL_NOTES, ALL_MODES } from './fixtures';
 
-// All 12 keys in ionian mode - full expected output arrays for concrete verification
+// All 12 keys in ionian mode — full expected output arrays for concrete verification
 const IONIAN_KEYS: Array<{ root: Note; expected: Note[] }> = [
   { root: 'C', expected: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
   { root: 'C#', expected: ['C#', 'D#', 'F', 'F#', 'G#', 'A#', 'C'] },
@@ -19,7 +19,7 @@ const IONIAN_KEYS: Array<{ root: Note; expected: Note[] }> = [
   { root: 'B', expected: ['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#'] },
 ];
 
-// All 7 modes from C - full expected output arrays for concrete verification
+// All 7 modes from C — full expected output arrays for concrete verification
 const C_MODES: Array<{ mode: ModeName; expected: Note[] }> = [
   { mode: Modes.Ionian, expected: ['C', 'D', 'E', 'F', 'G', 'A', 'B'] },
   { mode: Modes.Dorian, expected: ['C', 'D', 'D#', 'F', 'G', 'A', 'A#'] },
@@ -37,13 +37,13 @@ const C_MODES: Array<{ mode: ModeName; expected: Note[] }> = [
 ];
 
 describe('getModeNotes', () => {
-  describe('all 12 keys in ionian mode - full output verified', () => {
+  describe('all 12 keys in ionian mode — full output verified', () => {
     it.each(IONIAN_KEYS)('$root ionian', ({ root, expected }) => {
       expect(getModeNotes(root, Modes.Ionian)).toEqual(expected);
     });
   });
 
-  describe('all 7 modes from C root - full output verified', () => {
+  describe('all 7 modes from C root — full output verified', () => {
     it.each(C_MODES)('C $mode', ({ mode, expected }) => {
       expect(getModeNotes('C', mode)).toEqual(expected);
     });

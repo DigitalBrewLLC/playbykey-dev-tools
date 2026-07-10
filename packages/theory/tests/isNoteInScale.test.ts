@@ -19,7 +19,7 @@ const MAJOR_IN_SCALE: Array<{ root: Note; inScale: Note[] }> = [
   { root: 'B', inScale: ['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#'] },
 ];
 
-describe('isNoteInScale - all 12 major keys', () => {
+describe('isNoteInScale — all 12 major keys', () => {
   it.each(MAJOR_IN_SCALE)('$root major', ({ root, inScale }) => {
     const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
     for (const note of inScale) {
@@ -31,7 +31,7 @@ describe('isNoteInScale - all 12 major keys', () => {
   });
 });
 
-describe('isNoteInScale - pentatonic major (C D E G A)', () => {
+describe('isNoteInScale — pentatonic major (C D E G A)', () => {
   const inScale: Note[] = ['C', 'D', 'E', 'G', 'A'];
   const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
 
@@ -50,7 +50,7 @@ describe('isNoteInScale - pentatonic major (C D E G A)', () => {
   );
 });
 
-describe('isNoteInScale - pentatonic minor (C D# F G A#)', () => {
+describe('isNoteInScale — pentatonic minor (C D# F G A#)', () => {
   const inScale: Note[] = ['C', 'D#', 'F', 'G', 'A#'];
   const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
 
@@ -69,7 +69,7 @@ describe('isNoteInScale - pentatonic minor (C D# F G A#)', () => {
   );
 });
 
-describe('isNoteInScale - blues (C D# F F# G A#)', () => {
+describe('isNoteInScale — blues (C D# F F# G A#)', () => {
   const inScale: Note[] = ['C', 'D#', 'F', 'F#', 'G', 'A#'];
   const outOfScale = ALL_NOTES.filter((n) => !inScale.includes(n));
 

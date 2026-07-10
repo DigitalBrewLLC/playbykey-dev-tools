@@ -1,4 +1,4 @@
-/* PlayByKey brand theme for Starlight - theory accent (amber) */
+/* PlayByKey brand theme for Starlight — theory accent (amber) */
 
 /* ── Light mode ─────────────────────────────────────────── */
 :root {
@@ -24,7 +24,7 @@
   /* Text */
   --sl-color-text: #171717;
 
-  /* Gray scale - light (1 = dark, 6 = light) */
+  /* Gray scale — light (1 = dark, 6 = light) */
   --sl-color-gray-1: #171717;
   --sl-color-gray-2: #404040;
   --sl-color-gray-3: #737373;
@@ -83,7 +83,7 @@
   /* Text */
   --sl-color-text: #e5e5e5;
 
-  /* Gray scale - dark (1 = light, 6 = dark) */
+  /* Gray scale — dark (1 = light, 6 = dark) */
   --sl-color-gray-1: #f5f5f5;
   --sl-color-gray-2: #e5e5e5;
   --sl-color-gray-3: #a3a3a3;

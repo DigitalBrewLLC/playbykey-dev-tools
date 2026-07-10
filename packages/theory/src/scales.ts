@@ -93,9 +93,9 @@ const getBluesNotes = (root: Note): Note[] =>
 /**
  * Returns the five notes of a pentatonic scale rooted at `root`.
  *
- * - `'major'` - degrees 1,2,3,5,6 of the ionian (major) scale
+ * - `'major'` — degrees 1,2,3,5,6 of the ionian (major) scale
  *   e.g. `getPentatonicNotes('C', 'major')` → `['C','D','E','G','A']`
- * - `'minor'` - degrees 1,3,4,5,7 of the aeolian (natural minor) scale
+ * - `'minor'` — degrees 1,3,4,5,7 of the aeolian (natural minor) scale
  *   e.g. `getPentatonicNotes('C', 'minor')` → `['C','D#','F','G','A#']`
  */
 const getPentatonicNotes = (root: Note, type: PentatonicType): Note[] => {

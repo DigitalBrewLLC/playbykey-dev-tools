@@ -9,7 +9,7 @@ export default defineConfig({
       title: 'Theory Engine',
       description:
         'TypeScript-first music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, MCP server support.',
-      titleDelimiter: ' | ',
+      titleDelimiter: '—',
       favicon: '/favicon.svg',
       logo: {
         src: './src/assets/logo.svg',

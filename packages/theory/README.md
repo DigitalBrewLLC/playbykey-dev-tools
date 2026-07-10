@@ -13,12 +13,12 @@ Built for music apps, education tools, notation UIs, and AI agents.
 
 ## Why @playbykey/theory
 
-- **Zero dependencies:** no transitive baggage
-- **TypeScript-first:** strict types exported (`Note`, `ModeName`, `ScaleType`, `IntervalId`, …)
-- **Agent/LLM-ready:** [interactive docs](https://theory-engine.docs.playbykey.com) with copy-paste context prompt below
-- **Sharps-only notation:** predictable API; use `ENHARMONIC_LABELS` for flat/sharp display strings
-- **Six scale types:** `major`, `chromatic`, `pentatonic-major`, `pentatonic-minor`, `blues`, `harmonic-minor`
-- **Interval catalog clarity:** `half_step` / `whole_step` (scale motion) vs `minor_2nd` / `major_2nd` (from root)
+- **Zero dependencies** — no transitive baggage
+- **TypeScript-first** — strict types exported (`Note`, `ModeName`, `ScaleType`, `IntervalId`, …)
+- **Agent/LLM-ready** — [interactive docs](https://theory-engine.docs.playbykey.com) with copy-paste context prompt below
+- **Sharps-only notation** — predictable API; use `ENHARMONIC_LABELS` for flat/sharp display strings
+- **Six scale types** — `major`, `chromatic`, `pentatonic-major`, `pentatonic-minor`, `blues`, `harmonic-minor`
+- **Interval catalog clarity** — `half_step` / `whole_step` (scale motion) vs `minor_2nd` / `major_2nd` (from root)
 
 ---
 
@@ -34,7 +34,7 @@ bun add @playbykey/theory
 **Agent / LLM context prompt:**
 
 ```text
-I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db).
+I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals — half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db).
 ```
 
 ## Quickstart
@@ -66,13 +66,13 @@ const noteMap = buildNoteMap('C', 'major');
 
 ## What's included
 
-- **Keys & Modes:** `getModeNotes`, `getModalRoot`, `getParentScaleModes`
-- **Key relationships:** `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, `getCircleOfFifthsOrder`
-- **Note utilities:** `getSemitoneDistance`
-- **Scales:** `getScaleNotes`, `getScaleDegrees`, `getScaleDegree`, `isNoteInScale`, `buildNoteMap`
-- **Intervals:** `resolveIntervalEndpoints`, `getIntervalSemitones`, `INTERVAL_DEFINITIONS` (14 intervals; scale motion vs from-root 2nds)
-- **Derived scales:** `getBluesNotes`, `getHarmonicMinorNotes`, `getPentatonicNotes`
-- **Type guards:** `isNote`, `isModeName`, `parseNote`, `parseModeName` (case-insensitive)
+- **Keys & Modes** — `getModeNotes`, `getModalRoot`, `getParentScaleModes`
+- **Key relationships** — `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount`, `getCircleOfFifthsOrder`
+- **Note utilities** — `getSemitoneDistance`
+- **Scales** — `getScaleNotes`, `getScaleDegrees`, `getScaleDegree`, `isNoteInScale`, `buildNoteMap`
+- **Intervals** — `resolveIntervalEndpoints`, `getIntervalSemitones`, `INTERVAL_DEFINITIONS` (14 intervals; scale motion vs from-root 2nds)
+- **Derived scales** — `getBluesNotes`, `getHarmonicMinorNotes`, `getPentatonicNotes`
+- **Type guards** — `isNote`, `isModeName`, `parseNote`, `parseModeName` (case-insensitive)
 
 **[Full API reference →](https://theory-engine.docs.playbykey.com)**
 

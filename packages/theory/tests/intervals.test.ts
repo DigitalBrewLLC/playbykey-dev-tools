@@ -18,20 +18,20 @@ describe('INTERVAL_DEFINITIONS catalog', () => {
 
   it('registers minor_2nd with one semitone and a from-root label', () => {
     expect(INTERVAL_DEFINITIONS[Intervals.Minor2nd]).toEqual({
-      label: 'Minor 2nd (from root)',
+      label: 'Minor 2nd — from root',
       intervalSpec: { fromDegree: 1, semitones: 1, chromaticTo: true },
     });
   });
 
   it('labels scale-motion steps distinctly from named 2nds', () => {
     expect(INTERVAL_DEFINITIONS[Intervals.HalfStep].label).toBe(
-      'Half step (scale motion)'
+      'Half step — scale motion'
     );
     expect(INTERVAL_DEFINITIONS[Intervals.WholeStep].label).toBe(
-      'Whole step (scale motion)'
+      'Whole step — scale motion'
     );
     expect(INTERVAL_DEFINITIONS[Intervals.Major2nd].label).toBe(
-      'Major 2nd (from root)'
+      'Major 2nd — from root'
     );
   });
 });
@@ -51,7 +51,7 @@ describe('getIntervalSemitones', () => {
   });
 });
 
-describe('resolveIntervalEndpoints - C major', () => {
+describe('resolveIntervalEndpoints — C major', () => {
   const root: Note = 'C';
 
   it('resolves half_step between adjacent scale degrees (E → F)', () => {
@@ -61,7 +61,7 @@ describe('resolveIntervalEndpoints - C major', () => {
       from: 'E',
       to: 'F',
       semitones: 1,
-      label: 'Half step (scale motion)',
+      label: 'Half step — scale motion',
     });
   });
 
@@ -72,7 +72,7 @@ describe('resolveIntervalEndpoints - C major', () => {
       from: 'D',
       to: 'E',
       semitones: 2,
-      label: 'Whole step (scale motion)',
+      label: 'Whole step — scale motion',
     });
   });
 
@@ -83,7 +83,7 @@ describe('resolveIntervalEndpoints - C major', () => {
       from: 'C',
       to: 'C#',
       semitones: 1,
-      label: 'Minor 2nd (from root)',
+      label: 'Minor 2nd — from root',
     });
   });
 
@@ -94,7 +94,7 @@ describe('resolveIntervalEndpoints - C major', () => {
       from: 'C',
       to: 'D',
       semitones: 2,
-      label: 'Major 2nd (from root)',
+      label: 'Major 2nd — from root',
     });
   });
 
@@ -129,7 +129,7 @@ describe('resolveIntervalEndpoints - C major', () => {
   });
 });
 
-describe('resolveIntervalEndpoints - transposed roots', () => {
+describe('resolveIntervalEndpoints — transposed roots', () => {
   it.each([
     {
       root: 'G' as Note,

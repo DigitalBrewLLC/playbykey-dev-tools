@@ -4,7 +4,7 @@ import type { Note, ModeName } from '../src';
 
 // getModalRoot(parentKey, mode) returns the note at position [mode.scaleDegree - 1]
 // in the ionian scale built from parentKey. The parentKey is always treated as the
-// Ionian (major) root - not the modal root.
+// Ionian (major) root — not the modal root.
 //
 // Example: getModalRoot('C', Modes.Dorian) → 'D'
 //   C ionian = [C, D, E, F, G, A, B]; dorian is scale degree 2 → index 1 → D

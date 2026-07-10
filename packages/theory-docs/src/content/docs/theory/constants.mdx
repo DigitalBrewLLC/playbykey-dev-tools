@@ -5,23 +5,23 @@ head:
   - tag: meta
     attrs:
       property: og:title
-      content: 'Constants | @playbykey/theory'
+      content: "Constants — @playbykey/theory"
   - tag: meta
     attrs:
       property: og:description
-      content: 'Exported constants for notes, modes, intervals, scales, and notation in @playbykey/theory'
+      content: "Exported constants for notes, modes, intervals, scales, and notation in @playbykey/theory"
   - tag: meta
     attrs:
       property: og:url
-      content: 'https://theory-engine.docs.playbykey.com/theory/constants/'
+      content: "https://theory-engine.docs.playbykey.com/theory/constants/"
   - tag: meta
     attrs:
       property: og:image
-      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+      content: "https://theory-engine.docs.playbykey.com/og.svg"
   - tag: meta
     attrs:
       name: twitter:image
-      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+      content: "https://theory-engine.docs.playbykey.com/og.svg"
 ---
 
 import ModeExplorer from '../../../components/playgrounds/ModeExplorer';
@@ -40,7 +40,7 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 ## Modes
 
-`MODES` describes each of the 7 diatonic modes - name, scale degree, and character. `MODE_INTERVALS` and `MODE_SEMITONE_OFFSETS` give the step sizes and absolute offsets from the root.
+`MODES` describes each of the 7 diatonic modes — name, scale degree, and character. `MODE_INTERVALS` and `MODE_SEMITONE_OFFSETS` give the step sizes and absolute offsets from the root.
 
 <ModeExplorer client:load />
 
@@ -58,6 +58,6 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 ## Notation and display
 
-`buildNoteMap(root, scaleType)` returns one entry per in-scale note with `note`, `scaleDegree` (1-based), and `semitoneOffset` (0–11, distance from root). Notation is left to the consumer - use `entry.note` for letter labels or `String(entry.scaleDegree)` for numeric labels.
+`buildNoteMap(root, scaleType)` returns one entry per in-scale note with `note`, `scaleDegree` (1-based), and `semitoneOffset` (0–11, distance from root). Notation is left to the consumer — use `entry.note` for letter labels or `String(entry.scaleDegree)` for numeric labels.
 
 <NotationExplorer client:load />

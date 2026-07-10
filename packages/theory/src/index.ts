@@ -1,5 +1,5 @@
 /**
- * Music theory module - barrel export.
+ * Music theory module — barrel export.
  *
  * Re-exports all types, constants, and engine functions
  * for clean single-path imports across the app.
