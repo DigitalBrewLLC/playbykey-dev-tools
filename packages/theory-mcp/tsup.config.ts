@@ -6,4 +6,5 @@ export default defineConfig({
   dts: true,
   clean: true,
   sourcemap: false,
+  noExternal: [/@modelcontextprotocol\/sdk/, /@playbykey\/theory/],
 });
