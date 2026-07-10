@@ -6,7 +6,14 @@ Ask Claude (or any MCP-compatible AI) questions like "what notes are in D Dorian
 
 ## Installation
 
-Add to your Claude Desktop config at `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+No global install needed - `npx` fetches and runs the package on demand.
+
+### Claude Desktop
+
+Config file location:
+
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -20,6 +27,26 @@ Add to your Claude Desktop config at `~/Library/Application Support/Claude/claud
 ```
 
 Restart Claude Desktop after saving.
+
+### Cursor
+
+Config file location:
+
+- **Global (all projects):** `~/.cursor/mcp.json`
+- **Project only:** `.cursor/mcp.json` in your project root
+
+```json
+{
+  "mcpServers": {
+    "theory": {
+      "command": "npx",
+      "args": ["-y", "@playbykey/theory-mcp"]
+    }
+  }
+}
+```
+
+Restart Cursor after saving.
 
 ## Tools
 
