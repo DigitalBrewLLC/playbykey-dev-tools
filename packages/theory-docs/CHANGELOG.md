@@ -7,6 +7,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.0.0...theory-docs-v1.1.0) (2026-07-10)
+
+
+### Features
+
+* add @playbykey/theory-mcp MCP server ([5407632](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/5407632ba83454bdeb97b8caae443ca3790ec102))
+* add @playbykey/theory-mcp MCP server ([5407632](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/5407632ba83454bdeb97b8caae443ca3790ec102))
+
 ## 1.0.0 (2026-07-09)
 
 
