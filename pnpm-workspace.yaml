@@ -3,3 +3,5 @@ packages:
 allowBuilds:
   esbuild: true
   sharp: true
+minimumReleaseAgeExclude:
+  - '@playbykey/theory@1.0.1'
