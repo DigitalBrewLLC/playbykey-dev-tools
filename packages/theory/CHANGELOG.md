@@ -7,6 +7,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.0.1...theory-v1.1.0) (2026-07-10)
+
+
+### Features
+
+* add @playbykey/theory-mcp MCP server ([5407632](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/5407632ba83454bdeb97b8caae443ca3790ec102))
+* add @playbykey/theory-mcp MCP server ([5407632](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/5407632ba83454bdeb97b8caae443ca3790ec102))
+
+
+### Bug Fixes
+
+* **theory:** remove em dashes from interval label strings ([195f28c](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/195f28cc2db1e90a9971eb9e496d8fb507820b7a))
+
 ## 1.0.1 (2026-07-09)
 
 ### Bug Fixes
