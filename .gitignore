@@ -3,10 +3,11 @@ node_modules/
 
 # Build outputs
 dist/
+.output/
 *.tsbuildinfo
 
 # Environment variables
-.env
+.env*
 .env.local
 .env.*.local
 
@@ -33,3 +34,18 @@ Thumbs.db
 .cache/
 .turbo/
 .astro/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+
+# Coverage
+coverage/
+
+# Agent task specs (local-only)
+tasks/
+
+# Release / PR temp files
+pr-body.md
+release-notes-*.md
