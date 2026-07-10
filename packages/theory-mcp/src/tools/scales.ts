@@ -5,12 +5,7 @@ import {
   isNoteInScale,
 } from '@playbykey/theory';
 import { validateNote, validateScaleType } from '../validate.js';
-
-type ToolContent = { content: Array<{ type: 'text'; text: string }> };
-
-function errorContent(message: string): ToolContent {
-  return { content: [{ type: 'text', text: message }] };
-}
+import { type ToolContent, errorContent, okContent } from '../tool-helpers.js';
 
 export function handleGetScaleNotes(
   args: Record<string, unknown>
@@ -22,12 +17,11 @@ export function handleGetScaleNotes(
 
   const notes = getScaleNotes(root.value, scaleType.value);
   const summary = `${root.value} ${scaleType.value}: ${notes.join(', ')}`;
-  const json = JSON.stringify({
+  return okContent(summary, {
     root: root.value,
     scaleType: scaleType.value,
     notes,
   });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
 }
 
 export function handleBuildNoteMap(args: Record<string, unknown>): ToolContent {
@@ -38,12 +32,11 @@ export function handleBuildNoteMap(args: Record<string, unknown>): ToolContent {
 
   const noteMap = buildNoteMap(root.value, scaleType.value);
   const summary = `Note map for ${root.value} ${scaleType.value}: ${noteMap.map((n) => `${n.note}(deg ${n.scaleDegree})`).join(', ')}`;
-  const json = JSON.stringify({
+  return okContent(summary, {
     root: root.value,
     scaleType: scaleType.value,
     noteMap,
   });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
 }
 
 export function handleGetScaleDegree(
@@ -61,14 +54,13 @@ export function handleGetScaleDegree(
     degree !== null
       ? `${note.value} is degree ${degree} in ${root.value} ${scaleType.value}`
       : `${note.value} is not in ${root.value} ${scaleType.value}`;
-  const json = JSON.stringify({
+  return okContent(summary, {
     root: root.value,
     scaleType: scaleType.value,
     note: note.value,
     degree,
     inScale: degree !== null,
   });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
 }
 
 export function handleIsNoteInScale(
@@ -83,11 +75,10 @@ export function handleIsNoteInScale(
 
   const inScale = isNoteInScale(root.value, scaleType.value, note.value);
   const summary = `${note.value} is ${inScale ? '' : 'not '}in ${root.value} ${scaleType.value}`;
-  const json = JSON.stringify({
+  return okContent(summary, {
     root: root.value,
     scaleType: scaleType.value,
     note: note.value,
     inScale,
   });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
 }

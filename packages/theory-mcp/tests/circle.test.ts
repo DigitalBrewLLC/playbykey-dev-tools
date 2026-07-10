@@ -6,7 +6,7 @@ import {
 
 describe('handleGetCircleOfFifths', () => {
   it('returns 12 notes starting from C', () => {
-    const result = handleGetCircleOfFifths({});
+    const result = handleGetCircleOfFifths();
     const text = result.content[0]?.text ?? '';
     const parsed = JSON.parse(text.slice(text.indexOf('{'))) as {
       notes: string[];

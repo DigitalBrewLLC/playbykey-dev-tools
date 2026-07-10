@@ -12,6 +12,10 @@ export type ValidateResult<T> = ValidateOk<T> | ValidateErr;
 
 const SCALE_TYPE_SET = new Set<string>(Object.values(ScaleTypes));
 
+function isScaleType(value: string): value is ScaleType {
+  return SCALE_TYPE_SET.has(value);
+}
+
 export function validateNote(value: unknown): ValidateResult<Note> {
   if (typeof value === 'string' && isNote(value)) return { ok: true, value };
   return {
@@ -39,8 +43,8 @@ export function validateIntervalId(value: unknown): ValidateResult<IntervalId> {
 }
 
 export function validateScaleType(value: unknown): ValidateResult<ScaleType> {
-  if (typeof value === 'string' && SCALE_TYPE_SET.has(value)) {
-    return { ok: true, value: value as ScaleType };
+  if (typeof value === 'string' && isScaleType(value)) {
+    return { ok: true, value };
   }
   return {
     ok: false,
