@@ -29,7 +29,7 @@ const NotesExplorer = () => {
         <div style={dataRowStyle}>
           <span style={dataLabelStyle}>Enharmonic label</span>
           <div style={dataValueStyle}>
-            {enharmonicLabel ?? 'Natural — no enharmonic equivalent'}
+            {enharmonicLabel ?? 'Natural - no enharmonic equivalent'}
           </div>
         </div>
       </InfoBlock>

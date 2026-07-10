@@ -5,23 +5,23 @@ head:
   - tag: meta
     attrs:
       property: og:title
-      content: "Intervals — @playbykey/theory"
+      content: 'Intervals | @playbykey/theory'
   - tag: meta
     attrs:
       property: og:description
-      content: "Resolve music interval endpoints and look up semitone distances for any root in @playbykey/theory"
+      content: 'Resolve music interval endpoints and look up semitone distances for any root in @playbykey/theory'
   - tag: meta
     attrs:
       property: og:url
-      content: "https://theory-engine.docs.playbykey.com/theory/intervals/"
+      content: 'https://theory-engine.docs.playbykey.com/theory/intervals/'
   - tag: meta
     attrs:
       property: og:image
-      content: "https://theory-engine.docs.playbykey.com/og.svg"
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
   - tag: meta
     attrs:
       name: twitter:image
-      content: "https://theory-engine.docs.playbykey.com/og.svg"
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
 ---
 
 import IntervalsPlayground from '../../../components/playgrounds/IntervalsPlayground';
@@ -32,9 +32,9 @@ An `IntervalId` names one of the 14 intervals in the catalog, from half steps th
 
 The catalog distinguishes two ways of describing the same semitone distances:
 
-**Scale motion** — `half_step` and `whole_step` resolve between **adjacent scale degrees** within the major scale (e.g. in C major: E→F is a half step, D→E is a whole step). These are pedagogical step names for diatonic motion.
+**Scale motion:** `half_step` and `whole_step` resolve between **adjacent scale degrees** within the major scale (e.g. in C major: E→F is a half step, D→E is a whole step). These are pedagogical step names for diatonic motion.
 
-**Named intervals from root** — `minor_2nd` and `major_2nd` resolve **from degree 1** at the given root. A minor 2nd is one semitone above the root (chromatic); a major 2nd is the diatonic 2nd scale degree (two semitones). Same distances as a half step and whole step, but anchored at the tonic rather than mid-scale.
+**Named intervals from root:** `minor_2nd` and `major_2nd` resolve **from degree 1** at the given root. A minor 2nd is one semitone above the root (chromatic); a major 2nd is the diatonic 2nd scale degree (two semitones). Same distances as a half step and whole step, but anchored at the tonic rather than mid-scale.
 
 All other catalog entries (`minor_3rd` through `octave`) are named intervals from the root using diatonic degree targets, except `minor_7th` which uses a chromatic upper note like `minor_2nd`.
 
@@ -43,11 +43,11 @@ import { resolveIntervalEndpoints, Intervals, Notes } from '@playbykey/theory';
 
 // Scale motion: E → F in C major (not from the tonic)
 resolveIntervalEndpoints({ root: Notes.C, interval: Intervals.HalfStep });
-// { from: 'E', to: 'F', semitones: 1, label: 'Half step — scale motion' }
+// { from: 'E', to: 'F', semitones: 1, label: 'Half step (scale motion)' }
 
 // Named interval from root: C → C#
 resolveIntervalEndpoints({ root: Notes.C, interval: Intervals.Minor2nd });
-// { from: 'C', to: 'C#', semitones: 1, label: 'Minor 2nd — from root' }
+// { from: 'C', to: 'C#', semitones: 1, label: 'Minor 2nd (from root)' }
 ```
 
 ## Live Playground
@@ -56,8 +56,8 @@ resolveIntervalEndpoints({ root: Notes.C, interval: Intervals.Minor2nd });
 
 ## Interval Types
 
-**`IntervalContext`** — `{ root: Note; interval: IntervalId }`. Passed to `resolveIntervalEndpoints` to resolve the two notes bounding the interval.
+**`IntervalContext`:** `{ root: Note; interval: IntervalId }`. Passed to `resolveIntervalEndpoints` to resolve the two notes bounding the interval.
 
-**`ResolvedInterval`** — `{ from: Note; to: Note; semitones: number; label: string }`. The resolved endpoints plus the catalog label for the interval.
+**`ResolvedInterval`:** `{ from: Note; to: Note; semitones: number; label: string }`. The resolved endpoints plus the catalog label for the interval.
 
-**`IntervalDefinition`** — `{ label: string; intervalSpec: IntervalSpec }`. Describes how an interval is defined relative to scale degrees. See the [Constants](/theory/constants/) page for the full `INTERVAL_DEFINITIONS` catalog.
+**`IntervalDefinition`:** `{ label: string; intervalSpec: IntervalSpec }`. Describes how an interval is defined relative to scale degrees. See the [Constants](/theory/constants/) page for the full `INTERVAL_DEFINITIONS` catalog.
