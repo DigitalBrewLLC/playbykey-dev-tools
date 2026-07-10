@@ -10,6 +10,12 @@
       "release-type": "node",
       "package-name": "theory-docs",
       "changelog-path": "CHANGELOG.md"
+    },
+    "packages/theory-mcp": {
+      "release-type": "node",
+      "package-name": "@playbykey/theory-mcp",
+      "changelog-path": "CHANGELOG.md",
+      "initial-version": "1.0.0"
     }
   }
 }

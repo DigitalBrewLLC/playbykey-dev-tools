@@ -1,0 +1,51 @@
+{
+  "name": "@playbykey/theory-mcp",
+  "version": "1.0.0",
+  "description": "MCP server that exposes @playbykey/theory as AI-callable music theory tools",
+  "keywords": [
+    "mcp",
+    "music-theory",
+    "model-context-protocol",
+    "playbykey",
+    "scales",
+    "modes",
+    "intervals"
+  ],
+  "homepage": "https://github.com/DigitalBrewLLC/playbykey-dev-tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DigitalBrewLLC/playbykey-dev-tools"
+  },
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "bin": {
+    "theory-mcp": "./dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@playbykey/theory": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.5.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

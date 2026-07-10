@@ -7,7 +7,7 @@ import { ALL_NOTES } from './fixtures';
 // Going from a higher note to a lower one wraps around the top of the octave.
 // Example: G to C is not 7 down, it is 5 up (G → G# → A → A# → B → C).
 
-// Distances from C upward to all 12 chromatic notes — covers the full 0-11 range
+// Distances from C upward to all 12 chromatic notes - covers the full 0-11 range
 const ASCENDING_FROM_C: Array<{ to: Note; semitones: number }> = [
   { to: 'C', semitones: 0 },
   { to: 'C#', semitones: 1 },
@@ -23,7 +23,7 @@ const ASCENDING_FROM_C: Array<{ to: Note; semitones: number }> = [
   { to: 'B', semitones: 11 },
 ];
 
-// Ascending distance from each non-C note back to C — wraps over the top of the octave
+// Ascending distance from each non-C note back to C - wraps over the top of the octave
 const ASCENDING_TO_C: Array<{ from: Note; semitones: number }> = [
   { from: 'C#', semitones: 11 },
   { from: 'D', semitones: 10 },
