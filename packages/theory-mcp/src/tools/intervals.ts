@@ -4,12 +4,7 @@ import {
 } from '@playbykey/theory';
 import type { IntervalContext } from '@playbykey/theory';
 import { validateNote, validateIntervalId } from '../validate.js';
-
-type ToolContent = { content: Array<{ type: 'text'; text: string }> };
-
-function errorContent(message: string): ToolContent {
-  return { content: [{ type: 'text', text: message }] };
-}
+import { type ToolContent, errorContent, okContent } from '../tool-helpers.js';
 
 export function handleResolveInterval(
   args: Record<string, unknown>
@@ -25,12 +20,11 @@ export function handleResolveInterval(
   };
   const result = resolveIntervalEndpoints(context);
   const summary = `${result.label}: ${result.from} to ${result.to} (${result.semitones} semitone${result.semitones === 1 ? '' : 's'})`;
-  const json = JSON.stringify({
+  return okContent(summary, {
     root: root.value,
     interval: interval.value,
     ...result,
   });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
 }
 
 export function handleGetSemitoneDistance(
@@ -43,6 +37,5 @@ export function handleGetSemitoneDistance(
 
   const semitones = getSemitoneDistance(from.value, to.value);
   const summary = `${from.value} to ${to.value}: ${semitones} semitone${semitones === 1 ? '' : 's'}`;
-  const json = JSON.stringify({ from: from.value, to: to.value, semitones });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+  return okContent(summary, { from: from.value, to: to.value, semitones });
 }

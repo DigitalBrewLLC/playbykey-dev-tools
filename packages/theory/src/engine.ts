@@ -44,7 +44,7 @@ const MODE_INTERVALS: Record<ModeName, readonly number[]> = {
 
 /**
  * Absolute semitone offsets from root for each scale degree per mode.
- * Describes position — each degree's distance from the root note.
+ * Describes position - each degree's distance from the root note.
  *
  * Example: Ionian [0, 2, 4, 5, 7, 9, 11] means
  * root +0, +2 (2nd), +4 (3rd), +5 (4th), +7 (5th), +9 (6th), +11 (7th).

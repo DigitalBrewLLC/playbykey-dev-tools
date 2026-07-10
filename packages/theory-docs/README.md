@@ -1,6 +1,6 @@
 # theory-docs
 
-Documentation site for [`@playbykey/theory`](../theory) — the PlayByKey music theory engine.
+Documentation site for [`@playbykey/theory`](../theory) - the PlayByKey music theory engine.
 
 Live at **[theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com)**.
 
@@ -73,6 +73,6 @@ Output directory: `dist/`
 
 ## Related
 
-- [`@playbykey/theory`](../theory) — the npm package this site documents
-- [PlayByKey](https://playbykey.com) — the app that uses this engine
-- [playbykey-dev-tools](../../) — the monorepo
+- [`@playbykey/theory`](../theory) - the npm package this site documents
+- [PlayByKey](https://playbykey.com) - the app that uses this engine
+- [playbykey-dev-tools](../../) - the monorepo

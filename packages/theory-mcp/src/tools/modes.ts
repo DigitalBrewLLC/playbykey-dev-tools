@@ -7,12 +7,7 @@ import {
   ModeInfoById,
 } from '@playbykey/theory';
 import { validateNote, validateModeName } from '../validate.js';
-
-type ToolContent = { content: Array<{ type: 'text'; text: string }> };
-
-function errorContent(message: string): ToolContent {
-  return { content: [{ type: 'text', text: message }] };
-}
+import { type ToolContent, errorContent, okContent } from '../tool-helpers.js';
 
 export function handleGetModeNotes(args: Record<string, unknown>): ToolContent {
   const root = validateNote(args['root']);
@@ -22,8 +17,7 @@ export function handleGetModeNotes(args: Record<string, unknown>): ToolContent {
 
   const notes = getModeNotes(root.value, mode.value);
   const summary = `${root.value} ${mode.value}: ${notes.join(', ')}`;
-  const json = JSON.stringify({ root: root.value, mode: mode.value, notes });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+  return okContent(summary, { root: root.value, mode: mode.value, notes });
 }
 
 export function handleGetParentScaleModes(
@@ -36,8 +30,7 @@ export function handleGetParentScaleModes(
 
   const modes = getParentScaleModes(root.value, mode.value);
   const summary = `Parent scale modes for ${root.value} ${mode.value}: ${modes.map((m) => `${m.root} ${m.mode}`).join(', ')}`;
-  const json = JSON.stringify({ root: root.value, mode: mode.value, modes });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+  return okContent(summary, { root: root.value, mode: mode.value, modes });
 }
 
 export function handleGetModalRoot(args: Record<string, unknown>): ToolContent {
@@ -48,12 +41,11 @@ export function handleGetModalRoot(args: Record<string, unknown>): ToolContent {
 
   const modalRoot = getModalRoot(parentKey.value, mode.value);
   const summary = `The ${mode.value} mode of the ${parentKey.value} major scale is rooted on ${modalRoot}`;
-  const json = JSON.stringify({
+  return okContent(summary, {
     parentKey: parentKey.value,
     mode: mode.value,
     modalRoot,
   });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
 }
 
 export function handleGetRelativeMinor(
@@ -64,8 +56,7 @@ export function handleGetRelativeMinor(
 
   const minorKey = getRelativeMinorKey(majorKey.value);
   const summary = `The relative minor of ${majorKey.value} major is ${minorKey} minor`;
-  const json = JSON.stringify({ majorKey: majorKey.value, minorKey });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+  return okContent(summary, { majorKey: majorKey.value, minorKey });
 }
 
 export function handleGetRelativeMajor(
@@ -76,8 +67,7 @@ export function handleGetRelativeMajor(
 
   const majorKey = getRelativeMajorKey(minorKey.value);
   const summary = `The relative major of ${minorKey.value} minor is ${majorKey} major`;
-  const json = JSON.stringify({ minorKey: minorKey.value, majorKey });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+  return okContent(summary, { minorKey: minorKey.value, majorKey });
 }
 
 export function handleGetModeInfo(args: Record<string, unknown>): ToolContent {
@@ -86,6 +76,5 @@ export function handleGetModeInfo(args: Record<string, unknown>): ToolContent {
 
   const info = ModeInfoById[mode.value];
   const summary = `${info.name} (degree ${info.scaleDegree}): ${info.character}`;
-  const json = JSON.stringify(info);
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+  return okContent(summary, info);
 }

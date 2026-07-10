@@ -112,7 +112,7 @@ const ScalesPlayground = () => {
       <FunctionCard
         name="getScaleNotes"
         signature="getScaleNotes(root: Note, scaleType: ScaleType): Note[]"
-        description="Returns the notes for any scale type — major, blues, pentatonic, harmonic minor, and chromatic."
+        description="Returns the notes for any scale type - major, blues, pentatonic, harmonic minor, and chromatic."
         result={derivedNotes}
       >
         <NoteSelect

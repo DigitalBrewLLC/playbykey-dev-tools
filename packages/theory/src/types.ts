@@ -10,7 +10,7 @@
  * For display purposes, `ENHARMONIC_LABELS` maps the 5 black-key notes to
  * their combined sharp/flat label (e.g. `'C#': 'Db/C#'`). A function that
  * returns a flat-spelled note (e.g. `Db`) cannot exist without extending
- * this type — which would be a cross-cutting breaking change.
+ * this type - which would be a cross-cutting breaking change.
  */
 type Note =
   | 'C'

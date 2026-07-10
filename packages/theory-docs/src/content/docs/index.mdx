@@ -5,35 +5,35 @@ head:
   - tag: meta
     attrs:
       property: og:title
-      content: "@playbykey/theory — TypeScript music theory engine"
+      content: '@playbykey/theory | TypeScript music theory engine'
   - tag: meta
     attrs:
       property: og:description
-      content: "TypeScript-first music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, MCP server support."
+      content: 'TypeScript-first music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, MCP server support.'
   - tag: meta
     attrs:
       property: og:url
-      content: "https://theory-engine.docs.playbykey.com"
+      content: 'https://theory-engine.docs.playbykey.com'
   - tag: meta
     attrs:
       property: og:image
-      content: "https://theory-engine.docs.playbykey.com/og.svg"
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
   - tag: meta
     attrs:
       name: twitter:image
-      content: "https://theory-engine.docs.playbykey.com/og.svg"
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
 ---
 
 import { Aside, Code, Tabs, TabItem } from '@astrojs/starlight/components';
 
-`@playbykey/theory` is a zero-dependency TypeScript music theory engine for computing scale notes, resolving diatonic modes, navigating key relationships, and building note display maps. 
+`@playbykey/theory` is a zero-dependency TypeScript music theory engine for computing scale notes, resolving diatonic modes, navigating key relationships, and building note display maps.
 
-The music theory engine powering [PlayByKey](https://playbykey.com). No external API calls, no runtime overhead — drop it into any JavaScript or TypeScript project and start computing immediately.
+The music theory engine powering [PlayByKey](https://playbykey.com). No external API calls, no runtime overhead - drop it into any JavaScript or TypeScript project and start computing immediately.
 
 <Aside type="tip" title="Using an AI agent or LLM?">
 Paste this into your agent to give it context about this package:
 
-<Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals — half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db)." />
+<Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db)." />
 </Aside>
 
 ## Installation
@@ -52,7 +52,10 @@ Paste this into your agent to give it context about this package:
     <Code lang="sh" code="bun add @playbykey/theory" />
   </TabItem>
   <TabItem label="agent">
-    <Code lang="text" code="Install @playbykey/theory from npm and add it to my project. Docs: https://theory-engine.docs.playbykey.com. Functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals — half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db)." />
+    <Code
+      lang="text"
+      code="Install @playbykey/theory from npm and add it to my project. Docs: https://theory-engine.docs.playbykey.com. Functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation (C# not Db)."
+    />
   </TabItem>
 </Tabs>
 
@@ -67,18 +70,18 @@ console.log(notes); // ['D', 'E', 'F', 'G', 'A', 'B', 'C']
 
 // Find the parent major key
 const parentModes = getParentScaleModes('D', 'dorian');
-const parent = parentModes.find(m => m.mode === 'ionian');
+const parent = parentModes.find((m) => m.mode === 'ionian');
 console.log(parent?.root); // 'C'
 ```
 
 ## What's in the package
 
-| Category | What it covers | Page |
-| --- | --- | --- |
-| Keys & Modes | Scales, modes, key relationships, note utilities | [Keys & Modes](/theory/engine/) |
-| Intervals | Interval catalog, semitone lookup, endpoint resolution | [Intervals](/theory/intervals/) |
-| Scales | Blues, harmonic minor, pentatonic, derived scales | [Scales](/theory/scales/) |
-| Constants | All exported constants and their values | [Constants](/theory/constants/) |
+| Category     | What it covers                                         | Page                            |
+| ------------ | ------------------------------------------------------ | ------------------------------- |
+| Keys & Modes | Scales, modes, key relationships, note utilities       | [Keys & Modes](/theory/engine/) |
+| Intervals    | Interval catalog, semitone lookup, endpoint resolution | [Intervals](/theory/intervals/) |
+| Scales       | Blues, harmonic minor, pentatonic, derived scales      | [Scales](/theory/scales/)       |
+| Constants    | All exported constants and their values                | [Constants](/theory/constants/) |
 
 ## TypeScript
 

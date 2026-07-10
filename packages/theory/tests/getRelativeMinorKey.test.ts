@@ -3,7 +3,7 @@ import { getRelativeMinorKey } from '../src';
 import type { Note } from '../src';
 
 // The relative minor of a major key is 9 semitones above (or equivalently 3 semitones below)
-// the major root. Both keys share the same 7 notes — only the tonal center differs.
+// the major root. Both keys share the same 7 notes - only the tonal center differs.
 // Example: C major and A minor share C D E F G A B.
 
 // All 12 major keys mapped to their relative minor (major root + 9 semitones)

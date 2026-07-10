@@ -15,7 +15,7 @@ export const checkAccessibility = async (page: Page) => {
   const report = violations
     .map(
       (v) =>
-        `[${v.impact}] "${v.id}" — ${v.description}\n` +
+        `[${v.impact}] "${v.id}" - ${v.description}\n` +
         v.nodes.map((n) => `    ${n.html}`).join('\n')
     )
     .join('\n\n');

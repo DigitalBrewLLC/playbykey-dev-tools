@@ -3,21 +3,12 @@ import {
   getKeySignatureCount,
 } from '@playbykey/theory';
 import { validateNote } from '../validate.js';
+import { type ToolContent, errorContent, okContent } from '../tool-helpers.js';
 
-type ToolContent = { content: Array<{ type: 'text'; text: string }> };
-
-function errorContent(message: string): ToolContent {
-  return { content: [{ type: 'text', text: message }] };
-}
-
-export function handleGetCircleOfFifths(
-  args: Record<string, unknown>
-): ToolContent {
-  void args;
+export function handleGetCircleOfFifths(): ToolContent {
   const notes = getCircleOfFifthsOrder();
   const summary = `Circle of fifths: ${notes.join(', ')}`;
-  const json = JSON.stringify({ notes });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+  return okContent(summary, { notes });
 }
 
 export function handleGetKeySignature(
@@ -28,8 +19,7 @@ export function handleGetKeySignature(
 
   const sig = getKeySignatureCount(key.value);
   const summary = formatKeySignatureSummary(key.value, sig);
-  const json = JSON.stringify({ key: key.value, signature: sig });
-  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+  return okContent(summary, { key: key.value, signature: sig });
 }
 
 function formatKeySignatureSummary(

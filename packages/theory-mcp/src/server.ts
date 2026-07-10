@@ -347,7 +347,7 @@ const TOOLS = [
 ];
 
 export const server = new Server(
-  { name: 'theory-mcp', version: '0.1.0' },
+  { name: 'theory-mcp', version: '1.0.0' },
   { capabilities: { tools: {} } }
 );
 
@@ -373,7 +373,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     case 'get_mode_info':
       return handleGetModeInfo(safeArgs);
     case 'get_circle_of_fifths':
-      return handleGetCircleOfFifths(safeArgs);
+      return handleGetCircleOfFifths();
     case 'get_key_signature':
       return handleGetKeySignature(safeArgs);
     case 'get_scale_notes':

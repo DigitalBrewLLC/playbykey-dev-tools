@@ -4,7 +4,7 @@ All three questions from the Engine Review pre-work are resolved. Decisions reco
 
 ---
 
-## 1. Chord functions — DEFERRED
+## 1. Chord functions - DEFERRED
 
 **Decision:** Defer to v1.1.
 
@@ -12,7 +12,7 @@ No implementation exists in the codebase. v1 is a direct port of the proven, tes
 
 ---
 
-## 2. `getEnharmonicEquivalent` and the `Note` type — DEFERRED
+## 2. `getEnharmonicEquivalent` and the `Note` type - DEFERRED
 
 **Decision:** Do not add this function. Document the constraint instead.
 
@@ -20,7 +20,7 @@ The sharps-only `Note` type is a deliberate design choice that flows through eve
 
 ---
 
-## 3. `getIntervalSemitones` signature — RESOLVED
+## 3. `getIntervalSemitones` signature - RESOLVED
 
 **Decision:** `getIntervalSemitones(interval: IntervalId): number`
 
