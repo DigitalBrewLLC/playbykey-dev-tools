@@ -1,4 +1,9 @@
-import { getScaleNotes, buildNoteMap } from '@playbykey/theory';
+import {
+  getScaleNotes,
+  buildNoteMap,
+  getScaleDegree,
+  isNoteInScale,
+} from '@playbykey/theory';
 import { validateNote, validateScaleType } from '../validate.js';
 
 type ToolContent = { content: Array<{ type: 'text'; text: string }> };
@@ -37,6 +42,52 @@ export function handleBuildNoteMap(args: Record<string, unknown>): ToolContent {
     root: root.value,
     scaleType: scaleType.value,
     noteMap,
+  });
+  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+}
+
+export function handleGetScaleDegree(
+  args: Record<string, unknown>
+): ToolContent {
+  const root = validateNote(args['root']);
+  const scaleType = validateScaleType(args['scale_type']);
+  const note = validateNote(args['note']);
+  if (!root.ok) return errorContent(root.error);
+  if (!scaleType.ok) return errorContent(scaleType.error);
+  if (!note.ok) return errorContent(note.error);
+
+  const degree = getScaleDegree(root.value, scaleType.value, note.value);
+  const summary =
+    degree !== null
+      ? `${note.value} is degree ${degree} in ${root.value} ${scaleType.value}`
+      : `${note.value} is not in ${root.value} ${scaleType.value}`;
+  const json = JSON.stringify({
+    root: root.value,
+    scaleType: scaleType.value,
+    note: note.value,
+    degree,
+    inScale: degree !== null,
+  });
+  return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
+}
+
+export function handleIsNoteInScale(
+  args: Record<string, unknown>
+): ToolContent {
+  const root = validateNote(args['root']);
+  const scaleType = validateScaleType(args['scale_type']);
+  const note = validateNote(args['note']);
+  if (!root.ok) return errorContent(root.error);
+  if (!scaleType.ok) return errorContent(scaleType.error);
+  if (!note.ok) return errorContent(note.error);
+
+  const inScale = isNoteInScale(root.value, scaleType.value, note.value);
+  const summary = `${note.value} is ${inScale ? '' : 'not '}in ${root.value} ${scaleType.value}`;
+  const json = JSON.stringify({
+    root: root.value,
+    scaleType: scaleType.value,
+    note: note.value,
+    inScale,
   });
   return { content: [{ type: 'text', text: `${summary}\n\n${json}` }] };
 }

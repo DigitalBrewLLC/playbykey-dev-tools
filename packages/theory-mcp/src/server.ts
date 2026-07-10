@@ -15,7 +15,12 @@ import {
   handleGetCircleOfFifths,
   handleGetKeySignature,
 } from './tools/circle.js';
-import { handleGetScaleNotes, handleBuildNoteMap } from './tools/scales.js';
+import {
+  handleGetScaleNotes,
+  handleBuildNoteMap,
+  handleGetScaleDegree,
+  handleIsNoteInScale,
+} from './tools/scales.js';
 import {
   handleResolveInterval,
   handleGetSemitoneDistance,
@@ -287,6 +292,58 @@ const TOOLS = [
       required: ['from', 'to'],
     },
   },
+  {
+    name: 'get_scale_degree',
+    description:
+      'Returns the 1-based scale degree of a note within a root + scale type, or null if the note is not in the scale.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note of the scale',
+        },
+        scale_type: {
+          type: 'string',
+          enum: [...SCALE_TYPE_ENUM],
+          description: 'Scale type',
+        },
+        note: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Note to locate within the scale',
+        },
+      },
+      required: ['root', 'scale_type', 'note'],
+    },
+  },
+  {
+    name: 'is_note_in_scale',
+    description:
+      'Returns true if the given note is present in the specified root + scale type, false otherwise.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note of the scale',
+        },
+        scale_type: {
+          type: 'string',
+          enum: [...SCALE_TYPE_ENUM],
+          description: 'Scale type',
+        },
+        note: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Note to check',
+        },
+      },
+      required: ['root', 'scale_type', 'note'],
+    },
+  },
 ];
 
 export const server = new Server(
@@ -327,6 +384,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleResolveInterval(safeArgs);
     case 'get_semitone_distance':
       return handleGetSemitoneDistance(safeArgs);
+    case 'get_scale_degree':
+      return handleGetScaleDegree(safeArgs);
+    case 'is_note_in_scale':
+      return handleIsNoteInScale(safeArgs);
     default:
       return {
         content: [{ type: 'text' as const, text: `Unknown tool: "${name}"` }],
