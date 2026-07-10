@@ -2,7 +2,7 @@ import { Server } from '@modelcontextprotocol/sdk/server';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-} from '@modelcontextprotocol/sdk/types';
+} from '@modelcontextprotocol/sdk/types.js';
 import {
   handleGetModeNotes,
   handleGetParentScaleModes,
