@@ -36,5 +36,14 @@ jobs:
       - name: Build @playbykey/theory
         run: pnpm --filter @playbykey/theory build
 
+      - name: Typecheck @playbykey/theory-mcp
+        run: pnpm --filter @playbykey/theory-mcp typecheck
+
+      - name: Test @playbykey/theory-mcp
+        run: pnpm --filter @playbykey/theory-mcp test
+
+      - name: Build @playbykey/theory-mcp
+        run: pnpm --filter @playbykey/theory-mcp build
+
       - name: Build theory-docs
         run: pnpm --filter theory-docs build
