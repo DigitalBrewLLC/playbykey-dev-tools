@@ -19,7 +19,8 @@ dist/
 .idea/
 *.swp
 *.swo
-.cursor
+.cursor/*
+!.cursor/mcp.json
 CLAUDE.md
 .CLAUDE.md
 settings.local.json

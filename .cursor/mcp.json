@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "theory": {
+      "command": "npx",
+      "args": ["-y", "@playbykey/theory-mcp"]
+    }
+  }
+}
