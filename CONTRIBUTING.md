@@ -31,7 +31,7 @@ pnpm install
 - `export type` for type-only exports.
 - Each package's public API is exported from a single barrel file
   (`src/index.ts`).
-- Do not use em-dashes (`-`) in prose, comments, or string literals - use
+- Do not use em-dashes (`—`) in prose, comments, or string literals - use
   `-` instead.
 
 ---
@@ -39,5 +39,4 @@ pnpm install
 ## Git
 
 - Each PR should represent a single functional change.
-- Do not commit or push without explicit instruction from the task owner.
 - Do not make changes directly on `main` - use a feature branch and open a PR.
