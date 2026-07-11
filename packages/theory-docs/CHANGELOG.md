@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.2.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.2.0...theory-docs-v1.2.1) (2026-07-11)
+
+
+### Bug Fixes
+
+* register theory-mcp for Claude Code via project-scoped .mcp.json ([#69](https://github.com/DigitalBrewLLC/playbykey-dev-tools/issues/69)) ([4004034](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/4004034e9ee73cd09d3e505c73925afc111f71fd))
+
 ## [1.2.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.1.0...theory-docs-v1.2.0) (2026-07-11)
 
 
