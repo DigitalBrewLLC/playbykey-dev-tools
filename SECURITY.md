@@ -4,7 +4,7 @@
 
 Please do not open a public GitHub issue for security vulnerabilities.
 
-Email **peppersbre@gmail.com** with a description of the issue and steps to reproduce. You can expect a response within 48 hours.
+Email **hello@digitalbrew.tech** with a description of the issue and steps to reproduce. You can expect a response within 48 hours.
 
 ## Scope
 
