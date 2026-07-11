@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.2.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.1.0...theory-v1.2.0) (2026-07-11)
+
+
+### Features
+
+* cross-link playbykey.com from theory-docs and npm README ([#63](https://github.com/DigitalBrewLLC/playbykey-dev-tools/issues/63)) ([614e78e](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/614e78e5a86cab382786421f5f2b1d024d57dd9f))
+
 ## [1.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.0.1...theory-v1.1.0) (2026-07-10)
 
 
