@@ -1,0 +1,132 @@
+---
+title: MCP Server
+description: Set up @playbykey/theory-mcp to call the theory engine as AI tools from Claude Desktop, Cursor, or Claude Code
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: 'MCP Server | @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:description
+      content: 'Set up @playbykey/theory-mcp to call the theory engine as AI tools from Claude Desktop, Cursor, or Claude Code'
+  - tag: meta
+    attrs:
+      property: og:url
+      content: 'https://theory-engine.docs.playbykey.com/mcp/'
+  - tag: meta
+    attrs:
+      property: og:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+---
+
+import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
+
+[`@playbykey/theory-mcp`](https://www.npmjs.com/package/@playbykey/theory-mcp) exposes `@playbykey/theory` as an MCP stdio server. MCP lets an AI assistant call the theory engine directly as tools instead of reasoning about scales, modes, and key relationships from training data. Answers are computed, not guessed. No global install needed - `npx` fetches and runs the package on demand.
+
+## Setup
+
+<Tabs>
+  <TabItem label="Claude Desktop">
+    Config file: `claude_desktop_config.json`
+
+    ```json
+    {
+      "mcpServers": {
+        "theory": {
+          "command": "npx",
+          "args": ["-y", "@playbykey/theory-mcp"]
+        }
+      }
+    }
+    ```
+
+    Restart Claude Desktop after saving.
+
+  </TabItem>
+  <TabItem label="Cursor">
+    Config file location:
+
+    - **Global (all projects):** `~/.cursor/mcp.json`
+    - **Project only:** `.cursor/mcp.json` in your project root
+
+    ```json
+    {
+      "mcpServers": {
+        "theory": {
+          "command": "npx",
+          "args": ["-y", "@playbykey/theory-mcp"]
+        }
+      }
+    }
+    ```
+
+    Restart Cursor after saving.
+
+  </TabItem>
+  <TabItem label="Claude Code">
+    **Project scope (recommended)** - commit an `.mcp.json` at your repo root so the server is available to every contributor after `git clone`:
+
+    ```json
+    {
+      "mcpServers": {
+        "theory": {
+          "command": "npx",
+          "args": ["-y", "@playbykey/theory-mcp"]
+        }
+      }
+    }
+    ```
+
+    **Local scope** - register the server for yourself in this project only, without committing anything:
+
+    <Code lang="sh" code="claude mcp add theory npx -y @playbykey/theory-mcp" />
+
+    **Global scope** - register the server for yourself across every project on this machine:
+
+    <Code lang="sh" code="claude mcp add theory npx -y @playbykey/theory-mcp --scope user" />
+
+    Run `claude mcp list` to confirm `theory` shows as connected.
+
+  </TabItem>
+</Tabs>
+
+## Tools
+
+### Modes
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `get_mode_notes` | `root`, `mode` | The 7 notes of a diatonic mode |
+| `get_parent_scale_modes` | `root`, `mode` | All 7 modal rotations of the parent key |
+| `get_modal_root` | `parent_key`, `mode` | The root note of a mode within a parent major key |
+| `get_relative_minor` | `major_key` | The relative minor root for a major key |
+| `get_relative_major` | `minor_key` | The relative major root for a minor key |
+| `get_mode_info` | `mode` | Display metadata: name, scale degree, character |
+
+### Circle and key signatures
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `get_circle_of_fifths` | none | All 12 chromatic notes in ascending-fifths order from C |
+| `get_key_signature` | `key` | Sharp or flat count for a key |
+
+### Scales
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `get_scale_notes` | `root`, `scale_type` | Notes of a scale (`major`, `blues`, `pentatonic-major`, `pentatonic-minor`, `harmonic-minor`, `chromatic`) |
+| `build_note_map` | `root`, `scale_type` | Per-note data: note name, scale degree, semitone offset from root |
+| `get_scale_degree` | `root`, `scale_type`, `note` | 1-based scale degree of a note, or null if not in scale |
+| `is_note_in_scale` | `root`, `scale_type`, `note` | Whether a note belongs to a scale |
+
+### Intervals
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `resolve_interval` | `root`, `interval` | From-note and to-note for a named interval within a root context |
+| `get_semitone_distance` | `from`, `to` | Ascending semitone distance between two notes (0-11) |

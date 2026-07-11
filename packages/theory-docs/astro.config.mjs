@@ -115,6 +115,10 @@ export default defineConfig({
             { label: 'Constants', slug: 'theory/constants' },
           ],
         },
+        {
+          label: 'MCP Server',
+          items: [{ label: 'Setup & Tools', slug: 'mcp' }],
+        },
       ],
       customCss: ['./src/styles/custom.css'],
     }),
