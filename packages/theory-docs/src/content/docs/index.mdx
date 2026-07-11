@@ -32,14 +32,14 @@ The music theory engine powering [PlayByKey](https://playbykey.com), a free inte
 
 <Aside type="tip" title="Using this with an AI assistant?">
   <Tabs>
-    <TabItem label="MCP tools">
+    <TabItem label="MCP context">
       `@playbykey/theory-mcp` exposes the engine as MCP tools so any MCP-compatible AI assistant can call it directly - no copy-paste needed. See the [playbykey/mcp](/mcp/) page for setup across Claude Desktop, Cursor, and Claude Code.
 
       Paste this into any MCP-compatible agent to have it set up the server:
 
       <Code lang="text" code="Add the @playbykey/theory-mcp MCP server to my MCP client, running via `npx -y @playbykey/theory-mcp`. Setup reference: https://theory-engine.docs.playbykey.com/mcp/" />
     </TabItem>
-    <TabItem label="Context prompt">
+    <TabItem label="Package context">
       Paste this into any agent or LLM to give it context about this package:
 
       <Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only Note type for type safety (C# not Db), flats fully supported via ENHARMONIC_LABELS." />
