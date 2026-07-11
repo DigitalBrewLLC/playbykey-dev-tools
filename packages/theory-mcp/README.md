@@ -2,7 +2,7 @@
 
 An MCP server that exposes [@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory) as AI-callable music theory tools.
 
-Ask Claude (or any MCP-compatible AI) questions like "what notes are in D Dorian?" or "what key has 3 sharps?" and get exact, computed answers backed by the theory engine - no hallucination.
+MCP lets an AI assistant call the theory engine directly as tools instead of reasoning about scales, modes, and key relationships from training data. Answers are computed, not guessed.
 
 ## Installation
 
@@ -10,10 +10,7 @@ No global install needed - `npx` fetches and runs the package on demand.
 
 ### Claude Desktop
 
-Config file location:
-
-- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+Config file: `claude_desktop_config.json`
 
 ```json
 {
@@ -47,6 +44,36 @@ Config file location:
 ```
 
 Restart Cursor after saving.
+
+### Claude Code
+
+**Project scope (recommended)** - commit an `.mcp.json` at your repo root so the server is
+available to every contributor after `git clone`:
+
+```json
+{
+  "mcpServers": {
+    "theory": {
+      "command": "npx",
+      "args": ["-y", "@playbykey/theory-mcp"]
+    }
+  }
+}
+```
+
+**Local scope** - register the server for yourself in this project only, without committing anything:
+
+```sh
+claude mcp add theory npx -y @playbykey/theory-mcp
+```
+
+**Global scope** - register the server for yourself across every project on this machine:
+
+```sh
+claude mcp add theory npx -y @playbykey/theory-mcp --scope user
+```
+
+Run `claude mcp list` to confirm `theory` shows as connected.
 
 ## Tools
 
@@ -113,12 +140,6 @@ Example: `resolve_interval("C", "major_3rd")` → C to E (4 semitones)
 **`get_semitone_distance`** - Returns the ascending semitone distance between two notes (0-11).  
 Input: `from` (note), `to` (note)  
 Example: `get_semitone_distance("C", "E")` → 4
-
-## Out of scope
-
-- Chord tools - deferred to v1.1 when `@playbykey/theory` adds chord support
-- Song data queries - separate feature
-- Remote/SSE transport - v1 is stdio only
 
 ## License
 
