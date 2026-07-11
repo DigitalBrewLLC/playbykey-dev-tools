@@ -4,7 +4,12 @@
     "packages/theory": {
       "release-type": "node",
       "package-name": "@playbykey/theory",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "changelog-sections": [
+        { "type": "feat", "section": "Features" },
+        { "type": "fix", "section": "Bug Fixes" },
+        { "type": "perf", "section": "Performance Improvements" }
+      ]
     },
     "packages/theory-docs": {
       "release-type": "node",
