@@ -23,7 +23,7 @@ Quickstart and API examples: [packages/theory/README.md](./packages/theory)
 
 ## Why @playbykey/theory
 
-- **A foundation music theory engine for computation of modes, keys, intervals, and scale relationships:** correct, consistent answers that every app, notation tool, or AI agent can build on instead of reimplementing music theory from scratch.
+- **Foundation music theory engine:** music theory as code. Modes, keys, intervals, and scale relationships resolved deterministically; one source of truth every app, notation tool, or AI agent can build on.
 - **Zero dependencies:** no transitive baggage; safe for agents, edge runtimes, and tight bundles
 - **TypeScript-first:** strict types exported alongside every function, no `any`
 - **Agent-ready:** copy-paste LLM context prompt and [interactive docs](https://theory-engine.docs.playbykey.com)

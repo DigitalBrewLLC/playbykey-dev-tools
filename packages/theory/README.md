@@ -14,7 +14,7 @@ Built for music apps, education tools, notation UIs, and AI agents. Powers [Play
 
 ## Why @playbykey/theory
 
-- **A foundation music theory engine for computation of modes, keys, intervals, and scale relationships:** correct, consistent answers that every app, notation tool, or AI agent can build on instead of reimplementing music theory from scratch.
+- **Foundation music theory engine:** music theory as code. Modes, keys, intervals, and scale relationships resolved deterministically; one source of truth every app, notation tool, or AI agent can build on.
 - **Zero dependencies:** no transitive baggage; safe for agents, edge runtimes, and tight bundles
 - **TypeScript-first:** strict types exported alongside every function, no `any`
 - **Agent/LLM-ready:** [interactive docs](https://theory-engine.docs.playbykey.com) with copy-paste context prompt below
