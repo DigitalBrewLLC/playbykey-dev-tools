@@ -4,6 +4,8 @@ An MCP server that exposes [@playbykey/theory](https://www.npmjs.com/package/@pl
 
 MCP lets an AI assistant call the theory engine directly as tools instead of reasoning about scales, modes, and key relationships from training data. Answers are computed, not guessed.
 
+See the [playbykey/mcp](https://theory-engine.docs.playbykey.com/mcp/) page for the same setup instructions and full tool reference.
+
 ## Installation
 
 No global install needed - `npx` fetches and runs the package on demand.

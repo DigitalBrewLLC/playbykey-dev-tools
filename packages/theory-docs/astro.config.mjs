@@ -116,7 +116,7 @@ export default defineConfig({
           ],
         },
         {
-          label: 'MCP Server',
+          label: 'playbykey/mcp',
           items: [{ label: 'Setup & Tools', slug: 'mcp' }],
         },
       ],

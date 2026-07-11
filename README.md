@@ -23,11 +23,11 @@ Quickstart and API examples: [packages/theory/README.md](./packages/theory)
 
 ## Why @playbykey/theory
 
+- **Foundation music theory engine:** music theory as code. Modes, keys, intervals, and scale relationships resolved deterministically; one source of truth every app, notation tool, or AI agent can build on.
 - **Zero dependencies:** no transitive baggage; safe for agents, edge runtimes, and tight bundles
-- **TypeScript-first:** strict types exported alongside functions
+- **TypeScript-first:** strict types exported alongside every function, no `any`
 - **Agent-ready:** copy-paste LLM context prompt and [interactive docs](https://theory-engine.docs.playbykey.com)
-- **Sharps-only notation:** predictable API contract (`C#` not `Db`)
-- **Scale types beyond diatonic:** major, chromatic, pentatonic major/minor, blues, harmonic minor
+- **Sharps-only notation:** one canonical spelling per note (`C#`, not `Db`) keeps the `Note` type safe and unambiguous. Flats are fully supported, derive them with `ENHARMONIC_LABELS`.
 
 ---
 
