@@ -14,13 +14,23 @@
     "packages/theory-docs": {
       "release-type": "node",
       "package-name": "theory-docs",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "changelog-sections": [
+        { "type": "feat", "section": "Features" },
+        { "type": "fix", "section": "Bug Fixes" },
+        { "type": "perf", "section": "Performance Improvements" }
+      ]
     },
     "packages/theory-mcp": {
       "release-type": "node",
       "package-name": "@playbykey/theory-mcp",
       "changelog-path": "CHANGELOG.md",
-      "initial-version": "1.0.0"
+      "initial-version": "1.0.0",
+      "changelog-sections": [
+        { "type": "feat", "section": "Features" },
+        { "type": "fix", "section": "Bug Fixes" },
+        { "type": "perf", "section": "Performance Improvements" }
+      ]
     }
   }
 }
