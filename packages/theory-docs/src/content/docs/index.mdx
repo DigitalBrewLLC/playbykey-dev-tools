@@ -28,21 +28,24 @@ import { Aside, Code, Tabs, TabItem } from '@astrojs/starlight/components';
 
 `@playbykey/theory` is a zero-dependency TypeScript music theory engine for computing scale notes, resolving diatonic modes, navigating key relationships, and building note display maps.
 
-The music theory engine powering [PlayByKey](https://playbykey.com). No external API calls, no runtime overhead - drop it into any JavaScript or TypeScript project and start computing immediately.
+The music theory engine powering [PlayByKey](https://playbykey.com).
 
 <Aside type="tip" title="Using this with an AI assistant?">
   <Tabs>
     <TabItem label="MCP tools">
       Add `@playbykey/theory-mcp` to your Claude Desktop config and call the theory engine directly as tools - no copy-paste needed:
 
-      <Code lang="json" code={`{
+```json
+{
   "mcpServers": {
     "theory": {
       "command": "npx",
       "args": ["-y", "@playbykey/theory-mcp"]
     }
   }
-}`} />
+}
+```
+
     </TabItem>
     <TabItem label="Context prompt">
       Paste this into any agent or LLM to give it context about this package:
