@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://theory-engine.docs.playbykey.com/sitemap-index.xml
