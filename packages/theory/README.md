@@ -4,10 +4,11 @@
 
 A zero-dependency TypeScript music theory engine for computing scale notes, resolving diatonic modes, navigating key relationships, and building note display maps.
 
-Built for music apps, education tools, notation UIs, and AI agents.
+Built for music apps, education tools, notation UIs, and AI agents. Powers [PlayByKey](https://playbykey.com), a free interactive music theory learning tool.
 
 - **npm:** [npmjs.com/package/@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)
 - **Documentation:** [theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com)
+- **Live demo:** [playbykey.com](https://playbykey.com)
 
 ---
 
