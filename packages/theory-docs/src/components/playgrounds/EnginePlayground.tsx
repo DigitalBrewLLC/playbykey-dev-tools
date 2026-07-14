@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react';
 import {
+  Accidentals,
   buildNoteMap,
   getCircleOfFifthsOrder,
+  getEnharmonicLabels,
+  getFlats,
   getKeySignatureCount,
   getModalRoot,
   getParentScaleModes,
@@ -10,6 +13,7 @@ import {
   getScaleDegree,
   getModeNotes,
   getSemitoneDistance,
+  getSharps,
   isModeName,
   isNote,
   isNoteInScale,
@@ -18,7 +22,15 @@ import {
   Notes,
   ScaleTypes,
 } from '@playbykey/theory';
-import type { KeyQuality, ModeName, Note, ScaleType } from '@playbykey/theory';
+import type {
+  AccidentalType,
+  KeyQuality,
+  ModeName,
+  Note,
+  NoteDisplayInfo,
+  ScaleType,
+} from '@playbykey/theory';
+import { AccidentalSelect } from '../ui/AccidentalSelect';
 import { FieldSelect } from '../ui/FieldSelect';
 import { KeyQualitySelect } from '../ui/KeyQualitySelect';
 import { ModeSelect } from '../ui/ModeSelect';
@@ -55,11 +67,27 @@ type InputKind =
   | 'stringGuard'
   | 'none';
 
+/**
+ * Shape of a function's result, for the sharp/flat/enharmonic respell toggle:
+ * - 'note': a single Note.
+ * - 'noteArray': a Note[].
+ * - 'noteMapArray': a NoteDisplayInfo[] (respell each entry's `note` field).
+ * - 'parentModesArray': an Array<{ root: Note; mode: ModeName }> (respell each entry's `root` field).
+ * - 'none': result contains no notes; the toggle is hidden.
+ */
+type ResultShape =
+  | 'note'
+  | 'noteArray'
+  | 'noteMapArray'
+  | 'parentModesArray'
+  | 'none';
+
 interface EngineFunctionSpec {
   id: EngineFunctionId;
   signature: string;
   description: string;
   inputKind: InputKind;
+  resultShape: ResultShape;
 }
 
 const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
@@ -68,6 +96,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     signature: 'getModeNotes(root: Note, mode: ModeName): Note[]',
     description: 'Returns all notes in a diatonic mode for the given root.',
     inputKind: 'rootMode',
+    resultShape: 'noteArray',
   },
   {
     id: 'getParentScaleModes',
@@ -75,24 +104,28 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
       'getParentScaleModes(root: Note, mode: ModeName): Array<{ root: Note; mode: ModeName }>',
     description: 'Returns all modes in the parent major scale.',
     inputKind: 'rootMode',
+    resultShape: 'parentModesArray',
   },
   {
     id: 'getRelativeMinorKey',
     signature: 'getRelativeMinorKey(majorKey: Note): Note',
     description: 'Returns the relative minor key for a major key root.',
     inputKind: 'rootOnly',
+    resultShape: 'note',
   },
   {
     id: 'getRelativeMajorKey',
     signature: 'getRelativeMajorKey(minorKey: Note): Note',
     description: 'Returns the relative major key for a minor key root.',
     inputKind: 'rootOnly',
+    resultShape: 'note',
   },
   {
     id: 'getCircleOfFifthsOrder',
     signature: 'getCircleOfFifthsOrder(): readonly Note[]',
     description: 'Returns all 12 keys in circle-of-fifths order.',
     inputKind: 'none',
+    resultShape: 'noteArray',
   },
   {
     id: 'getKeySignatureCount',
@@ -101,12 +134,14 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description:
       'Returns the sharp or flat count for a key signature. Quality defaults to major.',
     inputKind: 'rootQuality',
+    resultShape: 'none',
   },
   {
     id: 'getModalRoot',
     signature: 'getModalRoot(parentKey: Note, mode: ModeName): Note',
     description: 'Returns the modal root for a parent key and mode.',
     inputKind: 'rootMode',
+    resultShape: 'note',
   },
   {
     id: 'getScaleDegree',
@@ -115,6 +150,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description:
       'Returns the 1-based scale degree of a note in a scale, or null if not present.',
     inputKind: 'rootScaleTypeNote',
+    resultShape: 'none',
   },
   {
     id: 'isNoteInScale',
@@ -122,6 +158,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
       'isNoteInScale(root: Note, scaleType: ScaleType, note: Note): boolean',
     description: 'Checks whether a note belongs to a scale.',
     inputKind: 'rootScaleTypeNote',
+    resultShape: 'none',
   },
   {
     id: 'buildNoteMap',
@@ -130,26 +167,65 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description:
       'Returns one NoteDisplayInfo per in-scale note with note, scaleDegree, and semitoneOffset.',
     inputKind: 'rootScaleType',
+    resultShape: 'noteMapArray',
   },
   {
     id: 'getSemitoneDistance',
     signature: 'getSemitoneDistance(from: Note, to: Note): number',
     description: 'Returns the semitone distance between two notes.',
     inputKind: 'twoNotes',
+    resultShape: 'none',
   },
   {
     id: 'isNote',
     signature: 'isNote(value: string): value is Note',
     description: 'Type guard that checks whether a string is a valid Note.',
     inputKind: 'stringGuard',
+    resultShape: 'none',
   },
   {
     id: 'isModeName',
     signature: 'isModeName(value: string): value is ModeName',
     description: 'Type guard that checks whether a string is a valid ModeName.',
     inputKind: 'stringGuard',
+    resultShape: 'none',
   },
 ];
+
+/** Maps an AccidentalType selection to the corresponding respelling function. */
+const respellFunctionFor = (accidental: AccidentalType) => {
+  if (accidental === Accidentals.Flat) return getFlats;
+  if (accidental === Accidentals.Both) return getEnharmonicLabels;
+  return getSharps;
+};
+
+/** Applies the sharp/flat/enharmonic toggle to a computeResult() result, based on its declared shape. */
+const respellResult = (
+  result: unknown,
+  resultShape: ResultShape,
+  accidental: AccidentalType
+): unknown => {
+  if (accidental === Accidentals.Sharp || resultShape === 'none') return result;
+  const respell = respellFunctionFor(accidental);
+  switch (resultShape) {
+    case 'note':
+      return respell([result as Note])[0];
+    case 'noteArray':
+      return respell(result as readonly Note[]);
+    case 'noteMapArray':
+      return (result as NoteDisplayInfo[]).map((entry) => ({
+        ...entry,
+        note: respell([entry.note])[0],
+      }));
+    case 'parentModesArray':
+      return (result as Array<{ root: Note; mode: ModeName }>).map((entry) => ({
+        ...entry,
+        root: respell([entry.root])[0],
+      }));
+    default:
+      return result;
+  }
+};
 
 const containerStyle = {
   display: 'flex',
@@ -251,8 +327,15 @@ const EnginePlayground = () => {
   const [toNote, setToNote] = useState<Note>(Notes.E);
   const [guardInput, setGuardInput] = useState('C');
   const [quality, setQuality] = useState<KeyQuality>(KeyQualities.Major);
+  const [accidental, setAccidental] = useState<AccidentalType>(
+    Accidentals.Sharp
+  );
 
-  const result = useMemo(
+  const selected =
+    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
+  const resultShape: ResultShape = selected?.resultShape ?? 'none';
+
+  const rawResult = useMemo(
     () =>
       computeResult(
         functionId,
@@ -278,8 +361,10 @@ const EnginePlayground = () => {
     ]
   );
 
-  const selected =
-    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
+  const result = useMemo(
+    () => respellResult(rawResult, resultShape, accidental),
+    [rawResult, resultShape, accidental]
+  );
 
   if (selected === undefined) return null;
 
@@ -354,6 +439,10 @@ const EnginePlayground = () => {
               onChange={(event) => setGuardInput(event.target.value)}
             />
           </label>
+        )}
+
+        {resultShape !== 'none' && (
+          <AccidentalSelect value={accidental} onChange={setAccidental} />
         )}
       </div>
 
