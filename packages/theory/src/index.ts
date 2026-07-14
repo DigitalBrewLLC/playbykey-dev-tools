@@ -13,6 +13,8 @@ export type {
   PentatonicType,
   NotationType,
   AccidentalType,
+  KeyQuality,
+  FlatNote,
   ModeInfo,
   NoteDisplayInfo,
 } from './types';
@@ -29,6 +31,8 @@ export {
   MODES,
   ModeInfoById,
   ENHARMONIC_LABELS,
+  KeyQualities,
+  FlatNotes,
 } from './constants';
 
 export {
@@ -46,7 +50,11 @@ export {
   isNote,
   isModeName,
   parseNote,
+  parseNoteToken,
   parseModeName,
+  getSharps,
+  getFlats,
+  getEnharmonicLabels,
 } from './engine';
 
 export type {

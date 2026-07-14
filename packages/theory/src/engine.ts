@@ -6,8 +6,18 @@
  * zero dependencies beyond local types and constants.
  */
 
-import type { Note, ModeName } from './types';
-import { Modes, CHROMATIC_NOTES, MODES, ModeInfoById } from './constants';
+import type { Note, ModeName, KeyQuality, FlatNote } from './types';
+import {
+  Modes,
+  CHROMATIC_NOTES,
+  MODES,
+  ModeInfoById,
+  ENHARMONIC_LABELS,
+  KeyQualities,
+  FlatNotes,
+  FLAT_TO_SHARP,
+  SHARP_TO_FLAT_MAP,
+} from './constants';
 
 const KEY_SIGNATURE_COUNT: Record<
   Note,
@@ -197,12 +207,21 @@ const getCircleOfFifthsOrder = (): readonly Note[] => {
  * Returns the key signature accidental count for a given key.
  * Used by CircleOfFifthsView for labels on the circle.
  *
+ * `quality` defaults to `'major'`. When `'minor'`, resolves the key's
+ * relative major root and returns that root's accidental count.
+ *
  * Example: getKeySignatureCount('G') => { sharps: 1 }
  * Example: getKeySignatureCount('F') => { flats: 1 }
+ * Example: getKeySignatureCount('C#', 'minor') => { sharps: 4 } (relative major is E)
  */
 const getKeySignatureCount = (
-  key: Note
-): { sharps: number } | { flats: number } => KEY_SIGNATURE_COUNT[key];
+  key: Note,
+  quality: KeyQuality = KeyQualities.Major
+): { sharps: number } | { flats: number } => {
+  const signatureKey =
+    quality === KeyQualities.Minor ? getRelativeMajorKey(key) : key;
+  return KEY_SIGNATURE_COUNT[signatureKey];
+};
 
 const normalizeNoteInput = (value: string): Note | null => {
   const normalized = value.toUpperCase();
@@ -214,6 +233,25 @@ const isNote = (value: string): value is Note =>
 
 const isModeName = (value: string): value is ModeName =>
   MODE_NAME_SET.has(value.toLowerCase());
+
+const isFlatNote = (value: string): value is FlatNote =>
+  Object.values(FlatNotes).includes(value as FlatNote);
+
+/**
+ * Normalizes a flat-spelled note token (e.g. "Db", "db", "DB") to its
+ * canonical sharp Note (e.g. "C#"), or null when not recognized. The letter
+ * is uppercased and the accidental is checked case-insensitively for 'b',
+ * handled separately from the letter so uppercasing the whole string never
+ * corrupts the accidental (e.g. "Db" must not become "DB").
+ */
+const normalizeFlatNoteInput = (value: string): Note | null => {
+  if (value.length !== 2) return null;
+  const letter = value.charAt(0).toUpperCase();
+  const accidental = value.charAt(1).toLowerCase();
+  if (accidental !== 'b') return null;
+  const candidate = `${letter}b`;
+  return isFlatNote(candidate) ? FLAT_TO_SHARP[candidate] : null;
+};
 
 /** First token before a space or comma (e.g. "C ionian" -> "C"). */
 const firstToken = (value: string): string => {
@@ -230,7 +268,17 @@ const firstToken = (value: string): string => {
 /** Parse a display key string into a chromatic Note, or null when not recognized. */
 const parseNote = (value: string): Note | null => {
   const token = firstToken(value);
-  return normalizeNoteInput(token);
+  return normalizeNoteInput(token) ?? normalizeFlatNoteInput(token);
+};
+
+/**
+ * Strict, exact-match note parser: accepts a single canonical sharp or flat
+ * note token (no phrase-splitting, unlike parseNote). Returns null for
+ * anything but a bare note.
+ */
+const parseNoteToken = (value: string): Note | null => {
+  const trimmed = value.trim();
+  return normalizeNoteInput(trimmed) ?? normalizeFlatNoteInput(trimmed);
 };
 
 /** Parse a mode slug into a ModeName, or null when not recognized. */
@@ -238,6 +286,33 @@ const parseModeName = (value: string): ModeName | null => {
   const token = firstToken(value).toLowerCase();
   return isModeName(token) ? token : null;
 };
+
+/**
+ * Normalizes notes (which may be flat-spelled) to their canonical sharp
+ * equivalents. Sharp/natural notes pass through unchanged.
+ *
+ * Example: getSharps(['Db', 'C#', 'D']) => ['C#', 'C#', 'D']
+ */
+const getSharps = (notes: readonly (Note | FlatNote)[]): Note[] =>
+  notes.map((note) => FLAT_TO_SHARP[note as FlatNote] ?? (note as Note));
+
+/**
+ * Converts notes to their flat-spelled equivalents. Natural notes are
+ * unaffected.
+ *
+ * Example: getFlats(['C#', 'D']) => ['Db', 'D']
+ */
+const getFlats = (notes: readonly Note[]): string[] =>
+  notes.map((note) => SHARP_TO_FLAT_MAP[note] ?? note);
+
+/**
+ * Returns combined sharp/flat display labels for notes (e.g. "C#" -> "Db/C#").
+ * Natural notes are unaffected.
+ *
+ * Example: getEnharmonicLabels(['C#', 'D']) => ['Db/C#', 'D']
+ */
+const getEnharmonicLabels = (notes: readonly Note[]): string[] =>
+  notes.map((note) => ENHARMONIC_LABELS[note] ?? note);
 
 export {
   elementAt,
@@ -256,5 +331,9 @@ export {
   isNote,
   isModeName,
   parseNote,
+  parseNoteToken,
   parseModeName,
+  getSharps,
+  getFlats,
+  getEnharmonicLabels,
 };
