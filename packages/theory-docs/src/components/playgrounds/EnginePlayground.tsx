@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
   buildNoteMap,
-  getCircleOfFifthsOrder,
-  getKeySignatureCount,
   getModalRoot,
   getParentScaleModes,
   getRelativeMajorKey,
@@ -13,20 +11,17 @@ import {
   isModeName,
   isNote,
   isNoteInScale,
-  KeyQualities,
   Modes,
   Notes,
   ScaleTypes,
 } from '@playbykey/theory';
 import type {
-  KeyQuality,
   ModeName,
   Note,
   NoteDisplayInfo,
   ScaleType,
 } from '@playbykey/theory';
 import { FieldSelect } from '../ui/FieldSelect';
-import { KeyQualitySelect } from '../ui/KeyQualitySelect';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { NoteSpellingResults } from '../ui/NoteSpellingResults';
@@ -39,8 +34,6 @@ type EngineFunctionId =
   | 'getParentScaleModes'
   | 'getRelativeMinorKey'
   | 'getRelativeMajorKey'
-  | 'getCircleOfFifthsOrder'
-  | 'getKeySignatureCount'
   | 'getModalRoot'
   | 'getScaleDegree'
   | 'isNoteInScale'
@@ -53,7 +46,6 @@ type InputKind =
   | 'rootMode'
   | 'rootModeNote'
   | 'rootOnly'
-  | 'rootQuality'
   | 'modeOnly'
   | 'noteOnly'
   | 'twoNotes'
@@ -123,22 +115,6 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description: 'Returns the relative major key for a minor key root.',
     inputKind: 'rootOnly',
     resultShape: ResultShapes.Note,
-  },
-  {
-    id: 'getCircleOfFifthsOrder',
-    signature: 'getCircleOfFifthsOrder(): readonly Note[]',
-    description: 'Returns all 12 keys in circle-of-fifths order.',
-    inputKind: 'none',
-    resultShape: ResultShapes.NoteArray,
-  },
-  {
-    id: 'getKeySignatureCount',
-    signature:
-      'getKeySignatureCount(key: Note, quality?: KeyQuality): { sharps: number } | { flats: number }',
-    description:
-      'Returns the sharp or flat count for a key signature. Quality defaults to major.',
-    inputKind: 'rootQuality',
-    resultShape: ResultShapes.None,
   },
   {
     id: 'getModalRoot',
@@ -271,8 +247,7 @@ const computeResult = (
   targetNote: Note,
   fromNote: Note,
   toNote: Note,
-  guardInput: string,
-  quality: KeyQuality
+  guardInput: string
 ): unknown => {
   switch (functionId) {
     case 'getModeNotes':
@@ -283,10 +258,6 @@ const computeResult = (
       return getRelativeMinorKey(root);
     case 'getRelativeMajorKey':
       return getRelativeMajorKey(root);
-    case 'getCircleOfFifthsOrder':
-      return getCircleOfFifthsOrder();
-    case 'getKeySignatureCount':
-      return getKeySignatureCount(root, quality);
     case 'getModalRoot':
       return getModalRoot(root, mode);
     case 'getScaleDegree':
@@ -316,7 +287,6 @@ const EnginePlayground = () => {
   const [fromNote, setFromNote] = useState<Note>(Notes.C);
   const [toNote, setToNote] = useState<Note>(Notes.E);
   const [guardInput, setGuardInput] = useState('C');
-  const [quality, setQuality] = useState<KeyQuality>(KeyQualities.Major);
 
   const selected =
     ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
@@ -332,8 +302,7 @@ const EnginePlayground = () => {
         targetNote,
         fromNote,
         toNote,
-        guardInput,
-        quality
+        guardInput
       ),
     [
       functionId,
@@ -344,7 +313,6 @@ const EnginePlayground = () => {
       fromNote,
       toNote,
       guardInput,
-      quality,
     ]
   );
 
@@ -378,14 +346,9 @@ const EnginePlayground = () => {
         {(selected.inputKind === 'rootMode' ||
           selected.inputKind === 'rootModeNote' ||
           selected.inputKind === 'rootOnly' ||
-          selected.inputKind === 'rootQuality' ||
           selected.inputKind === 'rootScaleType' ||
           selected.inputKind === 'rootScaleTypeNote') && (
           <NoteSelect value={root} onChange={setRoot} label="Root" />
-        )}
-
-        {selected.inputKind === 'rootQuality' && (
-          <KeyQualitySelect value={quality} onChange={setQuality} />
         )}
 
         {(selected.inputKind === 'rootMode' ||
