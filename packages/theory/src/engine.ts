@@ -234,6 +234,7 @@ const isNote = (value: string): value is Note =>
 const isModeName = (value: string): value is ModeName =>
   MODE_NAME_SET.has(value.toLowerCase());
 
+/** Type guard for the 5 canonical flat-spelled note strings (e.g. "Db"). */
 const isFlatNote = (value: string): value is FlatNote =>
   Object.values(FlatNotes).includes(value as FlatNote);
 
@@ -265,7 +266,14 @@ const firstToken = (value: string): string => {
   return trimmed;
 };
 
-/** Parse a display key string into a chromatic Note, or null when not recognized. */
+/**
+ * Parse a display key string into a chromatic Note, or null when not
+ * recognized. Accepts flat-spelled note names (e.g. "Db") in addition to
+ * sharps, normalizing them to their canonical sharp equivalent.
+ *
+ * Example: parseNote('C ionian') => 'C'
+ * Example: parseNote('Db aeolian') => 'C#'
+ */
 const parseNote = (value: string): Note | null => {
   const token = firstToken(value);
   return normalizeNoteInput(token) ?? normalizeFlatNoteInput(token);
@@ -274,7 +282,11 @@ const parseNote = (value: string): Note | null => {
 /**
  * Strict, exact-match note parser: accepts a single canonical sharp or flat
  * note token (no phrase-splitting, unlike parseNote). Returns null for
- * anything but a bare note.
+ * anything but a bare note - use this for validating a single argument
+ * rather than extracting a note from a larger phrase.
+ *
+ * Example: parseNoteToken('Db') => 'C#'
+ * Example: parseNoteToken('C ionian') => null (parseNote would return 'C')
  */
 const parseNoteToken = (value: string): Note | null => {
   const trimmed = value.trim();
