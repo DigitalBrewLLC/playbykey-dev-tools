@@ -202,7 +202,8 @@ const TOOLS = [
   },
   {
     name: 'get_key_signature',
-    description: 'Returns the sharp or flat count for a given key.',
+    description:
+      'Returns the sharp or flat count for a given key, treated as a major-key tonic (minor-key signatures are not exposed by this tool).',
     inputSchema: {
       type: 'object',
       properties: {
@@ -354,14 +355,15 @@ const TOOLS = [
   {
     name: 'get_sharps',
     description:
-      'Normalizes notes (which may be flat-spelled) to their canonical sharp equivalents.',
+      'Respells a list of notes to canonical sharp spelling, e.g. ["Db", "C#", "D"] -> ["C#", "C#", "D"]. Use this to normalize flat-spelled notes before passing them to other tools, which all expect sharp-spelled input.',
     inputSchema: {
       type: 'object',
       properties: {
         notes: {
           type: 'array',
           items: { type: 'string', enum: [...NOTE_ENUM] },
-          description: 'Notes to normalize to sharps',
+          description:
+            'Notes to normalize to sharps (sharp or flat input accepted)',
         },
       },
       required: ['notes'],
@@ -370,14 +372,14 @@ const TOOLS = [
   {
     name: 'get_flats',
     description:
-      'Converts notes to their flat-spelled equivalents. Natural notes are unaffected.',
+      'Respells a list of sharp-spelled notes as flats, e.g. ["C#", "D"] -> ["Db", "D"]. Natural notes are unaffected. Input must already be sharp-spelled (as returned by get_scale_notes, get_mode_notes, etc.) - use get_sharps first if you have flat-spelled notes.',
     inputSchema: {
       type: 'object',
       properties: {
         notes: {
           type: 'array',
           items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
-          description: 'Notes to convert to flats',
+          description: 'Sharp-spelled notes to convert to flats',
         },
       },
       required: ['notes'],
@@ -386,14 +388,14 @@ const TOOLS = [
   {
     name: 'get_enharmonic_labels',
     description:
-      'Returns combined sharp/flat display labels for notes (e.g. "C#" -> "Db/C#"). Natural notes are unaffected.',
+      'Returns combined sharp/flat display labels for a list of sharp-spelled notes, e.g. ["C#", "D"] -> ["Db/C#", "D"]. Natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if you have flat-spelled notes.',
     inputSchema: {
       type: 'object',
       properties: {
         notes: {
           type: 'array',
           items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
-          description: 'Notes to label',
+          description: 'Sharp-spelled notes to label',
         },
       },
       required: ['notes'],
