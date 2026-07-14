@@ -25,8 +25,13 @@ import {
   handleResolveInterval,
   handleGetSemitoneDistance,
 } from './tools/intervals.js';
+import {
+  handleGetSharps,
+  handleGetFlats,
+  handleGetEnharmonicLabels,
+} from './tools/spelling.js';
 
-const NOTE_ENUM = [
+const SHARP_NOTE_ENUM = [
   'C',
   'C#',
   'D',
@@ -40,6 +45,8 @@ const NOTE_ENUM = [
   'A#',
   'B',
 ] as const;
+
+const NOTE_ENUM = [...SHARP_NOTE_ENUM, 'Db', 'Eb', 'Gb', 'Ab', 'Bb'] as const;
 
 const MODE_ENUM = [
   'ionian',
@@ -344,6 +351,54 @@ const TOOLS = [
       required: ['root', 'scale_type', 'note'],
     },
   },
+  {
+    name: 'get_sharps',
+    description:
+      'Normalizes notes (which may be flat-spelled) to their canonical sharp equivalents.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...NOTE_ENUM] },
+          description: 'Notes to normalize to sharps',
+        },
+      },
+      required: ['notes'],
+    },
+  },
+  {
+    name: 'get_flats',
+    description:
+      'Converts notes to their flat-spelled equivalents. Natural notes are unaffected.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+          description: 'Notes to convert to flats',
+        },
+      },
+      required: ['notes'],
+    },
+  },
+  {
+    name: 'get_enharmonic_labels',
+    description:
+      'Returns combined sharp/flat display labels for notes (e.g. "C#" -> "Db/C#"). Natural notes are unaffected.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+          description: 'Notes to label',
+        },
+      },
+      required: ['notes'],
+    },
+  },
 ];
 
 export const server = new Server(
@@ -388,6 +443,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleGetScaleDegree(safeArgs);
     case 'is_note_in_scale':
       return handleIsNoteInScale(safeArgs);
+    case 'get_sharps':
+      return handleGetSharps(safeArgs);
+    case 'get_flats':
+      return handleGetFlats(safeArgs);
+    case 'get_enharmonic_labels':
+      return handleGetEnharmonicLabels(safeArgs);
     default:
       return {
         content: [{ type: 'text' as const, text: `Unknown tool: "${name}"` }],
