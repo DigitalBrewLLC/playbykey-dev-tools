@@ -13,12 +13,14 @@ import {
   isModeName,
   isNote,
   isNoteInScale,
+  KeyQualities,
   Modes,
   Notes,
   ScaleTypes,
 } from '@playbykey/theory';
-import type { ModeName, Note, ScaleType } from '@playbykey/theory';
+import type { KeyQuality, ModeName, Note, ScaleType } from '@playbykey/theory';
 import { FieldSelect } from '../ui/FieldSelect';
+import { KeyQualitySelect } from '../ui/KeyQualitySelect';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ResultPanel } from '../ui/ResultPanel';
@@ -44,6 +46,7 @@ type InputKind =
   | 'rootMode'
   | 'rootModeNote'
   | 'rootOnly'
+  | 'rootQuality'
   | 'modeOnly'
   | 'noteOnly'
   | 'twoNotes'
@@ -94,9 +97,10 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
   {
     id: 'getKeySignatureCount',
     signature:
-      'getKeySignatureCount(key: Note): { sharps: number } | { flats: number }',
-    description: 'Returns the sharp or flat count for a key signature.',
-    inputKind: 'rootOnly',
+      'getKeySignatureCount(key: Note, quality?: KeyQuality): { sharps: number } | { flats: number }',
+    description:
+      'Returns the sharp or flat count for a key signature. Quality defaults to major.',
+    inputKind: 'rootQuality',
   },
   {
     id: 'getModalRoot',
@@ -201,7 +205,8 @@ const computeResult = (
   targetNote: Note,
   fromNote: Note,
   toNote: Note,
-  guardInput: string
+  guardInput: string,
+  quality: KeyQuality
 ): unknown => {
   switch (functionId) {
     case 'getModeNotes':
@@ -215,7 +220,7 @@ const computeResult = (
     case 'getCircleOfFifthsOrder':
       return getCircleOfFifthsOrder();
     case 'getKeySignatureCount':
-      return getKeySignatureCount(root);
+      return getKeySignatureCount(root, quality);
     case 'getModalRoot':
       return getModalRoot(root, mode);
     case 'getScaleDegree':
@@ -245,6 +250,7 @@ const EnginePlayground = () => {
   const [fromNote, setFromNote] = useState<Note>(Notes.C);
   const [toNote, setToNote] = useState<Note>(Notes.E);
   const [guardInput, setGuardInput] = useState('C');
+  const [quality, setQuality] = useState<KeyQuality>(KeyQualities.Major);
 
   const result = useMemo(
     () =>
@@ -256,7 +262,8 @@ const EnginePlayground = () => {
         targetNote,
         fromNote,
         toNote,
-        guardInput
+        guardInput,
+        quality
       ),
     [
       functionId,
@@ -267,6 +274,7 @@ const EnginePlayground = () => {
       fromNote,
       toNote,
       guardInput,
+      quality,
     ]
   );
 
@@ -298,9 +306,14 @@ const EnginePlayground = () => {
         {(selected.inputKind === 'rootMode' ||
           selected.inputKind === 'rootModeNote' ||
           selected.inputKind === 'rootOnly' ||
+          selected.inputKind === 'rootQuality' ||
           selected.inputKind === 'rootScaleType' ||
           selected.inputKind === 'rootScaleTypeNote') && (
           <NoteSelect value={root} onChange={setRoot} label="Root" />
+        )}
+
+        {selected.inputKind === 'rootQuality' && (
+          <KeyQualitySelect value={quality} onChange={setQuality} />
         )}
 
         {(selected.inputKind === 'rootMode' ||
