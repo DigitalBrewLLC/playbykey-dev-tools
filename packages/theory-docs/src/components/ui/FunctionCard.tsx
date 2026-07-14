@@ -6,6 +6,8 @@ interface FunctionCardProps {
   description: string;
   children?: React.ReactNode;
   result: unknown;
+  /** Extra result panels rendered after the main Result panel (e.g. alternate note spellings). */
+  additionalResults?: React.ReactNode;
 }
 
 const cardStyle = {
@@ -56,6 +58,7 @@ const FunctionCard = ({
   description,
   children,
   result,
+  additionalResults,
 }: FunctionCardProps) => {
   return (
     <section style={cardStyle}>
@@ -66,6 +69,7 @@ const FunctionCard = ({
       <p style={descriptionStyle}>{description}</p>
       {children && <div style={controlsStyle}>{children}</div>}
       <ResultPanel label="Result" value={result} />
+      {additionalResults}
     </section>
   );
 };

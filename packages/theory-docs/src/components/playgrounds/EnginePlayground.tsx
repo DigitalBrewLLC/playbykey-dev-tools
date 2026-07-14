@@ -1,10 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
-  Accidentals,
   buildNoteMap,
   getCircleOfFifthsOrder,
-  getEnharmonicLabels,
-  getFlats,
   getKeySignatureCount,
   getModalRoot,
   getParentScaleModes,
@@ -13,7 +10,6 @@ import {
   getScaleDegree,
   getModeNotes,
   getSemitoneDistance,
-  getSharps,
   isModeName,
   isNote,
   isNoteInScale,
@@ -23,18 +19,17 @@ import {
   ScaleTypes,
 } from '@playbykey/theory';
 import type {
-  AccidentalType,
   KeyQuality,
   ModeName,
   Note,
   NoteDisplayInfo,
   ScaleType,
 } from '@playbykey/theory';
-import { AccidentalSelect } from '../ui/AccidentalSelect';
 import { FieldSelect } from '../ui/FieldSelect';
 import { KeyQualitySelect } from '../ui/KeyQualitySelect';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
+import { NoteSpellingResults } from '../ui/NoteSpellingResults';
 import { ResultPanel } from '../ui/ResultPanel';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
 import { controlsRowStyle } from './playgroundStyles';
@@ -201,39 +196,24 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
   },
 ];
 
-/** Maps an AccidentalType selection to the corresponding respelling function. */
-const respellFunctionFor = (accidental: AccidentalType) => {
-  if (accidental === Accidentals.Flat) return getFlats;
-  if (accidental === Accidentals.Both) return getEnharmonicLabels;
-  return getSharps;
-};
-
-/** Applies the sharp/flat/enharmonic toggle to a computeResult() result, based on its declared shape. */
-const respellResult = (
+/** Extracts the bare notes from a computeResult() result, based on its declared shape. */
+const extractNotes = (
   result: unknown,
-  resultShape: ResultShape,
-  accidental: AccidentalType
-): unknown => {
-  if (accidental === Accidentals.Sharp || resultShape === ResultShapes.None)
-    return result;
-  const respell = respellFunctionFor(accidental);
+  resultShape: ResultShape
+): readonly Note[] => {
   switch (resultShape) {
     case ResultShapes.Note:
-      return respell([result as Note])[0];
+      return [result as Note];
     case ResultShapes.NoteArray:
-      return respell(result as readonly Note[]);
+      return result as readonly Note[];
     case ResultShapes.NoteMapArray:
-      return (result as NoteDisplayInfo[]).map((entry) => ({
-        ...entry,
-        note: respell([entry.note])[0],
-      }));
+      return (result as NoteDisplayInfo[]).map((entry) => entry.note);
     case ResultShapes.ParentModesArray:
-      return (result as Array<{ root: Note; mode: ModeName }>).map((entry) => ({
-        ...entry,
-        root: respell([entry.root])[0],
-      }));
+      return (result as Array<{ root: Note; mode: ModeName }>).map(
+        (entry) => entry.root
+      );
     default:
-      return result;
+      return [];
   }
 };
 
@@ -337,15 +317,12 @@ const EnginePlayground = () => {
   const [toNote, setToNote] = useState<Note>(Notes.E);
   const [guardInput, setGuardInput] = useState('C');
   const [quality, setQuality] = useState<KeyQuality>(KeyQualities.Major);
-  const [accidental, setAccidental] = useState<AccidentalType>(
-    Accidentals.Sharp
-  );
 
   const selected =
     ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
   const resultShape: ResultShape = selected?.resultShape ?? ResultShapes.None;
 
-  const rawResult = useMemo(
+  const result = useMemo(
     () =>
       computeResult(
         functionId,
@@ -371,9 +348,9 @@ const EnginePlayground = () => {
     ]
   );
 
-  const result = useMemo(
-    () => respellResult(rawResult, resultShape, accidental),
-    [rawResult, resultShape, accidental]
+  const spellingNotes = useMemo(
+    () => extractNotes(result, resultShape),
+    [result, resultShape]
   );
 
   if (selected === undefined) return null;
@@ -450,13 +427,12 @@ const EnginePlayground = () => {
             />
           </label>
         )}
-
-        {resultShape !== 'none' && (
-          <AccidentalSelect value={accidental} onChange={setAccidental} />
-        )}
       </div>
 
       <ResultPanel label="Result" value={result} />
+      {resultShape !== ResultShapes.None && (
+        <NoteSpellingResults notes={spellingNotes} />
+      )}
     </div>
   );
 };

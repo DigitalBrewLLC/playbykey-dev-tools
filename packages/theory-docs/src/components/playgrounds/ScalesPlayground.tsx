@@ -15,6 +15,7 @@ import type { Note, PentatonicType, ScaleType } from '@playbykey/theory';
 import { FieldSelect } from '../ui/FieldSelect';
 import { FunctionCard } from '../ui/FunctionCard';
 import { NoteSelect } from '../ui/NoteSelect';
+import { NoteSpellingResults } from '../ui/NoteSpellingResults';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
 
 const containerStyle = {
@@ -114,6 +115,7 @@ const ScalesPlayground = () => {
         signature="getScaleNotes(root: Note, scaleType: ScaleType): Note[]"
         description="Returns the notes for any scale type - major, blues, pentatonic, harmonic minor, and chromatic."
         result={derivedNotes}
+        additionalResults={<NoteSpellingResults notes={derivedNotes} />}
       >
         <NoteSelect
           value={scaleNotesRoot}
