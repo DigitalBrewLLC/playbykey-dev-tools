@@ -82,6 +82,15 @@ type ResultShape =
   | 'parentModesArray'
   | 'none';
 
+/** Named constants for each ResultShape value. */
+const ResultShapes = {
+  Note: 'note',
+  NoteArray: 'noteArray',
+  NoteMapArray: 'noteMapArray',
+  ParentModesArray: 'parentModesArray',
+  None: 'none',
+} as const satisfies Record<string, ResultShape>;
+
 interface EngineFunctionSpec {
   id: EngineFunctionId;
   signature: string;
@@ -96,7 +105,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     signature: 'getModeNotes(root: Note, mode: ModeName): Note[]',
     description: 'Returns all notes in a diatonic mode for the given root.',
     inputKind: 'rootMode',
-    resultShape: 'noteArray',
+    resultShape: ResultShapes.NoteArray,
   },
   {
     id: 'getParentScaleModes',
@@ -104,28 +113,28 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
       'getParentScaleModes(root: Note, mode: ModeName): Array<{ root: Note; mode: ModeName }>',
     description: 'Returns all modes in the parent major scale.',
     inputKind: 'rootMode',
-    resultShape: 'parentModesArray',
+    resultShape: ResultShapes.ParentModesArray,
   },
   {
     id: 'getRelativeMinorKey',
     signature: 'getRelativeMinorKey(majorKey: Note): Note',
     description: 'Returns the relative minor key for a major key root.',
     inputKind: 'rootOnly',
-    resultShape: 'note',
+    resultShape: ResultShapes.Note,
   },
   {
     id: 'getRelativeMajorKey',
     signature: 'getRelativeMajorKey(minorKey: Note): Note',
     description: 'Returns the relative major key for a minor key root.',
     inputKind: 'rootOnly',
-    resultShape: 'note',
+    resultShape: ResultShapes.Note,
   },
   {
     id: 'getCircleOfFifthsOrder',
     signature: 'getCircleOfFifthsOrder(): readonly Note[]',
     description: 'Returns all 12 keys in circle-of-fifths order.',
     inputKind: 'none',
-    resultShape: 'noteArray',
+    resultShape: ResultShapes.NoteArray,
   },
   {
     id: 'getKeySignatureCount',
@@ -134,14 +143,14 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description:
       'Returns the sharp or flat count for a key signature. Quality defaults to major.',
     inputKind: 'rootQuality',
-    resultShape: 'none',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'getModalRoot',
     signature: 'getModalRoot(parentKey: Note, mode: ModeName): Note',
     description: 'Returns the modal root for a parent key and mode.',
     inputKind: 'rootMode',
-    resultShape: 'note',
+    resultShape: ResultShapes.Note,
   },
   {
     id: 'getScaleDegree',
@@ -150,7 +159,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description:
       'Returns the 1-based scale degree of a note in a scale, or null if not present.',
     inputKind: 'rootScaleTypeNote',
-    resultShape: 'none',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'isNoteInScale',
@@ -158,7 +167,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
       'isNoteInScale(root: Note, scaleType: ScaleType, note: Note): boolean',
     description: 'Checks whether a note belongs to a scale.',
     inputKind: 'rootScaleTypeNote',
-    resultShape: 'none',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'buildNoteMap',
@@ -167,28 +176,28 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description:
       'Returns one NoteDisplayInfo per in-scale note with note, scaleDegree, and semitoneOffset.',
     inputKind: 'rootScaleType',
-    resultShape: 'noteMapArray',
+    resultShape: ResultShapes.NoteMapArray,
   },
   {
     id: 'getSemitoneDistance',
     signature: 'getSemitoneDistance(from: Note, to: Note): number',
     description: 'Returns the semitone distance between two notes.',
     inputKind: 'twoNotes',
-    resultShape: 'none',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'isNote',
     signature: 'isNote(value: string): value is Note',
     description: 'Type guard that checks whether a string is a valid Note.',
     inputKind: 'stringGuard',
-    resultShape: 'none',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'isModeName',
     signature: 'isModeName(value: string): value is ModeName',
     description: 'Type guard that checks whether a string is a valid ModeName.',
     inputKind: 'stringGuard',
-    resultShape: 'none',
+    resultShape: ResultShapes.None,
   },
 ];
 
@@ -205,19 +214,20 @@ const respellResult = (
   resultShape: ResultShape,
   accidental: AccidentalType
 ): unknown => {
-  if (accidental === Accidentals.Sharp || resultShape === 'none') return result;
+  if (accidental === Accidentals.Sharp || resultShape === ResultShapes.None)
+    return result;
   const respell = respellFunctionFor(accidental);
   switch (resultShape) {
-    case 'note':
+    case ResultShapes.Note:
       return respell([result as Note])[0];
-    case 'noteArray':
+    case ResultShapes.NoteArray:
       return respell(result as readonly Note[]);
-    case 'noteMapArray':
+    case ResultShapes.NoteMapArray:
       return (result as NoteDisplayInfo[]).map((entry) => ({
         ...entry,
         note: respell([entry.note])[0],
       }));
-    case 'parentModesArray':
+    case ResultShapes.ParentModesArray:
       return (result as Array<{ root: Note; mode: ModeName }>).map((entry) => ({
         ...entry,
         root: respell([entry.root])[0],
@@ -333,7 +343,7 @@ const EnginePlayground = () => {
 
   const selected =
     ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
-  const resultShape: ResultShape = selected?.resultShape ?? 'none';
+  const resultShape: ResultShape = selected?.resultShape ?? ResultShapes.None;
 
   const rawResult = useMemo(
     () =>
