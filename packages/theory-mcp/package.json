@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
-    "@playbykey/theory": "^1.0.1"
+    "@playbykey/theory": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
