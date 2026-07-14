@@ -64,6 +64,29 @@ const noteMap = buildNoteMap('C', 'major');
 // [{ note: 'C', scaleDegree: 1, semitoneOffset: 0 }, { note: 'D', scaleDegree: 2, semitoneOffset: 2 }, ...]
 ```
 
+**Note spelling**
+
+```typescript
+import {
+  getModeNotes,
+  getFlats,
+  getEnharmonicLabels,
+  getSharps,
+} from '@playbykey/theory';
+
+const notes = getModeNotes('C#', 'aeolian');
+// ['C#', 'D#', 'E', 'F#', 'G#', 'A', 'B'] - sharp-spelled by default
+
+const flats = getFlats(notes);
+// ['Db', 'Eb', 'E', 'Gb', 'Ab', 'A', 'B']
+
+const labels = getEnharmonicLabels(notes);
+// ['Db/C#', 'Eb/D#', 'E', 'Gb/F#', 'Ab/G#', 'A', 'B']
+
+const backToSharps = getSharps(['Db', 'Eb', 'Gb']);
+// ['C#', 'D#', 'F#'] - flats normalize back to their canonical sharp spelling
+```
+
 ## What's included
 
 - **Keys & Modes:** `getModeNotes`, `getModalRoot`, `getParentScaleModes`

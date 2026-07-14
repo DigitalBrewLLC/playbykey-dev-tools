@@ -85,6 +85,26 @@ const parent = parentModes.find((m) => m.mode === 'ionian');
 console.log(parent?.root); // 'C'
 ```
 
+```typescript
+import {
+  getModeNotes,
+  getFlats,
+  getEnharmonicLabels,
+  getSharps,
+} from '@playbykey/theory';
+
+// Sharp-spelled by default
+const notes = getModeNotes('C#', 'aeolian');
+console.log(notes); // ['C#', 'D#', 'E', 'F#', 'G#', 'A', 'B']
+
+// Respell as flats or combined enharmonic labels
+console.log(getFlats(notes)); // ['Db', 'Eb', 'E', 'Gb', 'Ab', 'A', 'B']
+console.log(getEnharmonicLabels(notes)); // ['Db/C#', 'Eb/D#', 'E', 'Gb/F#', 'Ab/G#', 'A', 'B']
+
+// getSharps normalizes flat-spelled notes back to canonical sharps
+console.log(getSharps(['Db', 'Eb', 'Gb'])); // ['C#', 'D#', 'F#']
+```
+
 ## What's in the package
 
 | Category     | What it covers                                         | Page                            |
