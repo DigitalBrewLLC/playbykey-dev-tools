@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
   buildNoteMap,
-  getCircleOfFifthsOrder,
-  getKeySignatureCount,
   getModalRoot,
   getParentScaleModes,
   getRelativeMajorKey,
@@ -17,10 +15,16 @@ import {
   Notes,
   ScaleTypes,
 } from '@playbykey/theory';
-import type { ModeName, Note, ScaleType } from '@playbykey/theory';
+import type {
+  ModeName,
+  Note,
+  NoteDisplayInfo,
+  ScaleType,
+} from '@playbykey/theory';
 import { FieldSelect } from '../ui/FieldSelect';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
+import { NoteSpellingResults } from '../ui/NoteSpellingResults';
 import { ResultPanel } from '../ui/ResultPanel';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
 import { controlsRowStyle } from './playgroundStyles';
@@ -30,8 +34,6 @@ type EngineFunctionId =
   | 'getParentScaleModes'
   | 'getRelativeMinorKey'
   | 'getRelativeMajorKey'
-  | 'getCircleOfFifthsOrder'
-  | 'getKeySignatureCount'
   | 'getModalRoot'
   | 'getScaleDegree'
   | 'isNoteInScale'
@@ -52,11 +54,36 @@ type InputKind =
   | 'stringGuard'
   | 'none';
 
+/**
+ * Shape of a function's result, for the sharp/flat/enharmonic respell toggle:
+ * - 'note': a single Note.
+ * - 'noteArray': a Note[].
+ * - 'noteMapArray': a NoteDisplayInfo[] (respell each entry's `note` field).
+ * - 'parentModesArray': an Array<{ root: Note; mode: ModeName }> (respell each entry's `root` field).
+ * - 'none': result contains no notes; the toggle is hidden.
+ */
+type ResultShape =
+  | 'note'
+  | 'noteArray'
+  | 'noteMapArray'
+  | 'parentModesArray'
+  | 'none';
+
+/** Named constants for each ResultShape value. */
+const ResultShapes = {
+  Note: 'note',
+  NoteArray: 'noteArray',
+  NoteMapArray: 'noteMapArray',
+  ParentModesArray: 'parentModesArray',
+  None: 'none',
+} as const satisfies Record<string, ResultShape>;
+
 interface EngineFunctionSpec {
   id: EngineFunctionId;
   signature: string;
   description: string;
   inputKind: InputKind;
+  resultShape: ResultShape;
 }
 
 const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
@@ -65,6 +92,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     signature: 'getModeNotes(root: Note, mode: ModeName): Note[]',
     description: 'Returns all notes in a diatonic mode for the given root.',
     inputKind: 'rootMode',
+    resultShape: ResultShapes.NoteArray,
   },
   {
     id: 'getParentScaleModes',
@@ -72,37 +100,28 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
       'getParentScaleModes(root: Note, mode: ModeName): Array<{ root: Note; mode: ModeName }>',
     description: 'Returns all modes in the parent major scale.',
     inputKind: 'rootMode',
+    resultShape: ResultShapes.ParentModesArray,
   },
   {
     id: 'getRelativeMinorKey',
     signature: 'getRelativeMinorKey(majorKey: Note): Note',
     description: 'Returns the relative minor key for a major key root.',
     inputKind: 'rootOnly',
+    resultShape: ResultShapes.Note,
   },
   {
     id: 'getRelativeMajorKey',
     signature: 'getRelativeMajorKey(minorKey: Note): Note',
     description: 'Returns the relative major key for a minor key root.',
     inputKind: 'rootOnly',
-  },
-  {
-    id: 'getCircleOfFifthsOrder',
-    signature: 'getCircleOfFifthsOrder(): readonly Note[]',
-    description: 'Returns all 12 keys in circle-of-fifths order.',
-    inputKind: 'none',
-  },
-  {
-    id: 'getKeySignatureCount',
-    signature:
-      'getKeySignatureCount(key: Note): { sharps: number } | { flats: number }',
-    description: 'Returns the sharp or flat count for a key signature.',
-    inputKind: 'rootOnly',
+    resultShape: ResultShapes.Note,
   },
   {
     id: 'getModalRoot',
     signature: 'getModalRoot(parentKey: Note, mode: ModeName): Note',
     description: 'Returns the modal root for a parent key and mode.',
     inputKind: 'rootMode',
+    resultShape: ResultShapes.Note,
   },
   {
     id: 'getScaleDegree',
@@ -111,6 +130,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description:
       'Returns the 1-based scale degree of a note in a scale, or null if not present.',
     inputKind: 'rootScaleTypeNote',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'isNoteInScale',
@@ -118,6 +138,7 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
       'isNoteInScale(root: Note, scaleType: ScaleType, note: Note): boolean',
     description: 'Checks whether a note belongs to a scale.',
     inputKind: 'rootScaleTypeNote',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'buildNoteMap',
@@ -126,26 +147,51 @@ const ENGINE_FUNCTIONS: EngineFunctionSpec[] = [
     description:
       'Returns one NoteDisplayInfo per in-scale note with note, scaleDegree, and semitoneOffset.',
     inputKind: 'rootScaleType',
+    resultShape: ResultShapes.NoteMapArray,
   },
   {
     id: 'getSemitoneDistance',
     signature: 'getSemitoneDistance(from: Note, to: Note): number',
     description: 'Returns the semitone distance between two notes.',
     inputKind: 'twoNotes',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'isNote',
     signature: 'isNote(value: string): value is Note',
     description: 'Type guard that checks whether a string is a valid Note.',
     inputKind: 'stringGuard',
+    resultShape: ResultShapes.None,
   },
   {
     id: 'isModeName',
     signature: 'isModeName(value: string): value is ModeName',
     description: 'Type guard that checks whether a string is a valid ModeName.',
     inputKind: 'stringGuard',
+    resultShape: ResultShapes.None,
   },
 ];
+
+/** Extracts the bare notes from a computeResult() result, based on its declared shape. */
+const extractNotes = (
+  result: unknown,
+  resultShape: ResultShape
+): readonly Note[] => {
+  switch (resultShape) {
+    case ResultShapes.Note:
+      return [result as Note];
+    case ResultShapes.NoteArray:
+      return result as readonly Note[];
+    case ResultShapes.NoteMapArray:
+      return (result as NoteDisplayInfo[]).map((entry) => entry.note);
+    case ResultShapes.ParentModesArray:
+      return (result as Array<{ root: Note; mode: ModeName }>).map(
+        (entry) => entry.root
+      );
+    default:
+      return [];
+  }
+};
 
 const containerStyle = {
   display: 'flex',
@@ -212,10 +258,6 @@ const computeResult = (
       return getRelativeMinorKey(root);
     case 'getRelativeMajorKey':
       return getRelativeMajorKey(root);
-    case 'getCircleOfFifthsOrder':
-      return getCircleOfFifthsOrder();
-    case 'getKeySignatureCount':
-      return getKeySignatureCount(root);
     case 'getModalRoot':
       return getModalRoot(root, mode);
     case 'getScaleDegree':
@@ -246,6 +288,10 @@ const EnginePlayground = () => {
   const [toNote, setToNote] = useState<Note>(Notes.E);
   const [guardInput, setGuardInput] = useState('C');
 
+  const selected =
+    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
+  const resultShape: ResultShape = selected?.resultShape ?? ResultShapes.None;
+
   const result = useMemo(
     () =>
       computeResult(
@@ -270,8 +316,10 @@ const EnginePlayground = () => {
     ]
   );
 
-  const selected =
-    ENGINE_FUNCTIONS.find((fn) => fn.id === functionId) ?? ENGINE_FUNCTIONS[0];
+  const spellingNotes = useMemo(
+    () => extractNotes(result, resultShape),
+    [result, resultShape]
+  );
 
   if (selected === undefined) return null;
 
@@ -345,6 +393,9 @@ const EnginePlayground = () => {
       </div>
 
       <ResultPanel label="Result" value={result} />
+      {resultShape !== ResultShapes.None && (
+        <NoteSpellingResults notes={spellingNotes} />
+      )}
     </div>
   );
 };

@@ -42,7 +42,7 @@ The music theory engine powering [PlayByKey](https://playbykey.com), a free inte
     <TabItem label="Package context">
       Paste this into any agent or LLM to give it context about this package:
 
-      <Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only Note type for type safety (C# not Db), flats fully supported via ENHARMONIC_LABELS." />
+      <Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation with flat-name input and output support." />
     </TabItem>
   </Tabs>
 </Aside>
@@ -65,7 +65,7 @@ The music theory engine powering [PlayByKey](https://playbykey.com), a free inte
   <TabItem label="agent">
     <Code
       lang="text"
-      code="Install @playbykey/theory from npm and add it to my project. Docs: https://theory-engine.docs.playbykey.com. Functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only Note type for type safety (C# not Db), flats fully supported via ENHARMONIC_LABELS. Or use @playbykey/theory-mcp for MCP tool calling."
+      code="Install @playbykey/theory from npm and add it to my project. Docs: https://theory-engine.docs.playbykey.com. Functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only notation with flat-name input and output support. Or use @playbykey/theory-mcp for MCP tool calling."
     />
   </TabItem>
 </Tabs>
@@ -83,6 +83,26 @@ console.log(notes); // ['D', 'E', 'F', 'G', 'A', 'B', 'C']
 const parentModes = getParentScaleModes('D', 'dorian');
 const parent = parentModes.find((m) => m.mode === 'ionian');
 console.log(parent?.root); // 'C'
+```
+
+```typescript
+import {
+  getModeNotes,
+  getFlats,
+  getEnharmonicLabels,
+  getSharps,
+} from '@playbykey/theory';
+
+// Sharp-spelled by default
+const notes = getModeNotes('C#', 'aeolian');
+console.log(notes); // ['C#', 'D#', 'E', 'F#', 'G#', 'A', 'B']
+
+// Respell as flats or combined enharmonic labels
+console.log(getFlats(notes)); // ['Db', 'Eb', 'E', 'Gb', 'Ab', 'A', 'B']
+console.log(getEnharmonicLabels(notes)); // ['Db/C#', 'Eb/D#', 'E', 'Gb/F#', 'Ab/G#', 'A', 'B']
+
+// getSharps normalizes flat-spelled notes back to canonical sharps
+console.log(getSharps(['Db', 'Eb', 'Gb'])); // ['C#', 'D#', 'F#']
 ```
 
 ## What's in the package
@@ -104,4 +124,7 @@ import type { Note, ModeName } from '@playbykey/theory';
 
 ## Note notation
 
-The package represents notes with one canonical sharp spelling (`C#`, not `Db`) to keep the `Note` type safe and unambiguous. Flats are fully supported: derive them with `ENHARMONIC_LABELS`.
+The package represents notes with one canonical sharp spelling (`C#`, not `Db`) to keep the `Note` type safe and unambiguous. Flats are fully supported:
+
+- **Input:** `parseNote`/`parseNoteToken` accept flat-spelled note names (`Db`, `Eb`, `Gb`, `Ab`, `Bb`), normalized to the canonical sharp spelling.
+- **Output:** `getFlats`/`getEnharmonicLabels` respell computed output as flats or combined enharmonic labels.

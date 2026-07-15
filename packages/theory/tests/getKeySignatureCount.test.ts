@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getKeySignatureCount } from '../src';
+import { getKeySignatureCount, KeyQualities } from '../src';
 import type { Note } from '../src';
 
 // Keys are ordered around the circle of fifths.
@@ -43,6 +43,30 @@ describe('getKeySignatureCount', () => {
     const flatKeys: Note[] = ['F', 'A#', 'D#', 'G#', 'C#'];
     flatKeys.forEach((key, i) => {
       expect(getKeySignatureCount(key)).toEqual({ flats: i + 1 });
+    });
+  });
+
+  describe('quality parameter', () => {
+    it('defaults to major and matches explicit major', () => {
+      expect(getKeySignatureCount('C#')).toEqual({ flats: 5 });
+      expect(getKeySignatureCount('C#', KeyQualities.Major)).toEqual({
+        flats: 5,
+      });
+    });
+
+    it('resolves minor keys via their relative major', () => {
+      expect(getKeySignatureCount('A', KeyQualities.Minor)).toEqual({
+        sharps: 0,
+      });
+      expect(getKeySignatureCount('E', KeyQualities.Minor)).toEqual({
+        sharps: 1,
+      });
+      expect(getKeySignatureCount('C#', KeyQualities.Minor)).toEqual({
+        sharps: 4,
+      });
+      expect(getKeySignatureCount('D', KeyQualities.Minor)).toEqual({
+        flats: 1,
+      });
     });
   });
 });

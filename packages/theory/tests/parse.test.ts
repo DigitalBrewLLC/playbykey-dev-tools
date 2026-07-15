@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { Modes } from '../src/constants';
-import { isNote, parseModeName, parseNote } from '../src/engine';
+import {
+  isNote,
+  parseModeName,
+  parseNote,
+  parseNoteToken,
+} from '../src/engine';
 
 describe('isNote', () => {
   it('accepts canonical note casing', () => {
@@ -17,6 +22,10 @@ describe('isNote', () => {
   it('rejects unrecognized input', () => {
     expect(isNote('')).toBe(false);
     expect(isNote('major')).toBe(false);
+  });
+
+  it('does not recognize flat-spelled input (regression guard)', () => {
+    expect(isNote('Db')).toBe(false);
   });
 });
 
@@ -40,6 +49,37 @@ describe('parseNote', () => {
   it('returns null for unrecognized input', () => {
     expect(parseNote('')).toBeNull();
     expect(parseNote('major')).toBeNull();
+  });
+
+  it('resolves flat-spelled note names to their canonical sharp equivalent', () => {
+    expect(parseNote('Db')).toBe('C#');
+    expect(parseNote('db')).toBe('C#');
+    expect(parseNote('Db aeolian')).toBe('C#');
+  });
+});
+
+describe('parseNoteToken', () => {
+  it('accepts canonical sharp note names, case-insensitively', () => {
+    expect(parseNoteToken('C#')).toBe('C#');
+    expect(parseNoteToken('c#')).toBe('C#');
+    expect(parseNoteToken('C')).toBe('C');
+  });
+
+  it('accepts flat note names in any case', () => {
+    expect(parseNoteToken('Db')).toBe('C#');
+    expect(parseNoteToken('db')).toBe('C#');
+    expect(parseNoteToken('DB')).toBe('C#');
+    expect(parseNoteToken('dB')).toBe('C#');
+  });
+
+  it('rejects phrases, unlike parseNote', () => {
+    expect(parseNoteToken('C ionian')).toBeNull();
+    expect(parseNoteToken('G, mixolydian')).toBeNull();
+  });
+
+  it('returns null for unrecognized input', () => {
+    expect(parseNoteToken('')).toBeNull();
+    expect(parseNoteToken('major')).toBeNull();
   });
 });
 

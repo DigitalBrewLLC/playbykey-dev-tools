@@ -26,6 +26,7 @@ head:
 
 import ModeExplorer from '../../../components/playgrounds/ModeExplorer';
 import NotesExplorer from '../../../components/playgrounds/NotesExplorer';
+import NoteSpellingExplorer from '../../../components/playgrounds/NoteSpellingExplorer';
 import IntervalExplorer from '../../../components/playgrounds/IntervalExplorer';
 import ScalesExplorer from '../../../components/playgrounds/ScalesExplorer';
 import NotationExplorer from '../../../components/playgrounds/NotationExplorer';
@@ -37,6 +38,12 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 `NOTES` is the ordered list of all 12 chromatic notes. `ENHARMONIC_LABELS` maps each accidental note to its flat/sharp display string.
 
 <NotesExplorer client:load />
+
+## Note spelling
+
+`getFlats`, `getEnharmonicLabels`, and `getSharps` respell already-computed sharp `Note[]` output. `parseNote` and `parseNoteToken` accept flat-spelled input (`Db`, `Eb`, `Gb`, `Ab`, `Bb`) too; see the [Keys & Modes](/theory/engine/) page.
+
+<NoteSpellingExplorer client:load />
 
 ## Modes
 

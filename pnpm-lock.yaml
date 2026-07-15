@@ -85,8 +85,8 @@ importers:
         specifier: ^1.0.0
         version: 1.29.0(zod@4.4.3)
       '@playbykey/theory':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: workspace:^
+        version: link:../theory
     devDependencies:
       '@types/node':
         specifier: ^22.0.0
@@ -999,9 +999,6 @@ packages:
     resolution: {integrity: sha512-Fa2Iyw7kaDRzGMfNYNUXNW2zbL5FQVDgSOcbDHdzBrDEdpqOqg8TcZ68F22ol6NJ9IGzvUdmeyZypLW5dyhqsg==}
     cpu: [x64]
     os: [win32]
-
-  '@playbykey/theory@1.0.1':
-    resolution: {integrity: sha512-cUPMH5QiKdCfCURj/iV8EzXypwX2nFW58IunSU8fvWPhb1Ru1wZbGYAQvT+5ACIOnOJDCPksJjkfETfeESS7Fg==}
 
   '@playwright/test@1.61.1':
     resolution: {integrity: sha512-8nKv6+0RJSL9FE4jYOEGXnPeM/Hg12qZpmqzZjRh3qM0Y7c3z1mrOTfFLids72RDQYVh9WpLEfR5WdpNX4fkig==}
@@ -4534,8 +4531,6 @@ snapshots:
 
   '@pagefind/windows-x64@1.5.2':
     optional: true
-
-  '@playbykey/theory@1.0.1': {}
 
   '@playwright/test@1.61.1':
     dependencies:

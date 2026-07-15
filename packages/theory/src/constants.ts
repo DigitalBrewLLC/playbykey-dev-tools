@@ -7,6 +7,8 @@ import type {
   ScaleType,
   AccidentalType,
   PentatonicType,
+  KeyQuality,
+  FlatNote,
 } from './types';
 
 /** All 12 chromatic notes with dot-notation access. Sharp notes use CSharp/DSharp style. */
@@ -88,6 +90,21 @@ const Accidentals = {
   Both: 'both',
 } as const satisfies Record<string, AccidentalType>;
 
+/** Named constants for each key-signature quality. */
+const KeyQualities = {
+  Major: 'major',
+  Minor: 'minor',
+} as const satisfies Record<string, KeyQuality>;
+
+/** Named constants for each flat-spelled accidental note accepted as input. */
+const FlatNotes = {
+  DFlat: 'Db',
+  EFlat: 'Eb',
+  GFlat: 'Gb',
+  AFlat: 'Ab',
+  BFlat: 'Bb',
+} as const satisfies Record<string, FlatNote>;
+
 /** All 7 modes with display names, scale degrees, and characteristic descriptions. */
 const MODES: readonly ModeInfo[] = [
   {
@@ -159,6 +176,35 @@ const ENHARMONIC_LABELS: Record<Note, string | null> = {
   B: null,
 };
 
+/**
+ * Maps each flat-spelled input note to its canonical sharp equivalent.
+ * Derived from ENHARMONIC_LABELS (single source of truth); a companion
+ * test asserts this table's keys are exactly the 5 FlatNote values and
+ * stay consistent with ENHARMONIC_LABELS. Module-internal to the package
+ * (exported from this file for use in engine.ts, but not re-exported from
+ * index.ts — not part of the public API).
+ */
+const FLAT_TO_SHARP: Readonly<Record<FlatNote, Note>> = Object.fromEntries(
+  Object.entries(ENHARMONIC_LABELS)
+    .filter((entry): entry is [Note, string] => entry[1] !== null)
+    .map(([sharp, label]) => [label.split('/')[0], sharp])
+) as Record<FlatNote, Note>;
+
+/**
+ * Maps each note to its flat-spelled equivalent (naturals map to themselves).
+ * Derived from FLAT_TO_SHARP by inversion, not by re-parsing
+ * ENHARMONIC_LABELS independently - this makes the two tables structurally
+ * unable to desync, rather than relying on a test to catch drift.
+ */
+const SHARP_TO_FLAT: Readonly<Partial<Record<Note, FlatNote>>> =
+  Object.fromEntries(
+    Object.entries(FLAT_TO_SHARP).map(([flat, sharp]) => [sharp, flat])
+  ) as Partial<Record<Note, FlatNote>>;
+
+const SHARP_TO_FLAT_MAP: Readonly<Record<Note, string>> = Object.fromEntries(
+  CHROMATIC_NOTES.map((note) => [note, SHARP_TO_FLAT[note] ?? note])
+) as Record<Note, string>;
+
 export {
   Notes,
   CHROMATIC_NOTES,
@@ -171,4 +217,8 @@ export {
   MODES,
   ModeInfoById,
   ENHARMONIC_LABELS,
+  KeyQualities,
+  FlatNotes,
+  FLAT_TO_SHARP,
+  SHARP_TO_FLAT_MAP,
 };

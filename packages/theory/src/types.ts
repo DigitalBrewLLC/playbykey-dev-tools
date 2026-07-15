@@ -71,6 +71,12 @@ type NotationType = 'number' | 'letter';
 /** Accidental display preference: sharp names (C#), flat names (Db), or both (Db/C#). */
 type AccidentalType = 'sharp' | 'flat' | 'both';
 
+/** Key-signature quality: major or (natural) minor. Determines which relative key's accidental count is returned. */
+type KeyQuality = 'major' | 'minor';
+
+/** The 5 flat-spelled accidental notes accepted as input, alongside their canonical sharp equivalents. */
+type FlatNote = 'Db' | 'Eb' | 'Gb' | 'Ab' | 'Bb';
+
 /** Display metadata for a mode. */
 interface ModeInfo {
   id: ModeName;
@@ -94,6 +100,8 @@ export type {
   PentatonicType,
   NotationType,
   AccidentalType,
+  KeyQuality,
+  FlatNote,
   ModeInfo,
   NoteDisplayInfo,
 };

@@ -18,7 +18,7 @@ Built for music apps, education tools, notation UIs, and AI agents. Powers [Play
 - **Zero dependencies:** no transitive baggage; safe for agents, edge runtimes, and tight bundles
 - **TypeScript-first:** strict types exported alongside every function, no `any`
 - **Agent/LLM-ready:** [interactive docs](https://theory-engine.docs.playbykey.com) with copy-paste context prompt below
-- **Sharps-only notation:** one canonical spelling per note (`C#`, not `Db`) keeps the `Note` type safe and unambiguous. Flats are fully supported, derive them with `ENHARMONIC_LABELS`.
+- **Sharps-only notation:** one canonical spelling per note (`C#`, not `Db`) keeps the `Note` type safe and unambiguous. Flats are fully supported for both input (`parseNote`/`parseNoteToken` accept `Db`, `Eb`, `Gb`, `Ab`, `Bb`) and output (`getFlats`/`getEnharmonicLabels`), without extending `Note` itself.
 
 ---
 
@@ -34,7 +34,7 @@ bun add @playbykey/theory
 **Agent / LLM context prompt:**
 
 ```text
-I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount, getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseModeName, isNote, isModeName (type guards, case-insensitive); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only Note type for type safety (C# not Db), flats fully supported via ENHARMONIC_LABELS.
+I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only Note type for type safety (C# not Db), flats fully supported for both input and output.
 ```
 
 ## Quickstart
@@ -64,6 +64,29 @@ const noteMap = buildNoteMap('C', 'major');
 // [{ note: 'C', scaleDegree: 1, semitoneOffset: 0 }, { note: 'D', scaleDegree: 2, semitoneOffset: 2 }, ...]
 ```
 
+**Note spelling**
+
+```typescript
+import {
+  getModeNotes,
+  getFlats,
+  getEnharmonicLabels,
+  getSharps,
+} from '@playbykey/theory';
+
+const notes = getModeNotes('C#', 'aeolian');
+// ['C#', 'D#', 'E', 'F#', 'G#', 'A', 'B'] - sharp-spelled by default
+
+const flats = getFlats(notes);
+// ['Db', 'Eb', 'E', 'Gb', 'Ab', 'A', 'B']
+
+const labels = getEnharmonicLabels(notes);
+// ['Db/C#', 'Eb/D#', 'E', 'Gb/F#', 'Ab/G#', 'A', 'B']
+
+const backToSharps = getSharps(['Db', 'Eb', 'Gb']);
+// ['C#', 'D#', 'F#'] - flats normalize back to their canonical sharp spelling
+```
+
 ## What's included
 
 - **Keys & Modes:** `getModeNotes`, `getModalRoot`, `getParentScaleModes`
@@ -72,7 +95,8 @@ const noteMap = buildNoteMap('C', 'major');
 - **Scales:** `getScaleNotes`, `getScaleDegrees`, `getScaleDegree`, `isNoteInScale`, `buildNoteMap`
 - **Intervals:** `resolveIntervalEndpoints`, `getIntervalSemitones`, `INTERVAL_DEFINITIONS` (14 intervals; scale motion vs from-root 2nds)
 - **Derived scales:** `getBluesNotes`, `getHarmonicMinorNotes`, `getPentatonicNotes`
-- **Type guards:** `isNote`, `isModeName`, `parseNote`, `parseModeName` (case-insensitive)
+- **Type guards / parsers:** `isNote`, `isModeName`, `parseNote`, `parseNoteToken`, `parseModeName` (case-insensitive; `parseNote`/`parseNoteToken` also accept flat note names)
+- **Note spelling:** `getSharps`, `getFlats`, `getEnharmonicLabels`
 
 **[Full API reference →](https://theory-engine.docs.playbykey.com)**
 
@@ -86,4 +110,4 @@ Written in TypeScript with strict mode. No `any`. Import types directly:
 import type { Note, ModeName, IntervalId } from '@playbykey/theory';
 ```
 
-Sharps-only: `C#` not `Db`. Reference `ENHARMONIC_LABELS` for flat/sharp display strings.
+Sharps-only: `C#` not `Db`. Reference `ENHARMONIC_LABELS` for flat/sharp display strings, or use `getFlats`/`getEnharmonicLabels` to respell computed output. `parseNote`/`parseNoteToken` accept flat-spelled input (`Db`, `Eb`, `Gb`, `Ab`, `Bb`) and normalize it to the canonical sharp spelling.

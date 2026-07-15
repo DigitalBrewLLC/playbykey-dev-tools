@@ -17,6 +17,8 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 | `IntervalId`      | Identifiers for the 14 intervals in the catalog, from `'half_step'` to `'octave'`.                                                                                |
 | `NotationType`    | Display notation: `'letter'` (note names) or `'number'` (scale degrees).                                                                                          |
 | `AccidentalType`  | Accidental display: `'sharp' \| 'flat' \| 'both'`.                                                                                                                |
+| `KeyQuality`      | Key-signature quality: `'major' \| 'minor'`.                                                                                                                      |
+| `FlatNote`        | The 5 flat-spelled accidental notes accepted as input: `'Db' \| 'Eb' \| 'Gb' \| 'Ab' \| 'Bb'`.                                                                    |
 | `ModeInfo`        | Mode metadata: `{ id: ModeName; name: string; scaleDegree: number; character: string }`.                                                                          |
 | `NoteDisplayInfo` | In-scale note data from `buildNoteMap`: `{ note: Note; scaleDegree: number; semitoneOffset: number }`.                                                            |
 
@@ -47,6 +49,8 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 | `MODES`                    | `readonly ModeInfo[]` - all 7 modes with name, scale degree, and character description.                             |
 | `ModeInfoById`             | `Record<ModeName, ModeInfo>` - O(1) lookup of mode metadata by id.                                                  |
 | `ENHARMONIC_LABELS`        | `Partial<Record<Note, string>>` - flat/sharp display labels for the 5 black-key notes (e.g. `'C#': 'Db/C#'`).       |
+| `KeyQualities`             | Typed constant map for `KeyQuality` values: `KeyQualities.Major`, `KeyQualities.Minor`.                             |
+| `FlatNotes`                | Typed constant map for `FlatNote` values (e.g. `FlatNotes.DFlat`, `FlatNotes.BFlat`).                               |
 | `MODE_INTERVALS`           | `Record<ModeName, readonly number[]>` - step intervals (semitones) between consecutive scale degrees for each mode. |
 | `MODE_SEMITONE_OFFSETS`    | `Record<ModeName, readonly number[]>` - absolute semitone offsets from root for each scale degree, per mode.        |
 | `INTERVAL_DEFINITIONS`     | `Record<IntervalId, IntervalDefinition>` - the full interval catalog (label + spec) for all 14 intervals.           |
@@ -100,8 +104,9 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 
 #### `getKeySignatureCount`
 
-- **Signature:** `getKeySignatureCount(key: Note): { sharps: number } | { flats: number }`
-- **Returns:** The sharp or flat count for the key signature.
+- **Signature:** `getKeySignatureCount(key: Note, quality?: KeyQuality): { sharps: number } | { flats: number }`
+- **Returns:** The sharp or flat count for the key signature. `quality` defaults to `KeyQualities.Major`; when `KeyQualities.Minor`, resolves `key`'s relative major root and returns that root's accidental count.
+- **Example:** `getKeySignatureCount('C#', 'minor')` → `{ sharps: 4 }` (C# minor's relative major is E)
 
 #### `getCircleOfFifthsOrder`
 
@@ -123,7 +128,12 @@ Public API of `@playbykey/theory`, as exported from `src/index.ts`.
 #### `parseNote`
 
 - **Signature:** `parseNote(value: string): Note | null`
-- **Returns:** First token of `value` parsed as a canonical `Note`, or `null`. Case-insensitive input.
+- **Returns:** First token of `value` parsed as a canonical `Note`, or `null`. Case-insensitive input. Accepts flat-spelled note names (`Db`, `Eb`, `Gb`, `Ab`, `Bb`) in addition to sharps, normalizing them to their canonical sharp equivalent.
+
+#### `parseNoteToken`
+
+- **Signature:** `parseNoteToken(value: string): Note | null`
+- **Returns:** `value`, trimmed, parsed as a canonical `Note`, or `null`. Case-insensitive, accepts flat-spelled input like `parseNote` — but exact-match only, with no phrase-splitting (`parseNoteToken('C ionian')` returns `null`, unlike `parseNote`). Intended for strict single-value input validation.
 
 #### `parseModeName`
 
@@ -150,6 +160,30 @@ The catalog contains 14 intervals. `half_step` and `whole_step` resolve **scale 
 - **Signature:** `resolveIntervalEndpoints(context: IntervalContext): ResolvedInterval`
 - **Parameters:** `context` - `{ root: Note; interval: IntervalId }`.
 - **Returns:** `{ from, to, semitones, label }` - the two notes bounding the interval, plus the catalog label.
+
+---
+
+## Note spelling functions
+
+Every scale/mode function returns sharp-spelled `Note[]` by default, unchanged. These functions let a consumer respell that output on demand - they operate purely on already-computed notes, they don't change what any other function returns.
+
+#### `getSharps`
+
+- **Signature:** `getSharps(notes: readonly (Note | FlatNote)[]): Note[]`
+- **Returns:** `notes` normalized to canonical sharp spelling. Flat-spelled input resolves to its sharp equivalent; sharp/natural input passes through unchanged.
+- **Example:** `getSharps(['Db', 'C#', 'D'])` → `['C#', 'C#', 'D']`
+
+#### `getFlats`
+
+- **Signature:** `getFlats(notes: readonly Note[]): string[]`
+- **Returns:** `notes` respelled as flats. Natural notes are unaffected.
+- **Example:** `getFlats(['C#', 'D'])` → `['Db', 'D']`
+
+#### `getEnharmonicLabels`
+
+- **Signature:** `getEnharmonicLabels(notes: readonly Note[]): string[]`
+- **Returns:** Combined sharp/flat display labels for `notes` (e.g. `'C#'` → `'Db/C#'`). Natural notes are unaffected.
+- **Example:** `getEnharmonicLabels(['C#', 'D'])` → `['Db/C#', 'D']`
 
 ---
 

@@ -1,0 +1,20 @@
+# @playbykey/theory
+
+> Zero-dependency, TypeScript-first music theory engine: scale notes, diatonic modes, key relationships, intervals, and note-spelling. Sharps-only canonical `Note` type for type safety, with full flat-name (`Db`, `Eb`, `Gb`, `Ab`, `Bb`) support on both input and output. Also published as `@playbykey/theory-mcp`, an MCP server exposing the same engine as AI-callable tools.
+
+Install: `npm install @playbykey/theory` (or `npx -y @playbykey/theory-mcp` to run the MCP server directly, no install needed).
+
+## Docs
+
+- [Keys & Modes](https://theory-engine.docs.playbykey.com/theory/engine/): `getModeNotes`, `getParentScaleModes`, `getModalRoot` (modes); `getRelativeMinorKey`, `getRelativeMajorKey`, `getKeySignatureCount` (accepts optional `quality: 'major'|'minor'`, default major), `getCircleOfFifthsOrder` (key relationships); `getSemitoneDistance` (note utilities); `isNote`, `isModeName`, `parseNote`, `parseNoteToken`, `parseModeName` (type guards/parsers - `parseNote`/`parseNoteToken` accept flat note names, `parseNoteToken` is strict/exact-match); `getSharps`, `getFlats`, `getEnharmonicLabels` (respell already-computed note output as sharps, flats, or combined enharmonic labels).
+- [Scales](https://theory-engine.docs.playbykey.com/theory/scales/): `getScaleNotes`, `getScaleDegrees`, `getScaleDegree`, `isNoteInScale`, `buildNoteMap`, and derived scales `getBluesNotes`, `getHarmonicMinorNotes`, `getPentatonicNotes`.
+- [Intervals](https://theory-engine.docs.playbykey.com/theory/intervals/): `resolveIntervalEndpoints`, `getIntervalSemitones`, `INTERVAL_DEFINITIONS` (14 intervals; `half_step`/`whole_step` are scale motion, `minor_2nd`/`major_2nd` are from-root).
+- [Constants](https://theory-engine.docs.playbykey.com/theory/constants/): full catalog of typed constant maps - `Notes`, `Modes`, `ScaleTypes`, `Intervals`, `Accidentals`, `KeyQualities`, `FlatNotes`, `PentatonicTypes`, `Notations`, plus `ENHARMONIC_LABELS`.
+- [MCP setup](https://theory-engine.docs.playbykey.com/mcp/): configure `@playbykey/theory-mcp` for Claude Desktop, Cursor, and Claude Code.
+
+## Key facts for agents
+
+- `Note` is a 12-value sharps-only union (`'C'`, `'C#'`, ... `'B'`) and is never extended to include flat literals - this is a deliberate design constraint, not an oversight.
+- Flat note names are still fully supported: `parseNote`/`parseNoteToken` accept them as *input* and normalize to the canonical sharp `Note`; `getFlats`/`getEnharmonicLabels` respell already-computed `Note[]` output as flats or combined labels. No scale/mode function's own parameter or return type ever includes a flat literal.
+- `@playbykey/theory-mcp`'s tools accept flat note names in every note-typed argument, but `get_flats`/`get_enharmonic_labels` require already-sharp-spelled input (call `get_sharps` first if you have flat-spelled notes).
+- Zero runtime dependencies. TypeScript strict mode, no `any`.

@@ -25,21 +25,16 @@ import {
   handleResolveInterval,
   handleGetSemitoneDistance,
 } from './tools/intervals.js';
+import {
+  handleGetSharps,
+  handleGetFlats,
+  handleGetEnharmonicLabels,
+} from './tools/spelling.js';
+import { CHROMATIC_NOTES, FlatNotes } from '@playbykey/theory';
 
-const NOTE_ENUM = [
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
-  'F',
-  'F#',
-  'G',
-  'G#',
-  'A',
-  'A#',
-  'B',
-] as const;
+const SHARP_NOTE_ENUM = CHROMATIC_NOTES;
+
+const NOTE_ENUM = [...SHARP_NOTE_ENUM, ...Object.values(FlatNotes)] as const;
 
 const MODE_ENUM = [
   'ionian',
@@ -195,7 +190,8 @@ const TOOLS = [
   },
   {
     name: 'get_key_signature',
-    description: 'Returns the sharp or flat count for a given key.',
+    description:
+      'Returns the sharp or flat count for a given key, treated as a major-key tonic (minor-key signatures are not exposed by this tool).',
     inputSchema: {
       type: 'object',
       properties: {
@@ -344,6 +340,55 @@ const TOOLS = [
       required: ['root', 'scale_type', 'note'],
     },
   },
+  {
+    name: 'get_sharps',
+    description:
+      'Respells a list of notes to canonical sharp spelling, e.g. ["Db", "C#", "D"] -> ["C#", "C#", "D"]. Most tools accept flat-spelled input directly, but get_flats and get_enharmonic_labels require sharp-spelled input - use this to normalize flat-spelled notes before calling those two.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...NOTE_ENUM] },
+          description:
+            'Notes to normalize to sharps (sharp or flat input accepted)',
+        },
+      },
+      required: ['notes'],
+    },
+  },
+  {
+    name: 'get_flats',
+    description:
+      'Respells a list of sharp-spelled notes as flats, e.g. ["C#", "D"] -> ["Db", "D"]. Natural notes are unaffected. Input must already be sharp-spelled (as returned by get_scale_notes, get_mode_notes, etc.) - use get_sharps first if you have flat-spelled notes.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+          description: 'Sharp-spelled notes to convert to flats',
+        },
+      },
+      required: ['notes'],
+    },
+  },
+  {
+    name: 'get_enharmonic_labels',
+    description:
+      'Returns combined sharp/flat display labels for a list of sharp-spelled notes, e.g. ["C#", "D"] -> ["Db/C#", "D"]. Natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if you have flat-spelled notes.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+          description: 'Sharp-spelled notes to label',
+        },
+      },
+      required: ['notes'],
+    },
+  },
 ];
 
 export const server = new Server(
@@ -388,6 +433,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleGetScaleDegree(safeArgs);
     case 'is_note_in_scale':
       return handleIsNoteInScale(safeArgs);
+    case 'get_sharps':
+      return handleGetSharps(safeArgs);
+    case 'get_flats':
+      return handleGetFlats(safeArgs);
+    case 'get_enharmonic_labels':
+      return handleGetEnharmonicLabels(safeArgs);
     default:
       return {
         content: [{ type: 'text' as const, text: `Unknown tool: "${name}"` }],

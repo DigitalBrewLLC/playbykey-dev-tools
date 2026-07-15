@@ -56,8 +56,6 @@ resolveIntervalEndpoints({ root: Notes.C, interval: Intervals.Minor2nd });
 
 ## Interval Types
 
-**`IntervalContext`:** `{ root: Note; interval: IntervalId }`. Passed to `resolveIntervalEndpoints` to resolve the two notes bounding the interval.
-
-**`ResolvedInterval`:** `{ from: Note; to: Note; semitones: number; label: string }`. The resolved endpoints plus the catalog label for the interval.
-
-**`IntervalDefinition`:** `{ label: string; intervalSpec: IntervalSpec }`. Describes how an interval is defined relative to scale degrees. See the [Constants](/theory/constants/) page for the full `INTERVAL_DEFINITIONS` catalog.
+- **`IntervalContext`:** `{ root: Note; interval: IntervalId }`. Passed to `resolveIntervalEndpoints` to resolve the two notes bounding the interval.
+- **`ResolvedInterval`:** `{ from: Note; to: Note; semitones: number; label: string }`. The resolved endpoints plus the catalog label for the interval.
+- **`IntervalDefinition`:** `{ label: string; intervalSpec: IntervalSpec }`. Describes how an interval is defined relative to scale degrees. See the [Constants](/theory/constants/) page for the full `INTERVAL_DEFINITIONS` catalog.

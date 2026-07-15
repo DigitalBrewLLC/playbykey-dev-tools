@@ -108,12 +108,17 @@ import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
 | `get_relative_major` | `minor_key` | The relative major root for a minor key |
 | `get_mode_info` | `mode` | Display metadata: name, scale degree, character |
 
-### Circle and key signatures
+### Circle of fifths
 
 | Tool | Input | Returns |
 | --- | --- | --- |
 | `get_circle_of_fifths` | none | All 12 chromatic notes in ascending-fifths order from C |
-| `get_key_signature` | `key` | Sharp or flat count for a key |
+
+### Key signatures
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `get_key_signature` | `key` | Sharp or flat count for a key, treated as a major-key tonic (minor-key signatures are not exposed by this tool) |
 
 ### Scales
 
@@ -130,3 +135,11 @@ import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
 | --- | --- | --- |
 | `resolve_interval` | `root`, `interval` | From-note and to-note for a named interval within a root context |
 | `get_semitone_distance` | `from`, `to` | Ascending semitone distance between two notes (0-11) |
+
+### Note spelling
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `get_sharps` | `notes` (sharp or flat) | Notes normalized to canonical sharp spelling |
+| `get_flats` | `notes` (must be sharp-spelled) | Notes respelled as flats |
+| `get_enharmonic_labels` | `notes` (must be sharp-spelled) | Combined sharp/flat display labels (e.g. `"Db/C#"`) |

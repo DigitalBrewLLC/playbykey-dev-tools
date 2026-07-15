@@ -27,8 +27,15 @@ describe('handleGetKeySignature', () => {
     expect(result.content[0]?.text).toContain('2 sharp');
   });
 
-  it('returns error for invalid key', () => {
+  it('returns error for invalid key, mentioning flat equivalents are accepted', () => {
     const result = handleGetKeySignature({ key: 'H' });
     expect(result.content[0]?.text).toContain('Invalid note');
+    expect(result.content[0]?.text).toContain('flat equivalents');
+  });
+
+  it('accepts a flat-spelled key and returns the same result as its sharp equivalent', () => {
+    const flatResult = handleGetKeySignature({ key: 'Db' });
+    const sharpResult = handleGetKeySignature({ key: 'C#' });
+    expect(flatResult.content[0]?.text).toBe(sharpResult.content[0]?.text);
   });
 });
