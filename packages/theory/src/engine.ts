@@ -85,6 +85,7 @@ const elementAt = <T>(array: readonly T[], index: number): T => {
 /** Pre-computed sets for O(1) type-guard lookups. */
 const NOTE_SET = new Set<string>(CHROMATIC_NOTES);
 const MODE_NAME_SET = new Set<string>(Object.values(Modes));
+const FLAT_NOTE_SET = new Set<string>(Object.values(FlatNotes));
 
 /**
  * Returns the chromatic index (0-11) of a note within the chromatic scale.
@@ -236,7 +237,7 @@ const isModeName = (value: string): value is ModeName =>
 
 /** Type guard for the 5 canonical flat-spelled note strings (e.g. "Db"). */
 const isFlatNote = (value: string): value is FlatNote =>
-  Object.values(FlatNotes).includes(value as FlatNote);
+  FLAT_NOTE_SET.has(value);
 
 /**
  * Normalizes a flat-spelled note token (e.g. "Db", "db", "DB") to its
@@ -306,7 +307,7 @@ const parseModeName = (value: string): ModeName | null => {
  * Example: getSharps(['Db', 'C#', 'D']) => ['C#', 'C#', 'D']
  */
 const getSharps = (notes: readonly (Note | FlatNote)[]): Note[] =>
-  notes.map((note) => FLAT_TO_SHARP[note as FlatNote] ?? (note as Note));
+  notes.map((note) => (isFlatNote(note) ? FLAT_TO_SHARP[note] : note));
 
 /**
  * Converts notes to their flat-spelled equivalents. Natural notes are

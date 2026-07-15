@@ -192,14 +192,17 @@ const FLAT_TO_SHARP: Readonly<Record<FlatNote, Note>> = Object.fromEntries(
 
 /**
  * Maps each note to its flat-spelled equivalent (naturals map to themselves).
- * Derived from ENHARMONIC_LABELS; same consistency guarantee and visibility
- * as FLAT_TO_SHARP.
+ * Derived from FLAT_TO_SHARP by inversion, not by re-parsing
+ * ENHARMONIC_LABELS independently - this makes the two tables structurally
+ * unable to desync, rather than relying on a test to catch drift.
  */
+const SHARP_TO_FLAT: Readonly<Partial<Record<Note, FlatNote>>> =
+  Object.fromEntries(
+    Object.entries(FLAT_TO_SHARP).map(([flat, sharp]) => [sharp, flat])
+  ) as Partial<Record<Note, FlatNote>>;
+
 const SHARP_TO_FLAT_MAP: Readonly<Record<Note, string>> = Object.fromEntries(
-  CHROMATIC_NOTES.map((note) => {
-    const label = ENHARMONIC_LABELS[note];
-    return [note, label === null ? note : label.split('/')[0]];
-  })
+  CHROMATIC_NOTES.map((note) => [note, SHARP_TO_FLAT[note] ?? note])
 ) as Record<Note, string>;
 
 export {
