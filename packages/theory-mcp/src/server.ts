@@ -30,23 +30,11 @@ import {
   handleGetFlats,
   handleGetEnharmonicLabels,
 } from './tools/spelling.js';
+import { CHROMATIC_NOTES, FlatNotes } from '@playbykey/theory';
 
-const SHARP_NOTE_ENUM = [
-  'C',
-  'C#',
-  'D',
-  'D#',
-  'E',
-  'F',
-  'F#',
-  'G',
-  'G#',
-  'A',
-  'A#',
-  'B',
-] as const;
+const SHARP_NOTE_ENUM = CHROMATIC_NOTES;
 
-const NOTE_ENUM = [...SHARP_NOTE_ENUM, 'Db', 'Eb', 'Gb', 'Ab', 'Bb'] as const;
+const NOTE_ENUM = [...SHARP_NOTE_ENUM, ...Object.values(FlatNotes)] as const;
 
 const MODE_ENUM = [
   'ionian',
@@ -355,7 +343,7 @@ const TOOLS = [
   {
     name: 'get_sharps',
     description:
-      'Respells a list of notes to canonical sharp spelling, e.g. ["Db", "C#", "D"] -> ["C#", "C#", "D"]. Use this to normalize flat-spelled notes before passing them to other tools, which all expect sharp-spelled input.',
+      'Respells a list of notes to canonical sharp spelling, e.g. ["Db", "C#", "D"] -> ["C#", "C#", "D"]. Most tools accept flat-spelled input directly, but get_flats and get_enharmonic_labels require sharp-spelled input - use this to normalize flat-spelled notes before calling those two.',
     inputSchema: {
       type: 'object',
       properties: {
