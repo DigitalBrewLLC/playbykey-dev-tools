@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.1.0...theory-mcp-v1.1.1) (2026-07-15)
+
+
+### Bug Fixes
+
+* **theory-mcp:** include CHANGELOG.md in published npm package ([1cb5a1c](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/1cb5a1c8260a037d1c7db00d57160841316ccf9e))
+
 ## [1.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.0.1...theory-mcp-v1.1.0) (2026-07-15)
 
 
