@@ -7,6 +7,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.3.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.2.0...theory-v1.3.0) (2026-07-15)
+
+
+### Features
+
+* **theory:** add key-signature quality, flat-name input, and note-spelling functions ([0330e81](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/0330e81775a28ab349a7e08cbfd9bdd94b856dac))
+
+
+### Bug Fixes
+
+* **theory:** remove flats keyword, keep enharmonic ([19a5b63](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/19a5b634446f7d22dfe919ffc7bc94f86beccb8a))
+
 ## [1.2.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.1.0...theory-v1.2.0) (2026-07-11)
 
 

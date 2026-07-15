@@ -7,6 +7,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.3.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.2.1...theory-docs-v1.3.0) (2026-07-15)
+
+
+### Features
+
+* **theory-docs:** document key-signature quality, flat-name input, and note-spelling functions ([53c10fc](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/53c10fc90732161509a65f3f1a466ef0bece45a9))
+* **theory-docs:** use brand icons for PlayByKey and npm header links ([4911e81](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/4911e81186cf3055bd3aea3e0d5ccf70e5b7be55))
+
+
+### Bug Fixes
+
+* **theory-docs:** use PlayByKey's blue PK icon, not the site's own orange favicon ([aed22bc](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/aed22bc8d67b6a06488d1ac64320a76d29723d20))
+
 ## [1.2.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.2.0...theory-docs-v1.2.1) (2026-07-11)
 
 
