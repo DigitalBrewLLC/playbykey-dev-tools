@@ -1,0 +1,42 @@
+---
+import config from 'virtual:starlight/user-config';
+import { Icon } from '@astrojs/starlight/components';
+
+const links = config.social || [];
+
+/** Brand-accurate icons for links Starlight's built-in icon set doesn't cover. */
+const customIconSrc: Record<string, string> = {
+  PlayByKey: '/favicon.svg',
+  npm: '/npm-icon.svg',
+};
+---
+
+{
+  links.length > 0 && (
+    <>
+      {links.map(({ label, href, icon }) => (
+        <a {href} rel="me" class="sl-flex">
+          <span class="sr-only">{label}</span>
+          {customIconSrc[label] ? (
+            <img src={customIconSrc[label]} width="16" height="16" alt="" />
+          ) : (
+            <Icon name={icon} />
+          )}
+        </a>
+      ))}
+    </>
+  )
+}
+
+<style>
+  @layer starlight.core {
+    a {
+      color: var(--sl-color-text-accent);
+      padding: 0.5em;
+      margin: -0.5em;
+    }
+    a:hover {
+      color: var(--sl-color-white);
+    }
+  }
+</style>
