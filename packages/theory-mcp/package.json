@@ -9,7 +9,8 @@
     "playbykey",
     "scales",
     "modes",
-    "intervals"
+    "intervals",
+    "enharmonic"
   ],
   "homepage": "https://github.com/DigitalBrewLLC/playbykey-dev-tools",
   "repository": {
