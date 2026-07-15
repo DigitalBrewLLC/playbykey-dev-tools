@@ -1,13 +1,12 @@
 import { useMemo, useState } from 'react';
 import {
-  FlatNotes,
   getEnharmonicLabels,
   getFlats,
   getSharps,
-  isNote,
   Notes,
+  parseNoteToken,
 } from '@playbykey/theory';
-import type { FlatNote, Note } from '@playbykey/theory';
+import type { Note } from '@playbykey/theory';
 import { CodeSnippet } from '../ui/CodeSnippet';
 import { InfoBlock } from '../ui/InfoBlock';
 import { NoteSelect } from '../ui/NoteSelect';
@@ -19,24 +18,16 @@ import {
   dataValueStyle,
 } from './playgroundStyles';
 
-/** getFlats returns a generic display string; narrow it back to a typed
- * note before feeding it to getSharps, rather than casting unsafely. */
-const FLAT_NOTE_VALUES = new Set<string>(Object.values(FlatNotes));
-const isNoteOrFlatNote = (value: string): value is Note | FlatNote =>
-  isNote(value) || FLAT_NOTE_VALUES.has(value);
-
 const NoteSpellingExplorer = () => {
   const [note, setNote] = useState<Note>(Notes.CSharp);
 
   const flat = useMemo(() => getFlats([note])[0], [note]);
   const label = useMemo(() => getEnharmonicLabels([note])[0], [note]);
-  const backToSharp = useMemo(
-    () =>
-      flat !== undefined && isNoteOrFlatNote(flat)
-        ? getSharps([flat])[0]
-        : undefined,
-    [flat]
-  );
+  const backToSharp = useMemo(() => {
+    if (flat === undefined) return undefined;
+    const sharp = parseNoteToken(flat);
+    return sharp !== null ? getSharps([sharp])[0] : undefined;
+  }, [flat]);
 
   const noteKey = Object.entries(Notes).find(([, v]) => v === note)?.[0];
 
