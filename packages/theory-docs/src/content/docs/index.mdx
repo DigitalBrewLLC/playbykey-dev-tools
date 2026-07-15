@@ -124,4 +124,7 @@ import type { Note, ModeName } from '@playbykey/theory';
 
 ## Note notation
 
-The package represents notes with one canonical sharp spelling (`C#`, not `Db`) to keep the `Note` type safe and unambiguous. Flats are fully supported for both input and output: `parseNote`/`parseNoteToken` accept flat-spelled note names (`Db`, `Eb`, `Gb`, `Ab`, `Bb`) and normalize them to the canonical sharp spelling, and `getFlats`/`getEnharmonicLabels` respell computed output as flats or combined enharmonic labels (e.g. via `ENHARMONIC_LABELS`).
+The package represents notes with one canonical sharp spelling (`C#`, not `Db`) to keep the `Note` type safe and unambiguous. Flats are fully supported:
+
+- **Input:** `parseNote`/`parseNoteToken` accept flat-spelled note names (`Db`, `Eb`, `Gb`, `Ab`, `Bb`), normalized to the canonical sharp spelling.
+- **Output:** `getFlats`/`getEnharmonicLabels` respell computed output as flats or combined enharmonic labels.
