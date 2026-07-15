@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 44" height="44" role="img" aria-label="PlayByKey">
+  <title>PlayByKey</title>
+  <text
+    x="0"
+    y="33"
+    font-family="'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    font-size="36"
+    letter-spacing="-0.03em"
+  ><tspan font-weight="700" fill="#fafafa">Play</tspan><tspan font-weight="400" fill="#a3a3a3">By</tspan><tspan font-weight="700" fill="#93c5fd">Key</tspan></text>
+</svg>
