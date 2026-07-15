@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.0.1...theory-mcp-v1.1.0) (2026-07-15)
+
+
+### Features
+
+* **theory-mcp:** accept flat-spelled note names and add note-spelling tools ([3d8e642](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/3d8e642ae82dd5ae367d39ccf95ad81ec18c1090))
+
 ## [1.0.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.0.0...theory-mcp-v1.0.1) (2026-07-11)
 
 

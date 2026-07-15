@@ -1,6 +1,6 @@
 {
   "name": "@playbykey/theory-mcp",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "MCP server that exposes @playbykey/theory as AI-callable music theory tools",
   "keywords": [
     "mcp",
