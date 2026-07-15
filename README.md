@@ -27,7 +27,7 @@ Quickstart and API examples: [packages/theory/README.md](./packages/theory)
 - **Zero dependencies:** no transitive baggage; safe for agents, edge runtimes, and tight bundles
 - **TypeScript-first:** strict types exported alongside every function, no `any`
 - **Agent-ready:** copy-paste LLM context prompt and [interactive docs](https://theory-engine.docs.playbykey.com)
-- **Sharps-only notation:** one canonical spelling per note (`C#`, not `Db`) keeps the `Note` type safe and unambiguous. Flats are fully supported, derive them with `ENHARMONIC_LABELS`.
+- **Sharps-only notation:** one canonical spelling per note (`C#`, not `Db`) keeps the `Note` type safe and unambiguous. Flats are fully supported for both input (`parseNote`/`parseNoteToken` accept `Db`, `Eb`, `Gb`, `Ab`, `Bb`) and output (`getFlats`/`getEnharmonicLabels`), without extending `Note` itself.
 
 ---
 

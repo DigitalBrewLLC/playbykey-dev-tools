@@ -105,13 +105,15 @@ Example: `get_relative_major("A")` → C
 Input: `mode` (mode name)  
 Example: `get_mode_info("dorian")` → Dorian, degree 2, "Minor with a raised 6th"
 
-### Circle and Key Signatures
+### Circle of Fifths
 
 **`get_circle_of_fifths`** - Returns all 12 chromatic notes in ascending-fifths order starting from C.  
 Input: none  
 Example → C, G, D, A, E, B, F#, C#, G#, D#, A#, F
 
-**`get_key_signature`** - Returns the sharp or flat count for a given key.  
+### Key Signatures
+
+**`get_key_signature`** - Returns the sharp or flat count for a given key, treated as a major-key tonic (minor-key signatures are not exposed by this tool).  
 Input: `key` (note)  
 Example: `get_key_signature("D")` → 2 sharps
 
@@ -142,6 +144,20 @@ Example: `resolve_interval("C", "major_3rd")` → C to E (4 semitones)
 **`get_semitone_distance`** - Returns the ascending semitone distance between two notes (0-11).  
 Input: `from` (note), `to` (note)  
 Example: `get_semitone_distance("C", "E")` → 4
+
+### Note Spelling
+
+**`get_sharps`** - Respells a list of notes to canonical sharp spelling. Most tools accept flat-spelled input directly, but `get_flats` and `get_enharmonic_labels` require sharp-spelled input - use this to normalize flat-spelled notes before calling those two.  
+Input: `notes` (sharp or flat)  
+Example: `get_sharps(["Db", "C#", "D"])` → C#, C#, D
+
+**`get_flats`** - Respells a list of sharp-spelled notes as flats. Natural notes are unaffected.  
+Input: `notes` (must be sharp-spelled)  
+Example: `get_flats(["C#", "D"])` → Db, D
+
+**`get_enharmonic_labels`** - Returns combined sharp/flat display labels for a list of sharp-spelled notes. Natural notes are unaffected.  
+Input: `notes` (must be sharp-spelled)  
+Example: `get_enharmonic_labels(["C#", "D"])` → Db/C#, D
 
 ## License
 
