@@ -1,4 +1,4 @@
-<a href="https://playbykey.com"><img src="assets/logo.png" alt="PlayByKey" width="64" /></a>
+<a href="https://playbykey.com"><img src="assets/logo.svg" alt="PlayByKey" width="220" height="42" /></a>
 
 # PlayByKey Developer Tools
 
