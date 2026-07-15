@@ -48,10 +48,8 @@ Compute scale notes for any root and diatonic mode, traverse key relationships, 
 
 ## Scale & Mode Functions
 
-**Scale and mode:** `getModeNotes`, `getParentScaleModes`, and `getModalRoot` compute the note set and modal rotations for any root and mode combination.
-
-**Key relationships:** `getRelativeMinorKey` and `getRelativeMajorKey` find relative keys. See [Circle of fifths](#circle-of-fifths) and [Key signatures](#key-signatures) above for `getCircleOfFifthsOrder` and `getKeySignatureCount`.
-
-**Note utilities:** `getSemitoneDistance` computes the ascending semitone gap between any two notes. For scale degree lookup and membership checks across all scale types, see `getScaleDegree` and `isNoteInScale` on the [Scales](/theory/scales/) page. See the [Constants](/theory/constants/) page for the full note and mode constant catalog.
-
-**Type guards:** `isNote`, `isModeName`, `parseNote`, and `parseModeName` narrow untrusted strings - URL params, user input, or external data - to typed `Note` or `ModeName` values before passing them to engine functions. `isNote` and `isModeName` are case-insensitive; `parseNote` and `parseModeName` return canonical values. `parseNote` and the stricter, exact-match `parseNoteToken` also accept flat-spelled note names (`Db`, `Eb`, `Gb`, `Ab`, `Bb`), normalizing them to their canonical sharp equivalent. `getSharps`, `getFlats`, and `getEnharmonicLabels` respell already-computed note output as sharps, flats, or combined enharmonic labels.
+- **Scale and mode:** `getModeNotes`, `getParentScaleModes`, and `getModalRoot` compute the note set and modal rotations for any root and mode combination.
+- **Key relationships:** `getRelativeMinorKey` and `getRelativeMajorKey` find relative keys. See [Circle of fifths](#circle-of-fifths) and [Key signatures](#key-signatures) above for `getCircleOfFifthsOrder` and `getKeySignatureCount`.
+- **Note utilities:** `getSemitoneDistance` computes the ascending semitone gap between any two notes. For scale degree lookup and membership checks across all scale types, see `getScaleDegree` and `isNoteInScale` on the [Scales](/theory/scales/) page. See the [Constants](/theory/constants/) page for the full note and mode constant catalog.
+- **Type guards:** `isNote`, `isModeName`, `parseNote`, and `parseModeName` narrow untrusted strings - URL params, user input, or external data - to typed `Note` or `ModeName` values before passing them to engine functions. `isNote` and `isModeName` are case-insensitive; `parseNote` and `parseModeName` return canonical values. `parseNote` and the stricter, exact-match `parseNoteToken` also accept flat-spelled note names (`Db`, `Eb`, `Gb`, `Ab`, `Bb`), normalizing them to their canonical sharp equivalent.
+- **Note spelling:** `getSharps`, `getFlats`, and `getEnharmonicLabels` respell already-computed note output as sharps, flats, or combined enharmonic labels.
