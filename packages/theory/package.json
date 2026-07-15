@@ -14,7 +14,9 @@
     "blues-scale",
     "harmonic-minor",
     "zero-dependencies",
-    "mcp"
+    "mcp",
+    "flats",
+    "enharmonic"
   ],
   "homepage": "https://theory-engine.docs.playbykey.com",
   "repository": {
