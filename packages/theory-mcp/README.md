@@ -159,6 +159,38 @@ Example: `get_flats(["C#", "D"])` → Db, D
 Input: `notes` (must be sharp-spelled)  
 Example: `get_enharmonic_labels(["C#", "D"])` → Db/C#, D
 
+### Chords
+
+**`get_chord_notes`** - Returns the notes of a chord given a root and chord type.  
+Input: `root` (note), `chord_type` (one of the 11 chord types, e.g. `major-triad`, `dominant-7th`, `major-9th`)  
+Example: `get_chord_notes("C", "major-triad")` → C, E, G
+
+**`get_diatonic_chords`** - Returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order.  
+Input: `root` (note), `mode` (mode name)  
+Example: `get_diatonic_chords("C", "ionian")` → C major-triad, D minor-triad, E minor-triad, F major-triad, G major-triad, A minor-triad, B diminished-triad
+
+**`get_chord_by_degree`** - Returns the diatonic chord at a specific scale degree (1-7) for a key/mode.  
+Input: `degree` (integer 1-7), `root` (note), `mode` (mode name)  
+Example: `get_chord_by_degree(5, "C", "ionian")` → G major-triad
+
+**`get_available_inversions`** - Returns the valid inversion numbers for a chord type, based on its note count.  
+Input: `chord_type`  
+Example: `get_available_inversions("major-9th")` → 0, 1, 2, 3, 4
+
+**`get_chord_inversion`** - Reorders a chord's notes so the given inversion's chord tone is lowest.  
+Input: `root` (note), `chord_type`, `inversion` (integer, valid range depends on chord type)  
+Example: `get_chord_inversion("C", "major-triad", 1)` → E, G, C
+
+### Progressions
+
+**`get_progression_in_key`** - Renders a named catalog progression as chords in a given key, in order. Always Ionian (major) internally.  
+Input: `progression_id` (one of `I-V-vi-IV`, `ii-V-I`, `I-IV-V`, `vi-IV-I-V`, `12-bar-blues`), `root` (note)  
+Example: `get_progression_in_key("I-V-vi-IV", "C")` → C major-triad, G major-triad, A minor-triad, F major-triad
+
+**`get_roman_numeral`** - Returns the roman numeral for a scale degree in a mode - case and suffix reflect diatonic triad quality.  
+Input: `degree` (integer 1-7), `mode` (mode name)  
+Example: `get_roman_numeral(7, "ionian")` → vii°
+
 ## License
 
 MIT
