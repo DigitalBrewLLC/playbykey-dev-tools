@@ -17,6 +17,10 @@ export type {
   FlatNote,
   ModeInfo,
   NoteDisplayInfo,
+  ChordType,
+  Chord,
+  ChordInversion,
+  ProgressionId,
 } from './types';
 
 export {
@@ -33,6 +37,8 @@ export {
   ENHARMONIC_LABELS,
   KeyQualities,
   FlatNotes,
+  ChordTypes,
+  ProgressionIds,
 } from './constants';
 
 export {
@@ -90,3 +96,22 @@ export {
   buildNoteMap,
   notesFromSemitoneOffsets,
 } from './scales';
+
+export type { ChordDefinition } from './chords';
+
+export {
+  CHORD_DEFINITIONS,
+  getChordNotes,
+  getDiatonicChords,
+  getChordByDegree,
+  getAvailableInversions,
+  getChordInversion,
+} from './chords';
+
+export type { ProgressionDefinition } from './progressions';
+
+export {
+  PROGRESSION_DEFINITIONS,
+  getProgressionInKey,
+  getRomanNumeral,
+} from './progressions';

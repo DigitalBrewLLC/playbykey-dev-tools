@@ -9,6 +9,8 @@ import type {
   PentatonicType,
   KeyQuality,
   FlatNote,
+  ChordType,
+  ProgressionId,
 } from './types';
 
 /** All 12 chromatic notes with dot-notation access. Sharp notes use CSharp/DSharp style. */
@@ -104,6 +106,30 @@ const FlatNotes = {
   AFlat: 'Ab',
   BFlat: 'Bb',
 } as const satisfies Record<string, FlatNote>;
+
+/** Named constants for each supported chord type. */
+const ChordTypes = {
+  MajorTriad: 'major-triad',
+  MinorTriad: 'minor-triad',
+  DiminishedTriad: 'diminished-triad',
+  AugmentedTriad: 'augmented-triad',
+  Major7th: 'major-7th',
+  Minor7th: 'minor-7th',
+  Dominant7th: 'dominant-7th',
+  Major6th: 'major-6th',
+  Minor6th: 'minor-6th',
+  Major9th: 'major-9th',
+  Minor9th: 'minor-9th',
+} as const satisfies Record<string, ChordType>;
+
+/** Named constants for each catalog progression. Key names spell out the roman-numeral sequence since the string values aren't valid identifiers on their own. */
+const ProgressionIds = {
+  OneFiveSixFour: 'I-V-vi-IV',
+  TwoFiveOne: 'ii-V-I',
+  OneFourFive: 'I-IV-V',
+  SixFourOneFive: 'vi-IV-I-V',
+  TwelveBarBlues: '12-bar-blues',
+} as const satisfies Record<string, ProgressionId>;
 
 /** All 7 modes with display names, scale degrees, and characteristic descriptions. */
 const MODES: readonly ModeInfo[] = [
@@ -221,4 +247,6 @@ export {
   FlatNotes,
   FLAT_TO_SHARP,
   SHARP_TO_FLAT_MAP,
+  ChordTypes,
+  ProgressionIds,
 };

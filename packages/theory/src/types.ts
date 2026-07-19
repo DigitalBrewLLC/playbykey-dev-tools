@@ -85,6 +85,43 @@ interface ModeInfo {
   character: string;
 }
 
+/** Chord type - quality plus any added-interval extension. */
+type ChordType =
+  | 'major-triad'
+  | 'minor-triad'
+  | 'diminished-triad'
+  | 'augmented-triad'
+  | 'major-7th'
+  | 'minor-7th'
+  | 'dominant-7th'
+  | 'major-6th'
+  | 'minor-6th'
+  | 'major-9th'
+  | 'minor-9th';
+
+/** A chord: root note plus its type. Notes are derived via getChordNotes, not stored. */
+interface Chord {
+  root: Note;
+  type: ChordType;
+}
+
+/**
+ * Chord inversion - which chord tone is in the bass. 0 = root position.
+ * The valid range depends on the chord type (a triad has 3 valid inversions,
+ * 0-2; a 9th chord has 5, 0-4) - this type covers the maximum range across
+ * all chord types (0-4). Runtime validation against the actual valid range
+ * for a given chord type happens in the chords module, not via this type alone.
+ */
+type ChordInversion = 0 | 1 | 2 | 3 | 4;
+
+/** Catalog identifier for a fixed, named progression - extend as the catalog grows. */
+type ProgressionId =
+  | 'I-V-vi-IV'
+  | 'ii-V-I'
+  | 'I-IV-V'
+  | 'vi-IV-I-V'
+  | '12-bar-blues';
+
 /** Computed display data for a single in-scale note, consumed by all visualization views. */
 interface NoteDisplayInfo {
   note: Note;
@@ -104,4 +141,8 @@ export type {
   FlatNote,
   ModeInfo,
   NoteDisplayInfo,
+  ChordType,
+  Chord,
+  ChordInversion,
+  ProgressionId,
 };
