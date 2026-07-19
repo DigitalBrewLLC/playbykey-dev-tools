@@ -30,6 +30,17 @@ import {
   handleGetFlats,
   handleGetEnharmonicLabels,
 } from './tools/spelling.js';
+import {
+  handleGetChordNotes,
+  handleGetDiatonicChords,
+  handleGetChordByDegree,
+  handleGetAvailableInversions,
+  handleGetChordInversion,
+} from './tools/chords.js';
+import {
+  handleGetProgressionInKey,
+  handleGetRomanNumeral,
+} from './tools/progressions.js';
 import { CHROMATIC_NOTES, FlatNotes } from '@playbykey/theory';
 
 const SHARP_NOTE_ENUM = CHROMATIC_NOTES;
@@ -70,6 +81,28 @@ const INTERVAL_ID_ENUM = [
   'minor_7th',
   'major_7th',
   'octave',
+] as const;
+
+const CHORD_TYPE_ENUM = [
+  'major-triad',
+  'minor-triad',
+  'diminished-triad',
+  'augmented-triad',
+  'major-7th',
+  'minor-7th',
+  'dominant-7th',
+  'major-6th',
+  'minor-6th',
+  'major-9th',
+  'minor-9th',
+] as const;
+
+const PROGRESSION_ID_ENUM = [
+  'I-V-vi-IV',
+  'ii-V-I',
+  'I-IV-V',
+  'vi-IV-I-V',
+  '12-bar-blues',
 ] as const;
 
 const TOOLS = [
@@ -389,6 +422,149 @@ const TOOLS = [
       required: ['notes'],
     },
   },
+  {
+    name: 'get_chord_notes',
+    description: 'Returns the notes of a chord given a root and chord type.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+        chord_type: {
+          type: 'string',
+          enum: [...CHORD_TYPE_ENUM],
+          description: 'Chord type',
+        },
+      },
+      required: ['root', 'chord_type'],
+    },
+  },
+  {
+    name: 'get_diatonic_chords',
+    description:
+      'Returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+        mode: {
+          type: 'string',
+          enum: [...MODE_ENUM],
+          description: 'Mode name',
+        },
+      },
+      required: ['root', 'mode'],
+    },
+  },
+  {
+    name: 'get_chord_by_degree',
+    description:
+      'Returns the diatonic chord at a specific scale degree (1-7) for a key/mode.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        degree: { type: 'integer', description: 'Scale degree (1-7)' },
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+        mode: {
+          type: 'string',
+          enum: [...MODE_ENUM],
+          description: 'Mode name',
+        },
+      },
+      required: ['degree', 'root', 'mode'],
+    },
+  },
+  {
+    name: 'get_available_inversions',
+    description:
+      'Returns the valid inversion numbers for a chord type, based on its note count.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        chord_type: {
+          type: 'string',
+          enum: [...CHORD_TYPE_ENUM],
+          description: 'Chord type',
+        },
+      },
+      required: ['chord_type'],
+    },
+  },
+  {
+    name: 'get_chord_inversion',
+    description:
+      "Reorders a chord's notes so the given inversion's chord tone is lowest.",
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+        chord_type: {
+          type: 'string',
+          enum: [...CHORD_TYPE_ENUM],
+          description: 'Chord type',
+        },
+        inversion: {
+          type: 'integer',
+          description:
+            'Inversion number (0-4, valid range depends on chord type)',
+        },
+      },
+      required: ['root', 'chord_type', 'inversion'],
+    },
+  },
+  {
+    name: 'get_progression_in_key',
+    description:
+      'Renders a named catalog progression as chords in a given key, in order. Always Ionian (major) internally.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        progression_id: {
+          type: 'string',
+          enum: [...PROGRESSION_ID_ENUM],
+          description: 'Catalog progression ID',
+        },
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+      },
+      required: ['progression_id', 'root'],
+    },
+  },
+  {
+    name: 'get_roman_numeral',
+    description:
+      'Returns the roman numeral for a scale degree in a mode - case and suffix reflect diatonic triad quality.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        degree: { type: 'integer', description: 'Scale degree (1-7)' },
+        mode: {
+          type: 'string',
+          enum: [...MODE_ENUM],
+          description: 'Mode name',
+        },
+      },
+      required: ['degree', 'mode'],
+    },
+  },
 ];
 
 export const server = new Server(
@@ -439,6 +615,20 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleGetFlats(safeArgs);
     case 'get_enharmonic_labels':
       return handleGetEnharmonicLabels(safeArgs);
+    case 'get_chord_notes':
+      return handleGetChordNotes(safeArgs);
+    case 'get_diatonic_chords':
+      return handleGetDiatonicChords(safeArgs);
+    case 'get_chord_by_degree':
+      return handleGetChordByDegree(safeArgs);
+    case 'get_available_inversions':
+      return handleGetAvailableInversions(safeArgs);
+    case 'get_chord_inversion':
+      return handleGetChordInversion(safeArgs);
+    case 'get_progression_in_key':
+      return handleGetProgressionInKey(safeArgs);
+    case 'get_roman_numeral':
+      return handleGetRomanNumeral(safeArgs);
     default:
       return {
         content: [{ type: 'text' as const, text: `Unknown tool: "${name}"` }],
