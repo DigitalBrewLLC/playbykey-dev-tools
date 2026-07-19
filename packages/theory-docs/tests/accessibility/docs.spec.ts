@@ -7,6 +7,8 @@ const PAGES = [
   { name: 'Engine', path: '/theory/engine/' },
   { name: 'Intervals', path: '/theory/intervals/' },
   { name: 'Scales', path: '/theory/scales/' },
+  { name: 'Chords', path: '/theory/chords/' },
+  { name: 'Progressions', path: '/theory/progressions/' },
   { name: 'Constants', path: '/theory/constants/' },
 ];
 

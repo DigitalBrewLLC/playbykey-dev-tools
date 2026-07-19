@@ -1,0 +1,39 @@
+---
+title: Chords
+description: Compute chord notes, diatonic chords, and inversions across 11 chord types in @playbykey/theory
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: 'Chords | @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:description
+      content: 'Compute chord notes, diatonic chords, and inversions across 11 chord types in @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:url
+      content: 'https://theory-engine.docs.playbykey.com/theory/chords/'
+  - tag: meta
+    attrs:
+      property: og:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+---
+
+import ChordsPlayground from '../../../components/playgrounds/ChordsPlayground';
+
+The chords module computes chord notes and diatonic chord relationships across 11 chord types: triads (`'major-triad'`, `'minor-triad'`, `'diminished-triad'`, `'augmented-triad'`), 7th chords (`'major-7th'`, `'minor-7th'`, `'dominant-7th'`), 6th chords (`'major-6th'`, `'minor-6th'`), and 9th chords (`'major-9th'`, `'minor-9th'`).
+
+`getChordNotes(root, chordType)` returns the notes of any chord type built on a root, using its fixed semitone-offset shape.
+
+`getDiatonicChords(root, mode)` returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order - defaulting to Ionian (major) when no mode is given. `getChordByDegree(degree, root, mode)` is its single-chord counterpart, returning just the chord at one scale degree (1-7).
+
+`getAvailableInversions(chordType)` returns the valid inversion numbers for a chord type, based on its note count - a triad has 3 (`0-2`), a 9th chord has 5 (`0-4`). `getChordInversion(chord, inversion)` reorders a chord's notes so the given inversion's chord tone is lowest, throwing a `RangeError` if the inversion is out of range for that chord's type.
+
+## Live Playground
+
+<ChordsPlayground client:load />

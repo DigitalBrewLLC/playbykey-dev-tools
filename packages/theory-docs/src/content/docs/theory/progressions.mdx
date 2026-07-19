@@ -1,0 +1,37 @@
+---
+title: Progressions
+description: Render a fixed catalog of 5 named chord progressions in any key, and label scale degrees with roman numerals in @playbykey/theory
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: 'Progressions | @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:description
+      content: 'Render a fixed catalog of 5 named chord progressions in any key, and label scale degrees with roman numerals in @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:url
+      content: 'https://theory-engine.docs.playbykey.com/theory/progressions/'
+  - tag: meta
+    attrs:
+      property: og:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+---
+
+import ProgressionsPlayground from '../../../components/playgrounds/ProgressionsPlayground';
+
+The progressions module renders a fixed catalog of 5 named chord progressions - `I-V-vi-IV` (the "pop" progression), `ii-V-I` (jazz cadence), `I-IV-V` (three-chord/blues-rock), `vi-IV-I-V` (the "axis" progression), and `12-bar-blues` (standard 12-bar form) - and labels scale degrees with correctly-cased roman numerals.
+
+`getProgressionInKey(progressionId, root)` transposes a catalog progression into any key, returning its chords in order. It always renders against Ionian (major) internally - the catalog progressions are defined by major-key roman numerals, so an arbitrary mode would produce chord qualities that contradict what each progression's name means.
+
+`getRomanNumeral(degree, mode)` is a more general labeling utility: given a scale degree (1-7) and a mode, it returns the roman numeral reflecting that degree's diatonic triad quality - uppercase for major (`"I"`), lowercase for minor (`"ii"`), lowercase with a `°` suffix for diminished (`"vii°"`). Unlike `getProgressionInKey`, it works in any mode, since it's just labeling a scale degree's quality rather than rendering one of the fixed catalog progressions.
+
+## Live Playground
+
+<ProgressionsPlayground client:load />

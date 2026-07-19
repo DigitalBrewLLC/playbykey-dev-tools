@@ -112,6 +112,8 @@ export default defineConfig({
             { label: 'Keys & Modes', slug: 'theory/engine' },
             { label: 'Intervals', slug: 'theory/intervals' },
             { label: 'Scales', slug: 'theory/scales' },
+            { label: 'Chords', slug: 'theory/chords' },
+            { label: 'Progressions', slug: 'theory/progressions' },
             { label: 'Constants', slug: 'theory/constants' },
           ],
         },
