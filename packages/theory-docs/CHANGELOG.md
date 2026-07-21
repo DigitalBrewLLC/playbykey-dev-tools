@@ -7,6 +7,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.4.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.3.0...theory-docs-v1.4.0) (2026-07-21)
+
+
+### Features
+
+* **theory-docs:** add Chords and Progressions docs pages ([5c3669a](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/5c3669a049f4fa7cbe210c64a33734c08dd521c8))
+
+
+### Bug Fixes
+
+* **theory-docs:** add Chords and Progressions to the /mcp/ tool reference ([a9e33ac](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/a9e33ac75db76902ebce7ead63d22f72cb4faa35))
+* **theory-docs:** remove unsafe numeric cast in ChordsPlayground ([c2432a9](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/c2432a96fa863d88991ded3c45d51827b49e6669))
+* **theory-docs:** return Chord objects from playground results, tighten prose ([9697811](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/96978118b1f4dac37c504a7fb22b372bf8211f15))
+
 ## [1.3.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.2.1...theory-docs-v1.3.0) (2026-07-15)
 
 

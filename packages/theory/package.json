@@ -1,6 +1,6 @@
 {
   "name": "@playbykey/theory",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Zero-dependency TypeScript music theory engine for scales, modes, intervals, and key relationships.",
   "keywords": [
     "music-theory",
