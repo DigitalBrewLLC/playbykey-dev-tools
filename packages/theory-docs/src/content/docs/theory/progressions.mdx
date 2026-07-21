@@ -26,11 +26,17 @@ head:
 
 import ProgressionsPlayground from '../../../components/playgrounds/ProgressionsPlayground';
 
-The progressions module renders a fixed catalog of 5 named chord progressions - `I-V-vi-IV` (the "pop" progression), `ii-V-I` (jazz cadence), `I-IV-V` (three-chord/blues-rock), `vi-IV-I-V` (the "axis" progression), and `12-bar-blues` (standard 12-bar form) - and labels scale degrees with correctly-cased roman numerals.
+The progressions module renders a fixed catalog of 5 named chord progressions and labels scale degrees with correctly-cased roman numerals:
 
-`getProgressionInKey(progressionId, root)` transposes a catalog progression into any key, returning its chords in order. It always renders against Ionian (major) internally - the catalog progressions are defined by major-key roman numerals, so an arbitrary mode would produce chord qualities that contradict what each progression's name means.
+- `I-V-vi-IV` - the "pop" progression
+- `ii-V-I` - jazz cadence
+- `I-IV-V` - three-chord/blues-rock
+- `vi-IV-I-V` - the "axis" progression
+- `12-bar-blues` - standard 12-bar form
 
-`getRomanNumeral(degree, mode)` is a more general labeling utility: given a scale degree (1-7) and a mode, it returns the roman numeral reflecting that degree's diatonic triad quality - uppercase for major (`"I"`), lowercase for minor (`"ii"`), lowercase with a `°` suffix for diminished (`"vii°"`). Unlike `getProgressionInKey`, it works in any mode, since it's just labeling a scale degree's quality rather than rendering one of the fixed catalog progressions.
+`getRomanNumeral(degree, mode)` returns the roman numeral for a scale degree (1-7) in a mode, reflecting that degree's diatonic triad quality - uppercase for major (`"I"`), lowercase for minor (`"ii"`), lowercase with a `°` suffix for diminished (`"vii°"`).
+
+`getProgressionInKey(progressionId, root)` transposes a catalog progression into any key, returning its chords in order.
 
 ## Live Playground
 

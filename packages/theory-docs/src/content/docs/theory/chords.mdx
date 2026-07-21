@@ -26,13 +26,18 @@ head:
 
 import ChordsPlayground from '../../../components/playgrounds/ChordsPlayground';
 
-The chords module computes chord notes and diatonic chord relationships across 11 chord types: triads (`'major-triad'`, `'minor-triad'`, `'diminished-triad'`, `'augmented-triad'`), 7th chords (`'major-7th'`, `'minor-7th'`, `'dominant-7th'`), 6th chords (`'major-6th'`, `'minor-6th'`), and 9th chords (`'major-9th'`, `'minor-9th'`).
+The chords module computes chord notes and diatonic chord relationships across 11 chord types:
 
-`getChordNotes(root, chordType)` returns the notes of any chord type built on a root, using its fixed semitone-offset shape.
+- **Triads**: `major-triad`, `minor-triad`, `diminished-triad`, `augmented-triad`
+- **7th chords**: `major-7th`, `minor-7th`, `dominant-7th`
+- **6th chords**: `major-6th`, `minor-6th`
+- **9th chords**: `major-9th`, `minor-9th`
 
-`getDiatonicChords(root, mode)` returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order - defaulting to Ionian (major) when no mode is given. `getChordByDegree(degree, root, mode)` is its single-chord counterpart, returning just the chord at one scale degree (1-7).
+`getChordNotes(root, chordType)` returns the notes of any chord type built on a root.
 
-`getAvailableInversions(chordType)` returns the valid inversion numbers for a chord type, based on its note count - a triad has 3 (`0-2`), a 9th chord has 5 (`0-4`). `getChordInversion(chord, inversion)` reorders a chord's notes so the given inversion's chord tone is lowest, throwing a `RangeError` if the inversion is out of range for that chord's type.
+`getDiatonicChords(root, mode)` returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order (defaults to Ionian/major). `getChordByDegree(degree, root, mode)` returns just the chord at one degree (1-7).
+
+`getAvailableInversions(chordType)` returns the valid inversion numbers for a chord type - a triad has 3 (`0-2`), a 9th chord has 5 (`0-4`). `getChordInversion(chord, inversion)` reorders a chord's notes so the given inversion's tone is lowest, throwing a `RangeError` if the inversion is out of range for that chord's type.
 
 ## Live Playground
 

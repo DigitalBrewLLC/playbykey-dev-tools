@@ -45,10 +45,8 @@ const ProgressionsPlayground = () => {
       <FunctionCard
         name="getProgressionInKey"
         signature="getProgressionInKey(progressionId: ProgressionId, root: Note): Chord[]"
-        description="Renders a named catalog progression as chords in a given key, in order. Always Ionian (major) internally."
-        result={progressionChords
-          .map((chord) => `${chord.root} ${chord.type}`)
-          .join(', ')}
+        description="Renders a named catalog progression as chords in a given key, in order."
+        result={progressionChords}
       >
         <ProgressionIdSelect
           value={progressionId}
