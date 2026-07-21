@@ -60,7 +60,7 @@ const getRomanNumeral = (
   return formatNumeralForQuality(numeral, type);
 };
 
-/** Renders a named catalog progression as chords in a given key, in order. Always Ionian (major) internally - the catalog progressions are defined by major-key roman numerals, so an arbitrary mode would produce chord qualities that contradict what each progression's name means. */
+/** Renders a named catalog progression as chords in a given key, in order. The catalog progressions are defined by major-key roman numerals, so an arbitrary mode would produce chord qualities that contradict what each progression's name means. */
 const getProgressionInKey = (
   progressionId: ProgressionId,
   root: Note
