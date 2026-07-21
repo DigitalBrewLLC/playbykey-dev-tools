@@ -76,7 +76,14 @@ const getChordInversion = (chord: Chord, inversion: ChordInversion): Note[] => {
   return [...notes.slice(inversion), ...notes.slice(0, inversion)];
 };
 
-/** The 4 triad ChordTypes - classifyTriadType only ever matches against these, never the 7th/6th/9th shapes also defined in CHORD_DEFINITIONS. */
+/**
+ * The 4 triad ChordTypes - classifyTriadType only ever matches against these,
+ * never the 7th/6th/9th shapes also defined in CHORD_DEFINITIONS. Augmented
+ * is included even though none of the 7 major-scale modes ever produce one
+ * (so that branch has no current caller and no test can reach it) - kept
+ * intentionally so classification stays correct if this is ever called
+ * against a scale where it does occur, not left in by oversight.
+ */
 const TRIAD_TYPES: readonly ChordType[] = [
   ChordTypes.MajorTriad,
   ChordTypes.MinorTriad,
@@ -146,11 +153,11 @@ const getChordByDegree = (
   mode: ModeName = Modes.Ionian
 ): Chord => {
   const diatonicChords = getDiatonicChords(root, mode);
-  const chord = diatonicChords[degree - 1];
-  if (chord === undefined) {
+  try {
+    return elementAt(diatonicChords, degree - 1);
+  } catch {
     throw new RangeError(`Degree ${degree} is out of range (expected 1-7)`);
   }
-  return chord;
 };
 
 export type { ChordDefinition };

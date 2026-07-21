@@ -49,6 +49,26 @@ describe('getProgressionInKey', () => {
       { root: 'G', type: 'major-triad' },
     ]);
   });
+
+  it('renders 12-bar-blues in C with the correct repeated-degree sequence', () => {
+    const chords = getProgressionInKey('12-bar-blues', 'C');
+    expect(chords).toHaveLength(12);
+    expect(chords.map((c) => c.root)).toEqual([
+      'C',
+      'C',
+      'C',
+      'C',
+      'F',
+      'F',
+      'C',
+      'C',
+      'G',
+      'F',
+      'C',
+      'C',
+    ]);
+    expect(chords.every((c) => c.type === 'major-triad')).toBe(true);
+  });
 });
 
 describe('getRomanNumeral', () => {

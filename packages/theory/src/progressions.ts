@@ -1,5 +1,6 @@
 import { getChordByDegree } from './chords';
 import { ChordTypes, Modes, ProgressionIds } from './constants';
+import { elementAt } from './engine';
 import type { Chord, ChordType, ModeName, Note, ProgressionId } from './types';
 
 interface ProgressionDefinition {
@@ -29,7 +30,16 @@ const ROMAN_NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'] as const;
 /** Reference root used only to read off a degree's triad quality - the answer is the same for any root, since quality depends on mode alone. */
 const QUALITY_REFERENCE_ROOT: Note = 'C';
 
-/** One formatter per triad quality - table-driven to match the codebase's definitions-table convention, and easier to scan/extend than a branch-per-quality if-chain. Only the 4 triad qualities are ever passed in (getChordByDegree/getDiatonicChords never return a 7th/6th/9th quality), so this is intentionally not a full Record<ChordType, ...>. */
+/**
+ * One formatter per triad quality - table-driven to match the codebase's
+ * definitions-table convention, and easier to scan/extend than a
+ * branch-per-quality if-chain. Only the 4 triad qualities are ever passed in
+ * (getChordByDegree/getDiatonicChords never return a 7th/6th/9th quality),
+ * so this is intentionally not a full Record<ChordType, ...>. The augmented
+ * entry has no current caller (none of the 7 major-scale modes produce an
+ * augmented triad) - kept intentionally for correctness if that ever
+ * changes, not left in by oversight.
+ */
 const NUMERAL_FORMATTERS: Partial<
   Record<ChordType, (numeral: string) => string>
 > = {
@@ -52,8 +62,10 @@ const getRomanNumeral = (
   degree: number,
   mode: ModeName = Modes.Ionian
 ): string => {
-  const numeral = ROMAN_NUMERALS[degree - 1];
-  if (numeral === undefined) {
+  let numeral: string;
+  try {
+    numeral = elementAt(ROMAN_NUMERALS, degree - 1);
+  } catch {
     throw new RangeError(`Degree ${degree} is out of range (expected 1-7)`);
   }
   const { type } = getChordByDegree(degree, QUALITY_REFERENCE_ROOT, mode);
