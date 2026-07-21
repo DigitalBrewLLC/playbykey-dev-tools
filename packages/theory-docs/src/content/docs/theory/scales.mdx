@@ -1,6 +1,6 @@
 ---
 title: Scales
-description: Compute blues scale, pentatonic, harmonic minor, and derived scale note sets in @playbykey/theory
+description: Compute blues scale, pentatonic, harmonic minor, melodic minor, and bebop derived scale note sets in @playbykey/theory
 head:
   - tag: meta
     attrs:
@@ -9,7 +9,7 @@ head:
   - tag: meta
     attrs:
       property: og:description
-      content: 'Compute blues scale, pentatonic, harmonic minor, and derived scale note sets in @playbykey/theory'
+      content: 'Compute blues scale, pentatonic, harmonic minor, melodic minor, and bebop derived scale note sets in @playbykey/theory'
   - tag: meta
     attrs:
       property: og:url
@@ -26,11 +26,22 @@ head:
 
 import ScalesPlayground from '../../../components/playgrounds/ScalesPlayground';
 
-The scales module computes note sets for six scale types: `'major'`, `'chromatic'`, `'pentatonic-major'`, `'pentatonic-minor'`, `'blues'`, and `'harmonic-minor'`. Each type is described by a `SCALE_DEFINITIONS` entry that records its label and how its notes are derived.
+The scales module computes note sets across 7 scale types:
+
+- `major`, `chromatic`, `pentatonic-major`, `pentatonic-minor`, `blues`, `harmonic-minor`
+- `melodic-minor`
+
+Each type is described by a `SCALE_DEFINITIONS` entry that records its label and how its notes are derived.
 
 `getScaleNotes(root, scaleType)` is the general-purpose entry point - it accepts any `ScaleType` and returns the corresponding notes for a given root. `getScaleDegrees(scaleType)` is its numeric parallel, returning the active scale-degree numbers instead of note names.
 
 `getScaleDegree(root, scaleType, note)` returns the 1-based position of a note within a scale, or `null` if the note is absent. `isNoteInScale(root, scaleType, note)` is its boolean shorthand - both work across every `ScaleType`.
+
+`getMelodicMinorNotes(root)` returns the ascending melodic minor scale. `getMelodicMinorModeNotes(root, mode)` returns any of its 7 modes - Dorian b2, Lydian augmented, Lydian dominant, Mixolydian b6, Locrian nat2, and Altered, alongside melodic minor itself.
+
+`getHarmonicMinorModeNotes(root, mode)` returns harmonic minor's modes - currently just Phrygian dominant, alongside harmonic minor itself.
+
+`getBebopScaleNotes(root, type)` returns one of 3 bebop scale variants - dominant, major, or dorian - each an 8-note scale with a chromatic passing tone.
 
 ## Live Playground
 

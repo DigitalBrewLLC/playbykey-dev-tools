@@ -9,6 +9,8 @@ const PAGES = [
   { name: 'Scales', path: '/theory/scales/' },
   { name: 'Chords', path: '/theory/chords/' },
   { name: 'Progressions', path: '/theory/progressions/' },
+  { name: 'Transposition', path: '/theory/transposition/' },
+  { name: 'MIDI & Frequency', path: '/theory/midi-frequency/' },
   { name: 'Constants', path: '/theory/constants/' },
 ];
 

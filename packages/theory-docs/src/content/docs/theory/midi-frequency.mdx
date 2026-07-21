@@ -1,0 +1,35 @@
+---
+title: MIDI & Frequency
+description: Convert between notes, MIDI note numbers, and frequencies in @playbykey/theory
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: 'MIDI & Frequency | @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:description
+      content: 'Convert between notes, MIDI note numbers, and frequencies in @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:url
+      content: 'https://theory-engine.docs.playbykey.com/theory/midi-frequency/'
+  - tag: meta
+    attrs:
+      property: og:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+---
+
+import MidiFrequencyPlayground from '../../../components/playgrounds/MidiFrequencyPlayground';
+
+`noteToMidi(note, octave)` returns the MIDI note number for a note at a given octave, using scientific pitch notation (C4 = middle C = MIDI 60). `midiToNote(midiNumber)` is its inverse, returning the note and octave for a MIDI number.
+
+`noteToFrequency(note, octave)` returns the frequency in Hz for a note at a given octave, using equal temperament tuning (A4 = 440Hz).
+
+## Live Playground
+
+<MidiFrequencyPlayground client:load />

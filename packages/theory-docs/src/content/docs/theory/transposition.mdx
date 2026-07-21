@@ -1,0 +1,33 @@
+---
+title: Transposition
+description: Transpose note sets between keys in @playbykey/theory
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: 'Transposition | @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:description
+      content: 'Transpose note sets between keys in @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:url
+      content: 'https://theory-engine.docs.playbykey.com/theory/transposition/'
+  - tag: meta
+    attrs:
+      property: og:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+---
+
+import TranspositionPlayground from '../../../components/playgrounds/TranspositionPlayground';
+
+`transpose(notes, fromRoot, toRoot)` shifts a set of notes from one key to another by the semitone distance between the two roots.
+
+## Live Playground
+
+<TranspositionPlayground client:load />
