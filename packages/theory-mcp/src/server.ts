@@ -20,6 +20,10 @@ import {
   handleBuildNoteMap,
   handleGetScaleDegree,
   handleIsNoteInScale,
+  handleGetMelodicMinorNotes,
+  handleGetMelodicMinorModeNotes,
+  handleGetHarmonicMinorModeNotes,
+  handleGetBebopScaleNotes,
 } from './tools/scales.js';
 import {
   handleResolveInterval,
@@ -41,6 +45,12 @@ import {
   handleGetProgressionInKey,
   handleGetRomanNumeral,
 } from './tools/progressions.js';
+import { handleTranspose } from './tools/transpose.js';
+import {
+  handleNoteToMidi,
+  handleMidiToNote,
+  handleNoteToFrequency,
+} from './tools/midi.js';
 import { CHROMATIC_NOTES, FlatNotes } from '@playbykey/theory';
 
 const SHARP_NOTE_ENUM = CHROMATIC_NOTES;
@@ -64,6 +74,28 @@ const SCALE_TYPE_ENUM = [
   'pentatonic-minor',
   'blues',
   'harmonic-minor',
+  'melodic-minor',
+] as const;
+
+const MELODIC_MINOR_MODE_ENUM = [
+  'melodic-minor',
+  'dorian-b2',
+  'lydian-augmented',
+  'lydian-dominant',
+  'mixolydian-b6',
+  'locrian-nat2',
+  'altered',
+] as const;
+
+const HARMONIC_MINOR_MODE_ENUM = [
+  'harmonic-minor',
+  'phrygian-dominant',
+] as const;
+
+const BEBOP_SCALE_TYPE_ENUM = [
+  'bebop-dominant',
+  'bebop-major',
+  'bebop-dorian',
 ] as const;
 
 const INTERVAL_ID_ENUM = [
@@ -240,7 +272,7 @@ const TOOLS = [
   {
     name: 'get_scale_notes',
     description:
-      'Returns the notes of a scale by type. Covers all ScaleType values: major, blues, pentatonic-major, pentatonic-minor, harmonic-minor, chromatic.',
+      'Returns the notes of a scale by type. Covers all ScaleType values: major, blues, pentatonic-major, pentatonic-minor, harmonic-minor, melodic-minor, chromatic.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -565,6 +597,164 @@ const TOOLS = [
       required: ['degree'],
     },
   },
+  {
+    name: 'transpose',
+    description:
+      'Transposes a set of notes from one key to another by the semitone distance between the two roots.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...NOTE_ENUM] },
+          description: 'Notes to transpose',
+        },
+        from_root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root the notes are currently in',
+        },
+        to_root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root to transpose the notes into',
+        },
+      },
+      required: ['notes', 'from_root', 'to_root'],
+    },
+  },
+  {
+    name: 'note_to_midi',
+    description:
+      'Returns the MIDI note number for a note at a given octave, using scientific pitch notation (C4 = middle C = MIDI 60).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        note: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Note',
+        },
+        octave: {
+          type: 'integer',
+          description: 'Octave (scientific pitch notation, typically -1 to 9)',
+        },
+      },
+      required: ['note', 'octave'],
+    },
+  },
+  {
+    name: 'midi_to_note',
+    description:
+      'Returns the note and octave for a given MIDI note number - the inverse of note_to_midi.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        midi_number: {
+          type: 'integer',
+          description: 'MIDI note number (0-127)',
+        },
+      },
+      required: ['midi_number'],
+    },
+  },
+  {
+    name: 'note_to_frequency',
+    description:
+      'Returns the frequency in Hz for a note at a given octave, equal temperament, A4 = 440Hz.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        note: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Note',
+        },
+        octave: {
+          type: 'integer',
+          description: 'Octave (scientific pitch notation, typically -1 to 9)',
+        },
+      },
+      required: ['note', 'octave'],
+    },
+  },
+  {
+    name: 'get_melodic_minor_notes',
+    description:
+      'Returns the seven notes of the ascending melodic minor scale for a root.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+      },
+      required: ['root'],
+    },
+  },
+  {
+    name: 'get_melodic_minor_mode_notes',
+    description: 'Returns the seven notes of a melodic minor mode for a root.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+        mode: {
+          type: 'string',
+          enum: [...MELODIC_MINOR_MODE_ENUM],
+          description: 'Melodic minor mode',
+        },
+      },
+      required: ['root', 'mode'],
+    },
+  },
+  {
+    name: 'get_harmonic_minor_mode_notes',
+    description: 'Returns the seven notes of a harmonic minor mode for a root.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+        mode: {
+          type: 'string',
+          enum: [...HARMONIC_MINOR_MODE_ENUM],
+          description: 'Harmonic minor mode',
+        },
+      },
+      required: ['root', 'mode'],
+    },
+  },
+  {
+    name: 'get_bebop_scale_notes',
+    description:
+      'Returns the eight notes of a bebop scale variant for a root - a diatonic scale plus one chromatic passing tone.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+        type: {
+          type: 'string',
+          enum: [...BEBOP_SCALE_TYPE_ENUM],
+          description: 'Bebop scale variant',
+        },
+      },
+      required: ['root', 'type'],
+    },
+  },
 ];
 
 export const server = new Server(
@@ -629,6 +819,22 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleGetProgressionInKey(safeArgs);
     case 'get_roman_numeral':
       return handleGetRomanNumeral(safeArgs);
+    case 'transpose':
+      return handleTranspose(safeArgs);
+    case 'note_to_midi':
+      return handleNoteToMidi(safeArgs);
+    case 'midi_to_note':
+      return handleMidiToNote(safeArgs);
+    case 'note_to_frequency':
+      return handleNoteToFrequency(safeArgs);
+    case 'get_melodic_minor_notes':
+      return handleGetMelodicMinorNotes(safeArgs);
+    case 'get_melodic_minor_mode_notes':
+      return handleGetMelodicMinorModeNotes(safeArgs);
+    case 'get_harmonic_minor_mode_notes':
+      return handleGetHarmonicMinorModeNotes(safeArgs);
+    case 'get_bebop_scale_notes':
+      return handleGetBebopScaleNotes(safeArgs);
     default:
       return {
         content: [{ type: 'text' as const, text: `Unknown tool: "${name}"` }],

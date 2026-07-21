@@ -120,7 +120,7 @@ Example: `get_key_signature("D")` → 2 sharps
 ### Scales
 
 **`get_scale_notes`** - Returns the notes of a scale by type.  
-Input: `root` (note), `scale_type` (one of: `major`, `blues`, `pentatonic-major`, `pentatonic-minor`, `harmonic-minor`, `chromatic`)  
+Input: `root` (note), `scale_type` (one of: `major`, `blues`, `pentatonic-major`, `pentatonic-minor`, `harmonic-minor`, `melodic-minor`, `chromatic`)  
 Example: `get_scale_notes("A", "blues")` → A, C, D, D#, E, G
 
 **`build_note_map`** - Returns structured per-note data: note name, scale degree (1-based), and semitone offset from root.  
@@ -134,6 +134,22 @@ Example: `get_scale_degree("C", "major", "E")` → 3
 **`is_note_in_scale`** - Returns whether a note belongs to a given scale.  
 Input: `root` (note), `scale_type`, `note` (note)  
 Example: `is_note_in_scale("C", "major", "F#")` → false
+
+**`get_melodic_minor_notes`** - Returns the seven notes of the ascending melodic minor scale.  
+Input: `root` (note)  
+Example: `get_melodic_minor_notes("C")` → C, D, D#, F, G, A, B
+
+**`get_melodic_minor_mode_notes`** - Returns the seven notes of a melodic minor mode.  
+Input: `root` (note), `mode` (one of: `melodic-minor`, `dorian-b2`, `lydian-augmented`, `lydian-dominant`, `mixolydian-b6`, `locrian-nat2`, `altered`)  
+Example: `get_melodic_minor_mode_notes("C", "altered")` → C, C#, D#, E, F#, G#, A#
+
+**`get_harmonic_minor_mode_notes`** - Returns the seven notes of a harmonic minor mode.  
+Input: `root` (note), `mode` (one of: `harmonic-minor`, `phrygian-dominant`)  
+Example: `get_harmonic_minor_mode_notes("C", "phrygian-dominant")` → C, C#, E, F, G, G#, A#
+
+**`get_bebop_scale_notes`** - Returns the eight notes of a bebop scale variant - a diatonic scale plus one chromatic passing tone.  
+Input: `root` (note), `type` (one of: `bebop-dominant`, `bebop-major`, `bebop-dorian`)  
+Example: `get_bebop_scale_notes("C", "bebop-dominant")` → C, D, E, F, G, A, A#, B
 
 ### Intervals
 
@@ -190,6 +206,26 @@ Example: `get_progression_in_key("I-V-vi-IV", "C")` → C major-triad, G major-t
 **`get_roman_numeral`** - Returns the roman numeral for a scale degree in a mode - case and suffix reflect diatonic triad quality.  
 Input: `degree` (integer 1-7), `mode` (mode name, optional - defaults to ionian)  
 Example: `get_roman_numeral(7, "ionian")` → vii°
+
+### Transposition
+
+**`transpose`** - Transposes a set of notes from one key to another by the semitone distance between the two roots.  
+Input: `notes` (array of notes), `from_root` (note), `to_root` (note)  
+Example: `transpose(["C", "E", "G"], "C", "D")` → D, F#, A
+
+### MIDI & Frequency
+
+**`note_to_midi`** - Returns the MIDI note number for a note at a given octave, using scientific pitch notation (C4 = middle C = MIDI 60).  
+Input: `note` (note), `octave` (integer)  
+Example: `note_to_midi("C", 4)` → 60
+
+**`midi_to_note`** - Returns the note and octave for a given MIDI note number - the inverse of `note_to_midi`.  
+Input: `midi_number` (integer 0-127)  
+Example: `midi_to_note(69)` → A4
+
+**`note_to_frequency`** - Returns the frequency in Hz for a note at a given octave, equal temperament, A4 = 440Hz.  
+Input: `note` (note), `octave` (integer)  
+Example: `note_to_frequency("A", 4)` → 440 Hz
 
 ## License
 

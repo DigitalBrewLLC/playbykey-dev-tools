@@ -4,6 +4,10 @@ import {
   handleBuildNoteMap,
   handleGetScaleDegree,
   handleIsNoteInScale,
+  handleGetMelodicMinorNotes,
+  handleGetMelodicMinorModeNotes,
+  handleGetHarmonicMinorModeNotes,
+  handleGetBebopScaleNotes,
 } from '../src/tools/scales.js';
 
 describe('handleGetScaleNotes', () => {
@@ -132,5 +136,74 @@ describe('handleIsNoteInScale', () => {
       note: 'G',
     });
     expect(result.content[0]?.text).toContain('Invalid scale type');
+  });
+});
+
+describe('handleGetMelodicMinorNotes', () => {
+  it('returns the ascending melodic minor scale for C', () => {
+    const result = handleGetMelodicMinorNotes({ root: 'C' });
+    expect(result.content[0]?.text).toContain('["C","D","D#","F","G","A","B"]');
+  });
+
+  it('returns error for invalid root', () => {
+    const result = handleGetMelodicMinorNotes({ root: 'X' });
+    expect(result.content[0]?.text).toContain('Invalid note');
+  });
+});
+
+describe('handleGetMelodicMinorModeNotes', () => {
+  it('returns the altered mode for C', () => {
+    const result = handleGetMelodicMinorModeNotes({
+      root: 'C',
+      mode: 'altered',
+    });
+    expect(result.content[0]?.text).toContain(
+      '["C","C#","D#","E","F#","G#","A#"]'
+    );
+  });
+
+  it('returns error for invalid mode', () => {
+    const result = handleGetMelodicMinorModeNotes({
+      root: 'C',
+      mode: 'bogus',
+    });
+    expect(result.content[0]?.text).toContain('Invalid melodic minor mode');
+  });
+});
+
+describe('handleGetHarmonicMinorModeNotes', () => {
+  it('returns the phrygian dominant mode for C', () => {
+    const result = handleGetHarmonicMinorModeNotes({
+      root: 'C',
+      mode: 'phrygian-dominant',
+    });
+    expect(result.content[0]?.text).toContain(
+      '["C","C#","E","F","G","G#","A#"]'
+    );
+  });
+
+  it('returns error for invalid mode', () => {
+    const result = handleGetHarmonicMinorModeNotes({
+      root: 'C',
+      mode: 'bogus',
+    });
+    expect(result.content[0]?.text).toContain('Invalid harmonic minor mode');
+  });
+});
+
+describe('handleGetBebopScaleNotes', () => {
+  it('returns the 8-note bebop dominant scale for C', () => {
+    const result = handleGetBebopScaleNotes({
+      root: 'C',
+      type: 'bebop-dominant',
+    });
+    expect(result.content[0]?.text).toContain(
+      '["C","D","E","F","G","A","A#","B"]'
+    );
+  });
+
+  it('returns error for invalid type', () => {
+    const result = handleGetBebopScaleNotes({ root: 'C', type: 'bogus' });
+    expect(result.content[0]?.text).toContain('Invalid bebop scale type');
   });
 });

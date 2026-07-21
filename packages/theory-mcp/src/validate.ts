@@ -5,6 +5,9 @@ import {
   ScaleTypes,
   ChordTypes,
   ProgressionIds,
+  MelodicMinorModes,
+  HarmonicMinorModes,
+  BebopScaleTypes,
 } from '@playbykey/theory';
 import type {
   Note,
@@ -14,6 +17,9 @@ import type {
   ChordType,
   ChordInversion,
   ProgressionId,
+  MelodicMinorModeName,
+  HarmonicMinorModeName,
+  BebopScaleType,
 } from '@playbykey/theory';
 
 type ValidateOk<T> = { ok: true; value: T };
@@ -42,6 +48,14 @@ const PROGRESSION_ID_SET = new Set<string>(Object.values(ProgressionIds));
 function isProgressionId(value: string): value is ProgressionId {
   return PROGRESSION_ID_SET.has(value);
 }
+
+const MELODIC_MINOR_MODE_SET = new Set<string>(
+  Object.values(MelodicMinorModes)
+);
+const HARMONIC_MINOR_MODE_SET = new Set<string>(
+  Object.values(HarmonicMinorModes)
+);
+const BEBOP_SCALE_TYPE_SET = new Set<string>(Object.values(BebopScaleTypes));
 
 export function validateNote(value: unknown): ValidateResult<Note> {
   if (typeof value === 'string') {
@@ -156,5 +170,71 @@ export function validateProgressionId(
   return {
     ok: false,
     error: `Invalid progression ID: "${String(value)}". Must be one of: ${Object.values(ProgressionIds).join(', ')}.`,
+  };
+}
+
+export function validateOctave(value: unknown): ValidateResult<number> {
+  if (
+    typeof value === 'number' &&
+    Number.isInteger(value) &&
+    value >= -1 &&
+    value <= 9
+  ) {
+    return { ok: true, value };
+  }
+  return {
+    ok: false,
+    error: `Invalid octave: "${String(value)}". Must be an integer, typically -1 to 9 (scientific pitch notation).`,
+  };
+}
+
+export function validateMidiNumber(value: unknown): ValidateResult<number> {
+  if (
+    typeof value === 'number' &&
+    Number.isInteger(value) &&
+    value >= 0 &&
+    value <= 127
+  ) {
+    return { ok: true, value };
+  }
+  return {
+    ok: false,
+    error: `Invalid MIDI number: "${String(value)}". Must be an integer from 0 to 127.`,
+  };
+}
+
+export function validateMelodicMinorMode(
+  value: unknown
+): ValidateResult<MelodicMinorModeName> {
+  if (typeof value === 'string' && MELODIC_MINOR_MODE_SET.has(value)) {
+    return { ok: true, value: value as MelodicMinorModeName };
+  }
+  return {
+    ok: false,
+    error: `Invalid melodic minor mode: "${String(value)}". Must be one of: ${Object.values(MelodicMinorModes).join(', ')}.`,
+  };
+}
+
+export function validateHarmonicMinorMode(
+  value: unknown
+): ValidateResult<HarmonicMinorModeName> {
+  if (typeof value === 'string' && HARMONIC_MINOR_MODE_SET.has(value)) {
+    return { ok: true, value: value as HarmonicMinorModeName };
+  }
+  return {
+    ok: false,
+    error: `Invalid harmonic minor mode: "${String(value)}". Must be one of: ${Object.values(HarmonicMinorModes).join(', ')}.`,
+  };
+}
+
+export function validateBebopScaleType(
+  value: unknown
+): ValidateResult<BebopScaleType> {
+  if (typeof value === 'string' && BEBOP_SCALE_TYPE_SET.has(value)) {
+    return { ok: true, value: value as BebopScaleType };
+  }
+  return {
+    ok: false,
+    error: `Invalid bebop scale type: "${String(value)}". Must be one of: ${Object.values(BebopScaleTypes).join(', ')}.`,
   };
 }
