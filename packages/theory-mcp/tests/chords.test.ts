@@ -45,6 +45,12 @@ describe('handleGetDiatonicChords', () => {
     const result = handleGetDiatonicChords({ root: 'C', mode: 'bogus' });
     expect(result.content[0]?.text).toContain('Invalid mode');
   });
+
+  it('defaults to ionian when mode is omitted', () => {
+    const withMode = handleGetDiatonicChords({ root: 'C', mode: 'ionian' });
+    const omitted = handleGetDiatonicChords({ root: 'C' });
+    expect(omitted.content[0]?.text).toEqual(withMode.content[0]?.text);
+  });
 });
 
 describe('handleGetChordByDegree', () => {
@@ -65,6 +71,16 @@ describe('handleGetChordByDegree', () => {
       mode: 'ionian',
     });
     expect(result.content[0]?.text).toContain('Invalid degree');
+  });
+
+  it('defaults to ionian when mode is omitted', () => {
+    const withMode = handleGetChordByDegree({
+      degree: 5,
+      root: 'C',
+      mode: 'ionian',
+    });
+    const omitted = handleGetChordByDegree({ degree: 5, root: 'C' });
+    expect(omitted.content[0]?.text).toEqual(withMode.content[0]?.text);
   });
 });
 

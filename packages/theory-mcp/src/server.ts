@@ -457,10 +457,10 @@ const TOOLS = [
         mode: {
           type: 'string',
           enum: [...MODE_ENUM],
-          description: 'Mode name',
+          description: 'Mode name (defaults to ionian if omitted)',
         },
       },
-      required: ['root', 'mode'],
+      required: ['root'],
     },
   },
   {
@@ -479,10 +479,10 @@ const TOOLS = [
         mode: {
           type: 'string',
           enum: [...MODE_ENUM],
-          description: 'Mode name',
+          description: 'Mode name (defaults to ionian if omitted)',
         },
       },
-      required: ['degree', 'root', 'mode'],
+      required: ['degree', 'root'],
     },
   },
   {
@@ -559,10 +559,10 @@ const TOOLS = [
         mode: {
           type: 'string',
           enum: [...MODE_ENUM],
-          description: 'Mode name',
+          description: 'Mode name (defaults to ionian if omitted)',
         },
       },
-      required: ['degree', 'mode'],
+      required: ['degree'],
     },
   },
 ];

@@ -4,10 +4,11 @@ import {
   getChordByDegree,
   getAvailableInversions,
   getChordInversion,
+  Modes,
 } from '@playbykey/theory';
 import {
   validateNote,
-  validateModeName,
+  validateOptionalModeName,
   validateChordType,
   validateInversion,
   validateDegree,
@@ -35,13 +36,14 @@ export function handleGetDiatonicChords(
   args: Record<string, unknown>
 ): ToolContent {
   const root = validateNote(args['root']);
-  const mode = validateModeName(args['mode']);
+  const mode = validateOptionalModeName(args['mode']);
   if (!root.ok) return errorContent(root.error);
   if (!mode.ok) return errorContent(mode.error);
 
+  const resolvedMode = mode.value ?? Modes.Ionian;
   const chords = getDiatonicChords(root.value, mode.value);
-  const summary = `Diatonic chords in ${root.value} ${mode.value} (${chords.length} chords) - see the chords field for each chord's root and type.`;
-  return okContent(summary, { root: root.value, mode: mode.value, chords });
+  const summary = `Diatonic chords in ${root.value} ${resolvedMode} (${chords.length} chords) - see the chords field for each chord's root and type.`;
+  return okContent(summary, { root: root.value, mode: resolvedMode, chords });
 }
 
 export function handleGetChordByDegree(
@@ -49,17 +51,18 @@ export function handleGetChordByDegree(
 ): ToolContent {
   const degree = validateDegree(args['degree']);
   const root = validateNote(args['root']);
-  const mode = validateModeName(args['mode']);
+  const mode = validateOptionalModeName(args['mode']);
   if (!degree.ok) return errorContent(degree.error);
   if (!root.ok) return errorContent(root.error);
   if (!mode.ok) return errorContent(mode.error);
 
+  const resolvedMode = mode.value ?? Modes.Ionian;
   const chord = getChordByDegree(degree.value, root.value, mode.value);
-  const summary = `Degree ${degree.value} of ${root.value} ${mode.value}: ${chord.root} ${chord.type}`;
+  const summary = `Degree ${degree.value} of ${root.value} ${resolvedMode}: ${chord.root} ${chord.type}`;
   return okContent(summary, {
     degree: degree.value,
     root: root.value,
-    mode: mode.value,
+    mode: resolvedMode,
     chord,
   });
 }
