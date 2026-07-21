@@ -59,7 +59,9 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 ## Scales
 
-`SCALE_DEFINITIONS` maps each scale kind to a label and how its notes are computed. `getScaleNotes` uses this to return the correct note set for any root and scale type.
+`SCALE_DEFINITIONS` maps each scale kind to a label and how its notes are computed - `ScaleTypes` now includes `MelodicMinor` alongside the original 6 types. `getScaleNotes` uses this to return the correct note set for any root and scale type.
+
+`MelodicMinorModes` names the 7 melodic minor modes, `HarmonicMinorModes` names harmonic minor's supported modes, and `BebopScaleTypes` names the 3 bebop scale variants - `getMelodicMinorModeNotes`, `getHarmonicMinorModeNotes`, and `getBebopScaleNotes` use these. See the [Scales](/theory/scales/) page for the live playground covering all of them.
 
 <ScalesExplorer client:load />
 
