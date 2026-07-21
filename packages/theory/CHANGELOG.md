@@ -7,6 +7,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.4.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.3.0...theory-v1.4.0) (2026-07-21)
+
+
+### Features
+
+* **theory:** add chords and progressions modules ([bde446c](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/bde446cf749171df95a3ca56ecf46b6bae018782))
+
+
+### Bug Fixes
+
+* **theory:** use elementAt for degree bounds checks, expand test coverage ([e4aeee2](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/e4aeee2be4690f906e888c6e0f2862241ed725c1))
+
 ## [1.3.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.2.0...theory-v1.3.0) (2026-07-15)
 
 

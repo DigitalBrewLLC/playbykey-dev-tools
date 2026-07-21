@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.1.1...theory-mcp-v1.2.0) (2026-07-21)
+
+
+### Features
+
+* **theory-mcp:** add chords and progressions MCP tools ([5a1aed3](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/5a1aed3a2b28bfe4a651f8f7f48c5315dd6e3e99))
+
+
+### Bug Fixes
+
+* **theory-mcp:** make mode optional to match engine defaults ([29639c6](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/29639c694f04a56402c6d671dc290ebe6643aa4e))
+* **theory-mcp:** simplify chord/progression tool summaries ([0646f31](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/0646f31dde5dd6d950c8fd1b4c51205ef3818370))
+
 ## [1.1.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.1.0...theory-mcp-v1.1.1) (2026-07-15)
 
 
