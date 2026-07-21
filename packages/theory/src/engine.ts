@@ -118,6 +118,21 @@ const getSemitoneDistance = (from: Note, to: Note): number => {
 };
 
 /**
+ * Transposes a set of notes from one key to another by the semitone
+ * distance between the two roots.
+ *
+ * Example: transpose(['C', 'E', 'G'], 'C', 'D') => ['D', 'F#', 'A']
+ */
+const transpose = (
+  notes: readonly Note[],
+  fromRoot: Note,
+  toRoot: Note
+): Note[] => {
+  const shift = getSemitoneDistance(fromRoot, toRoot);
+  return notes.map((note) => noteAtIndex(getNoteIndex(note) + shift));
+};
+
+/**
  * Returns the 7 notes of a diatonic mode for a given root.
  *
  * Example: getModeNotes('C', 'ionian') => ['C', 'D', 'E', 'F', 'G', 'A', 'B']
@@ -334,6 +349,7 @@ export {
   getNoteIndex,
   noteAtIndex,
   getSemitoneDistance,
+  transpose,
   getModeNotes,
   getModalRoot,
   getParentScaleModes,

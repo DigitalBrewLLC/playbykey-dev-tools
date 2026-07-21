@@ -21,6 +21,9 @@ export type {
   Chord,
   ChordInversion,
   ProgressionId,
+  MelodicMinorModeName,
+  HarmonicMinorModeName,
+  BebopScaleType,
 } from './types';
 
 export {
@@ -39,6 +42,9 @@ export {
   FlatNotes,
   ChordTypes,
   ProgressionIds,
+  MelodicMinorModes,
+  HarmonicMinorModes,
+  BebopScaleTypes,
 } from './constants';
 
 export {
@@ -46,6 +52,7 @@ export {
   MODE_INTERVALS,
   MODE_SEMITONE_OFFSETS,
   getSemitoneDistance,
+  transpose,
   getModeNotes,
   getModalRoot,
   getParentScaleModes,
@@ -95,6 +102,14 @@ export {
   isNoteInScale,
   buildNoteMap,
   notesFromSemitoneOffsets,
+  MELODIC_MINOR_SEMITONE_OFFSETS,
+  MELODIC_MINOR_MODE_SEMITONE_OFFSETS,
+  HARMONIC_MINOR_MODE_SEMITONE_OFFSETS,
+  BEBOP_SCALE_SEMITONE_OFFSETS,
+  getMelodicMinorNotes,
+  getMelodicMinorModeNotes,
+  getHarmonicMinorModeNotes,
+  getBebopScaleNotes,
 } from './scales';
 
 export type { ChordDefinition } from './chords';
@@ -115,3 +130,5 @@ export {
   getProgressionInKey,
   getRomanNumeral,
 } from './progressions';
+
+export { noteToMidi, midiToNote, noteToFrequency } from './midi';

@@ -3,6 +3,9 @@ import {
   CHROMATIC_NOTES,
   ScaleTypes,
   PentatonicTypes,
+  MelodicMinorModes,
+  HarmonicMinorModes,
+  BebopScaleTypes,
 } from './constants';
 import { elementAt, getNoteIndex, getModeNotes, noteAtIndex } from './engine';
 import type {
@@ -11,6 +14,9 @@ import type {
   NoteDisplayInfo,
   PentatonicType,
   ScaleType,
+  MelodicMinorModeName,
+  HarmonicMinorModeName,
+  BebopScaleType,
 } from './types';
 
 /** Semitone offsets from the tonic for the six-note blues scale. */
@@ -36,6 +42,40 @@ const HARMONIC_MINOR_PARENT_MODE: ModeName = Modes.Aeolian;
 
 /** Harmonic minor raises the 7th degree by one semitone. */
 const HARMONIC_MINOR_RAISE_DEGREE = 7;
+
+/** Semitone offsets from the tonic for the ascending melodic minor scale. */
+const MELODIC_MINOR_SEMITONE_OFFSETS = [0, 2, 3, 5, 7, 9, 11] as const;
+
+/** Semitone offsets for each melodic minor mode, keyed by MelodicMinorModeName. */
+const MELODIC_MINOR_MODE_SEMITONE_OFFSETS: Record<
+  MelodicMinorModeName,
+  readonly number[]
+> = {
+  [MelodicMinorModes.MelodicMinor]: [0, 2, 3, 5, 7, 9, 11],
+  [MelodicMinorModes.DorianB2]: [0, 1, 3, 5, 7, 9, 10],
+  [MelodicMinorModes.LydianAugmented]: [0, 2, 4, 6, 8, 9, 11],
+  [MelodicMinorModes.LydianDominant]: [0, 2, 4, 6, 7, 9, 10],
+  [MelodicMinorModes.MixolydianB6]: [0, 2, 4, 5, 7, 8, 10],
+  [MelodicMinorModes.LocrianNat2]: [0, 2, 3, 5, 6, 8, 10],
+  [MelodicMinorModes.Altered]: [0, 1, 3, 4, 6, 8, 10],
+};
+
+/** Semitone offsets for each harmonic minor mode currently supported, keyed by HarmonicMinorModeName. */
+const HARMONIC_MINOR_MODE_SEMITONE_OFFSETS: Record<
+  HarmonicMinorModeName,
+  readonly number[]
+> = {
+  [HarmonicMinorModes.HarmonicMinor]: [0, 2, 3, 5, 7, 8, 11],
+  [HarmonicMinorModes.PhrygianDominant]: [0, 1, 4, 5, 7, 8, 10],
+};
+
+/** Semitone offsets for each bebop scale variant, keyed by BebopScaleType. */
+const BEBOP_SCALE_SEMITONE_OFFSETS: Record<BebopScaleType, readonly number[]> =
+  {
+    [BebopScaleTypes.BebopDominant]: [0, 2, 4, 5, 7, 9, 10, 11],
+    [BebopScaleTypes.BebopMajor]: [0, 2, 4, 5, 7, 8, 9, 11],
+    [BebopScaleTypes.BebopDorian]: [0, 2, 3, 4, 5, 7, 9, 10],
+  };
 
 interface ScaleDefinition {
   label: string;
@@ -67,6 +107,10 @@ const SCALE_DEFINITIONS: Record<ScaleType, ScaleDefinition> = {
     parentMode: HARMONIC_MINOR_PARENT_MODE,
     raiseDegree: HARMONIC_MINOR_RAISE_DEGREE,
   },
+  [ScaleTypes.MelodicMinor]: {
+    label: 'Melodic minor scale',
+    semitoneOffsets: MELODIC_MINOR_SEMITONE_OFFSETS,
+  },
 };
 
 const notesFromSemitoneOffsets = (
@@ -89,6 +133,28 @@ const getHarmonicMinorNotes = (root: Note): Note[] => {
 
 const getBluesNotes = (root: Note): Note[] =>
   notesFromSemitoneOffsets(root, BLUES_SEMITONE_OFFSETS);
+
+/** Returns the seven notes of the ascending melodic minor scale for a root. */
+const getMelodicMinorNotes = (root: Note): Note[] =>
+  notesFromSemitoneOffsets(root, MELODIC_MINOR_SEMITONE_OFFSETS);
+
+/** Returns the seven notes of a melodic minor mode for a root. */
+const getMelodicMinorModeNotes = (
+  root: Note,
+  mode: MelodicMinorModeName
+): Note[] =>
+  notesFromSemitoneOffsets(root, MELODIC_MINOR_MODE_SEMITONE_OFFSETS[mode]);
+
+/** Returns the seven notes of a harmonic minor mode for a root. Produces the same result as getHarmonicMinorNotes when mode is 'harmonic-minor'. */
+const getHarmonicMinorModeNotes = (
+  root: Note,
+  mode: HarmonicMinorModeName
+): Note[] =>
+  notesFromSemitoneOffsets(root, HARMONIC_MINOR_MODE_SEMITONE_OFFSETS[mode]);
+
+/** Returns the eight notes of a bebop scale variant for a root - each is a diatonic scale plus one chromatic passing tone. */
+const getBebopScaleNotes = (root: Note, type: BebopScaleType): Note[] =>
+  notesFromSemitoneOffsets(root, BEBOP_SCALE_SEMITONE_OFFSETS[type]);
 
 /**
  * Returns the five notes of a pentatonic scale rooted at `root`.
@@ -219,4 +285,12 @@ export {
   isNoteInScale,
   buildNoteMap,
   notesFromSemitoneOffsets,
+  MELODIC_MINOR_SEMITONE_OFFSETS,
+  MELODIC_MINOR_MODE_SEMITONE_OFFSETS,
+  HARMONIC_MINOR_MODE_SEMITONE_OFFSETS,
+  BEBOP_SCALE_SEMITONE_OFFSETS,
+  getMelodicMinorNotes,
+  getMelodicMinorModeNotes,
+  getHarmonicMinorModeNotes,
+  getBebopScaleNotes,
 };
