@@ -34,8 +34,11 @@ describe('handleGetDiatonicChords', () => {
   it('returns the 7 diatonic chords for C ionian', () => {
     const result = handleGetDiatonicChords({ root: 'C', mode: 'ionian' });
     const text = result.content[0]?.text ?? '';
-    expect(text).toContain('C major-triad');
-    expect(text).toContain('B diminished-triad');
+    const parsed = JSON.parse(text.slice(text.indexOf('{'))) as {
+      chords: Array<{ root: string; type: string }>;
+    };
+    expect(parsed.chords[0]).toEqual({ root: 'C', type: 'major-triad' });
+    expect(parsed.chords[6]).toEqual({ root: 'B', type: 'diminished-triad' });
   });
 
   it('returns error for invalid mode', () => {

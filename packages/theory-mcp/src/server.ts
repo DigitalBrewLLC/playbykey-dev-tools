@@ -530,7 +530,7 @@ const TOOLS = [
   {
     name: 'get_progression_in_key',
     description:
-      'Renders a named catalog progression as chords in a given key, in order. Always Ionian (major) internally.',
+      'Renders a named catalog progression as chords in a given key, in order.',
     inputSchema: {
       type: 'object',
       properties: {

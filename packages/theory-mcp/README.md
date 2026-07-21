@@ -183,7 +183,7 @@ Example: `get_chord_inversion("C", "major-triad", 1)` → E, G, C
 
 ### Progressions
 
-**`get_progression_in_key`** - Renders a named catalog progression as chords in a given key, in order. Always Ionian (major) internally.  
+**`get_progression_in_key`** - Renders a named catalog progression as chords in a given key, in order.  
 Input: `progression_id` (one of `I-V-vi-IV`, `ii-V-I`, `I-IV-V`, `vi-IV-I-V`, `12-bar-blues`), `root` (note)  
 Example: `get_progression_in_key("I-V-vi-IV", "C")` → C major-triad, G major-triad, A minor-triad, F major-triad
 

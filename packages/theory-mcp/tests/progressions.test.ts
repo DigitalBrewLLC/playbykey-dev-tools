@@ -11,10 +11,15 @@ describe('handleGetProgressionInKey', () => {
       root: 'C',
     });
     const text = result.content[0]?.text ?? '';
-    expect(text).toContain('C major-triad');
-    expect(text).toContain('G major-triad');
-    expect(text).toContain('A minor-triad');
-    expect(text).toContain('F major-triad');
+    const parsed = JSON.parse(text.slice(text.indexOf('{'))) as {
+      chords: Array<{ root: string; type: string }>;
+    };
+    expect(parsed.chords).toEqual([
+      { root: 'C', type: 'major-triad' },
+      { root: 'G', type: 'major-triad' },
+      { root: 'A', type: 'minor-triad' },
+      { root: 'F', type: 'major-triad' },
+    ]);
   });
 
   it('returns error for invalid progression ID', () => {
