@@ -7,16 +7,33 @@ import {
   getScaleDegrees,
   getScaleNotes,
   isNoteInScale,
+  getMelodicMinorNotes,
+  getMelodicMinorModeNotes,
+  getHarmonicMinorModeNotes,
+  getBebopScaleNotes,
   Notes,
   PentatonicTypes,
   ScaleTypes,
+  MelodicMinorModes,
+  HarmonicMinorModes,
+  BebopScaleTypes,
 } from '@playbykey/theory';
-import type { Note, PentatonicType, ScaleType } from '@playbykey/theory';
+import type {
+  Note,
+  PentatonicType,
+  ScaleType,
+  MelodicMinorModeName,
+  HarmonicMinorModeName,
+  BebopScaleType,
+} from '@playbykey/theory';
 import { FieldSelect } from '../ui/FieldSelect';
 import { FunctionCard } from '../ui/FunctionCard';
 import { NoteSelect } from '../ui/NoteSelect';
 import { NoteSpellingResults } from '../ui/NoteSpellingResults';
 import { ScaleTypeSelect } from '../ui/ScaleTypeSelect';
+import { MelodicMinorModeSelect } from '../ui/MelodicMinorModeSelect';
+import { HarmonicMinorModeSelect } from '../ui/HarmonicMinorModeSelect';
+import { BebopScaleTypeSelect } from '../ui/BebopScaleTypeSelect';
 
 const containerStyle = {
   display: 'flex',
@@ -43,6 +60,22 @@ const ScalesPlayground = () => {
   const [inScaleType, setInScaleType] = useState<ScaleType>(ScaleTypes.Major);
   const [inScaleNote, setInScaleNote] = useState<Note>(Notes.E);
 
+  const [melodicMinorRoot, setMelodicMinorRoot] = useState<Note>(Notes.C);
+  const [melodicMinorModeRoot, setMelodicMinorModeRoot] = useState<Note>(
+    Notes.C
+  );
+  const [melodicMinorMode, setMelodicMinorMode] =
+    useState<MelodicMinorModeName>(MelodicMinorModes.Altered);
+  const [harmonicMinorModeRoot, setHarmonicMinorModeRoot] = useState<Note>(
+    Notes.C
+  );
+  const [harmonicMinorMode, setHarmonicMinorMode] =
+    useState<HarmonicMinorModeName>(HarmonicMinorModes.PhrygianDominant);
+  const [bebopRoot, setBebopRoot] = useState<Note>(Notes.C);
+  const [bebopType, setBebopType] = useState<BebopScaleType>(
+    BebopScaleTypes.BebopDominant
+  );
+
   const bluesNotes = useMemo(() => getBluesNotes(bluesRoot), [bluesRoot]);
   const harmonicMinorNotes = useMemo(
     () => getHarmonicMinorNotes(harmonicRoot),
@@ -67,6 +100,22 @@ const ScalesPlayground = () => {
   const inScaleResult = useMemo(
     () => isNoteInScale(inScaleRoot, inScaleType, inScaleNote),
     [inScaleRoot, inScaleType, inScaleNote]
+  );
+  const melodicMinorNotes = useMemo(
+    () => getMelodicMinorNotes(melodicMinorRoot),
+    [melodicMinorRoot]
+  );
+  const melodicMinorModeNotes = useMemo(
+    () => getMelodicMinorModeNotes(melodicMinorModeRoot, melodicMinorMode),
+    [melodicMinorModeRoot, melodicMinorMode]
+  );
+  const harmonicMinorModeNotes = useMemo(
+    () => getHarmonicMinorModeNotes(harmonicMinorModeRoot, harmonicMinorMode),
+    [harmonicMinorModeRoot, harmonicMinorMode]
+  );
+  const bebopScaleNotes = useMemo(
+    () => getBebopScaleNotes(bebopRoot, bebopType),
+    [bebopRoot, bebopType]
   );
 
   return (
@@ -162,6 +211,63 @@ const ScalesPlayground = () => {
           onChange={setInScaleNote}
           label="Note"
         />
+      </FunctionCard>
+
+      <FunctionCard
+        name="getMelodicMinorNotes"
+        signature="getMelodicMinorNotes(root: Note): Note[]"
+        description="Returns the seven notes of the ascending melodic minor scale for a root."
+        result={melodicMinorNotes}
+      >
+        <NoteSelect
+          value={melodicMinorRoot}
+          onChange={setMelodicMinorRoot}
+          label="Root"
+        />
+      </FunctionCard>
+
+      <FunctionCard
+        name="getMelodicMinorModeNotes"
+        signature="getMelodicMinorModeNotes(root: Note, mode: MelodicMinorModeName): Note[]"
+        description="Returns the seven notes of a melodic minor mode for a root."
+        result={melodicMinorModeNotes}
+      >
+        <NoteSelect
+          value={melodicMinorModeRoot}
+          onChange={setMelodicMinorModeRoot}
+          label="Root"
+        />
+        <MelodicMinorModeSelect
+          value={melodicMinorMode}
+          onChange={setMelodicMinorMode}
+        />
+      </FunctionCard>
+
+      <FunctionCard
+        name="getHarmonicMinorModeNotes"
+        signature="getHarmonicMinorModeNotes(root: Note, mode: HarmonicMinorModeName): Note[]"
+        description="Returns the seven notes of a harmonic minor mode for a root."
+        result={harmonicMinorModeNotes}
+      >
+        <NoteSelect
+          value={harmonicMinorModeRoot}
+          onChange={setHarmonicMinorModeRoot}
+          label="Root"
+        />
+        <HarmonicMinorModeSelect
+          value={harmonicMinorMode}
+          onChange={setHarmonicMinorMode}
+        />
+      </FunctionCard>
+
+      <FunctionCard
+        name="getBebopScaleNotes"
+        signature="getBebopScaleNotes(root: Note, type: BebopScaleType): Note[]"
+        description="Returns the eight notes of a bebop scale variant for a root - a diatonic scale plus one chromatic passing tone."
+        result={bebopScaleNotes}
+      >
+        <NoteSelect value={bebopRoot} onChange={setBebopRoot} label="Root" />
+        <BebopScaleTypeSelect value={bebopType} onChange={setBebopType} />
       </FunctionCard>
     </div>
   );

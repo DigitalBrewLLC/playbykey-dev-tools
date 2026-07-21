@@ -114,6 +114,8 @@ export default defineConfig({
             { label: 'Scales', slug: 'theory/scales' },
             { label: 'Chords', slug: 'theory/chords' },
             { label: 'Progressions', slug: 'theory/progressions' },
+            { label: 'Transposition', slug: 'theory/transposition' },
+            { label: 'MIDI & Frequency', slug: 'theory/midi-frequency' },
             { label: 'Constants', slug: 'theory/constants' },
           ],
         },
