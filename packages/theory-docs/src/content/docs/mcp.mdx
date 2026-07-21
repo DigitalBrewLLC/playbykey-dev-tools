@@ -124,10 +124,14 @@ import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
 
 | Tool | Input | Returns |
 | --- | --- | --- |
-| `get_scale_notes` | `root`, `scale_type` | Notes of a scale (`major`, `blues`, `pentatonic-major`, `pentatonic-minor`, `harmonic-minor`, `chromatic`) |
+| `get_scale_notes` | `root`, `scale_type` | Notes of a scale (`major`, `blues`, `pentatonic-major`, `pentatonic-minor`, `harmonic-minor`, `melodic-minor`, `chromatic`) |
 | `build_note_map` | `root`, `scale_type` | Per-note data: note name, scale degree, semitone offset from root |
 | `get_scale_degree` | `root`, `scale_type`, `note` | 1-based scale degree of a note, or null if not in scale |
 | `is_note_in_scale` | `root`, `scale_type`, `note` | Whether a note belongs to a scale |
+| `get_melodic_minor_notes` | `root` | The 7 notes of the ascending melodic minor scale |
+| `get_melodic_minor_mode_notes` | `root`, `mode` | The 7 notes of a melodic minor mode |
+| `get_harmonic_minor_mode_notes` | `root`, `mode` | The 7 notes of a harmonic minor mode |
+| `get_bebop_scale_notes` | `root`, `type` | The 8 notes of a bebop scale variant |
 
 ### Intervals
 
@@ -160,3 +164,17 @@ import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
 | --- | --- | --- |
 | `get_progression_in_key` | `progression_id`, `root` | A named catalog progression rendered as chords in a given key |
 | `get_roman_numeral` | `degree`, `mode` (optional, defaults to ionian) | Roman numeral for a scale degree in a mode |
+
+### Transposition
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `transpose` | `notes`, `from_root`, `to_root` | Notes shifted from one key to another by the semitone distance between the roots |
+
+### MIDI & Frequency
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `note_to_midi` | `note`, `octave` | MIDI note number, using scientific pitch notation (C4 = middle C = MIDI 60) |
+| `midi_to_note` | `midi_number` | Note and octave for a MIDI number - the inverse of `note_to_midi` |
+| `note_to_frequency` | `note`, `octave` | Frequency in Hz, equal temperament (A4 = 440Hz) |
