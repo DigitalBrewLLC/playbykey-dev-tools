@@ -87,4 +87,21 @@ describe('getChordInversion', () => {
     const chord = { root: 'C', type: 'major-triad' } as const;
     expect(() => getChordInversion(chord, 3)).toThrow(RangeError);
   });
+
+  it('rotates a C dominant 7th chord (4 notes) through all 4 inversions', () => {
+    const chord = { root: 'C', type: 'dominant-7th' } as const;
+    expect(getChordInversion(chord, 0)).toEqual(['C', 'E', 'G', 'A#']);
+    expect(getChordInversion(chord, 1)).toEqual(['E', 'G', 'A#', 'C']);
+    expect(getChordInversion(chord, 2)).toEqual(['G', 'A#', 'C', 'E']);
+    expect(getChordInversion(chord, 3)).toEqual(['A#', 'C', 'E', 'G']);
+  });
+
+  it('rotates a C major 9th chord (5 notes) through all 5 inversions', () => {
+    const chord = { root: 'C', type: 'major-9th' } as const;
+    expect(getChordInversion(chord, 0)).toEqual(['C', 'E', 'G', 'B', 'D']);
+    expect(getChordInversion(chord, 1)).toEqual(['E', 'G', 'B', 'D', 'C']);
+    expect(getChordInversion(chord, 2)).toEqual(['G', 'B', 'D', 'C', 'E']);
+    expect(getChordInversion(chord, 3)).toEqual(['B', 'D', 'C', 'E', 'G']);
+    expect(getChordInversion(chord, 4)).toEqual(['D', 'C', 'E', 'G', 'B']);
+  });
 });
