@@ -60,7 +60,8 @@ type ScaleType =
   | 'pentatonic-major'
   | 'pentatonic-minor'
   | 'blues'
-  | 'harmonic-minor';
+  | 'harmonic-minor'
+  | 'melodic-minor';
 
 /** Pentatonic variant: major (degrees 1,2,3,5,6 of ionian) or minor (degrees 1,3,4,5,7 of aeolian). */
 type PentatonicType = 'pentatonic-major' | 'pentatonic-minor';
@@ -129,6 +130,22 @@ interface NoteDisplayInfo {
   semitoneOffset: number;
 }
 
+/** Modes derived from the melodic minor scale (ascending form). */
+type MelodicMinorModeName =
+  | 'melodic-minor'
+  | 'dorian-b2'
+  | 'lydian-augmented'
+  | 'lydian-dominant'
+  | 'mixolydian-b6'
+  | 'locrian-nat2'
+  | 'altered';
+
+/** Modes derived from the harmonic minor scale. Phrygian dominant is the only mode currently supported beyond the base scale. */
+type HarmonicMinorModeName = 'harmonic-minor' | 'phrygian-dominant';
+
+/** Bebop scale variants - 8-note scales with a chromatic passing tone. */
+type BebopScaleType = 'bebop-dominant' | 'bebop-major' | 'bebop-dorian';
+
 export type {
   Note,
   ModeName,
@@ -145,4 +162,7 @@ export type {
   Chord,
   ChordInversion,
   ProgressionId,
+  MelodicMinorModeName,
+  HarmonicMinorModeName,
+  BebopScaleType,
 };

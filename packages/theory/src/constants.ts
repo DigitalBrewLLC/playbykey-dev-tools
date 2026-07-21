@@ -11,6 +11,9 @@ import type {
   FlatNote,
   ChordType,
   ProgressionId,
+  MelodicMinorModeName,
+  HarmonicMinorModeName,
+  BebopScaleType,
 } from './types';
 
 /** All 12 chromatic notes with dot-notation access. Sharp notes use CSharp/DSharp style. */
@@ -77,7 +80,32 @@ const ScaleTypes = {
   PentatonicMinor: 'pentatonic-minor',
   Blues: 'blues',
   HarmonicMinor: 'harmonic-minor',
+  MelodicMinor: 'melodic-minor',
 } as const satisfies Record<string, ScaleType>;
+
+/** Named constants for each melodic minor mode. */
+const MelodicMinorModes = {
+  MelodicMinor: 'melodic-minor',
+  DorianB2: 'dorian-b2',
+  LydianAugmented: 'lydian-augmented',
+  LydianDominant: 'lydian-dominant',
+  MixolydianB6: 'mixolydian-b6',
+  LocrianNat2: 'locrian-nat2',
+  Altered: 'altered',
+} as const satisfies Record<string, MelodicMinorModeName>;
+
+/** Named constants for each harmonic minor mode currently supported. */
+const HarmonicMinorModes = {
+  HarmonicMinor: 'harmonic-minor',
+  PhrygianDominant: 'phrygian-dominant',
+} as const satisfies Record<string, HarmonicMinorModeName>;
+
+/** Named constants for each bebop scale variant. */
+const BebopScaleTypes = {
+  BebopDominant: 'bebop-dominant',
+  BebopMajor: 'bebop-major',
+  BebopDorian: 'bebop-dorian',
+} as const satisfies Record<string, BebopScaleType>;
 
 /** Named constants for pentatonic types. */
 const PentatonicTypes = {
@@ -249,4 +277,7 @@ export {
   SHARP_TO_FLAT_MAP,
   ChordTypes,
   ProgressionIds,
+  MelodicMinorModes,
+  HarmonicMinorModes,
+  BebopScaleTypes,
 };
