@@ -29,9 +29,6 @@ const containerStyle = {
 
 const DEGREES = [1, 2, 3, 4, 5, 6, 7] as const;
 
-const formatChord = (chord: { root: Note; type: ChordType }): string =>
-  `${chord.root} ${chord.type}`;
-
 const ChordsPlayground = () => {
   const [notesRoot, setNotesRoot] = useState<Note>(Notes.C);
   const [notesType, setNotesType] = useState<ChordType>(ChordTypes.MajorTriad);
@@ -107,7 +104,7 @@ const ChordsPlayground = () => {
         name="getDiatonicChords"
         signature="getDiatonicChords(root: Note, mode?: ModeName): Chord[]"
         description="Returns the 7 diatonic triads for a key/mode, one per scale degree."
-        result={diatonicChords.map(formatChord).join(', ')}
+        result={diatonicChords}
       >
         <NoteSelect
           value={diatonicRoot}
@@ -121,7 +118,7 @@ const ChordsPlayground = () => {
         name="getChordByDegree"
         signature="getChordByDegree(degree: number, root: Note, mode?: ModeName): Chord"
         description="Returns the diatonic chord at a specific scale degree (1-7)."
-        result={formatChord(chordByDegree)}
+        result={chordByDegree}
       >
         <FieldSelect
           label="Degree"
