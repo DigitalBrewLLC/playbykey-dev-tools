@@ -155,7 +155,14 @@ const ChordsPlayground = () => {
         <FieldSelect
           label="Inversion"
           value={String(inversion)}
-          onChange={(v) => setInversion(Number(v) as ChordInversion)}
+          onChange={(v) => {
+            const validInversion = invertAvailableInversions.find(
+              (i) => i === Number(v)
+            );
+            if (validInversion !== undefined) {
+              setInversion(validInversion);
+            }
+          }}
         >
           {invertAvailableInversions.map((i) => (
             <option key={i} value={i}>
