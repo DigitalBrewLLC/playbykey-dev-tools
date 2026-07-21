@@ -143,3 +143,20 @@ import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
 | `get_sharps` | `notes` (sharp or flat) | Notes normalized to canonical sharp spelling |
 | `get_flats` | `notes` (must be sharp-spelled) | Notes respelled as flats |
 | `get_enharmonic_labels` | `notes` (must be sharp-spelled) | Combined sharp/flat display labels (e.g. `"Db/C#"`) |
+
+### Chords
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `get_chord_notes` | `root`, `chord_type` | Notes of a chord type built on a root |
+| `get_diatonic_chords` | `root`, `mode` | The 7 diatonic triads for a key/mode, one per scale degree |
+| `get_chord_by_degree` | `degree`, `root`, `mode` | The diatonic chord at a specific scale degree (1-7) |
+| `get_available_inversions` | `chord_type` | Valid inversion numbers for a chord type |
+| `get_chord_inversion` | `root`, `chord_type`, `inversion` | Chord notes reordered so the given inversion's tone is lowest |
+
+### Progressions
+
+| Tool | Input | Returns |
+| --- | --- | --- |
+| `get_progression_in_key` | `progression_id`, `root` | A named catalog progression rendered as chords in a given key |
+| `get_roman_numeral` | `degree`, `mode` | Roman numeral for a scale degree in a mode |
