@@ -40,7 +40,7 @@ export function handleGetDiatonicChords(
   if (!mode.ok) return errorContent(mode.error);
 
   const chords = getDiatonicChords(root.value, mode.value);
-  const summary = `Diatonic chords in ${root.value} ${mode.value}: ${chords.map((c) => `${c.root} ${c.type}`).join(', ')}`;
+  const summary = `Diatonic chords in ${root.value} ${mode.value} (${chords.length} chords) - see the chords field for each chord's root and type.`;
   return okContent(summary, { root: root.value, mode: mode.value, chords });
 }
 

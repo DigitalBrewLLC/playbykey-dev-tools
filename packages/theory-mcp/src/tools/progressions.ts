@@ -16,7 +16,7 @@ export function handleGetProgressionInKey(
   if (!root.ok) return errorContent(root.error);
 
   const chords = getProgressionInKey(progressionId.value, root.value);
-  const summary = `${progressionId.value} in ${root.value}: ${chords.map((c) => `${c.root} ${c.type}`).join(', ')}`;
+  const summary = `${progressionId.value} in ${root.value} (${chords.length} chords) - see the chords field for each chord's root and type.`;
   return okContent(summary, {
     progressionId: progressionId.value,
     root: root.value,
