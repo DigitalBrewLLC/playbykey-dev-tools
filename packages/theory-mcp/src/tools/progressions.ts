@@ -1,7 +1,7 @@
-import { getProgressionInKey, getRomanNumeral } from '@playbykey/theory';
+import { getProgressionInKey, getRomanNumeral, Modes } from '@playbykey/theory';
 import {
   validateNote,
-  validateModeName,
+  validateOptionalModeName,
   validateProgressionId,
   validateDegree,
 } from '../validate.js';
@@ -28,15 +28,16 @@ export function handleGetRomanNumeral(
   args: Record<string, unknown>
 ): ToolContent {
   const degree = validateDegree(args['degree']);
-  const mode = validateModeName(args['mode']);
+  const mode = validateOptionalModeName(args['mode']);
   if (!degree.ok) return errorContent(degree.error);
   if (!mode.ok) return errorContent(mode.error);
 
+  const resolvedMode = mode.value ?? Modes.Ionian;
   const numeral = getRomanNumeral(degree.value, mode.value);
-  const summary = `Degree ${degree.value} in ${mode.value}: ${numeral}`;
+  const summary = `Degree ${degree.value} in ${resolvedMode}: ${numeral}`;
   return okContent(summary, {
     degree: degree.value,
-    mode: mode.value,
+    mode: resolvedMode,
     numeral,
   });
 }

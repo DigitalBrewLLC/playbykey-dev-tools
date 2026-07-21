@@ -54,4 +54,10 @@ describe('handleGetRomanNumeral', () => {
     const result = handleGetRomanNumeral({ degree: 1, mode: 'bogus' });
     expect(result.content[0]?.text).toContain('Invalid mode');
   });
+
+  it('defaults to ionian when mode is omitted', () => {
+    const withMode = handleGetRomanNumeral({ degree: 7, mode: 'ionian' });
+    const omitted = handleGetRomanNumeral({ degree: 7 });
+    expect(omitted.content[0]?.text).toEqual(withMode.content[0]?.text);
+  });
 });

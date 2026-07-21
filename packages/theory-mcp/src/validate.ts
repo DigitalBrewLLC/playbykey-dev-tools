@@ -63,6 +63,14 @@ export function validateModeName(value: unknown): ValidateResult<ModeName> {
   };
 }
 
+/** Like validateModeName, but treats an omitted mode as valid (undefined) rather than an error - for tools wrapping an engine function whose mode parameter defaults to Ionian. */
+export function validateOptionalModeName(
+  value: unknown
+): ValidateResult<ModeName | undefined> {
+  if (value === undefined) return { ok: true, value: undefined };
+  return validateModeName(value);
+}
+
 export function validateIntervalId(value: unknown): ValidateResult<IntervalId> {
   if (typeof value === 'string' && isIntervalId(value))
     return { ok: true, value };
