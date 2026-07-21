@@ -34,7 +34,7 @@ bun add @playbykey/theory
 **Agent / LLM context prompt:**
 
 ```text
-I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales). Zero dependencies, TypeScript-first, sharps-only Note type for type safety (C# not Db), flats fully supported for both input and output.
+I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales); getChordNotes, getDiatonicChords, getChordByDegree, getAvailableInversions, getChordInversion (11 chord types - triads, 7ths, 6ths, 9ths); getProgressionInKey, getRomanNumeral (5 catalog progressions, roman numeral labeling). Zero dependencies, TypeScript-first, sharps-only Note type for type safety (C# not Db), flats fully supported for both input and output.
 ```
 
 ## Quickstart
@@ -97,6 +97,8 @@ const backToSharps = getSharps(['Db', 'Eb', 'Gb']);
 - **Derived scales:** `getBluesNotes`, `getHarmonicMinorNotes`, `getPentatonicNotes`
 - **Type guards / parsers:** `isNote`, `isModeName`, `parseNote`, `parseNoteToken`, `parseModeName` (case-insensitive; `parseNote`/`parseNoteToken` also accept flat note names)
 - **Note spelling:** `getSharps`, `getFlats`, `getEnharmonicLabels`
+- **Chords:** `getChordNotes`, `getDiatonicChords`, `getChordByDegree`, `getAvailableInversions`, `getChordInversion` (11 chord types: triads, 7ths, 6ths, 9ths)
+- **Progressions:** `getProgressionInKey`, `getRomanNumeral` (5 catalog progressions, roman numeral labeling)
 
 **[Full API reference →](https://theory-engine.docs.playbykey.com)**
 

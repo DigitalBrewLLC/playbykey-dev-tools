@@ -63,6 +63,14 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 <ScalesExplorer client:load />
 
+## Chords
+
+`ChordTypes` names the 11 supported chord types (triads, 7ths, 6ths, 9ths). `CHORD_DEFINITIONS` maps each to a label and its semitone-offset shape - `getChordNotes` uses this to return a chord's notes for any root. See the [Chords](/theory/chords/) page for the live playground.
+
+## Progressions
+
+`ProgressionIds` names the 5 catalog progressions. `PROGRESSION_DEFINITIONS` maps each to a label and its scale-degree sequence - `getProgressionInKey` uses this to render a progression's chords in any key. See the [Progressions](/theory/progressions/) page for the live playground.
+
 ## Notation and display
 
 `buildNoteMap(root, scaleType)` returns one entry per in-scale note with `note`, `scaleDegree` (1-based), and `semitoneOffset` (0–11, distance from root). Notation is left to the consumer - use `entry.note` for letter labels or `String(entry.scaleDegree)` for numeric labels.
