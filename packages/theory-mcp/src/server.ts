@@ -51,7 +51,13 @@ import {
   handleMidiToNote,
   handleNoteToFrequency,
 } from './tools/midi.js';
-import { CHROMATIC_NOTES, FlatNotes } from '@playbykey/theory';
+import {
+  CHROMATIC_NOTES,
+  FlatNotes,
+  MelodicMinorModes,
+  HarmonicMinorModes,
+  BebopScaleTypes,
+} from '@playbykey/theory';
 
 const SHARP_NOTE_ENUM = CHROMATIC_NOTES;
 
@@ -77,26 +83,13 @@ const SCALE_TYPE_ENUM = [
   'melodic-minor',
 ] as const;
 
-const MELODIC_MINOR_MODE_ENUM = [
-  'melodic-minor',
-  'dorian-b2',
-  'lydian-augmented',
-  'lydian-dominant',
-  'mixolydian-b6',
-  'locrian-nat2',
-  'altered',
-] as const;
+const MELODIC_MINOR_MODE_ENUM = [...Object.values(MelodicMinorModes)] as const;
 
 const HARMONIC_MINOR_MODE_ENUM = [
-  'harmonic-minor',
-  'phrygian-dominant',
+  ...Object.values(HarmonicMinorModes),
 ] as const;
 
-const BEBOP_SCALE_TYPE_ENUM = [
-  'bebop-dominant',
-  'bebop-major',
-  'bebop-dorian',
-] as const;
+const BEBOP_SCALE_TYPE_ENUM = [...Object.values(BebopScaleTypes)] as const;
 
 const INTERVAL_ID_ENUM = [
   'half_step',
