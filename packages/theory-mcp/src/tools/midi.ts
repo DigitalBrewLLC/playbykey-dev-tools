@@ -13,6 +13,11 @@ export function handleNoteToMidi(args: Record<string, unknown>): ToolContent {
   if (!octave.ok) return errorContent(octave.error);
 
   const midiNumber = noteToMidi(note.value, octave.value);
+  if (midiNumber < 0 || midiNumber > 127) {
+    return errorContent(
+      `Invalid note/octave combination: ${note.value}${octave.value} is MIDI note ${midiNumber}, outside the valid MIDI range (0-127).`
+    );
+  }
   const summary = `${note.value}${octave.value} is MIDI note ${midiNumber}`;
   return okContent(summary, {
     note: note.value,

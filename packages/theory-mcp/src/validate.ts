@@ -57,6 +57,18 @@ const HARMONIC_MINOR_MODE_SET = new Set<string>(
 );
 const BEBOP_SCALE_TYPE_SET = new Set<string>(Object.values(BebopScaleTypes));
 
+function isMelodicMinorMode(value: string): value is MelodicMinorModeName {
+  return MELODIC_MINOR_MODE_SET.has(value);
+}
+
+function isHarmonicMinorMode(value: string): value is HarmonicMinorModeName {
+  return HARMONIC_MINOR_MODE_SET.has(value);
+}
+
+function isBebopScaleType(value: string): value is BebopScaleType {
+  return BEBOP_SCALE_TYPE_SET.has(value);
+}
+
 export function validateNote(value: unknown): ValidateResult<Note> {
   if (typeof value === 'string') {
     const parsed = parseNoteToken(value);
@@ -206,8 +218,8 @@ export function validateMidiNumber(value: unknown): ValidateResult<number> {
 export function validateMelodicMinorMode(
   value: unknown
 ): ValidateResult<MelodicMinorModeName> {
-  if (typeof value === 'string' && MELODIC_MINOR_MODE_SET.has(value)) {
-    return { ok: true, value: value as MelodicMinorModeName };
+  if (typeof value === 'string' && isMelodicMinorMode(value)) {
+    return { ok: true, value };
   }
   return {
     ok: false,
@@ -218,8 +230,8 @@ export function validateMelodicMinorMode(
 export function validateHarmonicMinorMode(
   value: unknown
 ): ValidateResult<HarmonicMinorModeName> {
-  if (typeof value === 'string' && HARMONIC_MINOR_MODE_SET.has(value)) {
-    return { ok: true, value: value as HarmonicMinorModeName };
+  if (typeof value === 'string' && isHarmonicMinorMode(value)) {
+    return { ok: true, value };
   }
   return {
     ok: false,
@@ -230,8 +242,8 @@ export function validateHarmonicMinorMode(
 export function validateBebopScaleType(
   value: unknown
 ): ValidateResult<BebopScaleType> {
-  if (typeof value === 'string' && BEBOP_SCALE_TYPE_SET.has(value)) {
-    return { ok: true, value: value as BebopScaleType };
+  if (typeof value === 'string' && isBebopScaleType(value)) {
+    return { ok: true, value };
   }
   return {
     ok: false,

@@ -26,6 +26,16 @@ describe('handleNoteToMidi', () => {
     const sharp = handleNoteToMidi({ note: 'C#', octave: 4 });
     expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
+
+  it('returns error-content, not an out-of-range MIDI number, for a note/octave combination above 127', () => {
+    const result = handleNoteToMidi({ note: 'B', octave: 9 });
+    expect(result.content[0]?.text).toContain('outside the valid MIDI range');
+  });
+
+  it('accepts the highest valid note/octave combination (G9 = MIDI 127)', () => {
+    const result = handleNoteToMidi({ note: 'G', octave: 9 });
+    expect(result.content[0]?.text).toContain('"midiNumber":127');
+  });
 });
 
 describe('handleMidiToNote', () => {
