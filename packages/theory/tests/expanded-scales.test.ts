@@ -35,6 +35,48 @@ describe('getMelodicMinorNotes', () => {
 });
 
 describe('getMelodicMinorModeNotes', () => {
+  it('returns melodic minor itself for the melodic-minor mode', () => {
+    expect(
+      getMelodicMinorModeNotes('C', MelodicMinorModes.MelodicMinor)
+    ).toEqual(getMelodicMinorNotes('C'));
+  });
+
+  it('returns the dorian b2 (2nd mode) rotation for C', () => {
+    expect(getMelodicMinorModeNotes('C', MelodicMinorModes.DorianB2)).toEqual([
+      'C',
+      'C#',
+      'D#',
+      'F',
+      'G',
+      'A',
+      'A#',
+    ]);
+  });
+
+  it('returns the lydian augmented (3rd mode) rotation for C', () => {
+    expect(
+      getMelodicMinorModeNotes('C', MelodicMinorModes.LydianAugmented)
+    ).toEqual(['C', 'D', 'E', 'F#', 'G#', 'A', 'B']);
+  });
+
+  it('returns the lydian dominant (4th mode) rotation for C', () => {
+    expect(
+      getMelodicMinorModeNotes('C', MelodicMinorModes.LydianDominant)
+    ).toEqual(['C', 'D', 'E', 'F#', 'G', 'A', 'A#']);
+  });
+
+  it('returns the mixolydian b6 (5th mode) rotation for C', () => {
+    expect(
+      getMelodicMinorModeNotes('C', MelodicMinorModes.MixolydianB6)
+    ).toEqual(['C', 'D', 'E', 'F', 'G', 'G#', 'A#']);
+  });
+
+  it('returns the locrian nat2 (6th mode) rotation for C', () => {
+    expect(
+      getMelodicMinorModeNotes('C', MelodicMinorModes.LocrianNat2)
+    ).toEqual(['C', 'D', 'D#', 'F', 'F#', 'G#', 'A#']);
+  });
+
   it('returns the altered (7th mode) rotation for C', () => {
     expect(getMelodicMinorModeNotes('C', MelodicMinorModes.Altered)).toEqual([
       'C',
@@ -73,6 +115,32 @@ describe('getBebopScaleNotes', () => {
       'A',
       'A#',
       'B',
+    ]);
+  });
+
+  it('returns the 8-note bebop major scale for C', () => {
+    expect(getBebopScaleNotes('C', BebopScaleTypes.BebopMajor)).toEqual([
+      'C',
+      'D',
+      'E',
+      'F',
+      'G',
+      'G#',
+      'A',
+      'B',
+    ]);
+  });
+
+  it('returns the 8-note bebop dorian scale for C', () => {
+    expect(getBebopScaleNotes('C', BebopScaleTypes.BebopDorian)).toEqual([
+      'C',
+      'D',
+      'D#',
+      'E',
+      'F',
+      'G',
+      'A',
+      'A#',
     ]);
   });
 });

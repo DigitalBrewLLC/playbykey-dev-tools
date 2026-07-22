@@ -46,12 +46,12 @@ const HARMONIC_MINOR_RAISE_DEGREE = 7;
 /** Semitone offsets from the tonic for the ascending melodic minor scale. */
 const MELODIC_MINOR_SEMITONE_OFFSETS = [0, 2, 3, 5, 7, 9, 11] as const;
 
-/** Semitone offsets for each melodic minor mode, keyed by MelodicMinorModeName. */
+/** Semitone offsets for each melodic minor mode, keyed by MelodicMinorModeName. The base scale entry references MELODIC_MINOR_SEMITONE_OFFSETS directly rather than duplicating the array, so there's one source of truth for it. */
 const MELODIC_MINOR_MODE_SEMITONE_OFFSETS: Record<
   MelodicMinorModeName,
   readonly number[]
 > = {
-  [MelodicMinorModes.MelodicMinor]: [0, 2, 3, 5, 7, 9, 11],
+  [MelodicMinorModes.MelodicMinor]: MELODIC_MINOR_SEMITONE_OFFSETS,
   [MelodicMinorModes.DorianB2]: [0, 1, 3, 5, 7, 9, 10],
   [MelodicMinorModes.LydianAugmented]: [0, 2, 4, 6, 8, 9, 11],
   [MelodicMinorModes.LydianDominant]: [0, 2, 4, 6, 7, 9, 10],
@@ -60,12 +60,18 @@ const MELODIC_MINOR_MODE_SEMITONE_OFFSETS: Record<
   [MelodicMinorModes.Altered]: [0, 1, 3, 4, 6, 8, 10],
 };
 
-/** Semitone offsets for each harmonic minor mode currently supported, keyed by HarmonicMinorModeName. */
+/**
+ * Semitone offsets for harmonic minor modes other than the base scale itself.
+ * The base scale ('harmonic-minor') is deliberately excluded here - it's
+ * derived via getHarmonicMinorNotes (parent-mode + raised-7th), not a static
+ * offset table, so getHarmonicMinorModeNotes delegates to that function
+ * directly for that case rather than keeping a second, independently
+ * maintained copy of the same result.
+ */
 const HARMONIC_MINOR_MODE_SEMITONE_OFFSETS: Record<
-  HarmonicMinorModeName,
+  Exclude<HarmonicMinorModeName, 'harmonic-minor'>,
   readonly number[]
 > = {
-  [HarmonicMinorModes.HarmonicMinor]: [0, 2, 3, 5, 7, 8, 11],
   [HarmonicMinorModes.PhrygianDominant]: [0, 1, 4, 5, 7, 8, 10],
 };
 
@@ -145,12 +151,19 @@ const getMelodicMinorModeNotes = (
 ): Note[] =>
   notesFromSemitoneOffsets(root, MELODIC_MINOR_MODE_SEMITONE_OFFSETS[mode]);
 
-/** Returns the seven notes of a harmonic minor mode for a root. Produces the same result as getHarmonicMinorNotes when mode is 'harmonic-minor'. */
+/** Returns the seven notes of a harmonic minor mode for a root. Delegates to getHarmonicMinorNotes for the base scale itself, since that's the actual (non-table-based) derivation - only the true modal rotations use the offset table. */
 const getHarmonicMinorModeNotes = (
   root: Note,
   mode: HarmonicMinorModeName
-): Note[] =>
-  notesFromSemitoneOffsets(root, HARMONIC_MINOR_MODE_SEMITONE_OFFSETS[mode]);
+): Note[] => {
+  if (mode === HarmonicMinorModes.HarmonicMinor) {
+    return getHarmonicMinorNotes(root);
+  }
+  return notesFromSemitoneOffsets(
+    root,
+    HARMONIC_MINOR_MODE_SEMITONE_OFFSETS[mode]
+  );
+};
 
 /** Returns the eight notes of a bebop scale variant for a root - each is a diatonic scale plus one chromatic passing tone. */
 const getBebopScaleNotes = (root: Note, type: BebopScaleType): Note[] =>
