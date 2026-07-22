@@ -20,6 +20,12 @@ describe('handleNoteToMidi', () => {
     const result = handleNoteToMidi({ note: 'C', octave: 'bogus' });
     expect(result.content[0]?.text).toContain('Invalid octave');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleNoteToMidi({ note: 'Db', octave: 4 });
+    const sharp = handleNoteToMidi({ note: 'C#', octave: 4 });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
 
 describe('handleMidiToNote', () => {
@@ -49,5 +55,11 @@ describe('handleNoteToFrequency', () => {
   it('returns error for invalid octave', () => {
     const result = handleNoteToFrequency({ note: 'A', octave: 'bogus' });
     expect(result.content[0]?.text).toContain('Invalid octave');
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleNoteToFrequency({ note: 'Db', octave: 4 });
+    const sharp = handleNoteToFrequency({ note: 'C#', octave: 4 });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });

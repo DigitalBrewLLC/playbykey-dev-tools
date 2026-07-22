@@ -37,4 +37,18 @@ describe('handleTranspose', () => {
     });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleTranspose({
+      notes: ['Db'],
+      from_root: 'Db',
+      to_root: 'D',
+    });
+    const sharp = handleTranspose({
+      notes: ['C#'],
+      from_root: 'C#',
+      to_root: 'D',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });

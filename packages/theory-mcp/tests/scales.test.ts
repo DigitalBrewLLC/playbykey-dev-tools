@@ -149,6 +149,12 @@ describe('handleGetMelodicMinorNotes', () => {
     const result = handleGetMelodicMinorNotes({ root: 'X' });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetMelodicMinorNotes({ root: 'Db' });
+    const sharp = handleGetMelodicMinorNotes({ root: 'C#' });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
 
 describe('handleGetMelodicMinorModeNotes', () => {
@@ -168,6 +174,18 @@ describe('handleGetMelodicMinorModeNotes', () => {
       mode: 'bogus',
     });
     expect(result.content[0]?.text).toContain('Invalid melodic minor mode');
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetMelodicMinorModeNotes({
+      root: 'Db',
+      mode: 'altered',
+    });
+    const sharp = handleGetMelodicMinorModeNotes({
+      root: 'C#',
+      mode: 'altered',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });
 
@@ -189,6 +207,18 @@ describe('handleGetHarmonicMinorModeNotes', () => {
     });
     expect(result.content[0]?.text).toContain('Invalid harmonic minor mode');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetHarmonicMinorModeNotes({
+      root: 'Db',
+      mode: 'phrygian-dominant',
+    });
+    const sharp = handleGetHarmonicMinorModeNotes({
+      root: 'C#',
+      mode: 'phrygian-dominant',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
 
 describe('handleGetBebopScaleNotes', () => {
@@ -205,5 +235,17 @@ describe('handleGetBebopScaleNotes', () => {
   it('returns error for invalid type', () => {
     const result = handleGetBebopScaleNotes({ root: 'C', type: 'bogus' });
     expect(result.content[0]?.text).toContain('Invalid bebop scale type');
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetBebopScaleNotes({
+      root: 'Db',
+      type: 'bebop-dominant',
+    });
+    const sharp = handleGetBebopScaleNotes({
+      root: 'C#',
+      type: 'bebop-dominant',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });
