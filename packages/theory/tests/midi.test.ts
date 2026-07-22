@@ -38,4 +38,16 @@ describe('noteToFrequency', () => {
   it('returns 440 for A4', () => {
     expect(noteToFrequency('A', 4)).toBeCloseTo(440, 5);
   });
+
+  it('returns 220 for A3, one octave below A4', () => {
+    expect(noteToFrequency('A', 3)).toBeCloseTo(220, 5);
+  });
+
+  it('returns 880 for A5, one octave above A4', () => {
+    expect(noteToFrequency('A', 5)).toBeCloseTo(880, 5);
+  });
+
+  it('returns ~261.63 for C4 (middle C)', () => {
+    expect(noteToFrequency('C', 4)).toBeCloseTo(261.6256, 3);
+  });
 });
