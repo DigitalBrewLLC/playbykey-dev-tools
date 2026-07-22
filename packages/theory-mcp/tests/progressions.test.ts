@@ -37,6 +37,18 @@ describe('handleGetProgressionInKey', () => {
     });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetProgressionInKey({
+      progression_id: 'I-V-vi-IV',
+      root: 'Db',
+    });
+    const sharp = handleGetProgressionInKey({
+      progression_id: 'I-V-vi-IV',
+      root: 'C#',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
 
 describe('handleGetRomanNumeral', () => {

@@ -28,6 +28,15 @@ describe('handleGetChordNotes', () => {
     });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetChordNotes({ root: 'Db', chord_type: 'major-triad' });
+    const sharp = handleGetChordNotes({
+      root: 'C#',
+      chord_type: 'major-triad',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
 
 describe('handleGetDiatonicChords', () => {
@@ -50,6 +59,12 @@ describe('handleGetDiatonicChords', () => {
     const withMode = handleGetDiatonicChords({ root: 'C', mode: 'ionian' });
     const omitted = handleGetDiatonicChords({ root: 'C' });
     expect(omitted.content[0]?.text).toEqual(withMode.content[0]?.text);
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetDiatonicChords({ root: 'Db', mode: 'ionian' });
+    const sharp = handleGetDiatonicChords({ root: 'C#', mode: 'ionian' });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });
 
@@ -81,6 +96,20 @@ describe('handleGetChordByDegree', () => {
     });
     const omitted = handleGetChordByDegree({ degree: 5, root: 'C' });
     expect(omitted.content[0]?.text).toEqual(withMode.content[0]?.text);
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetChordByDegree({
+      degree: 5,
+      root: 'Db',
+      mode: 'ionian',
+    });
+    const sharp = handleGetChordByDegree({
+      degree: 5,
+      root: 'C#',
+      mode: 'ionian',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });
 
@@ -122,5 +151,19 @@ describe('handleGetChordInversion', () => {
       inversion: 'bogus',
     });
     expect(result.content[0]?.text).toContain('Invalid inversion');
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetChordInversion({
+      root: 'Db',
+      chord_type: 'major-triad',
+      inversion: 1,
+    });
+    const sharp = handleGetChordInversion({
+      root: 'C#',
+      chord_type: 'major-triad',
+      inversion: 1,
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });
