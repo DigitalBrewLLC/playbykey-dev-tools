@@ -1,18 +1,13 @@
 import { ScaleTypes } from '@playbykey/theory';
 import type { ScaleType } from '@playbykey/theory';
 import { FieldSelect } from './FieldSelect';
+import { formatKebabLabel } from './formatKebabLabel';
 
 interface ScaleTypeSelectProps {
   value: ScaleType;
   onChange: (scaleType: ScaleType) => void;
   label?: string;
 }
-
-const formatScaleTypeLabel = (scaleType: ScaleType) =>
-  scaleType
-    .split(/[-_]/)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
 
 const ScaleTypeSelect = ({
   value,
@@ -26,7 +21,7 @@ const ScaleTypeSelect = ({
   >
     {Object.values(ScaleTypes).map((scaleType) => (
       <option key={scaleType} value={scaleType}>
-        {formatScaleTypeLabel(scaleType)}
+        {formatKebabLabel(scaleType)}
       </option>
     ))}
   </FieldSelect>

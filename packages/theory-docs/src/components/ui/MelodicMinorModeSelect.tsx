@@ -1,18 +1,13 @@
 import { MelodicMinorModes } from '@playbykey/theory';
 import type { MelodicMinorModeName } from '@playbykey/theory';
 import { FieldSelect } from './FieldSelect';
+import { formatKebabLabel } from './formatKebabLabel';
 
 interface MelodicMinorModeSelectProps {
   value: MelodicMinorModeName;
   onChange: (mode: MelodicMinorModeName) => void;
   label?: string;
 }
-
-const formatMelodicMinorModeLabel = (mode: MelodicMinorModeName) =>
-  mode
-    .split(/[-_]/)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
 
 const MelodicMinorModeSelect = ({
   value,
@@ -26,7 +21,7 @@ const MelodicMinorModeSelect = ({
   >
     {Object.values(MelodicMinorModes).map((mode) => (
       <option key={mode} value={mode}>
-        {formatMelodicMinorModeLabel(mode)}
+        {formatKebabLabel(mode)}
       </option>
     ))}
   </FieldSelect>
