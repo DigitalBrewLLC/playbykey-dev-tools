@@ -31,6 +31,12 @@ describe('handleGetScaleNotes', () => {
     const result = handleGetScaleNotes({ root: 'X', scale_type: 'major' });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetScaleNotes({ root: 'Db', scale_type: 'major' });
+    const sharp = handleGetScaleNotes({ root: 'C#', scale_type: 'major' });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
 
 describe('handleBuildNoteMap', () => {
@@ -54,6 +60,12 @@ describe('handleBuildNoteMap', () => {
   it('returns error for invalid scale type', () => {
     const result = handleBuildNoteMap({ root: 'C', scale_type: 'dorian' });
     expect(result.content[0]?.text).toContain('Invalid scale type');
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleBuildNoteMap({ root: 'Db', scale_type: 'major' });
+    const sharp = handleBuildNoteMap({ root: 'C#', scale_type: 'major' });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });
 
@@ -98,6 +110,20 @@ describe('handleGetScaleDegree', () => {
     });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetScaleDegree({
+      root: 'Db',
+      scale_type: 'major',
+      note: 'F',
+    });
+    const sharp = handleGetScaleDegree({
+      root: 'C#',
+      scale_type: 'major',
+      note: 'F',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
 
 describe('handleIsNoteInScale', () => {
@@ -136,6 +162,20 @@ describe('handleIsNoteInScale', () => {
       note: 'G',
     });
     expect(result.content[0]?.text).toContain('Invalid scale type');
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleIsNoteInScale({
+      root: 'Db',
+      scale_type: 'major',
+      note: 'F',
+    });
+    const sharp = handleIsNoteInScale({
+      root: 'C#',
+      scale_type: 'major',
+      note: 'F',
+    });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });
 

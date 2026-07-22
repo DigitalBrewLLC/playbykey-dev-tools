@@ -30,6 +30,12 @@ describe('handleResolveInterval', () => {
     const result = handleResolveInterval({ root: 'X', interval: 'major_3rd' });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleResolveInterval({ root: 'Db', interval: 'major_3rd' });
+    const sharp = handleResolveInterval({ root: 'C#', interval: 'major_3rd' });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
 
 describe('handleGetSemitoneDistance', () => {
@@ -46,5 +52,11 @@ describe('handleGetSemitoneDistance', () => {
   it('returns error for invalid from note', () => {
     const result = handleGetSemitoneDistance({ from: 'X', to: 'E' });
     expect(result.content[0]?.text).toContain('Invalid note');
+  });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleGetSemitoneDistance({ from: 'Db', to: 'E' });
+    const sharp = handleGetSemitoneDistance({ from: 'C#', to: 'E' });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
 });
