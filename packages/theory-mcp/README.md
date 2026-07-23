@@ -8,11 +8,14 @@ See the [playbykey/mcp](https://theory-engine.docs.playbykey.com/mcp/) page for 
 
 ## Installation
 
-No global install needed - `npx` fetches and runs the package on demand.
+No global install needed - `npx` fetches and runs the package on demand. Requires [Node.js](https://nodejs.org) (for `npx`).
 
 ### Claude Desktop
 
-Config file: `claude_desktop_config.json`
+Config file location:
+
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -25,7 +28,7 @@ Config file: `claude_desktop_config.json`
 }
 ```
 
-Restart Claude Desktop after saving.
+Restart Claude Desktop after saving, then check its settings to confirm `theory` shows as connected.
 
 ### Cursor
 
@@ -45,7 +48,7 @@ Config file location:
 }
 ```
 
-Restart Cursor after saving.
+Restart Cursor after saving, then check its MCP settings to confirm `theory` shows as connected.
 
 ### Claude Code
 

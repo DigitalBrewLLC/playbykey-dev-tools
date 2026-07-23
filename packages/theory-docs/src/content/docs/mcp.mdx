@@ -28,11 +28,16 @@ import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
 
 [`@playbykey/theory-mcp`](https://www.npmjs.com/package/@playbykey/theory-mcp) exposes `@playbykey/theory` as an MCP stdio server. MCP lets an AI assistant call the theory engine directly as tools instead of reasoning about scales, modes, and key relationships from training data. Answers are computed, not guessed. No global install needed - `npx` fetches and runs the package on demand.
 
+Requires [Node.js](https://nodejs.org) (for `npx`).
+
 ## Setup
 
 <Tabs>
   <TabItem label="Claude Desktop">
-    Config file: `claude_desktop_config.json`
+    Config file location:
+
+    - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+    - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
     ```json
     {
@@ -45,7 +50,7 @@ import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
     }
     ```
 
-    Restart Claude Desktop after saving.
+    Restart Claude Desktop after saving, then check its settings to confirm `theory` shows as connected.
 
   </TabItem>
   <TabItem label="Cursor">
@@ -65,7 +70,7 @@ import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
     }
     ```
 
-    Restart Cursor after saving.
+    Restart Cursor after saving, then check its MCP settings to confirm `theory` shows as connected.
 
   </TabItem>
   <TabItem label="Claude Code">
