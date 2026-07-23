@@ -18,7 +18,7 @@ const infoTitleStyle = {
 
 const infoBadgeStyle = {
   fontSize: '0.875rem',
-  color: 'var(--sl-color-gray-3)',
+  color: 'var(--sl-color-gray-2)',
 };
 
 const InfoBlock = ({ children }: { children: React.ReactNode }) => (

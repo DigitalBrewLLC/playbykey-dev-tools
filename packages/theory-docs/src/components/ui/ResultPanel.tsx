@@ -58,7 +58,7 @@ const ResultPanel = ({ label, value }: ResultPanelProps) => {
     content = <code style={codeStyle}>{String(value)}</code>;
   } else {
     content = (
-      <pre style={preStyle}>
+      <pre style={preStyle} tabIndex={0}>
         <code
           style={{ fontFamily: 'var(--sl-font-mono)', fontSize: '0.875rem' }}
         >

@@ -337,7 +337,7 @@ const EnginePlayground = () => {
         ))}
       </FieldSelect>
 
-      <pre style={signatureStyle}>
+      <pre style={signatureStyle} tabIndex={0}>
         <code>{selected.signature}</code>
       </pre>
       <p style={descriptionStyle}>{selected.description}</p>
