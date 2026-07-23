@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.2.0...theory-mcp-v1.3.0) (2026-07-23)
+
+
+### Features
+
+* **theory-mcp:** add MCP tools for transpose, MIDI/frequency, and expanded scales ([63deff6](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/63deff68023deba22c1f6f519803d592767577f1))
+
+
+### Bug Fixes
+
+* **theory-mcp:** fix MIDI range bug, unsafe casts, hardcoded enums ([402ca67](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/402ca67b035be5a7555c471b0114c7b7a8e9f273))
+
 ## [1.2.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.1.1...theory-mcp-v1.2.0) (2026-07-21)
 
 
