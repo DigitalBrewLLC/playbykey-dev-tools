@@ -106,7 +106,7 @@
 
 /* Extra scroll room so the last heading on any page can reach the TOC scroll-spy's trigger line and highlight. */
 .sl-markdown-content {
-  padding-bottom: 40vh;
+  padding-bottom: 15vh;
 }
 
 select:focus-visible,
