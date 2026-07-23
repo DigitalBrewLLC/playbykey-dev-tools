@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.5.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.5.0...theory-docs-v1.5.1) (2026-07-23)
+
+
+### Bug Fixes
+
+* **theory-docs:** fix pre-existing color-contrast and keyboard-focus issues ([3620417](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/36204179dbd5c44572cf970073ddec4ca893890d))
+
 ## [1.5.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.4.0...theory-docs-v1.5.0) (2026-07-23)
 
 
