@@ -5,8 +5,9 @@
   /* Accent */
   --sl-color-accent-low: #fef3c7;
   --sl-color-accent: #f59e0b;
-  --sl-color-accent-high: #b45309;
-  --sl-color-text-accent: #b45309;
+  /* Darkened from #b45309 - the original failed WCAG AA contrast against gray-6 surfaces. */
+  --sl-color-accent-high: #92400e;
+  --sl-color-text-accent: #92400e;
 
   /* Typography */
   --sl-font:

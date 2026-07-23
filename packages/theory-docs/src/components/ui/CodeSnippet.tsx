@@ -26,7 +26,7 @@ const CodeSnippet = ({ call }: CodeSnippetProps) => {
   const lines = Array.isArray(call) ? call : [call];
 
   return (
-    <pre style={wrapperStyle}>
+    <pre style={wrapperStyle} tabIndex={0}>
       {lines.map((line, i) => (
         <code key={i} style={lineStyle}>
           {line}

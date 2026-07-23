@@ -63,7 +63,7 @@ const FunctionCard = ({
   return (
     <section style={cardStyle}>
       <h3 style={headingStyle}>{name}</h3>
-      <pre style={signatureStyle}>
+      <pre style={signatureStyle} tabIndex={0}>
         <code>{signature}</code>
       </pre>
       <p style={descriptionStyle}>{description}</p>
