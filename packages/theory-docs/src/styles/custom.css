@@ -104,6 +104,11 @@
   --sl-color-purple-high: #fcd34d;
 }
 
+/* Extra scroll room so the last heading on any page can reach the TOC scroll-spy's trigger line and highlight. */
+.sl-markdown-content {
+  padding-bottom: 40vh;
+}
+
 select:focus-visible,
 input:focus-visible {
   outline: 2px solid var(--sl-color-accent);
