@@ -12,10 +12,7 @@ No global install needed - `npx` fetches and runs the package on demand. Require
 
 ### Claude Desktop
 
-Config file location:
-
-- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+Edit the MCP config file (`claude_desktop_config.json`) via Claude Desktop's settings.
 
 ```json
 {
