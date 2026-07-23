@@ -30,6 +30,13 @@ import { Aside, Code, Tabs, TabItem } from '@astrojs/starlight/components';
 
 The music theory engine powering [PlayByKey](https://playbykey.com), a free interactive music theory learning tool.
 
+## Note notation
+
+The package represents notes with one canonical sharp spelling (`C#`, not `Db`) to keep the `Note` type safe and unambiguous. Flats are fully supported:
+
+- **Input:** `parseNote`/`parseNoteToken` accept flat-spelled note names (`Db`, `Eb`, `Gb`, `Ab`, `Bb`), normalized to the canonical sharp spelling.
+- **Output:** `getFlats`/`getEnharmonicLabels` respell computed output as flats or combined enharmonic labels.
+
 <Aside type="tip" title="Using this with an AI assistant?">
   <Tabs>
     <TabItem label="MCP context">
@@ -71,6 +78,8 @@ The music theory engine powering [PlayByKey](https://playbykey.com), a free inte
 </Tabs>
 
 ## Quickstart
+
+Written in TypeScript with strict mode - every export is fully typed, no `any`. Import types directly: `import type { Note, ModeName } from '@playbykey/theory';`
 
 ```typescript
 import { getModeNotes, getParentScaleModes } from '@playbykey/theory';
@@ -117,18 +126,3 @@ console.log(getSharps(['Db', 'Eb', 'Gb'])); // ['C#', 'D#', 'F#']
 | Transposition | Shift a set of notes between keys                     | [Transposition](/theory/transposition/) |
 | MIDI & Frequency | Convert between notes, MIDI numbers, and Hz frequencies | [MIDI & Frequency](/theory/midi-frequency/) |
 | Constants    | All exported constants and their values                | [Constants](/theory/constants/) |
-
-## TypeScript
-
-The package is written in TypeScript with strict mode. All exported functions are fully typed. No `any`. Import types directly:
-
-```typescript
-import type { Note, ModeName } from '@playbykey/theory';
-```
-
-## Note notation
-
-The package represents notes with one canonical sharp spelling (`C#`, not `Db`) to keep the `Note` type safe and unambiguous. Flats are fully supported:
-
-- **Input:** `parseNote`/`parseNoteToken` accept flat-spelled note names (`Db`, `Eb`, `Gb`, `Ab`, `Bb`), normalized to the canonical sharp spelling.
-- **Output:** `getFlats`/`getEnharmonicLabels` respell computed output as flats or combined enharmonic labels.
