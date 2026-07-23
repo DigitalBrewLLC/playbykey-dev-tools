@@ -7,6 +7,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.5.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.4.0...theory-docs-v1.5.0) (2026-07-23)
+
+
+### Features
+
+* **theory-docs:** add Transposition, MIDI & Frequency docs pages, update Scales page ([f628d7a](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/f628d7a00ce854bf19800beed7d095cd84c7dfcf))
+
+
+### Bug Fixes
+
+* **theory-docs:** fix TOC scroll-spy never highlighting a page's last heading ([f3a61b7](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/f3a61b7f5e29f55c983002be24a81ee4596fdf1b))
+* **theory-docs:** reduce TOC scroll-spy padding from 40vh to 15vh ([ef0264b](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/ef0264b3e29826a783a1e6e32281b731a2c25f58))
+
 ## [1.4.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.3.0...theory-docs-v1.4.0) (2026-07-21)
 
 

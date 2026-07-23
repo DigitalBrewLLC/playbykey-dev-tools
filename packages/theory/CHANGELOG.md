@@ -7,6 +7,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.5.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.4.0...theory-v1.5.0) (2026-07-23)
+
+
+### Features
+
+* **theory:** add transpose, MIDI/frequency conversion, and expanded scales ([244fbb2](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/244fbb2283bc1f09a48d9915c478cc1a9c08ea44))
+
+
+### Bug Fixes
+
+* **theory:** remove duplicate scale-derivation sources of truth ([d228c90](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/d228c90e3f3b8624c03343762602926a0f6787dc))
+
 ## [1.4.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.3.0...theory-v1.4.0) (2026-07-21)
 
 
