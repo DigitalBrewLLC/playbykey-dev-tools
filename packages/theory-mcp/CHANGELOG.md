@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.3.0...theory-mcp-v1.4.0) (2026-07-27)
+
+
+### Features
+
+* **theory-mcp:** add official MCP registry manifest ([694edfb](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/694edfb5a77424407bd9934d93cbf65dbf8ccce8))
+
 ## [1.3.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.2.0...theory-mcp-v1.3.0) (2026-07-23)
 
 
