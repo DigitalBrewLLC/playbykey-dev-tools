@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.5.0...theory-mcp-v1.6.0) (2026-07-27)
+
+
+### Features
+
+* **theory-mcp:** add title and keyword-dense description for registry SEO ([30d21b3](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/30d21b30cc2c6e142742a26ad4348a562c81a57f))
+
 ## [1.5.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.4.2...theory-mcp-v1.5.0) (2026-07-27)
 
 
