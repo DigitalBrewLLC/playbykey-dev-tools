@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.4.0...theory-mcp-v1.4.1) (2026-07-27)
+
+
+### Bug Fixes
+
+* **theory-mcp:** sync server.json version with published package ([b15c923](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/b15c923032836ac3355ea4d22b6fa3722b18c5d6))
+
 ## [1.4.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.3.0...theory-mcp-v1.4.0) (2026-07-27)
 
 
