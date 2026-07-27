@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.playbykey/theory-mcp",
   "description": "MCP server exposing @playbykey/theory as AI-callable music theory tools.",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "repository": {
     "url": "https://github.com/DigitalBrewLLC/playbykey-dev-tools",
     "source": "github",
@@ -13,7 +13,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@playbykey/theory-mcp",
-      "version": "1.4.2",
+      "version": "1.5.0",
       "runtimeHint": "npx",
       "runtimeArguments": [
         {
