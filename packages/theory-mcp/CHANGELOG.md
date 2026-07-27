@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.4.1...theory-mcp-v1.4.2) (2026-07-27)
+
+
+### Bug Fixes
+
+* **theory-mcp:** shorten server.json description under registry limit ([ecc324f](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/ecc324f815ddace03ef522293a003e0e8bf22f86))
+
 ## [1.4.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.4.0...theory-mcp-v1.4.1) (2026-07-27)
 
 
