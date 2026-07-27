@@ -1,7 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.playbykey/theory-mcp",
-  "description": "MCP server exposing @playbykey/theory as AI-callable music theory tools.",
+  "title": "PlayByKey Music Theory",
+  "description": "Chords, scales, progressions, transposition, and MIDI tools for music theory AI agents.",
   "version": "1.5.0",
   "repository": {
     "url": "https://github.com/DigitalBrewLLC/playbykey-dev-tools",
