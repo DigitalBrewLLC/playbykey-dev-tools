@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.4.2...theory-mcp-v1.5.0) (2026-07-27)
+
+
+### Features
+
+* **theory-mcp:** switch registry namespace to domain-based auth ([28f1e21](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/28f1e215d332e8f4f0e7489fbf2de1d9e938a39b))
+
 ## [1.4.2](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.4.1...theory-mcp-v1.4.2) (2026-07-27)
 
 
