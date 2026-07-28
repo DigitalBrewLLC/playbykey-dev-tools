@@ -7,6 +7,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.5.2](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.5.1...theory-docs-v1.5.2) (2026-07-28)
+
+
+### Bug Fixes
+
+* **theory-docs:** keep brand-forward og:title, not the SEO-keyword one ([29440ce](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/29440ce829757edd8537de4a3cfccf7e66e2cda4))
+* **theory-docs:** target SEO keywords in MCP page title and homepage description ([dff7aff](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/dff7aff8e2609ae02e3ce00dd4c855978960b255))
+
 ## [1.5.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.5.0...theory-docs-v1.5.1) (2026-07-23)
 
 
