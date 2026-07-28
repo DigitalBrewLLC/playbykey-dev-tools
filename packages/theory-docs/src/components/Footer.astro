@@ -15,25 +15,7 @@ const customIconSrc: Record<string, string> = {
 <Default><slot /></Default>
 
 <footer class="pbk-footer">
-  <a href="https://playbykey.com" class="pbk-footer-cta">
-    <img
-      src="/playbykey-logo-light.svg"
-      alt="PlayByKey"
-      width="110"
-      height="21"
-      class="pbk-footer-logo pbk-footer-logo-light"
-    />
-    <img
-      src="/playbykey-logo-dark.svg"
-      alt="PlayByKey"
-      width="110"
-      height="21"
-      class="pbk-footer-logo pbk-footer-logo-dark"
-    />
-    <span class="pbk-footer-cta-text">
-      The music theory engine powering PlayByKey, a free interactive music theory learning tool.
-    </span>
-  </a>
+  <p class="pbk-footer-tagline">A free, open-source TypeScript music theory engine.</p>
   {
     links.length > 0 && (
       <div class="pbk-footer-links">
@@ -64,36 +46,10 @@ const customIconSrc: Record<string, string> = {
       justify-content: space-between;
       gap: 0.75rem;
     }
-    .pbk-footer-cta {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex: 1 1 auto;
-      min-width: 16rem;
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--sl-color-hairline);
-      border-radius: 0.5rem;
-      color: var(--sl-color-gray-2);
-      transition: border-color 0.15s ease;
-    }
-    .pbk-footer-cta:hover {
-      border-color: var(--sl-color-accent);
-      color: var(--sl-color-white);
-    }
-    .pbk-footer-logo {
-      flex-shrink: 0;
-    }
-    .pbk-footer-logo-dark {
-      display: none;
-    }
-    :root[data-theme='dark'] .pbk-footer-logo-light {
-      display: none;
-    }
-    :root[data-theme='dark'] .pbk-footer-logo-dark {
-      display: block;
-    }
-    .pbk-footer-cta-text {
+    .pbk-footer-tagline {
+      margin: 0;
       font-size: var(--sl-text-xs);
+      color: var(--sl-color-gray-3);
     }
     .pbk-footer-links {
       display: flex;
