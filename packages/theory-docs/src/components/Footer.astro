@@ -1,0 +1,71 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+import config from 'virtual:starlight/user-config';
+import { Icon } from '@astrojs/starlight/components';
+
+const links = config.social || [];
+
+/** Brand-accurate icons for links Starlight's built-in icon set doesn't cover. */
+const customIconSrc: Record<string, string> = {
+  PlayByKey: '/playbykey-icon.svg',
+  npm: '/npm-icon.svg',
+};
+---
+
+<Default><slot /></Default>
+
+<footer class="pbk-footer">
+  <p class="pbk-footer-tagline">A free, open-source TypeScript music theory engine.</p>
+  {
+    links.length > 0 && (
+      <div class="pbk-footer-links">
+        {links.map(({ label, href, icon }) => (
+          <a {href} rel="me" class="pbk-footer-link">
+            {customIconSrc[label] ? (
+              <img src={customIconSrc[label]} width="16" height="16" alt="" />
+            ) : (
+              <Icon name={icon} />
+            )}
+            <span>{label}</span>
+          </a>
+        ))}
+      </div>
+    )
+  }
+</footer>
+
+<style>
+  @layer starlight.core {
+    .pbk-footer {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--sl-color-hairline);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .pbk-footer-tagline {
+      margin: 0;
+      font-size: var(--sl-text-xs);
+      color: var(--sl-color-gray-3);
+    }
+    .pbk-footer-links {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .pbk-footer-link {
+      display: flex;
+      align-items: center;
+      gap: 0.375em;
+      color: var(--sl-color-text-accent);
+      font-size: var(--sl-text-xs);
+      padding: 0.5em;
+      margin: -0.5em;
+    }
+    .pbk-footer-link:hover {
+      color: var(--sl-color-white);
+    }
+  }
+</style>

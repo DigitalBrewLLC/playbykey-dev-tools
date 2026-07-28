@@ -6,15 +6,16 @@ export default defineConfig({
   site: 'https://theory-engine.docs.playbykey.com',
   integrations: [
     starlight({
-      title: 'Theory Engine',
+      title: 'Music Theory Engine',
       description:
         'TypeScript-first music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, MCP server support.',
       titleDelimiter: ' | ',
       favicon: '/favicon.svg',
       logo: {
-        src: './src/assets/logo.svg',
-        alt: '',
-        replacesTitle: false,
+        light: './public/playbykey-logo-light.svg',
+        dark: './public/playbykey-logo-dark.svg',
+        alt: 'PlayByKey',
+        replacesTitle: true,
       },
       social: [
         {
@@ -61,7 +62,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             property: 'og:site_name',
-            content: 'Theory Engine | PlayByKey',
+            content: 'Music Theory Engine | PlayByKey',
           },
         },
         {
@@ -94,6 +95,11 @@ export default defineConfig({
             applicationCategory: 'DeveloperApplication',
             operatingSystem: 'Any',
             url: 'https://theory-engine.docs.playbykey.com',
+            sameAs: [
+              'https://github.com/DigitalBrewLLC/playbykey-dev-tools',
+              'https://www.npmjs.com/package/@playbykey/theory',
+              'https://playbykey.com',
+            ],
             author: {
               '@type': 'Organization',
               name: 'PlayByKey',
@@ -107,7 +113,7 @@ export default defineConfig({
           items: [{ label: 'Overview', slug: '' }],
         },
         {
-          label: 'Theory Engine',
+          label: 'Music Theory Engine',
           items: [
             { label: 'Keys & Modes', slug: 'theory/engine' },
             { label: 'Intervals', slug: 'theory/intervals' },
@@ -120,13 +126,14 @@ export default defineConfig({
           ],
         },
         {
-          label: 'playbykey/mcp',
+          label: '@playbykey/mcp',
           items: [{ label: 'Setup & Tools', slug: 'mcp' }],
         },
       ],
       customCss: ['./src/styles/custom.css'],
       components: {
         SocialIcons: './src/components/SocialIcons.astro',
+        Footer: './src/components/Footer.astro',
       },
     }),
     react(),
