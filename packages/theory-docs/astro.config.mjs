@@ -127,7 +127,10 @@ export default defineConfig({
         },
         {
           label: '@playbykey/mcp',
-          items: [{ label: 'Setup & Tools', slug: 'mcp' }],
+          items: [
+            { label: 'Why MCP?', slug: 'why-mcp' },
+            { label: 'Setup & Tools', slug: 'mcp' },
+          ],
         },
       ],
       customCss: ['./src/styles/custom.css'],
