@@ -7,6 +7,21 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.6.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.5.3...theory-docs-v1.6.0) (2026-07-28)
+
+
+### Features
+
+* **theory-docs:** add changelog page ([07360d5](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/07360d59fd41dc0e0573a7e387c192bade52ca01))
+* **theory-docs:** add Why MCP page ([f3c2719](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/f3c27192845db3ee4188e3c17a7172c04011fba9))
+
+
+### Bug Fixes
+
+* **theory-docs:** link PlayByKey and @playbykey/theory-mcp on Why Use MCP page ([7429d27](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/7429d279c79958157414c69bcc70235832cfd13c))
+* **theory-docs:** restyle changelog page as nested list, no code font ([3c326e7](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/3c326e7d4f679ccd871dacc98dd885a79ab6ee6b))
+* **theory-docs:** rewrite Why Use MCP page ([6c30d8b](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/6c30d8b4de6b6e214f7a5da2ed4379f7423df5ea))
+
 ## [1.5.3](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.5.2...theory-docs-v1.5.3) (2026-07-28)
 
 
