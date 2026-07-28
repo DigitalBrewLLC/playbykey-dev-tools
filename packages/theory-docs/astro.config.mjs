@@ -113,7 +113,7 @@ export default defineConfig({
           items: [{ label: 'Overview', slug: '' }],
         },
         {
-          label: 'Theory Engine',
+          label: 'Music Theory Engine',
           items: [
             { label: 'Keys & Modes', slug: 'theory/engine' },
             { label: 'Intervals', slug: 'theory/intervals' },
