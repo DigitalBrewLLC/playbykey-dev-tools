@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.6.0...theory-mcp-v1.6.1) (2026-07-28)
+
+
+### Bug Fixes
+
+* **theory-docs:** footer links, homepage rebrand, and header logo ([d32fa62](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/d32fa6293758e9d896d9d2ca7f5a15b0057210ad))
+* **theory-docs:** rebrand homepage hero and swap header logo ([2270e06](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/2270e060f3bd62ec916ebf7248fd8e1ebaec6896))
+
 ## [1.6.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.5.0...theory-mcp-v1.6.0) (2026-07-27)
 
 

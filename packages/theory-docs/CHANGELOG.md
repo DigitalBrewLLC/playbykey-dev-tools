@@ -7,6 +7,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.5.3](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.5.2...theory-docs-v1.5.3) (2026-07-28)
+
+
+### Bug Fixes
+
+* **theory-docs:** add missing pages to README docs-structure table ([ee1c4e1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/ee1c4e11bf515d18b50ba1b28c9d7229ccdde24d))
+* **theory-docs:** add sameAs to the SoftwareApplication schema ([5eec17d](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/5eec17d9d95ff3964884a6e48b71f7f9f5db5815))
+* **theory-docs:** footer links, homepage rebrand, and header logo ([d32fa62](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/d32fa6293758e9d896d9d2ca7f5a15b0057210ad))
+* **theory-docs:** rebrand homepage hero and swap header logo ([2270e06](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/2270e060f3bd62ec916ebf7248fd8e1ebaec6896))
+* **theory-docs:** redesign footer as a PlayByKey CTA ([d7a8b45](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/d7a8b453ad2b7f0aa9d6e7569a9d88d8524d887f))
+* **theory-docs:** rename sidebar section label to Music Theory Engine ([2de42cc](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/2de42ccb35d4576a28145aa79d08d9ca70f2597e))
+* **theory-docs:** rename site title to Music Theory Engine ([96da7f5](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/96da7f5dd3bbb4708d4b7c4fdaf8dca084610b09))
+* **theory-docs:** revert footer CTA, back to plain tagline ([71f0d5f](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/71f0d5fdc77480c670d0557d1337c6d42c8ed7f2))
+
 ## [1.5.2](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.5.1...theory-docs-v1.5.2) (2026-07-28)
 
 ### Bug Fixes
