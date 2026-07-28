@@ -1,11 +1,11 @@
 ---
-title: playbykey/mcp
+title: '@playbykey/mcp'
 description: Set up @playbykey/theory-mcp to call the theory engine as AI tools from Claude Desktop, Cursor, or Claude Code
 head:
   - tag: meta
     attrs:
       property: og:title
-      content: 'playbykey/mcp | @playbykey/theory'
+      content: '@playbykey/mcp | @playbykey/theory'
   - tag: meta
     attrs:
       property: og:description
@@ -26,7 +26,7 @@ head:
 
 import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
 
-[`@playbykey/theory-mcp`](https://www.npmjs.com/package/@playbykey/theory-mcp) exposes `@playbykey/theory` as an MCP stdio server. MCP lets an AI assistant call the theory engine directly as tools instead of reasoning about scales, modes, and key relationships from training data. Answers are computed, not guessed. No global install needed - `npx` fetches and runs the package on demand.
+[`@playbykey/theory-mcp`](https://www.npmjs.com/package/@playbykey/theory-mcp) exposes [`@playbykey/theory`](https://www.npmjs.com/package/@playbykey/theory) as an MCP stdio server. MCP lets an AI assistant call the theory engine directly as tools instead of reasoning about scales, modes, and key relationships from training data. Music theory relationships, resolved deterministically through fixed interval and scale-degree relationships. No global install needed - `npx` fetches and runs the package on demand.
 
 Requires [Node.js](https://nodejs.org) (for `npx`).
 

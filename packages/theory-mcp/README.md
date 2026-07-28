@@ -2,9 +2,9 @@
 
 An MCP server that exposes [@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory) as AI-callable music theory tools.
 
-MCP lets an AI assistant call the theory engine directly as tools instead of reasoning about scales, modes, and key relationships from training data. Answers are computed, not guessed.
+MCP lets an AI assistant call the theory engine directly as tools instead of reasoning about scales, modes, and key relationships from training data. Music theory relationships, resolved deterministically through fixed interval and scale-degree relationships.
 
-See the [playbykey/mcp](https://theory-engine.docs.playbykey.com/mcp/) page for the same setup instructions and full tool reference.
+See the [@playbykey/mcp](https://theory-engine.docs.playbykey.com/mcp/) page for the same setup instructions and full tool reference.
 
 ## Installation
 

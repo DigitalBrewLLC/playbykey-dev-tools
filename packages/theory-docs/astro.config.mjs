@@ -12,9 +12,10 @@ export default defineConfig({
       titleDelimiter: ' | ',
       favicon: '/favicon.svg',
       logo: {
-        src: './src/assets/logo.svg',
-        alt: '',
-        replacesTitle: false,
+        light: './public/playbykey-logo-light.svg',
+        dark: './public/playbykey-logo-dark.svg',
+        alt: 'PlayByKey',
+        replacesTitle: true,
       },
       social: [
         {
@@ -125,7 +126,7 @@ export default defineConfig({
           ],
         },
         {
-          label: 'playbykey/mcp',
+          label: '@playbykey/mcp',
           items: [{ label: 'Setup & Tools', slug: 'mcp' }],
         },
       ],
