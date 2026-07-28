@@ -131,7 +131,7 @@ export default defineConfig({
         {
           label: '@playbykey/mcp',
           items: [
-            { label: 'Why MCP?', slug: 'why-mcp' },
+            { label: 'Why Use MCP?', slug: 'why-mcp' },
             { label: 'Setup & Tools', slug: 'mcp' },
           ],
         },
