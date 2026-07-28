@@ -110,7 +110,10 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Getting Started',
-          items: [{ label: 'Overview', slug: '' }],
+          items: [
+            { label: 'Overview', slug: '' },
+            { label: 'Changelog', slug: 'changelog' },
+          ],
         },
         {
           label: 'Music Theory Engine',
