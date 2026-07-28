@@ -94,6 +94,11 @@ export default defineConfig({
             applicationCategory: 'DeveloperApplication',
             operatingSystem: 'Any',
             url: 'https://theory-engine.docs.playbykey.com',
+            sameAs: [
+              'https://github.com/DigitalBrewLLC/playbykey-dev-tools',
+              'https://www.npmjs.com/package/@playbykey/theory',
+              'https://playbykey.com',
+            ],
             author: {
               '@type': 'Organization',
               name: 'PlayByKey',
