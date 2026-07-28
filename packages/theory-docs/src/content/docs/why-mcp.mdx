@@ -1,0 +1,50 @@
+---
+title: Why MCP?
+description: Why an AI assistant should call the music theory MCP server instead of reasoning about theory from training data
+head:
+  - tag: meta
+    attrs:
+      property: og:title
+      content: 'Why MCP? | @playbykey/theory'
+  - tag: meta
+    attrs:
+      property: og:description
+      content: 'Why an AI assistant should call the music theory MCP server instead of reasoning about theory from training data'
+  - tag: meta
+    attrs:
+      property: og:url
+      content: 'https://theory-engine.docs.playbykey.com/why-mcp/'
+  - tag: meta
+    attrs:
+      property: og:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: 'https://theory-engine.docs.playbykey.com/og.svg'
+---
+
+An LLM answering a music theory question is predicting the next likely token, not computing a result. Most of the time that's close enough. Some of the time it isn't - a relative minor that's actually a third off, a roman numeral that doesn't match the chord quality, a chord spelled with the wrong accidental, transposition math that's a semitone out.
+
+None of these are exotic edge cases. They're the ordinary failure mode of asking a language model to do arithmetic-shaped work from memory instead of computing it.
+
+## What calling the engine actually changes
+
+Every one of the following is a fixed relationship, not a judgment call - the same answer exists regardless of which model is asked:
+
+- A key's diatonic chords, given its scale and mode
+- The chord tones and inversions for any of 11 chord types
+- A catalog progression rendered in a specific key
+- The relative minor or major of any key
+- A note transposed by a fixed interval
+- A MIDI note number or frequency for a given pitch and octave
+
+`@playbykey/theory-mcp` computes these instead of predicting them. Calling the tool and getting a plausible-sounding answer from training data can look identical in a chat window - the difference only shows up when the answer is wrong, and by then it's already been used.
+
+## What this doesn't cover
+
+Deterministic computation only works for questions with one correct answer. It's not the right tool for genuinely subjective or generative questions - suggesting what chord to play next, or how to voice-lead a transition, are judgment calls, not fixed relationships. See [`playbykey/mcp`](/mcp/) for the full list of what's computed today.
+
+## Setup
+
+See [`playbykey/mcp`](/mcp/) for installation across Claude Desktop, Cursor, and Claude Code, plus the full tool reference.
