@@ -1,11 +1,11 @@
 ---
-title: Why MCP?
+title: Why Use MCP?
 description: Why an AI assistant should call the music theory MCP server instead of reasoning about theory from training data
 head:
   - tag: meta
     attrs:
       property: og:title
-      content: 'Why MCP? | @playbykey/theory'
+      content: 'Why Use MCP? | @playbykey/theory'
   - tag: meta
     attrs:
       property: og:description
@@ -24,26 +24,40 @@ head:
       content: 'https://theory-engine.docs.playbykey.com/og.svg'
 ---
 
-An LLM answering a music theory question is predicting the next likely token, not computing a result. Most of the time that's close enough. Some of the time it isn't - a relative minor that's actually a third off, a roman numeral that doesn't match the chord quality, a chord spelled with the wrong accidental, transposition math that's a semitone out.
+`@playbykey/theory-mcp` exists to give developers and musicians an intuitive engine to build with, and to give AI assistants the same thing: a way to compute music theory relationships instead of predicting them.
 
-None of these are exotic edge cases. They're the ordinary failure mode of asking a language model to do arithmetic-shaped work from memory instead of computing it.
+## Why it matters
 
-## What calling the engine actually changes
+AI models can still hallucinate a music theory fact outright, or misread which key or notation convention a question assumes: a relative minor off by a third, a chord with the wrong enharmonic spelling, a mismatched roman numeral, transposition off by a semitone crossing an octave. This does the most damage on fundamentals. If you're learning and an AI confidently gets something basic wrong, you may not catch it immediately.
 
-Every one of the following is a fixed relationship, not a judgment call - the same answer exists regardless of which model is asked:
+The same risk applies to anything you build. This engine lets you power your AI with fundamentals, instead of just being AI-powered.
 
-- A key's diatonic chords, given its scale and mode
-- The chord tones and inversions for any of 11 chord types
-- A catalog progression rendered in a specific key
-- The relative minor or major of any key
-- A note transposed by a fixed interval
-- A MIDI note number or frequency for a given pitch and octave
+## A foundation to build on
 
-`@playbykey/theory-mcp` computes these instead of predicting them. Calling the tool and getting a plausible-sounding answer from training data can look identical in a chat window - the difference only shows up when the answer is wrong, and by then it's already been used.
+This engine computes fixed relationships: chords, scales, progressions, transposition, key relationships, MIDI and frequency conversion. You can:
 
-## What this doesn't cover
+- Ask an AI assistant a music theory question and get a consistent answer, grounded in the actual theory
+- Build a new music tool, app, or learning platform with this as the foundation
+- Add reliable music theory grounding to something you've already built
 
-Deterministic computation only works for questions with one correct answer. It's not the right tool for genuinely subjective or generative questions - suggesting what chord to play next, or how to voice-lead a transition, are judgment calls, not fixed relationships. See [`playbykey/mcp`](/mcp/) for the full list of what's computed today.
+PlayByKey itself is built on this foundation.
+
+## Example prompts and use cases
+
+Ask an AI assistant directly:
+
+- "What are the diatonic chords in D major?"
+- "Show me the inversions of a Cmaj7 chord"
+- "What's the I-V-vi-IV progression in G major?"
+- "What's the relative minor of F major?"
+- "Transpose this progression from C major to A major"
+- "What is the MIDI note number for A4?"
+
+Or build with it:
+
+- A practice app calls it to generate quiz answers grounded in the actual theory
+- An AI tutor calls it before answering, so what it explains is correct, not just plausible-sounding
+- A production tool or plugin calls it for key and chord data it can depend on
 
 ## Setup
 
