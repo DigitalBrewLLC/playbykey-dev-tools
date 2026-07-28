@@ -6,7 +6,7 @@ export default defineConfig({
   site: 'https://theory-engine.docs.playbykey.com',
   integrations: [
     starlight({
-      title: 'Theory Engine',
+      title: 'Music Theory Engine',
       description:
         'TypeScript-first music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, MCP server support.',
       titleDelimiter: ' | ',
@@ -62,7 +62,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             property: 'og:site_name',
-            content: 'Theory Engine | PlayByKey',
+            content: 'Music Theory Engine | PlayByKey',
           },
         },
         {
