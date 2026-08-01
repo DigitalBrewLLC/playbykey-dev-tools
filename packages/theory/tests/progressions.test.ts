@@ -7,7 +7,7 @@ import {
 } from '../src/progressions';
 
 describe('PROGRESSION_DEFINITIONS', () => {
-  it('has exactly the 5 catalog entries with the correct degree sequences', () => {
+  it('has exactly the 7 catalog entries with the correct degree sequences', () => {
     expect(
       PROGRESSION_DEFINITIONS[ProgressionIds.OneFiveSixFour].degrees
     ).toEqual([1, 5, 6, 4]);
@@ -23,6 +23,12 @@ describe('PROGRESSION_DEFINITIONS', () => {
     expect(
       PROGRESSION_DEFINITIONS[ProgressionIds.TwelveBarBlues].degrees
     ).toEqual([1, 1, 1, 1, 4, 4, 1, 1, 5, 4, 1, 1]);
+    expect(
+      PROGRESSION_DEFINITIONS[ProgressionIds.OneSixFourFive].degrees
+    ).toEqual([1, 6, 4, 5]);
+    expect(
+      PROGRESSION_DEFINITIONS[ProgressionIds.OneSixTwoFive].degrees
+    ).toEqual([1, 6, 2, 5]);
     expect(Object.keys(PROGRESSION_DEFINITIONS)).toEqual(
       Object.values(ProgressionIds)
     );
@@ -68,6 +74,26 @@ describe('getProgressionInKey', () => {
       'C',
     ]);
     expect(chords.every((c) => c.type === 'major-triad')).toBe(true);
+  });
+
+  it('renders I-vi-IV-V in C', () => {
+    const chords = getProgressionInKey('I-vi-IV-V', 'C');
+    expect(chords).toEqual([
+      { root: 'C', type: 'major-triad' },
+      { root: 'A', type: 'minor-triad' },
+      { root: 'F', type: 'major-triad' },
+      { root: 'G', type: 'major-triad' },
+    ]);
+  });
+
+  it('renders I-vi-ii-V in C', () => {
+    const chords = getProgressionInKey('I-vi-ii-V', 'C');
+    expect(chords).toEqual([
+      { root: 'C', type: 'major-triad' },
+      { root: 'A', type: 'minor-triad' },
+      { root: 'D', type: 'minor-triad' },
+      { root: 'G', type: 'major-triad' },
+    ]);
   });
 });
 
