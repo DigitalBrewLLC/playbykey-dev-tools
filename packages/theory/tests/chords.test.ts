@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { Modes } from '../src/constants';
+import { ChordTypes, Modes } from '../src/constants';
 import {
   CHORD_DEFINITIONS,
+  detectChord,
   getAvailableInversions,
   getChordByDegree,
   getChordInversion,
@@ -123,5 +124,38 @@ describe('getChordInversion', () => {
     expect(getChordInversion(chord, 2)).toEqual(['G', 'B', 'D', 'C', 'E']);
     expect(getChordInversion(chord, 3)).toEqual(['B', 'D', 'C', 'E', 'G']);
     expect(getChordInversion(chord, 4)).toEqual(['D', 'C', 'E', 'G', 'B']);
+  });
+});
+
+describe('detectChord', () => {
+  it('identifies a major triad regardless of note order', () => {
+    expect(detectChord(['E', 'C', 'G'])).toEqual({
+      root: 'C',
+      type: 'major-triad',
+    });
+  });
+
+  it('ignores duplicate notes', () => {
+    expect(detectChord(['C', 'C', 'E', 'G'])).toEqual({
+      root: 'C',
+      type: 'major-triad',
+    });
+  });
+
+  it('returns null for an incomplete note set', () => {
+    expect(detectChord(['C', 'E'])).toBeNull();
+  });
+
+  it('returns null for an empty note set', () => {
+    expect(detectChord([])).toBeNull();
+  });
+
+  it('round-trips every chord type via getChordNotes', () => {
+    for (const type of Object.values(ChordTypes)) {
+      expect(detectChord(getChordNotes('C', type))).toEqual({
+        root: 'C',
+        type,
+      });
+    }
   });
 });

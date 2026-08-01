@@ -204,6 +204,50 @@ const getChordByDegree = (
   }
 };
 
+const CHORD_TYPES = Object.values(ChordTypes);
+
+/**
+ * Identifies a chord type and root from a set of notes (any order, duplicates
+ * ignored). Requires an exact match against a complete CHORD_DEFINITIONS
+ * shape - returns null rather than guessing at a closest/partial match,
+ * since inferring from an incomplete note set is generation from partial
+ * input (paid, Harmony API), not describing a complete object.
+ *
+ * Known limitation: symmetric chord shapes could theoretically match more
+ * than one (root, type) pair from the same note set. Checked against the
+ * full 22-entry dictionary this ships alongside - not a concern in
+ * practice; returns the first match by iteration order. Revisit if a
+ * future chord type makes this ambiguous.
+ *
+ * Offsets are compared mod 12: `notes` is pitch-class only (no octave/
+ * register), so a 9th and a 2nd are the same input value - CHORD_DEFINITIONS'
+ * semitoneOffsets for 9th/11th/13th chords intentionally use raw values past
+ * 11 (14, 17, 21) to distinguish "extended" tones for display/voicing
+ * purposes, but that distinction doesn't exist in a bare pitch-class set and
+ * must be collapsed before matching.
+ */
+const detectChord = (notes: readonly Note[]): Chord | null => {
+  const uniqueNotes = [...new Set(notes)];
+  for (const candidateRoot of uniqueNotes) {
+    const offsets = uniqueNotes
+      .map((note) => getSemitoneDistance(candidateRoot, note))
+      .sort((a, b) => a - b);
+    const match = CHORD_TYPES.find((type) => {
+      const definitionOffsets = [...CHORD_DEFINITIONS[type].semitoneOffsets]
+        .map((offset) => offset % 12)
+        .sort((a, b) => a - b);
+      return (
+        definitionOffsets.length === offsets.length &&
+        definitionOffsets.every((offset, i) => offset === offsets[i])
+      );
+    });
+    if (match !== undefined) {
+      return { root: candidateRoot, type: match };
+    }
+  }
+  return null;
+};
+
 export type { ChordDefinition };
 export {
   CHORD_DEFINITIONS,
@@ -212,4 +256,5 @@ export {
   getChordByDegree,
   getAvailableInversions,
   getChordInversion,
+  detectChord,
 };
