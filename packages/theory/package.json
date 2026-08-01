@@ -1,6 +1,6 @@
 {
   "name": "@playbykey/theory",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Zero-dependency music theory engine for scales, modes, intervals, and key relationships.",
   "keywords": [
     "music-theory",
