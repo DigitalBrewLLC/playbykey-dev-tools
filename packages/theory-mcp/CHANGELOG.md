@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v2.0.0...theory-mcp-v2.0.1) (2026-08-01)
+
+
+### Bug Fixes
+
+* adopt ChordTypes/ProgressionIds typed constants in chords and progressions tests ([4f57478](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/4f5747810592fff736d5c6197726d7d22bef27cb))
+* resolve 15 dependency vulnerabilities flagged by Socket scan ([53451b5](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/53451b560ce894ce29963cf7c9654bbb1a92496b))
+* **theory-mcp:** add flat-input test coverage for handleDetectChords ([c076d11](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/c076d1139fa2bfef8c16ab91f3ddf72b1d621c16))
+
 ## [2.0.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.6.1...theory-mcp-v2.0.0) (2026-08-01)
 
 

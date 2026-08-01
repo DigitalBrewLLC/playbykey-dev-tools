@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.0.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v2.0.0...theory-v2.0.1) (2026-08-01)
+
+
+### Bug Fixes
+
+* adopt ChordTypes/ProgressionIds typed constants in chords and progressions tests ([4f57478](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/4f5747810592fff736d5c6197726d7d22bef27cb))
+
 ## [2.0.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.5.0...theory-v2.0.0) (2026-08-01)
 
 
