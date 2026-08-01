@@ -57,6 +57,8 @@ import {
   MelodicMinorModes,
   HarmonicMinorModes,
   BebopScaleTypes,
+  ChordTypes,
+  ProgressionIds,
 } from '@playbykey/theory';
 
 const SHARP_NOTE_ENUM = CHROMATIC_NOTES;
@@ -108,27 +110,9 @@ const INTERVAL_ID_ENUM = [
   'octave',
 ] as const;
 
-const CHORD_TYPE_ENUM = [
-  'major-triad',
-  'minor-triad',
-  'diminished-triad',
-  'augmented-triad',
-  'major-7th',
-  'minor-7th',
-  'dominant-7th',
-  'major-6th',
-  'minor-6th',
-  'major-9th',
-  'minor-9th',
-] as const;
+const CHORD_TYPE_ENUM = [...Object.values(ChordTypes)] as const;
 
-const PROGRESSION_ID_ENUM = [
-  'I-V-vi-IV',
-  'ii-V-I',
-  'I-IV-V',
-  'vi-IV-I-V',
-  '12-bar-blues',
-] as const;
+const PROGRESSION_ID_ENUM = [...Object.values(ProgressionIds)] as const;
 
 const TOOLS = [
   {
