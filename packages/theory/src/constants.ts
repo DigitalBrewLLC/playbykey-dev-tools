@@ -168,6 +168,8 @@ const ProgressionIds = {
   OneFourFive: 'I-IV-V',
   SixFourOneFive: 'vi-IV-I-V',
   TwelveBarBlues: '12-bar-blues',
+  OneSixFourFive: 'I-vi-IV-V',
+  OneSixTwoFive: 'I-vi-ii-V',
 } as const satisfies Record<string, ProgressionId>;
 
 /** All 7 modes with display names, scale degrees, and characteristic descriptions. */

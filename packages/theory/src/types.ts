@@ -132,6 +132,8 @@ type ProgressionId =
   | 'ii-V-I'
   | 'I-IV-V'
   | 'vi-IV-I-V'
+  | 'I-vi-IV-V'
+  | 'I-vi-ii-V'
   | '12-bar-blues';
 
 /** Computed display data for a single in-scale note, consumed by all visualization views. */

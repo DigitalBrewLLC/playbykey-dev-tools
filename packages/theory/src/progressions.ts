@@ -23,6 +23,14 @@ const PROGRESSION_DEFINITIONS: Record<ProgressionId, ProgressionDefinition> = {
     label: '12-bar blues',
     degrees: [1, 1, 1, 1, 4, 4, 1, 1, 5, 4, 1, 1],
   },
+  [ProgressionIds.OneSixFourFive]: {
+    label: 'I-vi-IV-V',
+    degrees: [1, 6, 4, 5],
+  },
+  [ProgressionIds.OneSixTwoFive]: {
+    label: 'I-vi-ii-V',
+    degrees: [1, 6, 2, 5],
+  },
 };
 
 const ROMAN_NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'] as const;
