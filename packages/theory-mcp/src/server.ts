@@ -40,7 +40,7 @@ import {
   handleGetChordByDegree,
   handleGetAvailableInversions,
   handleGetChordInversion,
-  handleDetectChord,
+  handleDetectChords,
 } from './tools/chords.js';
 import {
   handleGetProgressionInKey,
@@ -538,9 +538,9 @@ const TOOLS = [
     },
   },
   {
-    name: 'detect_chord',
+    name: 'detect_chords',
     description:
-      "Identifies a chord's root and type from a set of notes (any order, duplicates ignored). Requires an exact match against the chord dictionary - returns no match rather than guessing at an incomplete or ambiguous note set. Many note sets legitimately match more than one (root, type) pair (e.g. a diminished 7th or augmented triad has multiple valid roots, a minor 7th shares its notes with a major 6th on a different root) - this tool returns only one match, not necessarily the one you'd expect from musical context.",
+      'Identifies every chord (root, type) reading of a set of notes (any order, duplicates ignored), keyed by root. Requires an exact match against the chord dictionary - a root with no exact match is omitted, never guessed. Many note sets legitimately have more than one valid root (e.g. a diminished 7th or augmented triad has multiple valid roots for the same notes, a minor 7th shares its notes with a major 6th on a different root) - all of them are returned, not collapsed to one.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -810,8 +810,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleGetAvailableInversions(safeArgs);
     case 'get_chord_inversion':
       return handleGetChordInversion(safeArgs);
-    case 'detect_chord':
-      return handleDetectChord(safeArgs);
+    case 'detect_chords':
+      return handleDetectChords(safeArgs);
     case 'get_progression_in_key':
       return handleGetProgressionInKey(safeArgs);
     case 'get_roman_numeral':

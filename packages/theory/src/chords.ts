@@ -207,25 +207,25 @@ const getChordByDegree = (
 const CHORD_TYPES = Object.values(ChordTypes);
 
 /**
- * Identifies a chord type and root from a set of notes (any order, duplicates
- * ignored). Requires an exact match against a complete CHORD_DEFINITIONS
- * shape - returns null rather than guessing at a closest/partial match,
- * since inferring from an incomplete note set is generation from partial
- * input (paid, Harmony API), not describing a complete object.
+ * Identifies every chord (root, type) reading of a set of notes (any order,
+ * duplicates ignored) - keyed by root, with every matching chord type for
+ * that root as an array (today, no root ever matches more than one type
+ * for the same note set - verified against the full 22-entry dictionary,
+ * no two chord types share an identical shape - but the shape doesn't
+ * assume that stays true forever). Each candidate root is checked for an
+ * exact match against a complete CHORD_DEFINITIONS shape - no
+ * closest/partial match, since inferring from an incomplete note set is
+ * generation from partial input (paid, Harmony API), not describing a
+ * complete object. Returns `{}` if no root matches anything.
  *
- * Known limitation: many note sets legitimately match more than one
- * (root, type) pair - verified against the full 22-entry dictionary, this
- * is common, not rare (roughly half the dictionary has at least one
- * collision): symmetric shapes have multiple valid roots for the same type
- * (augmented-triad, diminished-7th), and distinct types can share an
- * identical note set at different roots (minor-7th / major-6th, sus2 /
- * sus4, and every 13th-chord type, since a full 7-note stack is just the
- * parent scale's note collection under a different modal name). This
- * returns only the first match found (candidate roots tried in the order
- * `notes` was given, chord types tried in CHORD_DEFINITIONS's declaration
- * order) - not necessarily the musically "correct" interpretation. Callers
- * that need every possibility, not just one, must roll their own search
- * using this function's algorithm as a starting point.
+ * Many note sets legitimately have more than one valid root: symmetric
+ * shapes have multiple valid roots for the same type (augmented-triad,
+ * diminished-7th), and distinct types can share an identical note set at
+ * different roots (minor-7th / major-6th, sus2 / sus4, and every
+ * 13th-chord type, since a full 7-note stack is just the parent scale's
+ * note collection under a different modal name) - all of these come back
+ * as separate entries, not collapsed to one. Choosing among them is the
+ * caller's job (e.g. using musical context this function doesn't have).
  *
  * Offsets are compared mod 12: `notes` is pitch-class only (no octave/
  * register), so a 9th and a 2nd are the same input value - CHORD_DEFINITIONS'
@@ -234,13 +234,16 @@ const CHORD_TYPES = Object.values(ChordTypes);
  * purposes, but that distinction doesn't exist in a bare pitch-class set and
  * must be collapsed before matching.
  */
-const detectChord = (notes: readonly Note[]): Chord | null => {
+const detectChords = (
+  notes: readonly Note[]
+): Partial<Record<Note, ChordType[]>> => {
   const uniqueNotes = [...new Set(notes)];
+  const matches: Partial<Record<Note, ChordType[]>> = {};
   for (const candidateRoot of uniqueNotes) {
     const offsets = uniqueNotes
       .map((note) => getSemitoneDistance(candidateRoot, note))
       .sort((a, b) => a - b);
-    const match = CHORD_TYPES.find((type) => {
+    const rootMatches = CHORD_TYPES.filter((type) => {
       const definitionOffsets = [...CHORD_DEFINITIONS[type].semitoneOffsets]
         .map((offset) => offset % 12)
         .sort((a, b) => a - b);
@@ -249,11 +252,11 @@ const detectChord = (notes: readonly Note[]): Chord | null => {
         definitionOffsets.every((offset, i) => offset === offsets[i])
       );
     });
-    if (match !== undefined) {
-      return { root: candidateRoot, type: match };
+    if (rootMatches.length > 0) {
+      matches[candidateRoot] = rootMatches;
     }
   }
-  return null;
+  return matches;
 };
 
 export type { ChordDefinition };
@@ -264,5 +267,5 @@ export {
   getChordByDegree,
   getAvailableInversions,
   getChordInversion,
-  detectChord,
+  detectChords,
 };

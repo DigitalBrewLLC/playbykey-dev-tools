@@ -5,7 +5,7 @@ import {
   handleGetChordByDegree,
   handleGetAvailableInversions,
   handleGetChordInversion,
-  handleDetectChord,
+  handleDetectChords,
 } from '../src/tools/chords.js';
 
 describe('handleGetChordNotes', () => {
@@ -169,28 +169,36 @@ describe('handleGetChordInversion', () => {
   });
 });
 
-describe('handleDetectChord', () => {
+describe('handleDetectChords', () => {
   it('identifies a C major triad from its notes', () => {
-    const result = handleDetectChord({ notes: ['E', 'C', 'G'] });
+    const result = handleDetectChords({ notes: ['E', 'C', 'G'] });
     const text = result.content[0]?.text ?? '';
-    expect(text).toContain('C major-triad');
-    expect(text).toContain('"chord":{"root":"C","type":"major-triad"}');
+    expect(text).toContain('C: major-triad');
+    expect(text).toContain('"chords":{"C":["major-triad"]}');
+  });
+
+  it('finds every valid root for a symmetric diminished 7th chord', () => {
+    const result = handleDetectChords({ notes: ['C', 'D#', 'F#', 'A'] });
+    const text = result.content[0]?.text ?? '';
+    expect(text).toContain(
+      '"chords":{"C":["diminished-7th"],"D#":["diminished-7th"],"F#":["diminished-7th"],"A":["diminished-7th"]}'
+    );
   });
 
   it('returns a no-match result, not an error, for an incomplete note set', () => {
-    const result = handleDetectChord({ notes: ['C', 'E'] });
+    const result = handleDetectChords({ notes: ['C', 'E'] });
     const text = result.content[0]?.text ?? '';
     expect(text).toContain('No exact chord match');
-    expect(text).toContain('"chord":null');
+    expect(text).toContain('"chords":{}');
   });
 
   it('returns error-content for invalid notes input', () => {
-    const result = handleDetectChord({ notes: 'not-an-array' });
+    const result = handleDetectChords({ notes: 'not-an-array' });
     expect(result.content[0]?.text).toContain('Invalid notes');
   });
 
   it('returns error-content for an invalid note in the array', () => {
-    const result = handleDetectChord({ notes: ['C', 'H'] });
+    const result = handleDetectChords({ notes: ['C', 'H'] });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
 });
