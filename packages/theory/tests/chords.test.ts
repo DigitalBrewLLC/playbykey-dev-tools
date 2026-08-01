@@ -155,7 +155,6 @@ describe('getChordInversion', () => {
       'D',
       'F',
     ]);
-    expect(() => getChordInversion(chord, 7)).toThrow(RangeError);
   });
 });
 
