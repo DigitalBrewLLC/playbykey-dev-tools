@@ -17,18 +17,18 @@
     "test:a11y:ui": "playwright test tests/accessibility/ --ui"
   },
   "dependencies": {
-    "@playbykey/theory": "workspace:*",
     "@astrojs/react": "^6.0.0",
     "@astrojs/starlight": "^0.41.1",
-    "astro": "^7.0.3",
+    "@playbykey/theory": "workspace:*",
+    "astro": "^7.1.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "latest",
+    "@playwright/test": "latest",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "typescript": "^5.9.3",
-    "@playwright/test": "latest",
-    "@axe-core/playwright": "latest"
+    "typescript": "^5.9.3"
   }
 }
