@@ -53,6 +53,7 @@ The package represents notes with one canonical sharp spelling (`C#`, not `Db`) 
 
       <Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales); getChordNotes, getDiatonicChords, getChordByDegree, getAvailableInversions, getChordInversion, detectChords (22 chord types - triads, 7ths, 6ths, suspended, 9ths, 11ths, 13ths); getProgressionInKey, getRomanNumeral (7 catalog progressions, roman numeral labeling); getMelodicMinorNotes, getMelodicMinorModeNotes, getHarmonicMinorModeNotes, getBebopScaleNotes (melodic minor + 7 modes, harmonic minor's Phrygian dominant, 3 bebop variants); transpose (shift notes between keys); noteToMidi, midiToNote, noteToFrequency (MIDI number and Hz frequency conversion). Zero dependencies, TypeScript-first, sharps-only notation with flat-name input and output support." />
     </TabItem>
+
   </Tabs>
 </Aside>
 
@@ -118,13 +119,13 @@ console.log(getSharps(['Db', 'Eb', 'Gb'])); // ['C#', 'D#', 'F#']
 
 ## What's in the package
 
-| Category     | What it covers                                         | Page                            |
-| ------------ | ------------------------------------------------------ | ------------------------------- |
-| Keys & Modes | Scales, modes, key relationships, note utilities       | [Keys & Modes](/theory/engine/) |
-| Intervals    | Interval catalog, semitone lookup, endpoint resolution | [Intervals](/theory/intervals/) |
-| Scales       | Blues, harmonic minor, melodic minor, pentatonic, bebop, derived scales | [Scales](/theory/scales/) |
-| Chords       | Chord notes, diatonic triads, inversions, chord detection (22 chord types) | [Chords](/theory/chords/)    |
-| Progressions | 7 catalog progressions, roman numeral labeling         | [Progressions](/theory/progressions/) |
-| Transposition | Shift a set of notes between keys                     | [Transposition](/theory/transposition/) |
-| MIDI & Frequency | Convert between notes, MIDI numbers, and Hz frequencies | [MIDI & Frequency](/theory/midi-frequency/) |
-| Constants    | All exported constants and their values                | [Constants](/theory/constants/) |
+| Category         | What it covers                                                             | Page                                        |
+| ---------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
+| Keys & Modes     | Scales, modes, key relationships, note utilities                           | [Keys & Modes](/theory/engine/)             |
+| Intervals        | Interval catalog, semitone lookup, endpoint resolution                     | [Intervals](/theory/intervals/)             |
+| Scales           | Blues, harmonic minor, melodic minor, pentatonic, bebop, derived scales    | [Scales](/theory/scales/)                   |
+| Chords           | Chord notes, diatonic triads, inversions, chord detection (22 chord types) | [Chords](/theory/chords/)                   |
+| Progressions     | 7 catalog progressions, roman numeral labeling                             | [Progressions](/theory/progressions/)       |
+| Transposition    | Shift a set of notes between keys                                          | [Transposition](/theory/transposition/)     |
+| MIDI & Frequency | Convert between notes, MIDI numbers, and Hz frequencies                    | [MIDI & Frequency](/theory/midi-frequency/) |
+| Constants        | All exported constants and their values                                    | [Constants](/theory/constants/)             |
