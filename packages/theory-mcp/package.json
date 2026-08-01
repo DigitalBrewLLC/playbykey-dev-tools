@@ -6,12 +6,13 @@
   "keywords": [
     "mcp",
     "music-theory",
-    "model-context-protocol",
-    "playbykey",
-    "scales",
-    "modes",
-    "intervals",
-    "enharmonic"
+    "ai-agent",
+    "offline",
+    "chord-detection",
+    "progressions",
+    "transpose",
+    "midi",
+    "llm"
   ],
   "homepage": "https://github.com/DigitalBrewLLC/playbykey-dev-tools",
   "repository": {
