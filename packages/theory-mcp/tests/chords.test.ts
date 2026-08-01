@@ -136,6 +136,15 @@ describe('handleGetChordInversion', () => {
     expect(result.content[0]?.text).toContain('["E","G","C"]');
   });
 
+  it('accepts inversion 6 - the top of the widened 0-6 range - for a 13th chord', () => {
+    const result = handleGetChordInversion({
+      root: 'C',
+      chord_type: 'major-13th',
+      inversion: 6,
+    });
+    expect(result.content[0]?.text).toContain('["A","C","E","G","B","D","F"]');
+  });
+
   it('returns error-content, not an unhandled exception, for an out-of-range inversion', () => {
     const result = handleGetChordInversion({
       root: 'C',
