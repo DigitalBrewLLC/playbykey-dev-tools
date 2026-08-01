@@ -16,7 +16,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,css,yml,md}": [
+    "*.{json,css,yml,md,astro}": [
       "prettier --write"
     ]
   },
@@ -27,6 +27,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.0",
     "vitest": "^4.1.5"
