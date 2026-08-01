@@ -1,6 +1,6 @@
 ---
 title: Chords
-description: Compute chord notes, diatonic chords, and inversions across 11 chord types in @playbykey/theory
+description: Compute chord notes, diatonic chords, and inversions across 22 chord types in @playbykey/theory
 head:
   - tag: meta
     attrs:
@@ -9,7 +9,7 @@ head:
   - tag: meta
     attrs:
       property: og:description
-      content: 'Compute chord notes, diatonic chords, and inversions across 11 chord types in @playbykey/theory'
+      content: 'Compute chord notes, diatonic chords, and inversions across 22 chord types in @playbykey/theory'
   - tag: meta
     attrs:
       property: og:url
@@ -26,18 +26,23 @@ head:
 
 import ChordsPlayground from '../../../components/playgrounds/ChordsPlayground';
 
-The chords module computes chord notes and diatonic chord relationships across 11 chord types:
+The chords module computes chord notes and diatonic chord relationships across 22 chord types:
 
 - **Triads**: `major-triad`, `minor-triad`, `diminished-triad`, `augmented-triad`
-- **7th chords**: `major-7th`, `minor-7th`, `dominant-7th`
+- **7th chords**: `major-7th`, `minor-7th`, `dominant-7th`, `diminished-7th`, `half-diminished-7th`
 - **6th chords**: `major-6th`, `minor-6th`
-- **9th chords**: `major-9th`, `minor-9th`
+- **Suspended chords**: `sus2`, `sus4`
+- **9th chords**: `major-9th`, `minor-9th`, `dominant-9th`
+- **11th chords**: `major-11th`, `minor-11th`, `dominant-11th`
+- **13th chords**: `major-13th`, `minor-13th`, `dominant-13th`
 
 `getChordNotes(root, chordType)` returns the notes of any chord type built on a root.
 
 `getDiatonicChords(root, mode)` returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order (defaults to Ionian/major). `getChordByDegree(degree, root, mode)` returns just the chord at one degree (1-7).
 
-`getAvailableInversions(chordType)` returns the valid inversion numbers for a chord type - a triad has 3 (`0-2`), a 9th chord has 5 (`0-4`). `getChordInversion(chord, inversion)` reorders a chord's notes so the given inversion's tone is lowest, throwing a `RangeError` if the inversion is out of range for that chord's type.
+`getAvailableInversions(chordType)` returns the valid inversion numbers for a chord type - a triad has 3 (`0-2`), a 13th chord has 7 (`0-6`). `getChordInversion(chord, inversion)` reorders a chord's notes so the given inversion's tone is lowest, throwing a `RangeError` if the inversion is out of range for that chord's type.
+
+`detectChord(notes)` identifies a chord's root and type from a set of notes (any order, duplicates ignored) - the reverse of `getChordNotes`. Requires an exact match against the chord dictionary; returns `null` for an incomplete or ambiguous note set rather than guessing.
 
 ## Live Playground
 
