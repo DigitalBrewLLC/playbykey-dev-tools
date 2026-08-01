@@ -21,6 +21,7 @@ import { FieldSelect } from '../ui/FieldSelect';
 import { FunctionCard } from '../ui/FunctionCard';
 import { ModeSelect } from '../ui/ModeSelect';
 import { NoteSelect } from '../ui/NoteSelect';
+import { ResultPanel } from '../ui/ResultPanel';
 
 const containerStyle = {
   display: 'flex',
@@ -204,8 +205,11 @@ const ChordsPlayground = () => {
       <FunctionCard
         name="detectChords"
         signature="detectChords(notes: Note[]): Partial<Record<Note, ChordType[]>>"
-        description="Identifies every chord (root, type) match for a set of notes, keyed by root. Pick an example to see how ambiguous note sets return more than one valid root."
+        description="Returns every chord that matches a set of notes, as key-value pairs mapping each matching root note to its list of matching chord types. Pick an example to see how a note set can match more than one root."
         result={detectedChords}
+        additionalResults={
+          <ResultPanel label="Input notes" value={detectExample.notes} />
+        }
       >
         <FieldSelect
           label="Example"
