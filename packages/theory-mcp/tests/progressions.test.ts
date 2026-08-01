@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { ChordTypes, ProgressionIds } from '@playbykey/theory';
 import {
   handleGetProgressionInKey,
   handleGetRomanNumeral,
@@ -7,7 +8,7 @@ import {
 describe('handleGetProgressionInKey', () => {
   it('returns 4 chords for I-V-vi-IV in C', () => {
     const result = handleGetProgressionInKey({
-      progression_id: 'I-V-vi-IV',
+      progression_id: ProgressionIds.OneFiveSixFour,
       root: 'C',
     });
     const text = result.content[0]?.text ?? '';
@@ -15,10 +16,10 @@ describe('handleGetProgressionInKey', () => {
       chords: Array<{ root: string; type: string }>;
     };
     expect(parsed.chords).toEqual([
-      { root: 'C', type: 'major-triad' },
-      { root: 'G', type: 'major-triad' },
-      { root: 'A', type: 'minor-triad' },
-      { root: 'F', type: 'major-triad' },
+      { root: 'C', type: ChordTypes.MajorTriad },
+      { root: 'G', type: ChordTypes.MajorTriad },
+      { root: 'A', type: ChordTypes.MinorTriad },
+      { root: 'F', type: ChordTypes.MajorTriad },
     ]);
   });
 
@@ -32,7 +33,7 @@ describe('handleGetProgressionInKey', () => {
 
   it('returns error for invalid root', () => {
     const result = handleGetProgressionInKey({
-      progression_id: 'I-V-vi-IV',
+      progression_id: ProgressionIds.OneFiveSixFour,
       root: 'X',
     });
     expect(result.content[0]?.text).toContain('Invalid note');
@@ -40,11 +41,11 @@ describe('handleGetProgressionInKey', () => {
 
   it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
     const flat = handleGetProgressionInKey({
-      progression_id: 'I-V-vi-IV',
+      progression_id: ProgressionIds.OneFiveSixFour,
       root: 'Db',
     });
     const sharp = handleGetProgressionInKey({
-      progression_id: 'I-V-vi-IV',
+      progression_id: ProgressionIds.OneFiveSixFour,
       root: 'C#',
     });
     expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);

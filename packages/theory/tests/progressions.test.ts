@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ProgressionIds } from '../src/constants';
+import { ChordTypes, ProgressionIds } from '../src/constants';
 import {
   PROGRESSION_DEFINITIONS,
   getProgressionInKey,
@@ -37,27 +37,27 @@ describe('PROGRESSION_DEFINITIONS', () => {
 
 describe('getProgressionInKey', () => {
   it('renders I-V-vi-IV in C', () => {
-    const chords = getProgressionInKey('I-V-vi-IV', 'C');
+    const chords = getProgressionInKey(ProgressionIds.OneFiveSixFour, 'C');
     expect(chords).toEqual([
-      { root: 'C', type: 'major-triad' },
-      { root: 'G', type: 'major-triad' },
-      { root: 'A', type: 'minor-triad' },
-      { root: 'F', type: 'major-triad' },
+      { root: 'C', type: ChordTypes.MajorTriad },
+      { root: 'G', type: ChordTypes.MajorTriad },
+      { root: 'A', type: ChordTypes.MinorTriad },
+      { root: 'F', type: ChordTypes.MajorTriad },
     ]);
   });
 
   it('transposes to a different root', () => {
-    const chords = getProgressionInKey('I-V-vi-IV', 'D');
+    const chords = getProgressionInKey(ProgressionIds.OneFiveSixFour, 'D');
     expect(chords).toEqual([
-      { root: 'D', type: 'major-triad' },
-      { root: 'A', type: 'major-triad' },
-      { root: 'B', type: 'minor-triad' },
-      { root: 'G', type: 'major-triad' },
+      { root: 'D', type: ChordTypes.MajorTriad },
+      { root: 'A', type: ChordTypes.MajorTriad },
+      { root: 'B', type: ChordTypes.MinorTriad },
+      { root: 'G', type: ChordTypes.MajorTriad },
     ]);
   });
 
   it('renders 12-bar-blues in C with the correct repeated-degree sequence', () => {
-    const chords = getProgressionInKey('12-bar-blues', 'C');
+    const chords = getProgressionInKey(ProgressionIds.TwelveBarBlues, 'C');
     expect(chords).toHaveLength(12);
     expect(chords.map((c) => c.root)).toEqual([
       'C',
@@ -73,26 +73,26 @@ describe('getProgressionInKey', () => {
       'C',
       'C',
     ]);
-    expect(chords.every((c) => c.type === 'major-triad')).toBe(true);
+    expect(chords.every((c) => c.type === ChordTypes.MajorTriad)).toBe(true);
   });
 
   it('renders I-vi-IV-V in C', () => {
-    const chords = getProgressionInKey('I-vi-IV-V', 'C');
+    const chords = getProgressionInKey(ProgressionIds.OneSixFourFive, 'C');
     expect(chords).toEqual([
-      { root: 'C', type: 'major-triad' },
-      { root: 'A', type: 'minor-triad' },
-      { root: 'F', type: 'major-triad' },
-      { root: 'G', type: 'major-triad' },
+      { root: 'C', type: ChordTypes.MajorTriad },
+      { root: 'A', type: ChordTypes.MinorTriad },
+      { root: 'F', type: ChordTypes.MajorTriad },
+      { root: 'G', type: ChordTypes.MajorTriad },
     ]);
   });
 
   it('renders I-vi-ii-V in C', () => {
-    const chords = getProgressionInKey('I-vi-ii-V', 'C');
+    const chords = getProgressionInKey(ProgressionIds.OneSixTwoFive, 'C');
     expect(chords).toEqual([
-      { root: 'C', type: 'major-triad' },
-      { root: 'A', type: 'minor-triad' },
-      { root: 'D', type: 'minor-triad' },
-      { root: 'G', type: 'major-triad' },
+      { root: 'C', type: ChordTypes.MajorTriad },
+      { root: 'A', type: ChordTypes.MinorTriad },
+      { root: 'D', type: ChordTypes.MinorTriad },
+      { root: 'G', type: ChordTypes.MajorTriad },
     ]);
   });
 });

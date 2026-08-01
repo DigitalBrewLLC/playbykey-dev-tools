@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { ChordTypes } from '@playbykey/theory';
 import {
   handleGetChordNotes,
   handleGetDiatonicChords,
@@ -12,7 +13,7 @@ describe('handleGetChordNotes', () => {
   it('returns notes for a C major triad', () => {
     const result = handleGetChordNotes({
       root: 'C',
-      chord_type: 'major-triad',
+      chord_type: ChordTypes.MajorTriad,
     });
     expect(result.content[0]?.text).toContain('["C","E","G"]');
   });
@@ -25,16 +26,19 @@ describe('handleGetChordNotes', () => {
   it('returns error for invalid root', () => {
     const result = handleGetChordNotes({
       root: 'X',
-      chord_type: 'major-triad',
+      chord_type: ChordTypes.MajorTriad,
     });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
 
   it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
-    const flat = handleGetChordNotes({ root: 'Db', chord_type: 'major-triad' });
+    const flat = handleGetChordNotes({
+      root: 'Db',
+      chord_type: ChordTypes.MajorTriad,
+    });
     const sharp = handleGetChordNotes({
       root: 'C#',
-      chord_type: 'major-triad',
+      chord_type: ChordTypes.MajorTriad,
     });
     expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
   });
@@ -47,8 +51,14 @@ describe('handleGetDiatonicChords', () => {
     const parsed = JSON.parse(text.slice(text.indexOf('{'))) as {
       chords: Array<{ root: string; type: string }>;
     };
-    expect(parsed.chords[0]).toEqual({ root: 'C', type: 'major-triad' });
-    expect(parsed.chords[6]).toEqual({ root: 'B', type: 'diminished-triad' });
+    expect(parsed.chords[0]).toEqual({
+      root: 'C',
+      type: ChordTypes.MajorTriad,
+    });
+    expect(parsed.chords[6]).toEqual({
+      root: 'B',
+      type: ChordTypes.DiminishedTriad,
+    });
   });
 
   it('returns error for invalid mode', () => {
@@ -116,7 +126,9 @@ describe('handleGetChordByDegree', () => {
 
 describe('handleGetAvailableInversions', () => {
   it('returns [0,1,2,3,4] for a 9th chord', () => {
-    const result = handleGetAvailableInversions({ chord_type: 'major-9th' });
+    const result = handleGetAvailableInversions({
+      chord_type: ChordTypes.Major9th,
+    });
     expect(result.content[0]?.text).toContain('[0,1,2,3,4]');
   });
 
@@ -130,7 +142,7 @@ describe('handleGetChordInversion', () => {
   it('returns inverted notes for a C major triad', () => {
     const result = handleGetChordInversion({
       root: 'C',
-      chord_type: 'major-triad',
+      chord_type: ChordTypes.MajorTriad,
       inversion: 1,
     });
     expect(result.content[0]?.text).toContain('["E","G","C"]');
@@ -139,7 +151,7 @@ describe('handleGetChordInversion', () => {
   it('accepts inversion 6 - the top of the widened 0-6 range - for a 13th chord', () => {
     const result = handleGetChordInversion({
       root: 'C',
-      chord_type: 'major-13th',
+      chord_type: ChordTypes.Major13th,
       inversion: 6,
     });
     expect(result.content[0]?.text).toContain('["A","C","E","G","B","D","F"]');
@@ -148,7 +160,7 @@ describe('handleGetChordInversion', () => {
   it('returns error-content, not an unhandled exception, for an out-of-range inversion', () => {
     const result = handleGetChordInversion({
       root: 'C',
-      chord_type: 'major-triad',
+      chord_type: ChordTypes.MajorTriad,
       inversion: 3,
     });
     expect(result.content[0]?.text).toContain('out of range');
@@ -157,7 +169,7 @@ describe('handleGetChordInversion', () => {
   it('returns error for invalid inversion type', () => {
     const result = handleGetChordInversion({
       root: 'C',
-      chord_type: 'major-triad',
+      chord_type: ChordTypes.MajorTriad,
       inversion: 'bogus',
     });
     expect(result.content[0]?.text).toContain('Invalid inversion');
@@ -166,12 +178,12 @@ describe('handleGetChordInversion', () => {
   it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
     const flat = handleGetChordInversion({
       root: 'Db',
-      chord_type: 'major-triad',
+      chord_type: ChordTypes.MajorTriad,
       inversion: 1,
     });
     const sharp = handleGetChordInversion({
       root: 'C#',
-      chord_type: 'major-triad',
+      chord_type: ChordTypes.MajorTriad,
       inversion: 1,
     });
     expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
