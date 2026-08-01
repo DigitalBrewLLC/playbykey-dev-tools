@@ -1,15 +1,15 @@
 ---
 title: '@playbykey/theory'
-description: TypeScript-first music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, available on npm, MCP server support.
+description: Music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, available on npm, MCP server support.
 head:
   - tag: meta
     attrs:
       property: og:title
-      content: '@playbykey/theory | TypeScript music theory engine'
+      content: '@playbykey/theory | Music theory engine'
   - tag: meta
     attrs:
       property: og:description
-      content: 'TypeScript-first music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, available on npm, MCP server support.'
+      content: 'Music theory engine for scales, modal relationships, key signatures, and interval resolution. Zero dependencies, full type safety, available on npm, MCP server support.'
   - tag: meta
     attrs:
       property: og:url
@@ -26,7 +26,7 @@ head:
 
 import { Aside, Code, Tabs, TabItem } from '@astrojs/starlight/components';
 
-[`@playbykey/theory`](https://www.npmjs.com/package/@playbykey/theory) is a zero-dependency, TypeScript-first npm package for computing scales, modes, chords, progressions, transposition, MIDI/frequency conversions, key relationships, and note display maps.
+[`@playbykey/theory`](https://www.npmjs.com/package/@playbykey/theory) is a zero-dependency npm package for computing scales, modes, chords, progressions, transposition, MIDI/frequency conversions, key relationships, and note display maps.
 
 The music theory engine powering [PlayByKey](https://playbykey.com), a free interactive music theory learning tool.
 
@@ -51,7 +51,7 @@ The package represents notes with one canonical sharp spelling (`C#`, not `Db`) 
     <TabItem label="Package context">
       Paste this into any agent or LLM to give it context about this package:
 
-      <Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales); getChordNotes, getDiatonicChords, getChordByDegree, getAvailableInversions, getChordInversion, detectChords (22 chord types - triads, 7ths, 6ths, suspended, 9ths, 11ths, 13ths); getProgressionInKey, getRomanNumeral (7 catalog progressions, roman numeral labeling); getMelodicMinorNotes, getMelodicMinorModeNotes, getHarmonicMinorModeNotes, getBebopScaleNotes (melodic minor + 7 modes, harmonic minor's Phrygian dominant, 3 bebop variants); transpose (shift notes between keys); noteToMidi, midiToNote, noteToFrequency (MIDI number and Hz frequency conversion). Zero dependencies, TypeScript-first, sharps-only notation with flat-name input and output support." />
+      <Code lang="text" code="I'm using @playbykey/theory for music theory computation. Docs: https://theory-engine.docs.playbykey.com. Key functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales); getChordNotes, getDiatonicChords, getChordByDegree, getAvailableInversions, getChordInversion, detectChords (22 chord types - triads, 7ths, 6ths, suspended, 9ths, 11ths, 13ths); getProgressionInKey, getRomanNumeral (7 catalog progressions, roman numeral labeling); getMelodicMinorNotes, getMelodicMinorModeNotes, getHarmonicMinorModeNotes, getBebopScaleNotes (melodic minor + 7 modes, harmonic minor's Phrygian dominant, 3 bebop variants); transpose (shift notes between keys); noteToMidi, midiToNote, noteToFrequency (MIDI number and Hz frequency conversion). Zero dependencies, strict types with no any, sharps-only notation with flat-name input and output support." />
     </TabItem>
 
   </Tabs>
@@ -75,7 +75,7 @@ The package represents notes with one canonical sharp spelling (`C#`, not `Db`) 
   <TabItem label="agent">
     <Code
       lang="text"
-      code="Install @playbykey/theory from npm and add it to my project. Docs: https://theory-engine.docs.playbykey.com. Functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales); getChordNotes, getDiatonicChords, getChordByDegree, getAvailableInversions, getChordInversion, detectChords (22 chord types - triads, 7ths, 6ths, suspended, 9ths, 11ths, 13ths); getProgressionInKey, getRomanNumeral (7 catalog progressions, roman numeral labeling); getMelodicMinorNotes, getMelodicMinorModeNotes, getHarmonicMinorModeNotes, getBebopScaleNotes (melodic minor + 7 modes, harmonic minor's Phrygian dominant, 3 bebop variants); transpose (shift notes between keys); noteToMidi, midiToNote, noteToFrequency (MIDI number and Hz frequency conversion). Zero dependencies, TypeScript-first, sharps-only notation with flat-name input and output support. Or use @playbykey/theory-mcp for MCP tool calling."
+      code="Install @playbykey/theory from npm and add it to my project. Docs: https://theory-engine.docs.playbykey.com. Functions: getModeNotes, getParentScaleModes, getModalRoot (modes); getRelativeMinorKey, getRelativeMajorKey, getKeySignatureCount (accepts an optional quality: 'major'|'minor' param, default major), getCircleOfFifthsOrder (key relationships); getSemitoneDistance (note utilities); getScaleNotes, getScaleDegrees, getScaleDegree, isNoteInScale, buildNoteMap (scales); resolveIntervalEndpoints, getIntervalSemitones, INTERVAL_DEFINITIONS (intervals - half_step/whole_step are scale motion, minor_2nd/major_2nd are from root); parseNote, parseNoteToken, parseModeName, isNote, isModeName (type guards/parsers, case-insensitive; parseNote and parseNoteToken also accept flat note names like Db); getSharps, getFlats, getEnharmonicLabels (respell notes as sharps/flats/combined enharmonic labels); getBluesNotes, getHarmonicMinorNotes, getPentatonicNotes (derived scales); getChordNotes, getDiatonicChords, getChordByDegree, getAvailableInversions, getChordInversion, detectChords (22 chord types - triads, 7ths, 6ths, suspended, 9ths, 11ths, 13ths); getProgressionInKey, getRomanNumeral (7 catalog progressions, roman numeral labeling); getMelodicMinorNotes, getMelodicMinorModeNotes, getHarmonicMinorModeNotes, getBebopScaleNotes (melodic minor + 7 modes, harmonic minor's Phrygian dominant, 3 bebop variants); transpose (shift notes between keys); noteToMidi, midiToNote, noteToFrequency (MIDI number and Hz frequency conversion). Zero dependencies, strict types with no any, sharps-only notation with flat-name input and output support. Or use @playbykey/theory-mcp for MCP tool calling."
     />
   </TabItem>
 </Tabs>
