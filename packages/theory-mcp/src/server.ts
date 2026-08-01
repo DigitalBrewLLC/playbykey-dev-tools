@@ -501,7 +501,7 @@ const TOOLS = [
   {
     name: 'get_available_inversions',
     description:
-      'Returns the valid inversion numbers for a chord type.\n\nExample: get_available_inversions({ chord_type: "major-9th" }) → [0,1,2,3,4]',
+      'Returns every valid value for a chord type\'s inversion parameter. 0 is root position, not itself an inversion.\n\nExample: get_available_inversions({ chord_type: "major-9th" }) → [0,1,2,3,4]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -534,7 +534,7 @@ const TOOLS = [
         inversion: {
           type: 'integer',
           description:
-            'Inversion number (0-6, valid range depends on chord type)',
+            'Inversion value, 0-6 (0 = root position, not itself an inversion; valid upper bound depends on chord type)',
         },
       },
       required: ['root', 'chord_type', 'inversion'],
