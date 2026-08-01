@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
+  detectChords,
   getAvailableInversions,
   getChordByDegree,
   getChordInversion,
@@ -29,6 +30,20 @@ const containerStyle = {
 
 const DEGREES = [1, 2, 3, 4, 5, 6, 7] as const;
 
+const DETECT_CHORDS_EXAMPLES = [
+  { label: 'C major triad (C, E, G)', notes: ['C', 'E', 'G'] as const },
+  {
+    label: 'C diminished 7th - symmetric shape, 4 valid roots (C, D#, F#, A)',
+    notes: ['C', 'D#', 'F#', 'A'] as const,
+  },
+  {
+    label:
+      'C minor 7th / D# major 6th - shared notes, 2 valid roots (C, D#, G, A#)',
+    notes: ['C', 'D#', 'G', 'A#'] as const,
+  },
+  { label: 'Incomplete triad - no match (C, E)', notes: ['C', 'E'] as const },
+] as const;
+
 const ChordsPlayground = () => {
   const [notesRoot, setNotesRoot] = useState<Note>(Notes.C);
   const [notesType, setNotesType] = useState<ChordType>(ChordTypes.MajorTriad);
@@ -49,6 +64,10 @@ const ChordsPlayground = () => {
     ChordTypes.MajorTriad
   );
   const [inversion, setInversion] = useState<ChordInversion>(0);
+
+  const [detectExampleLabel, setDetectExampleLabel] = useState<string>(
+    DETECT_CHORDS_EXAMPLES[0].label
+  );
 
   const chordNotes = useMemo(
     () => getChordNotes(notesRoot, notesType),
@@ -78,6 +97,16 @@ const ChordsPlayground = () => {
   const invertedNotes = useMemo(
     () => getChordInversion({ root: invertRoot, type: invertType }, inversion),
     [invertRoot, invertType, inversion]
+  );
+
+  const detectExample =
+    DETECT_CHORDS_EXAMPLES.find(
+      (example) => example.label === detectExampleLabel
+    ) ?? DETECT_CHORDS_EXAMPLES[0];
+
+  const detectedChords = useMemo(
+    () => detectChords(detectExample.notes),
+    [detectExample]
   );
 
   const handleInvertTypeChange = (chordType: ChordType) => {
@@ -167,6 +196,32 @@ const ChordsPlayground = () => {
           {invertAvailableInversions.map((i) => (
             <option key={i} value={i}>
               {i}
+            </option>
+          ))}
+        </FieldSelect>
+      </FunctionCard>
+
+      <FunctionCard
+        name="detectChords"
+        signature="detectChords(notes: Note[]): Partial<Record<Note, ChordType[]>>"
+        description="Identifies every chord (root, type) match for a set of notes, keyed by root. Pick an example to see how ambiguous note sets return more than one valid root."
+        result={detectedChords}
+      >
+        <FieldSelect
+          label="Example"
+          value={detectExampleLabel}
+          onChange={(v) => {
+            const example = DETECT_CHORDS_EXAMPLES.find(
+              (candidate) => candidate.label === v
+            );
+            if (example !== undefined) {
+              setDetectExampleLabel(example.label);
+            }
+          }}
+        >
+          {DETECT_CHORDS_EXAMPLES.map((example) => (
+            <option key={example.label} value={example.label}>
+              {example.label}
             </option>
           ))}
         </FieldSelect>
