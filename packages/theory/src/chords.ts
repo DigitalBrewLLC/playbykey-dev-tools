@@ -138,10 +138,9 @@ const getAvailableInversions = (
  * Reorders a chord's notes so the given inversion's chord tone is lowest (first in the array).
  *
  * @param chord - The chord to invert, `{ root, type }`
- * @param inversion - Which chord tone to put in the bass (0 = root position, not
- *   itself an inversion). Must be in range for `chord.type`'s actual note count -
- *   a triad only goes up to 2 even though `ChordInversion` itself covers 0-6, the
- *   widest range across all chord types
+ * @param inversion - Which chord tone to put in the bass (0 = root position).
+ *   Must be in range for `chord.type`'s actual note count - a triad only goes
+ *   up to 2, even though `ChordInversion` covers 0-6
  * @returns The chord's notes, rotated so the requested tone is first
  * @throws {RangeError} if `inversion` is out of range for `chord.type`'s note count -
  *   use `getAvailableInversions(chord.type)` to check first if the range isn't known
@@ -162,12 +161,10 @@ const getChordInversion = (chord: Chord, inversion: ChordInversion): Note[] => {
 };
 
 /**
- * The 4 triad ChordTypes - classifyTriadType only ever matches against these,
- * never the 7th/6th/9th shapes also defined in CHORD_DEFINITIONS. Augmented
- * is included even though none of the 7 major-scale modes ever produce one
- * (so that branch has no current caller and no test can reach it) - kept
- * intentionally so classification stays correct if this is ever called
- * against a scale where it does occur, not left in by oversight.
+ * The 4 triad types classifyTriadType matches against, never the 7th/6th/9th
+ * shapes CHORD_DEFINITIONS also holds. Augmented is included even though no
+ * major-scale mode produces one, kept for correctness if this is ever called
+ * against a scale where it does.
  */
 const TRIAD_TYPES: readonly ChordType[] = [
   ChordTypes.MajorTriad,
@@ -177,12 +174,10 @@ const TRIAD_TYPES: readonly ChordType[] = [
 ];
 
 /**
- * Identifies which triad shape (root, third, fifth) forms, by computing each
- * note's semitone offset from the root and matching against CHORD_DEFINITIONS'
- * existing offset arrays for the 4 triad types - the same table getChordNotes
- * already uses, not a second, independently-maintained classification table.
- * Throws if no triad shape matches (should not happen for the 7 major-scale
- * modes; see the note on getDiatonicChords below).
+ * Identifies a triad shape from root/third/fifth by matching semitone offsets
+ * against CHORD_DEFINITIONS - the same table getChordNotes uses, not a second
+ * classification table. Throws if nothing matches, which shouldn't happen for
+ * the 7 major-scale modes.
  */
 const classifyTriadType = (root: Note, third: Note, fifth: Note): ChordType => {
   const offsets = [
@@ -208,14 +203,10 @@ const classifyTriadType = (root: Note, third: Note, fifth: Note): ChordType => {
 /**
  * Returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order.
  *
- * Algorithm: for each of the 7 scale degrees, build a triad by stacking the
- * scale note at that degree, the scale note two positions later (wrapping
- * within the 7-note scale array), and the scale note four positions later
- * (also wrapping), then identify which triad shape those 3 notes form via
- * classifyTriadType. Only major/minor/diminished triads actually occur across
- * the 7 major-scale modes; augmented is matched too since CHORD_DEFINITIONS
- * already defines it, so the classification stays correct if this is ever
- * called against a scale where it occurs.
+ * Builds each degree's triad from the scale notes two and four positions
+ * later (wrapping within the 7-note scale), then classifies the shape via
+ * classifyTriadType. Augmented is matched even though the 7 major-scale
+ * modes never produce one, since CHORD_DEFINITIONS already defines it.
  *
  * @param root - Root of the key
  * @param mode - Diatonic mode name (e.g. `"ionian"`, `"dorian"`) - defaults to `"ionian"` (major)
@@ -275,32 +266,17 @@ const getChordByDegree = (
 const CHORD_TYPES = Object.values(ChordTypes);
 
 /**
- * Identifies every chord (root, type) reading of a set of notes (any order,
- * duplicates ignored) - keyed by root, with every matching chord type for
- * that root as an array (today, no root ever matches more than one type
- * for the same note set - verified against the full 22-entry dictionary,
- * no two chord types share an identical shape - but the shape doesn't
- * assume that stays true forever). Each candidate root is checked for an
- * exact match against a complete CHORD_DEFINITIONS shape - no
- * closest/partial match, since inferring from an incomplete note set is
- * generation from partial input (paid, Harmony API), not describing a
- * complete object. Returns `{}` if no root matches anything.
+ * Identifies every chord (root, type) match for a set of notes, keyed by
+ * root - each value is that root's matching types. Exact match only; omits
+ * a root rather than guessing, and returns `{}` if nothing matches.
  *
- * Many note sets legitimately have more than one valid root: symmetric
- * shapes have multiple valid roots for the same type (augmented-triad,
- * diminished-7th), and distinct types can share an identical note set at
- * different roots (minor-7th / major-6th, sus2 / sus4, and every
- * 13th-chord type, since a full 7-note stack is just the parent scale's
- * note collection under a different modal name) - all of these come back
- * as separate entries, not collapsed to one. Choosing among them is the
- * caller's job (e.g. using musical context this function doesn't have).
+ * Multiple valid roots are common: symmetric chords (augmented-triad,
+ * diminished-7th), minor-7th/major-6th overlap, and the whole 13th-chord
+ * family all produce more than one entry.
  *
- * Offsets are compared mod 12: `notes` is pitch-class only (no octave/
- * register), so a 9th and a 2nd are the same input value - CHORD_DEFINITIONS'
- * semitoneOffsets for 9th/11th/13th chords intentionally use raw values past
- * 11 (14, 17, 21) to distinguish "extended" tones for display/voicing
- * purposes, but that distinction doesn't exist in a bare pitch-class set and
- * must be collapsed before matching.
+ * Offsets are compared mod 12: notes are pitch-class only, so 9th/11th/
+ * 13th chords' extended-tone offsets (14, 17, 21) must collapse to their
+ * pitch class before matching.
  *
  * @param notes - Notes to identify (any order, duplicates ignored)
  * @returns Every matching `{ root: chordType[] }` reading, or `{}` if nothing matches

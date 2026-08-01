@@ -249,7 +249,7 @@ const ENHARMONIC_LABELS: Record<Note, string | null> = {
  * test asserts this table's keys are exactly the 5 FlatNote values and
  * stay consistent with ENHARMONIC_LABELS. Module-internal to the package
  * (exported from this file for use in engine.ts, but not re-exported from
- * index.ts — not part of the public API).
+ * index.ts - not part of the public API).
  */
 const FLAT_TO_SHARP: Readonly<Record<FlatNote, Note>> = Object.fromEntries(
   Object.entries(ENHARMONIC_LABELS)

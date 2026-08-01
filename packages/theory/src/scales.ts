@@ -61,12 +61,10 @@ const MELODIC_MINOR_MODE_SEMITONE_OFFSETS: Record<
 };
 
 /**
- * Semitone offsets for harmonic minor modes other than the base scale itself.
- * The base scale ('harmonic-minor') is deliberately excluded here - it's
- * derived via getHarmonicMinorNotes (parent-mode + raised-7th), not a static
- * offset table, so getHarmonicMinorModeNotes delegates to that function
- * directly for that case rather than keeping a second, independently
- * maintained copy of the same result.
+ * Semitone offsets for harmonic minor modes other than the base scale. The
+ * base scale is deliberately excluded - it's derived via
+ * getHarmonicMinorNotes, not a static table, so getHarmonicMinorModeNotes
+ * delegates to that function for that case.
  */
 const HARMONIC_MINOR_MODE_SEMITONE_OFFSETS: Record<
   Exclude<HarmonicMinorModeName, 'harmonic-minor'>,
@@ -390,11 +388,10 @@ const isNoteInScale = (root: Note, scaleType: ScaleType, note: Note): boolean =>
   getScaleDegree(root, scaleType, note) !== null;
 
 /**
- * Returns one `NoteDisplayInfo` entry per in-scale note, in scale-degree order.
- * Every entry includes the note name, its 1-based scale degree, and its semitone
- * offset from the root (0 = root, up to 11).
- * Consumers derive their own labels: use `note` for letter labels or
- * `String(scaleDegree)` for numeric labels.
+ * Returns one `NoteDisplayInfo` entry per in-scale note, in scale-degree
+ * order - note name, 1-based scale degree, and semitone offset from root.
+ * Consumers derive their own labels from these fields (`note` for letters,
+ * `String(scaleDegree)` for numbers).
  *
  * @param root - Root note
  * @param scaleType - Scale type (see `ScaleTypes`)

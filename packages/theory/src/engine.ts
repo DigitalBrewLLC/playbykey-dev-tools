@@ -330,11 +330,9 @@ const isFlatNote = (value: string): value is FlatNote =>
   FLAT_NOTE_SET.has(value);
 
 /**
- * Normalizes a flat-spelled note token (e.g. "Db", "db", "DB") to its
- * canonical sharp Note (e.g. "C#"), or null when not recognized. The letter
- * is uppercased and the accidental is checked case-insensitively for 'b',
- * handled separately from the letter so uppercasing the whole string never
- * corrupts the accidental (e.g. "Db" must not become "DB").
+ * Normalizes a flat-spelled note token (e.g. "Db", "db") to its canonical
+ * sharp Note, or null when not recognized. The letter and accidental are
+ * handled separately so uppercasing never corrupts the accidental.
  */
 const normalizeFlatNoteInput = (value: string): Note | null => {
   if (value.length !== 2) return null;
@@ -359,11 +357,9 @@ const firstToken = (value: string): string => {
 
 /**
  * Parses a display key string into a chromatic Note, or `null` when not
- * recognized. Accepts flat-spelled note names (e.g. `"Db"`) in addition to
- * sharps, normalizing them to their canonical sharp equivalent. Only reads
- * the first token - use this to extract a note from a larger phrase like
- * `"C ionian"`, not to validate that an entire string is exactly one note
- * (use `parseNoteToken` for that).
+ * recognized. Accepts flat spellings (normalized to sharp) and only reads
+ * the first token - use `parseNoteToken` instead to validate that an
+ * entire string is exactly one note.
  *
  * @param value - A note, optionally followed by more text (e.g. a mode name)
  * @returns The canonical sharp `Note`, or `null` if the first token isn't a valid note

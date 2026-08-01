@@ -39,14 +39,10 @@ const ROMAN_NUMERALS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'] as const;
 const QUALITY_REFERENCE_ROOT: Note = 'C';
 
 /**
- * One formatter per triad quality - table-driven to match the codebase's
- * definitions-table convention, and easier to scan/extend than a
- * branch-per-quality if-chain. Only the 4 triad qualities are ever passed in
- * (getChordByDegree/getDiatonicChords never return a 7th/6th/9th quality),
- * so this is intentionally not a full Record<ChordType, ...>. The augmented
- * entry has no current caller (none of the 7 major-scale modes produce an
- * augmented triad) - kept intentionally for correctness if that ever
- * changes, not left in by oversight.
+ * One formatter per triad quality, table-driven rather than a
+ * branch-per-quality if-chain. Only the 4 triad qualities are ever passed
+ * in, so this is intentionally not a full Record<ChordType, ...>; augmented
+ * has no current caller but is kept for correctness if that changes.
  */
 const NUMERAL_FORMATTERS: Partial<
   Record<ChordType, (numeral: string) => string>
