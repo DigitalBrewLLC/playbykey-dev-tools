@@ -540,14 +540,15 @@ const TOOLS = [
   {
     name: 'detect_chord',
     description:
-      "Identifies a chord's root and type from a set of notes (any order, duplicates ignored). Requires an exact match against the chord dictionary - returns no match rather than guessing at an incomplete or ambiguous note set.",
+      "Identifies a chord's root and type from a set of notes (any order, duplicates ignored). Requires an exact match against the chord dictionary - returns no match rather than guessing at an incomplete or ambiguous note set. Many note sets legitimately match more than one (root, type) pair (e.g. a diminished 7th or augmented triad has multiple valid roots, a minor 7th shares its notes with a major 6th on a different root) - this tool returns only one match, not necessarily the one you'd expect from musical context.",
     inputSchema: {
       type: 'object',
       properties: {
         notes: {
           type: 'array',
-          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
-          description: 'Notes to identify as a chord',
+          items: { type: 'string', enum: [...NOTE_ENUM] },
+          description:
+            'Notes to identify as a chord - flat-spelled input accepted',
         },
       },
       required: ['notes'],

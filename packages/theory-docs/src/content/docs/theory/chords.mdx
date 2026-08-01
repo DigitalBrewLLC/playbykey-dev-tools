@@ -42,7 +42,7 @@ The chords module computes chord notes and diatonic chord relationships across 2
 
 `getAvailableInversions(chordType)` returns the valid inversion numbers for a chord type - a triad has 3 (`0-2`), a 13th chord has 7 (`0-6`). `getChordInversion(chord, inversion)` reorders a chord's notes so the given inversion's tone is lowest, throwing a `RangeError` if the inversion is out of range for that chord's type.
 
-`detectChord(notes)` identifies a chord's root and type from a set of notes (any order, duplicates ignored) - the reverse of `getChordNotes`. Requires an exact match against the chord dictionary; returns `null` for an incomplete or ambiguous note set rather than guessing.
+`detectChord(notes)` identifies a chord's root and type from a set of notes (any order, duplicates ignored) - the reverse of `getChordNotes`. Requires an exact match against the chord dictionary; returns `null` if no chord type matches the note count/shape at all, rather than guessing at a closest match. Many note sets legitimately match more than one `{root, type}` pair (a diminished 7th or augmented triad has multiple valid roots for the same identical notes; a minor 7th shares its notes with a major 6th on a different root; every 13th chord shares its notes with two other 13th-chord roots) - in that case `detectChord` returns only one match, not necessarily the one musical context would suggest.
 
 ## Live Playground
 

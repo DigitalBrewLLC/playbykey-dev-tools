@@ -213,11 +213,19 @@ const CHORD_TYPES = Object.values(ChordTypes);
  * since inferring from an incomplete note set is generation from partial
  * input (paid, Harmony API), not describing a complete object.
  *
- * Known limitation: symmetric chord shapes could theoretically match more
- * than one (root, type) pair from the same note set. Checked against the
- * full 22-entry dictionary this ships alongside - not a concern in
- * practice; returns the first match by iteration order. Revisit if a
- * future chord type makes this ambiguous.
+ * Known limitation: many note sets legitimately match more than one
+ * (root, type) pair - verified against the full 22-entry dictionary, this
+ * is common, not rare (roughly half the dictionary has at least one
+ * collision): symmetric shapes have multiple valid roots for the same type
+ * (augmented-triad, diminished-7th), and distinct types can share an
+ * identical note set at different roots (minor-7th / major-6th, sus2 /
+ * sus4, and every 13th-chord type, since a full 7-note stack is just the
+ * parent scale's note collection under a different modal name). This
+ * returns only the first match found (candidate roots tried in the order
+ * `notes` was given, chord types tried in CHORD_DEFINITIONS's declaration
+ * order) - not necessarily the musically "correct" interpretation. Callers
+ * that need every possibility, not just one, must roll their own search
+ * using this function's algorithm as a starting point.
  *
  * Offsets are compared mod 12: `notes` is pitch-class only (no octave/
  * register), so a 9th and a 2nd are the same input value - CHORD_DEFINITIONS'
