@@ -40,6 +40,7 @@ import {
   handleGetChordByDegree,
   handleGetAvailableInversions,
   handleGetChordInversion,
+  handleDetectChord,
 } from './tools/chords.js';
 import {
   handleGetProgressionInKey,
@@ -530,10 +531,26 @@ const TOOLS = [
         inversion: {
           type: 'integer',
           description:
-            'Inversion number (0-4, valid range depends on chord type)',
+            'Inversion number (0-6, valid range depends on chord type)',
         },
       },
       required: ['root', 'chord_type', 'inversion'],
+    },
+  },
+  {
+    name: 'detect_chord',
+    description:
+      "Identifies a chord's root and type from a set of notes (any order, duplicates ignored). Requires an exact match against the chord dictionary - returns no match rather than guessing at an incomplete or ambiguous note set.",
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+          description: 'Notes to identify as a chord',
+        },
+      },
+      required: ['notes'],
     },
   },
   {
@@ -792,6 +809,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleGetAvailableInversions(safeArgs);
     case 'get_chord_inversion':
       return handleGetChordInversion(safeArgs);
+    case 'detect_chord':
+      return handleDetectChord(safeArgs);
     case 'get_progression_in_key':
       return handleGetProgressionInKey(safeArgs);
     case 'get_roman_numeral':

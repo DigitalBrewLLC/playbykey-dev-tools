@@ -5,6 +5,7 @@ import {
   handleGetChordByDegree,
   handleGetAvailableInversions,
   handleGetChordInversion,
+  handleDetectChord,
 } from '../src/tools/chords.js';
 
 describe('handleGetChordNotes', () => {
@@ -165,5 +166,31 @@ describe('handleGetChordInversion', () => {
       inversion: 1,
     });
     expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
+});
+
+describe('handleDetectChord', () => {
+  it('identifies a C major triad from its notes', () => {
+    const result = handleDetectChord({ notes: ['E', 'C', 'G'] });
+    const text = result.content[0]?.text ?? '';
+    expect(text).toContain('C major-triad');
+    expect(text).toContain('"chord":{"root":"C","type":"major-triad"}');
+  });
+
+  it('returns a no-match result, not an error, for an incomplete note set', () => {
+    const result = handleDetectChord({ notes: ['C', 'E'] });
+    const text = result.content[0]?.text ?? '';
+    expect(text).toContain('No exact chord match');
+    expect(text).toContain('"chord":null');
+  });
+
+  it('returns error-content for invalid notes input', () => {
+    const result = handleDetectChord({ notes: 'not-an-array' });
+    expect(result.content[0]?.text).toContain('Invalid notes');
+  });
+
+  it('returns error-content for an invalid note in the array', () => {
+    const result = handleDetectChord({ notes: ['C', 'H'] });
+    expect(result.content[0]?.text).toContain('Invalid note');
   });
 });
