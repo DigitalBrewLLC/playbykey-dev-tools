@@ -210,4 +210,10 @@ describe('handleDetectChords', () => {
     const result = handleDetectChords({ notes: ['C', 'H'] });
     expect(result.content[0]?.text).toContain('Invalid note');
   });
+
+  it('accepts flat-spelled notes, normalizing to the same result as sharps', () => {
+    const flat = handleDetectChords({ notes: ['Db', 'F', 'Ab'] });
+    const sharp = handleDetectChords({ notes: ['C#', 'F', 'G#'] });
+    expect(flat.content[0]?.text).toEqual(sharp.content[0]?.text);
+  });
 });
