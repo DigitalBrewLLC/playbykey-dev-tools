@@ -97,7 +97,7 @@ const backToSharps = getSharps(['Db', 'Eb', 'Gb']);
 - **Derived scales:** `getBluesNotes`, `getHarmonicMinorNotes`, `getPentatonicNotes`
 - **Type guards / parsers:** `isNote`, `isModeName`, `parseNote`, `parseNoteToken`, `parseModeName` (case-insensitive; `parseNote`/`parseNoteToken` also accept flat note names)
 - **Note spelling:** `getSharps`, `getFlats`, `getEnharmonicLabels`
-- **Chords:** `getChordNotes`, `getDiatonicChords`, `getChordByDegree`, `getAvailableInversions`, `getChordInversion`, `detectChord` (22 chord types: triads, 7ths, 6ths, suspended, 9ths, 11ths, 13ths)
+- **Chords:** `getChordNotes`, `getDiatonicChords`, `getChordByDegree`, `getAvailableInversions`, `getChordInversion`, `detectChords` (22 chord types: triads, 7ths, 6ths, suspended, 9ths, 11ths, 13ths)
 - **Progressions:** `getProgressionInKey`, `getRomanNumeral` (7 catalog progressions, roman numeral labeling)
 - **Expanded scales:** `getMelodicMinorNotes`, `getMelodicMinorModeNotes`, `getHarmonicMinorModeNotes`, `getBebopScaleNotes` (melodic minor + 7 modes, harmonic minor's Phrygian dominant, 3 bebop variants)
 - **Transposition:** `transpose` (shifts a set of notes between keys)

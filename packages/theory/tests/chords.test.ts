@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { ChordTypes, Modes } from '../src/constants';
 import {
   CHORD_DEFINITIONS,
-  detectChord,
+  detectChords,
   getAvailableInversions,
   getChordByDegree,
   getChordInversion,
@@ -127,35 +127,55 @@ describe('getChordInversion', () => {
   });
 });
 
-describe('detectChord', () => {
+describe('detectChords', () => {
   it('identifies a major triad regardless of note order', () => {
-    expect(detectChord(['E', 'C', 'G'])).toEqual({
-      root: 'C',
-      type: 'major-triad',
+    expect(detectChords(['E', 'C', 'G'])).toEqual({
+      C: ['major-triad'],
     });
   });
 
   it('ignores duplicate notes', () => {
-    expect(detectChord(['C', 'C', 'E', 'G'])).toEqual({
-      root: 'C',
-      type: 'major-triad',
+    expect(detectChords(['C', 'C', 'E', 'G'])).toEqual({
+      C: ['major-triad'],
     });
   });
 
-  it('returns null for an incomplete note set', () => {
-    expect(detectChord(['C', 'E'])).toBeNull();
+  it('returns an empty object for an incomplete note set', () => {
+    expect(detectChords(['C', 'E'])).toEqual({});
   });
 
-  it('returns null for an empty note set', () => {
-    expect(detectChord([])).toBeNull();
+  it('returns an empty object for an empty note set', () => {
+    expect(detectChords([])).toEqual({});
   });
 
-  it('round-trips every chord type via getChordNotes', () => {
+  it('round-trips every chord type via getChordNotes, at minimum recovering the original root', () => {
     for (const type of Object.values(ChordTypes)) {
-      expect(detectChord(getChordNotes('C', type))).toEqual({
-        root: 'C',
-        type,
-      });
+      const result = detectChords(getChordNotes('C', type));
+      expect(result['C']).toEqual([type]);
     }
+  });
+
+  it('finds every valid root for a symmetric diminished 7th chord', () => {
+    expect(detectChords(getChordNotes('C', 'diminished-7th'))).toEqual({
+      C: ['diminished-7th'],
+      'D#': ['diminished-7th'],
+      'F#': ['diminished-7th'],
+      A: ['diminished-7th'],
+    });
+  });
+
+  it('finds every valid root for a symmetric augmented triad', () => {
+    expect(detectChords(getChordNotes('C', 'augmented-triad'))).toEqual({
+      C: ['augmented-triad'],
+      E: ['augmented-triad'],
+      'G#': ['augmented-triad'],
+    });
+  });
+
+  it('finds a minor 7th chord and the major 6th chord sharing its notes at a different root', () => {
+    expect(detectChords(getChordNotes('C', 'minor-7th'))).toEqual({
+      C: ['minor-7th'],
+      'D#': ['major-6th'],
+    });
   });
 });
