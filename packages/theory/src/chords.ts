@@ -266,20 +266,18 @@ const getChordByDegree = (
 const CHORD_TYPES = Object.values(ChordTypes);
 
 /**
- * Identifies every chord (root, type) match for a set of notes, keyed by
- * root - each value is that root's matching types. Exact match only; omits
- * a root rather than guessing, and returns `{}` if nothing matches.
+ * Returns every chord that matches a set of notes, as key-value pairs
+ * mapping each matching root note to its list of matching chord types.
  *
- * Multiple valid roots are common: symmetric chords (augmented-triad,
- * diminished-7th), minor-7th/major-6th overlap, and the whole 13th-chord
- * family all produce more than one entry.
+ * A note set can match more than one root: symmetric chords
+ * (augmented-triad, diminished-7th), the minor-7th/major-6th overlap, and
+ * the whole 13th-chord family all produce more than one entry.
  *
- * Offsets are compared mod 12: notes are pitch-class only, so 9th/11th/
- * 13th chords' extended-tone offsets (14, 17, 21) must collapse to their
- * pitch class before matching.
+ * Matching is by pitch class: note order and octave don't matter, and
+ * duplicate notes are ignored.
  *
  * @param notes - Notes to identify (any order, duplicates ignored)
- * @returns Every matching `{ root: chordType[] }` reading, or `{}` if nothing matches
+ * @returns Root → chord-type-list key-value pairs for every matching root, or `{}` if no chord matches
  *
  * @example
  * detectChords(["E", "C", "G"])

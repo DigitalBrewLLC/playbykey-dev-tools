@@ -543,7 +543,7 @@ const TOOLS = [
   {
     name: 'detect_chords',
     description:
-      'Identifies every chord (root, type) reading of a set of notes, keyed by root. No exact match means the root is omitted, never guessed. Many note sets have more than one valid root - all are returned, not collapsed to one.\n\nExample: detect_chords({ notes: ["E", "C", "G"] }) → { "C": ["major-triad"] }\nExample (symmetric chord, 4 valid roots): detect_chords({ notes: ["C", "D#", "F#", "A"] }) → { "C": ["diminished-7th"], "D#": ["diminished-7th"], "F#": ["diminished-7th"], "A": ["diminished-7th"] }',
+      'Returns every chord that matches a set of notes, as key-value pairs mapping each matching root note to its list of matching chord types. A root with no match is omitted. Many note sets match more than one root - all are returned, not collapsed to one.\n\nExample: detect_chords({ notes: ["E", "C", "G"] }) → { "C": ["major-triad"] }\nExample (symmetric chord, 4 valid roots): detect_chords({ notes: ["C", "D#", "F#", "A"] }) → { "C": ["diminished-7th"], "D#": ["diminished-7th"], "F#": ["diminished-7th"], "A": ["diminished-7th"] }',
     inputSchema: {
       type: 'object',
       properties: {
