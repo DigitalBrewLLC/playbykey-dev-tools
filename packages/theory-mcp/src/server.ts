@@ -119,7 +119,7 @@ const TOOLS = [
   {
     name: 'get_mode_notes',
     description:
-      'Returns the 7 notes of a diatonic mode for a given root note.',
+      'Returns the 7 notes of a diatonic mode for a given root.\n\nExample: get_mode_notes({ root: "D", mode: "dorian" }) → ["D","E","F","G","A","B","C"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -140,7 +140,7 @@ const TOOLS = [
   {
     name: 'get_parent_scale_modes',
     description:
-      'Returns all 7 modal rotations of the parent key for a given root and mode.',
+      'Returns all 7 modal rotations of the parent major key for a root and mode.\n\nExample: get_parent_scale_modes({ root: "D", mode: "dorian" }) → [{"root":"C","mode":"ionian"},{"root":"D","mode":"dorian"},...]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -161,7 +161,7 @@ const TOOLS = [
   {
     name: 'get_modal_root',
     description:
-      'Returns the root note of a mode within a given parent (Ionian/major) key.',
+      'Returns the natural root note of a mode within a parent major key.\n\nExample: get_modal_root({ parent_key: "C", mode: "dorian" }) → "D"',
     inputSchema: {
       type: 'object',
       properties: {
@@ -181,7 +181,8 @@ const TOOLS = [
   },
   {
     name: 'get_relative_minor',
-    description: 'Returns the relative minor root for a major key.',
+    description:
+      'Returns the relative minor root for a major key.\n\nExample: get_relative_minor({ major_key: "C" }) → "A"',
     inputSchema: {
       type: 'object',
       properties: {
@@ -196,7 +197,8 @@ const TOOLS = [
   },
   {
     name: 'get_relative_major',
-    description: 'Returns the relative major root for a minor key.',
+    description:
+      'Returns the relative major root for a minor key.\n\nExample: get_relative_major({ minor_key: "A" }) → "C"',
     inputSchema: {
       type: 'object',
       properties: {
@@ -212,7 +214,7 @@ const TOOLS = [
   {
     name: 'get_mode_info',
     description:
-      'Returns display metadata for a mode: name, scale degree, and characteristic description.',
+      'Returns display metadata for a mode: name, scale degree, and character description.\n\nExample: get_mode_info({ mode: "dorian" }) → { "id": "dorian", "name": "Dorian", "scaleDegree": 2, "character": "Smooth and soulful - minor with a bright 6th" }',
     inputSchema: {
       type: 'object',
       properties: {
@@ -228,13 +230,13 @@ const TOOLS = [
   {
     name: 'get_circle_of_fifths',
     description:
-      'Returns all 12 chromatic notes in ascending-fifths order starting from C.',
+      'Returns all 12 chromatic notes in ascending-fifths order starting from C. No input.\n\nExample: get_circle_of_fifths({}) → ["C","G","D","A","E","B","F#","C#","G#","D#","A#","F"]',
     inputSchema: { type: 'object', properties: {} },
   },
   {
     name: 'get_key_signature',
     description:
-      'Returns the sharp or flat count for a given key, treated as a major-key tonic (minor-key signatures are not exposed by this tool).',
+      'Returns the sharp or flat count for a key, treated as a major-key tonic (minor-key signatures are not exposed by this tool).\n\nExample: get_key_signature({ key: "F" }) → { "flats": 1 }',
     inputSchema: {
       type: 'object',
       properties: {
@@ -250,7 +252,7 @@ const TOOLS = [
   {
     name: 'get_scale_notes',
     description:
-      'Returns the notes of a scale by type. Covers all ScaleType values: major, blues, pentatonic-major, pentatonic-minor, harmonic-minor, melodic-minor, chromatic.',
+      'Returns the notes of a scale by type - major, blues, pentatonic-major, pentatonic-minor, harmonic-minor, melodic-minor, or chromatic.\n\nExample: get_scale_notes({ root: "A", scale_type: "blues" }) → ["A","C","D","D#","E","G"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -271,7 +273,7 @@ const TOOLS = [
   {
     name: 'build_note_map',
     description:
-      'Returns structured per-note data for a scale: note name, scale degree (1-based), and semitone offset from root.',
+      'Returns per-note scale data: note name, scale degree (1-based), and semitone offset from root.\n\nExample: build_note_map({ root: "C", scale_type: "major" }) → [{"note":"C","scaleDegree":1,"semitoneOffset":0},{"note":"D","scaleDegree":2,"semitoneOffset":2},...]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -292,7 +294,7 @@ const TOOLS = [
   {
     name: 'resolve_interval',
     description:
-      'Returns the from-note and to-note for a named interval within a root context.',
+      'Returns the from-note and to-note for a named interval within a root context.\n\nExample: resolve_interval({ root: "C", interval: "major_3rd" }) → { "from": "C", "to": "E", "semitones": 4, "label": "Major 3rd" }',
     inputSchema: {
       type: 'object',
       properties: {
@@ -313,7 +315,7 @@ const TOOLS = [
   {
     name: 'get_semitone_distance',
     description:
-      'Returns the ascending semitone distance between two notes (0-11).',
+      'Returns the ascending semitone distance between two notes (0-11).\n\nExample: get_semitone_distance({ from: "C", to: "E" }) → 4',
     inputSchema: {
       type: 'object',
       properties: {
@@ -334,7 +336,7 @@ const TOOLS = [
   {
     name: 'get_scale_degree',
     description:
-      'Returns the 1-based scale degree of a note within a root + scale type, or null if the note is not in the scale.',
+      'Returns the 1-based scale degree of a note within a scale, or null if not present.\n\nExample: get_scale_degree({ root: "C", scale_type: "major", note: "E" }) → 3',
     inputSchema: {
       type: 'object',
       properties: {
@@ -360,7 +362,7 @@ const TOOLS = [
   {
     name: 'is_note_in_scale',
     description:
-      'Returns true if the given note is present in the specified root + scale type, false otherwise.',
+      'Returns true if a note is present in a scale, false otherwise.\n\nExample: is_note_in_scale({ root: "C", scale_type: "major", note: "F#" }) → false',
     inputSchema: {
       type: 'object',
       properties: {
@@ -386,7 +388,7 @@ const TOOLS = [
   {
     name: 'get_sharps',
     description:
-      'Respells a list of notes to canonical sharp spelling, e.g. ["Db", "C#", "D"] -> ["C#", "C#", "D"]. Most tools accept flat-spelled input directly, but get_flats and get_enharmonic_labels require sharp-spelled input - use this to normalize flat-spelled notes before calling those two.',
+      'Respells notes to canonical sharp spelling. Accepts sharp or flat input. Most other tools accept flat input directly, but get_flats and get_enharmonic_labels require sharp-spelled input - use this to normalize first.\n\nExample: get_sharps({ notes: ["Db", "C#", "D"] }) → ["C#","C#","D"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -403,7 +405,7 @@ const TOOLS = [
   {
     name: 'get_flats',
     description:
-      'Respells a list of sharp-spelled notes as flats, e.g. ["C#", "D"] -> ["Db", "D"]. Natural notes are unaffected. Input must already be sharp-spelled (as returned by get_scale_notes, get_mode_notes, etc.) - use get_sharps first if you have flat-spelled notes.',
+      'Respells sharp-spelled notes as flats. Natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if it might be flat-spelled.\n\nExample: get_flats({ notes: ["C#", "D"] }) → ["Db","D"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -419,7 +421,7 @@ const TOOLS = [
   {
     name: 'get_enharmonic_labels',
     description:
-      'Returns combined sharp/flat display labels for a list of sharp-spelled notes, e.g. ["C#", "D"] -> ["Db/C#", "D"]. Natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if you have flat-spelled notes.',
+      'Returns combined sharp/flat display labels for sharp-spelled notes. Natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if it might be flat-spelled.\n\nExample: get_enharmonic_labels({ notes: ["C#", "D"] }) → ["Db/C#","D"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -434,7 +436,8 @@ const TOOLS = [
   },
   {
     name: 'get_chord_notes',
-    description: 'Returns the notes of a chord given a root and chord type.',
+    description:
+      'Returns the notes of a chord given a root and chord type.\n\nExample: get_chord_notes({ root: "C", chord_type: "major-triad" }) → ["C","E","G"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -455,7 +458,7 @@ const TOOLS = [
   {
     name: 'get_diatonic_chords',
     description:
-      'Returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order.',
+      'Returns the 7 diatonic triads for a key/mode, in degree order.\n\nExample: get_diatonic_chords({ root: "C", mode: "ionian" }) → [{"root":"C","type":"major-triad"},{"root":"D","type":"minor-triad"},...]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -476,7 +479,7 @@ const TOOLS = [
   {
     name: 'get_chord_by_degree',
     description:
-      'Returns the diatonic chord at a specific scale degree (1-7) for a key/mode.',
+      'Returns the diatonic chord at a specific scale degree (1-7) for a key/mode.\n\nExample: get_chord_by_degree({ degree: 5, root: "C", mode: "ionian" }) → { "root": "G", "type": "major-triad" }',
     inputSchema: {
       type: 'object',
       properties: {
@@ -498,7 +501,7 @@ const TOOLS = [
   {
     name: 'get_available_inversions',
     description:
-      'Returns the valid inversion numbers for a chord type, based on its note count.',
+      'Returns the valid inversion numbers for a chord type.\n\nExample: get_available_inversions({ chord_type: "major-9th" }) → [0,1,2,3,4]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -514,7 +517,7 @@ const TOOLS = [
   {
     name: 'get_chord_inversion',
     description:
-      "Reorders a chord's notes so the given inversion's chord tone is lowest.",
+      'Reorders a chord\'s notes so the given inversion\'s tone is lowest.\n\nExample: get_chord_inversion({ root: "C", chord_type: "major-triad", inversion: 1 }) → ["E","G","C"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -540,7 +543,7 @@ const TOOLS = [
   {
     name: 'detect_chords',
     description:
-      'Identifies every chord (root, type) reading of a set of notes (any order, duplicates ignored), keyed by root. Requires an exact match against the chord dictionary - a root with no exact match is omitted, never guessed. Many note sets legitimately have more than one valid root (e.g. a diminished 7th or augmented triad has multiple valid roots for the same notes, a minor 7th shares its notes with a major 6th on a different root) - all of them are returned, not collapsed to one.',
+      'Identifies every chord (root, type) reading of a set of notes, keyed by root. No exact match means the root is omitted, never guessed. Many note sets have more than one valid root - all are returned, not collapsed to one.\n\nExample: detect_chords({ notes: ["E", "C", "G"] }) → { "C": ["major-triad"] }\nExample (symmetric chord, 4 valid roots): detect_chords({ notes: ["C", "D#", "F#", "A"] }) → { "C": ["diminished-7th"], "D#": ["diminished-7th"], "F#": ["diminished-7th"], "A": ["diminished-7th"] }',
     inputSchema: {
       type: 'object',
       properties: {
@@ -557,7 +560,7 @@ const TOOLS = [
   {
     name: 'get_progression_in_key',
     description:
-      'Renders a named catalog progression as chords in a given key, in order.',
+      'Renders a named catalog progression as chords in a given key, in order.\n\nExample: get_progression_in_key({ progression_id: "I-V-vi-IV", root: "C" }) → [{"root":"C","type":"major-triad"},{"root":"G","type":"major-triad"},{"root":"A","type":"minor-triad"},{"root":"F","type":"major-triad"}]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -578,7 +581,7 @@ const TOOLS = [
   {
     name: 'get_roman_numeral',
     description:
-      'Returns the roman numeral for a scale degree in a mode - case and suffix reflect diatonic triad quality.',
+      'Returns the roman numeral for a scale degree in a mode - case and suffix reflect diatonic triad quality.\n\nExample: get_roman_numeral({ degree: 7, mode: "ionian" }) → "vii°"',
     inputSchema: {
       type: 'object',
       properties: {
@@ -595,7 +598,7 @@ const TOOLS = [
   {
     name: 'transpose',
     description:
-      'Transposes a set of notes from one key to another by the semitone distance between the two roots.',
+      'Transposes notes from one key to another by the semitone distance between the two roots.\n\nExample: transpose({ notes: ["C","E","G"], from_root: "C", to_root: "D" }) → ["D","F#","A"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -621,7 +624,7 @@ const TOOLS = [
   {
     name: 'note_to_midi',
     description:
-      'Returns the MIDI note number for a note at a given octave, using scientific pitch notation (C4 = middle C = MIDI 60).',
+      'Returns the MIDI note number for a note at a given octave (C4 = middle C = MIDI 60).\n\nExample: note_to_midi({ note: "C", octave: 4 }) → 60',
     inputSchema: {
       type: 'object',
       properties: {
@@ -641,7 +644,7 @@ const TOOLS = [
   {
     name: 'midi_to_note',
     description:
-      'Returns the note and octave for a given MIDI note number - the inverse of note_to_midi.',
+      'Returns the note and octave for a MIDI note number - the inverse of note_to_midi.\n\nExample: midi_to_note({ midi_number: 60 }) → { "note": "C", "octave": 4 }',
     inputSchema: {
       type: 'object',
       properties: {
@@ -656,7 +659,7 @@ const TOOLS = [
   {
     name: 'note_to_frequency',
     description:
-      'Returns the frequency in Hz for a note at a given octave, equal temperament, A4 = 440Hz.',
+      'Returns the frequency in Hz for a note at a given octave, equal temperament, A4 = 440Hz.\n\nExample: note_to_frequency({ note: "A", octave: 4 }) → 440',
     inputSchema: {
       type: 'object',
       properties: {
@@ -676,7 +679,7 @@ const TOOLS = [
   {
     name: 'get_melodic_minor_notes',
     description:
-      'Returns the seven notes of the ascending melodic minor scale for a root.',
+      'Returns the 7 notes of the ascending melodic minor scale for a root.\n\nExample: get_melodic_minor_notes({ root: "C" }) → ["C","D","D#","F","G","A","B"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -691,7 +694,8 @@ const TOOLS = [
   },
   {
     name: 'get_melodic_minor_mode_notes',
-    description: 'Returns the seven notes of a melodic minor mode for a root.',
+    description:
+      'Returns the 7 notes of a melodic minor mode for a root.\n\nExample: get_melodic_minor_mode_notes({ root: "C", mode: "lydian-dominant" }) → ["C","D","E","F#","G","A","A#"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -711,7 +715,8 @@ const TOOLS = [
   },
   {
     name: 'get_harmonic_minor_mode_notes',
-    description: 'Returns the seven notes of a harmonic minor mode for a root.',
+    description:
+      'Returns the 7 notes of a harmonic minor mode for a root.\n\nExample: get_harmonic_minor_mode_notes({ root: "C", mode: "phrygian-dominant" }) → ["C","C#","E","F","G","G#","A#"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -732,7 +737,7 @@ const TOOLS = [
   {
     name: 'get_bebop_scale_notes',
     description:
-      'Returns the eight notes of a bebop scale variant for a root - a diatonic scale plus one chromatic passing tone.',
+      'Returns the 8 notes of a bebop scale variant for a root - a diatonic scale plus one chromatic passing tone.\n\nExample: get_bebop_scale_notes({ root: "C", type: "bebop-dominant" }) → ["C","D","E","F","G","A","A#","B"]',
     inputSchema: {
       type: 'object',
       properties: {
