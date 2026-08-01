@@ -89,6 +89,12 @@ const INTERVAL_DEFINITIONS: Record<IntervalId, IntervalDefinition> = {
 
 const INTERVAL_VALUE_SET = new Set<string>(Object.values(Intervals));
 
+/**
+ * Type guard - checks whether a string is a valid `IntervalId`.
+ *
+ * @param value - String to check
+ * @returns `true` if `value` is one of the 14 interval IDs (narrows the type on `true`)
+ */
 const isIntervalId = (value: string): value is IntervalId =>
   INTERVAL_VALUE_SET.has(value);
 
@@ -127,10 +133,32 @@ const resolveEndpointsFromSpec = (
 /**
  * Returns the fixed semitone count for a given interval.
  * The count is a property of the interval itself - root and mode do not affect it.
+ *
+ * @param interval - Interval ID (see `Intervals`), e.g. `"major_3rd"`, `"perfect_5th"`
+ * @returns Semitone count for that interval
+ *
+ * @example
+ * getIntervalSemitones("major_3rd")
+ * // → 4
  */
 const getIntervalSemitones = (interval: IntervalId): number =>
   INTERVAL_DEFINITIONS[interval].intervalSpec.semitones;
 
+/**
+ * Resolves an interval to its actual from/to notes within a root context -
+ * scale-motion intervals (`half_step`/`whole_step`) and diatonic-degree
+ * intervals resolve via the major scale at `context.root`; chromatic
+ * from-root intervals (`minor_2nd`, `minor_7th`) resolve by semitone count
+ * directly, independent of the scale.
+ *
+ * @param context - `{ root, interval }` - the key/root the interval is resolved within
+ * @returns `{ from, to, semitones, label }` - the two actual notes, the semitone
+ *   distance between them, and the interval's display label
+ *
+ * @example
+ * resolveIntervalEndpoints({ root: "C", interval: "major_3rd" })
+ * // → { from: "C", to: "E", semitones: 4, label: "Major 3rd" }
+ */
 const resolveIntervalEndpoints = (
   context: IntervalContext
 ): ResolvedInterval => {
