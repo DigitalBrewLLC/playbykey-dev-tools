@@ -32,7 +32,7 @@ function isScaleType(value: string): value is ScaleType {
   return SCALE_TYPE_SET.has(value);
 }
 
-const VALID_CHORD_INVERSIONS = new Set<number>([0, 1, 2, 3, 4]);
+const VALID_CHORD_INVERSIONS = new Set<number>([0, 1, 2, 3, 4, 5, 6]);
 const CHORD_TYPE_SET = new Set<string>(Object.values(ChordTypes));
 
 function isChordType(value: string): value is ChordType {
