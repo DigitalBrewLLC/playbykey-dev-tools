@@ -119,6 +119,19 @@ const SCALE_DEFINITIONS: Record<ScaleType, ScaleDefinition> = {
   },
 };
 
+/**
+ * Returns the notes produced by a set of semitone offsets from a root -
+ * the shared primitive every table-driven scale/chord function in this
+ * package builds on.
+ *
+ * @param root - Root note
+ * @param offsets - Semitone offsets from root, e.g. `[0, 4, 7]` for a major triad shape
+ * @returns One note per offset, in the same order
+ *
+ * @example
+ * notesFromSemitoneOffsets("C", [0, 4, 7])
+ * // → ["C", "E", "G"]
+ */
 const notesFromSemitoneOffsets = (
   root: Note,
   offsets: readonly number[]
@@ -127,6 +140,17 @@ const notesFromSemitoneOffsets = (
   return offsets.map((offset) => noteAtIndex(rootIndex + offset));
 };
 
+/**
+ * Returns the seven notes of the harmonic minor scale for a root - the
+ * Aeolian (natural minor) scale with its 7th degree raised one semitone.
+ *
+ * @param root - Root note
+ * @returns The 7 harmonic minor notes, ascending from root
+ *
+ * @example
+ * getHarmonicMinorNotes("C")
+ * // → ["C", "D", "D#", "F", "G", "G#", "B"]
+ */
 const getHarmonicMinorNotes = (root: Note): Note[] => {
   const raisedIndex = HARMONIC_MINOR_RAISE_DEGREE - 1;
   const parentNotes = getModeNotes(root, HARMONIC_MINOR_PARENT_MODE);
@@ -137,21 +161,64 @@ const getHarmonicMinorNotes = (root: Note): Note[] => {
   ];
 };
 
+/**
+ * Returns the six notes of the blues scale for a root.
+ *
+ * @param root - Root note
+ * @returns The 6 blues scale notes, ascending from root
+ *
+ * @example
+ * getBluesNotes("C")
+ * // → ["C", "D#", "F", "F#", "G", "A#"]
+ */
 const getBluesNotes = (root: Note): Note[] =>
   notesFromSemitoneOffsets(root, BLUES_SEMITONE_OFFSETS);
 
-/** Returns the seven notes of the ascending melodic minor scale for a root. */
+/**
+ * Returns the seven notes of the ascending melodic minor scale for a root.
+ *
+ * @param root - Root note
+ * @returns The 7 melodic minor notes, ascending from root
+ *
+ * @example
+ * getMelodicMinorNotes("C")
+ * // → ["C", "D", "D#", "F", "G", "A", "B"]
+ */
 const getMelodicMinorNotes = (root: Note): Note[] =>
   notesFromSemitoneOffsets(root, MELODIC_MINOR_SEMITONE_OFFSETS);
 
-/** Returns the seven notes of a melodic minor mode for a root. */
+/**
+ * Returns the seven notes of a melodic minor mode for a root.
+ *
+ * @param root - Root note
+ * @param mode - Melodic minor mode name (see `MelodicMinorModes`), e.g. `"altered"`, `"lydian-dominant"`
+ * @returns The mode's 7 notes, ascending from root
+ *
+ * @example
+ * getMelodicMinorModeNotes("C", "lydian-dominant")
+ * // → ["C", "D", "E", "F#", "G", "A", "A#"]
+ */
 const getMelodicMinorModeNotes = (
   root: Note,
   mode: MelodicMinorModeName
 ): Note[] =>
   notesFromSemitoneOffsets(root, MELODIC_MINOR_MODE_SEMITONE_OFFSETS[mode]);
 
-/** Returns the seven notes of a harmonic minor mode for a root. Delegates to getHarmonicMinorNotes for the base scale itself, since that's the actual (non-table-based) derivation - only the true modal rotations use the offset table. */
+/**
+ * Returns the seven notes of a harmonic minor mode for a root. Delegates to
+ * `getHarmonicMinorNotes` for the base scale itself, since that's the
+ * actual (non-table-based) derivation - only the true modal rotations use
+ * the offset table.
+ *
+ * @param root - Root note
+ * @param mode - Harmonic minor mode name (see `HarmonicMinorModes`) -
+ *   `"harmonic-minor"` (the base scale) or `"phrygian-dominant"`
+ * @returns The mode's 7 notes, ascending from root
+ *
+ * @example
+ * getHarmonicMinorModeNotes("C", "phrygian-dominant")
+ * // → ["C", "C#", "E", "F", "G", "G#", "A#"]
+ */
 const getHarmonicMinorModeNotes = (
   root: Note,
   mode: HarmonicMinorModeName
@@ -165,17 +232,34 @@ const getHarmonicMinorModeNotes = (
   );
 };
 
-/** Returns the eight notes of a bebop scale variant for a root - each is a diatonic scale plus one chromatic passing tone. */
+/**
+ * Returns the eight notes of a bebop scale variant for a root - each is a
+ * diatonic scale plus one chromatic passing tone.
+ *
+ * @param root - Root note
+ * @param type - Bebop scale variant (see `BebopScaleTypes`): `"bebop-dominant"`, `"bebop-major"`, or `"bebop-dorian"`
+ * @returns The variant's 8 notes, ascending from root
+ *
+ * @example
+ * getBebopScaleNotes("C", "bebop-dominant")
+ * // → ["C", "D", "E", "F", "G", "A", "A#", "B"]
+ */
 const getBebopScaleNotes = (root: Note, type: BebopScaleType): Note[] =>
   notesFromSemitoneOffsets(root, BEBOP_SCALE_SEMITONE_OFFSETS[type]);
 
 /**
  * Returns the five notes of a pentatonic scale rooted at `root`.
  *
- * - `'major'` - degrees 1,2,3,5,6 of the ionian (major) scale
- *   e.g. `getPentatonicNotes('C', 'major')` → `['C','D','E','G','A']`
- * - `'minor'` - degrees 1,3,4,5,7 of the aeolian (natural minor) scale
- *   e.g. `getPentatonicNotes('C', 'minor')` → `['C','D#','F','G','A#']`
+ * @param root - Root note
+ * @param type - `"pentatonic-major"` (degrees 1,2,3,5,6 of Ionian) or
+ *   `"pentatonic-minor"` (degrees 1,3,4,5,7 of Aeolian)
+ * @returns The 5 pentatonic notes, ascending from root
+ *
+ * @example
+ * getPentatonicNotes("C", "pentatonic-major")
+ * // → ["C", "D", "E", "G", "A"]
+ * getPentatonicNotes("C", "pentatonic-minor")
+ * // → ["C", "D#", "F", "G", "A#"]
  */
 const getPentatonicNotes = (root: Note, type: PentatonicType): Note[] => {
   if (type === PentatonicTypes.Major) {
@@ -188,8 +272,24 @@ const getPentatonicNotes = (root: Note, type: PentatonicType): Note[] => {
   return scale.filter((_, i) => degrees.has(i + 1));
 };
 
+/**
+ * Returns all seven diatonic scale degrees, `[1, 2, 3, 4, 5, 6, 7]`.
+ *
+ * @returns The 7 diatonic scale degree numbers
+ */
 const getFullScaleDegrees = (): readonly number[] => FULL_SCALE_DEGREES;
 
+/**
+ * Returns the scale degree numbers for a scale type - 7 for diatonic
+ * scales, 5 for pentatonic, 6 for blues, 12 for chromatic.
+ *
+ * @param scaleType - Scale type (see `ScaleTypes`)
+ * @returns Scale degree numbers, e.g. `[1, 2, 3, 4, 5, 6]` for blues
+ *
+ * @example
+ * getScaleDegrees("blues")
+ * // → [1, 2, 3, 4, 5, 6]
+ */
 const getScaleDegrees = (scaleType: ScaleType): readonly number[] => {
   if (scaleType === ScaleTypes.Blues) {
     return BLUES_SEMITONE_OFFSETS.map((_, index) => index + 1);
@@ -206,6 +306,19 @@ const getScaleDegrees = (scaleType: ScaleType): readonly number[] => {
   return FULL_SCALE_DEGREES;
 };
 
+/**
+ * Returns the notes of a scale by type - the general-purpose entry point
+ * covering every `ScaleType` (major, chromatic, pentatonic-major,
+ * pentatonic-minor, blues, harmonic-minor, melodic-minor).
+ *
+ * @param root - Root note
+ * @param scaleType - Scale type (see `ScaleTypes`)
+ * @returns The scale's notes, ascending from root - count depends on `scaleType`
+ *
+ * @example
+ * getScaleNotes("A", "blues")
+ * // → ["A", "C", "D", "D#", "E", "G"]
+ */
 const getScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
   const definition = SCALE_DEFINITIONS[scaleType];
 
@@ -235,11 +348,19 @@ const getScaleNotes = (root: Note, scaleType: ScaleType): Note[] => {
 };
 
 /**
- * Returns the scale degree (1-based position) of a note within a scale, or null
- * if the note is not present in that scale.
+ * Returns the scale degree (1-based position) of a note within a scale, or
+ * `null` if the note is not present in that scale.
  *
- * Example: getScaleDegree('C', 'major', 'E') => 3
- * Example: getScaleDegree('C', 'pentatonic-major', 'F') => null
+ * @param root - Root note
+ * @param scaleType - Scale type (see `ScaleTypes`)
+ * @param note - Note to look up
+ * @returns The note's 1-based scale degree, or `null` if it's not in the scale
+ *
+ * @example
+ * getScaleDegree("C", "major", "E")
+ * // → 3
+ * getScaleDegree("C", "pentatonic-major", "F")
+ * // → null
  */
 const getScaleDegree = (
   root: Note,
@@ -254,21 +375,38 @@ const getScaleDegree = (
 /**
  * Returns true if the note is present in the given root + scale type.
  *
- * Example: isNoteInScale('C', 'major', 'E') => true
- * Example: isNoteInScale('C', 'major', 'F#') => false
+ * @param root - Root note
+ * @param scaleType - Scale type (see `ScaleTypes`)
+ * @param note - Note to check
+ * @returns `true` if `note` is in the scale
+ *
+ * @example
+ * isNoteInScale("C", "major", "E")
+ * // → true
+ * isNoteInScale("C", "major", "F#")
+ * // → false
  */
 const isNoteInScale = (root: Note, scaleType: ScaleType, note: Note): boolean =>
   getScaleDegree(root, scaleType, note) !== null;
 
 /**
- * Returns one NoteDisplayInfo entry per in-scale note, in scale-degree order.
+ * Returns one `NoteDisplayInfo` entry per in-scale note, in scale-degree order.
  * Every entry includes the note name, its 1-based scale degree, and its semitone
  * offset from the root (0 = root, up to 11).
  * Consumers derive their own labels: use `note` for letter labels or
  * `String(scaleDegree)` for numeric labels.
  *
- * Example: buildNoteMap('C', 'major') =>
- *   [{ note:'C', scaleDegree:1, semitoneOffset:0 }, { note:'D', scaleDegree:2, semitoneOffset:2 }, ...]
+ * @param root - Root note
+ * @param scaleType - Scale type (see `ScaleTypes`)
+ * @returns One `{ note, scaleDegree, semitoneOffset }` entry per note in the scale
+ *
+ * @example
+ * buildNoteMap("C", "major")
+ * // → [
+ * //   { note: "C", scaleDegree: 1, semitoneOffset: 0 },
+ * //   { note: "D", scaleDegree: 2, semitoneOffset: 2 },
+ * //   ...
+ * // ]
  */
 const buildNoteMap = (root: Note, scaleType: ScaleType): NoteDisplayInfo[] => {
   const rootIndex = getNoteIndex(root);
