@@ -3,7 +3,7 @@
   "name": "com.playbykey/theory-mcp",
   "title": "PlayByKey Music Theory MCP",
   "description": "Exposes @playbykey/theory's chord, scale, progression, transposition, and MIDI functions as MCP tools for AI agents.",
-  "version": "1.6.1",
+  "version": "2.0.0",
   "repository": {
     "url": "https://github.com/DigitalBrewLLC/playbykey-dev-tools",
     "source": "github",
@@ -14,7 +14,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@playbykey/theory-mcp",
-      "version": "1.6.1",
+      "version": "2.0.0",
       "runtimeHint": "npx",
       "runtimeArguments": [
         {
