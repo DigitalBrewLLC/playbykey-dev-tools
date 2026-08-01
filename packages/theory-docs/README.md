@@ -19,18 +19,18 @@ Live at **[theory-engine.docs.playbykey.com](https://theory-engine.docs.playbyke
 
 ## Docs structure
 
-| Page             | Path                      | Contents                                                                  |
-| ---------------- | ------------------------- | ------------------------------------------------------------------------- |
-| Overview         | `/`                       | Install, quickstart, package map, notation notes                          |
-| Keys & Modes     | `/theory/engine/`         | Scale/mode functions, key relationships, note utilities, type guards      |
-| Intervals        | `/theory/intervals/`      | `IntervalId`, `resolveIntervalEndpoints`, `INTERVAL_DEFINITIONS`          |
-| Scales           | `/theory/scales/`         | Blues, pentatonic, harmonic minor, melodic minor, bebop, derived scales   |
-| Chords           | `/theory/chords/`         | Chord notes, diatonic chords, and inversions across 11 chord types        |
-| Progressions     | `/theory/progressions/`   | 5 catalog progressions in any key, roman numeral labeling                 |
-| Transposition    | `/theory/transposition/`  | Transpose note sets between keys                                          |
-| MIDI & Frequency | `/theory/midi-frequency/` | Convert between notes, MIDI note numbers, and frequencies                 |
-| Constants        | `/theory/constants/`      | All exported constants with live explorers                                |
-| @playbykey/mcp   | `/mcp/`                   | MCP server setup (Claude Desktop, Cursor, Claude Code) and tool reference |
+| Page             | Path                      | Contents                                                                        |
+| ---------------- | ------------------------- | ------------------------------------------------------------------------------- |
+| Overview         | `/`                       | Install, quickstart, package map, notation notes                                |
+| Keys & Modes     | `/theory/engine/`         | Scale/mode functions, key relationships, note utilities, type guards            |
+| Intervals        | `/theory/intervals/`      | `IntervalId`, `resolveIntervalEndpoints`, `INTERVAL_DEFINITIONS`                |
+| Scales           | `/theory/scales/`         | Blues, pentatonic, harmonic minor, melodic minor, bebop, derived scales         |
+| Chords           | `/theory/chords/`         | Chord notes, diatonic chords, chord detection, inversions across 22 chord types |
+| Progressions     | `/theory/progressions/`   | 7 catalog progressions in any key, roman numeral labeling                       |
+| Transposition    | `/theory/transposition/`  | Transpose note sets between keys                                                |
+| MIDI & Frequency | `/theory/midi-frequency/` | Convert between notes, MIDI note numbers, and frequencies                       |
+| Constants        | `/theory/constants/`      | All exported constants with live explorers                                      |
+| @playbykey/mcp   | `/mcp/`                   | MCP server setup (Claude Desktop, Cursor, Claude Code) and tool reference       |
 
 ---
 

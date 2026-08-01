@@ -178,7 +178,7 @@ Example: `get_enharmonic_labels(["C#", "D"])` → Db/C#, D
 ### Chords
 
 **`get_chord_notes`** - Returns the notes of a chord given a root and chord type.  
-Input: `root` (note), `chord_type` (one of the 11 chord types, e.g. `major-triad`, `dominant-7th`, `major-9th`)  
+Input: `root` (note), `chord_type` (one of the 22 chord types, e.g. `major-triad`, `dominant-7th`, `major-13th`)  
 Example: `get_chord_notes("C", "major-triad")` → C, E, G
 
 **`get_diatonic_chords`** - Returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order.  
@@ -197,10 +197,14 @@ Example: `get_available_inversions("major-9th")` → 0, 1, 2, 3, 4
 Input: `root` (note), `chord_type`, `inversion` (integer, valid range depends on chord type)  
 Example: `get_chord_inversion("C", "major-triad", 1)` → E, G, C
 
+**`detect_chords`** - Identifies every chord (root, type) match for a set of notes, keyed by root.  
+Input: `notes` (array of notes, any order)  
+Example: `detect_chords(["E", "C", "G"])` → { C: [major-triad] }
+
 ### Progressions
 
 **`get_progression_in_key`** - Renders a named catalog progression as chords in a given key, in order.  
-Input: `progression_id` (one of `I-V-vi-IV`, `ii-V-I`, `I-IV-V`, `vi-IV-I-V`, `12-bar-blues`), `root` (note)  
+Input: `progression_id` (one of `I-V-vi-IV`, `ii-V-I`, `I-IV-V`, `vi-IV-I-V`, `12-bar-blues`, `I-vi-IV-V`, `I-vi-ii-V`), `root` (note)  
 Example: `get_progression_in_key("I-V-vi-IV", "C")` → C major-triad, G major-triad, A minor-triad, F major-triad
 
 **`get_roman_numeral`** - Returns the roman numeral for a scale degree in a mode - case and suffix reflect diatonic triad quality.  
