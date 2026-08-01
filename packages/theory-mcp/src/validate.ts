@@ -154,7 +154,7 @@ export function validateInversion(
   }
   return {
     ok: false,
-    error: `Invalid inversion: "${String(value)}". Must be an integer 0-4 (the valid upper bound depends on the chord type - use get_available_inversions to check; get_chord_inversion itself will still reject an in-range-but-too-high value for a given chord type).`,
+    error: `Invalid inversion: "${String(value)}". Must be an integer 0-6 (0 = root position; the valid upper bound depends on the chord type - use get_available_inversions to check; get_chord_inversion itself will still reject an in-range-but-too-high value for a given chord type).`,
   };
 }
 
