@@ -65,7 +65,20 @@ const formatNumeralForQuality = (numeral: string, type: ChordType): string => {
   return formatter(numeral);
 };
 
-/** Roman numeral for a scale degree in a mode - case and suffix reflect diatonic triad quality. Defaults to Ionian (major). Degree is 1-7. */
+/**
+ * Roman numeral for a scale degree in a mode - case and suffix reflect
+ * diatonic triad quality (uppercase = major, lowercase = minor, lowercase
+ * + `°` = diminished, uppercase + `+` = augmented).
+ *
+ * @param degree - Scale degree, 1-7 (1 = tonic)
+ * @param mode - Diatonic mode name - defaults to `"ionian"` (major)
+ * @returns The formatted roman numeral for that degree's diatonic triad quality
+ * @throws {RangeError} if `degree` is outside 1-7
+ *
+ * @example
+ * getRomanNumeral(7, "ionian")
+ * // → "vii°"
+ */
 const getRomanNumeral = (
   degree: number,
   mode: ModeName = Modes.Ionian
@@ -80,7 +93,26 @@ const getRomanNumeral = (
   return formatNumeralForQuality(numeral, type);
 };
 
-/** Renders a named catalog progression as chords in a given key, in order. The catalog progressions are defined by major-key roman numerals, so an arbitrary mode would produce chord qualities that contradict what each progression's name means. */
+/**
+ * Renders a named catalog progression as chords in a given key, in order.
+ * Always Ionian - the catalog progressions are defined by major-key roman
+ * numerals, so an arbitrary mode would produce chord qualities that
+ * contradict what each progression's name means (no `mode` parameter).
+ *
+ * @param progressionId - Catalog progression ID (see `ProgressionIds`),
+ *   e.g. `"I-V-vi-IV"`, `"12-bar-blues"`
+ * @param root - Key to transpose the progression into
+ * @returns The progression's chords in order, each `{ root, type }`
+ *
+ * @example
+ * getProgressionInKey("I-V-vi-IV", "C")
+ * // → [
+ * //   { root: "C", type: "major-triad" },
+ * //   { root: "G", type: "major-triad" },
+ * //   { root: "A", type: "minor-triad" },
+ * //   { root: "F", type: "major-triad" },
+ * // ]
+ */
 const getProgressionInKey = (
   progressionId: ProgressionId,
   root: Note

@@ -93,11 +93,34 @@ const CHORD_DEFINITIONS: Record<ChordType, ChordDefinition> = {
   },
 };
 
-/** Returns the notes of a chord type built on root. */
+/**
+ * Returns the notes of a chord type built on root.
+ *
+ * @param root - Root note, sharps-only chromatic spelling (e.g. `"C"`, `"F#"`)
+ * @param chordType - One of the 22 supported chord types (see `ChordTypes`),
+ *   e.g. `"major-triad"`, `"dominant-9th"`, `"minor-13th"`
+ * @returns The chord's notes in stacked order, root first
+ *
+ * @example
+ * getChordNotes("C", "major-triad")
+ * // → ["C", "E", "G"]
+ */
 const getChordNotes = (root: Note, chordType: ChordType): Note[] =>
   notesFromSemitoneOffsets(root, CHORD_DEFINITIONS[chordType].semitoneOffsets);
 
-/** Returns the number of valid inversions for a chord type (its note count) as an array [0, 1, ..., N-1]. */
+/**
+ * Returns the valid inversion numbers for a chord type - always `[0, 1, ..., N-1]`
+ * where N is that chord type's note count (3 for a triad, up to 7 for a 13th chord).
+ *
+ * @param chordType - One of the 22 supported chord types
+ * @returns Every valid inversion number for that chord type, ascending from 0 (root position)
+ *
+ * @example
+ * getAvailableInversions("major-triad")
+ * // → [0, 1, 2]
+ * getAvailableInversions("major-13th")
+ * // → [0, 1, 2, 3, 4, 5, 6]
+ */
 const getAvailableInversions = (
   chordType: ChordType
 ): readonly ChordInversion[] => {
@@ -108,7 +131,21 @@ const getAvailableInversions = (
   ) as readonly ChordInversion[];
 };
 
-/** Reorders a chord's notes so the given inversion's chord tone is lowest (first in the array). Throws if the inversion is out of range for this chord's note count. */
+/**
+ * Reorders a chord's notes so the given inversion's chord tone is lowest (first in the array).
+ *
+ * @param chord - The chord to invert, `{ root, type }`
+ * @param inversion - Which chord tone to put in the bass (0 = root position). Must be
+ *   in range for `chord.type`'s actual note count - a triad only has 0-2 valid even
+ *   though `ChordInversion` itself covers 0-6, the widest range across all chord types
+ * @returns The chord's notes, rotated so the requested tone is first
+ * @throws {RangeError} if `inversion` is out of range for `chord.type`'s note count -
+ *   use `getAvailableInversions(chord.type)` to check first if the range isn't known
+ *
+ * @example
+ * getChordInversion({ root: "C", type: "major-triad" }, 1)
+ * // → ["E", "G", "C"]
+ */
 const getChordInversion = (chord: Chord, inversion: ChordInversion): Note[] => {
   const notes = getChordNotes(chord.root, chord.type);
   const validInversions = getAvailableInversions(chord.type);
@@ -165,8 +202,7 @@ const classifyTriadType = (root: Note, third: Note, fifth: Note): ChordType => {
 };
 
 /**
- * Returns the 7 diatonic triads for a key/mode, one per scale degree, in
- * degree order. Defaults to Ionian (major).
+ * Returns the 7 diatonic triads for a key/mode, one per scale degree, in degree order.
  *
  * Algorithm: for each of the 7 scale degrees, build a triad by stacking the
  * scale note at that degree, the scale note two positions later (wrapping
@@ -176,6 +212,22 @@ const classifyTriadType = (root: Note, third: Note, fifth: Note): ChordType => {
  * the 7 major-scale modes; augmented is matched too since CHORD_DEFINITIONS
  * already defines it, so the classification stays correct if this is ever
  * called against a scale where it occurs.
+ *
+ * @param root - Root of the key
+ * @param mode - Diatonic mode name (e.g. `"ionian"`, `"dorian"`) - defaults to `"ionian"` (major)
+ * @returns 7 chords in scale-degree order (index 0 = degree 1/tonic), each `{ root, type }`
+ *
+ * @example
+ * getDiatonicChords("C", "ionian")
+ * // → [
+ * //   { root: "C", type: "major-triad" },
+ * //   { root: "D", type: "minor-triad" },
+ * //   { root: "E", type: "minor-triad" },
+ * //   { root: "F", type: "major-triad" },
+ * //   { root: "G", type: "major-triad" },
+ * //   { root: "A", type: "minor-triad" },
+ * //   { root: "B", type: "diminished-triad" },
+ * // ]
  */
 const getDiatonicChords = (
   root: Note,
@@ -190,7 +242,19 @@ const getDiatonicChords = (
   });
 };
 
-/** Returns the chord at a specific scale degree - a single-item version of getDiatonicChords. Degree is 1-7. Defaults to Ionian (major). */
+/**
+ * Returns the chord at a specific scale degree - a single-item version of `getDiatonicChords`.
+ *
+ * @param degree - Scale degree, 1-7 (1 = tonic)
+ * @param root - Root of the key
+ * @param mode - Diatonic mode name - defaults to `"ionian"` (major)
+ * @returns The chord at that degree, `{ root, type }`
+ * @throws {RangeError} if `degree` is outside 1-7
+ *
+ * @example
+ * getChordByDegree(5, "C", "ionian")
+ * // → { root: "G", type: "major-triad" }
+ */
 const getChordByDegree = (
   degree: number,
   root: Note,
@@ -233,6 +297,18 @@ const CHORD_TYPES = Object.values(ChordTypes);
  * 11 (14, 17, 21) to distinguish "extended" tones for display/voicing
  * purposes, but that distinction doesn't exist in a bare pitch-class set and
  * must be collapsed before matching.
+ *
+ * @param notes - Notes to identify (any order, duplicates ignored)
+ * @returns Every matching `{ root: chordType[] }` reading, or `{}` if nothing matches
+ *
+ * @example
+ * detectChords(["E", "C", "G"])
+ * // → { C: ["major-triad"] }
+ *
+ * @example
+ * // Symmetric chords have multiple valid roots for the identical notes
+ * detectChords(["C", "D#", "F#", "A"])
+ * // → { C: ["diminished-7th"], "D#": ["diminished-7th"], "F#": ["diminished-7th"], A: ["diminished-7th"] }
  */
 const detectChords = (
   notes: readonly Note[]
