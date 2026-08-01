@@ -388,7 +388,7 @@ const TOOLS = [
   {
     name: 'get_sharps',
     description:
-      'Respells notes to canonical sharp spelling. Accepts sharp or flat input. Most other tools accept flat input directly, but get_flats and get_enharmonic_labels require sharp-spelled input - use this to normalize first.\n\nExample: get_sharps({ notes: ["Db", "C#", "D"] }) → ["C#","C#","D"]',
+      'Respells notes to canonical sharp spelling, sharp or flat input accepted. get_flats and get_enharmonic_labels require sharp-spelled input - use this to normalize first.\n\nExample: get_sharps({ notes: ["Db", "C#", "D"] }) → ["C#","C#","D"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -405,7 +405,7 @@ const TOOLS = [
   {
     name: 'get_flats',
     description:
-      'Respells sharp-spelled notes as flats. Natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if it might be flat-spelled.\n\nExample: get_flats({ notes: ["C#", "D"] }) → ["Db","D"]',
+      'Respells sharp-spelled notes as flats; natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if it might not be.\n\nExample: get_flats({ notes: ["C#", "D"] }) → ["Db","D"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -421,7 +421,7 @@ const TOOLS = [
   {
     name: 'get_enharmonic_labels',
     description:
-      'Returns combined sharp/flat display labels for sharp-spelled notes. Natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if it might be flat-spelled.\n\nExample: get_enharmonic_labels({ notes: ["C#", "D"] }) → ["Db/C#","D"]',
+      'Returns combined sharp/flat display labels for sharp-spelled notes; natural notes are unaffected. Input must already be sharp-spelled - use get_sharps first if it might not be.\n\nExample: get_enharmonic_labels({ notes: ["C#", "D"] }) → ["Db/C#","D"]',
     inputSchema: {
       type: 'object',
       properties: {
