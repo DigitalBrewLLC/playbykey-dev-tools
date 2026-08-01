@@ -47,6 +47,50 @@ const CHORD_DEFINITIONS: Record<ChordType, ChordDefinition> = {
     label: 'Minor 9th chord',
     semitoneOffsets: [0, 3, 7, 10, 14],
   },
+  [ChordTypes.Diminished7th]: {
+    label: 'Diminished 7th chord',
+    semitoneOffsets: [0, 3, 6, 9],
+  },
+  [ChordTypes.HalfDiminished7th]: {
+    label: 'Half-diminished 7th chord',
+    semitoneOffsets: [0, 3, 6, 10],
+  },
+  [ChordTypes.Dominant9th]: {
+    label: 'Dominant 9th chord',
+    semitoneOffsets: [0, 4, 7, 10, 14],
+  },
+  [ChordTypes.Sus2]: {
+    label: 'Suspended 2nd chord',
+    semitoneOffsets: [0, 2, 7],
+  },
+  [ChordTypes.Sus4]: {
+    label: 'Suspended 4th chord',
+    semitoneOffsets: [0, 5, 7],
+  },
+  [ChordTypes.Major11th]: {
+    label: 'Major 11th chord',
+    semitoneOffsets: [0, 4, 7, 11, 14, 17],
+  },
+  [ChordTypes.Minor11th]: {
+    label: 'Minor 11th chord',
+    semitoneOffsets: [0, 3, 7, 10, 14, 17],
+  },
+  [ChordTypes.Dominant11th]: {
+    label: 'Dominant 11th chord',
+    semitoneOffsets: [0, 4, 7, 10, 14, 17],
+  },
+  [ChordTypes.Major13th]: {
+    label: 'Major 13th chord',
+    semitoneOffsets: [0, 4, 7, 11, 14, 17, 21],
+  },
+  [ChordTypes.Minor13th]: {
+    label: 'Minor 13th chord',
+    semitoneOffsets: [0, 3, 7, 10, 14, 17, 21],
+  },
+  [ChordTypes.Dominant13th]: {
+    label: 'Dominant 13th chord',
+    semitoneOffsets: [0, 4, 7, 10, 14, 17, 21],
+  },
 };
 
 /** Returns the notes of a chord type built on root. */

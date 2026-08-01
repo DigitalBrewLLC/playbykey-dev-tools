@@ -10,8 +10,8 @@ import {
 } from '../src/chords';
 
 describe('CHORD_DEFINITIONS', () => {
-  it('defines all 11 chord types', () => {
-    expect(Object.keys(CHORD_DEFINITIONS)).toHaveLength(11);
+  it('defines all 22 chord types', () => {
+    expect(Object.keys(CHORD_DEFINITIONS)).toHaveLength(22);
   });
 });
 
@@ -26,6 +26,22 @@ describe('getChordNotes', () => {
 
   it('returns a major 9th chord', () => {
     expect(getChordNotes('C', 'major-9th')).toEqual(['C', 'E', 'G', 'B', 'D']);
+  });
+
+  it('returns a sus4 chord', () => {
+    expect(getChordNotes('C', 'sus4')).toEqual(['C', 'F', 'G']);
+  });
+
+  it('returns a major 13th chord (all 7 notes of the parent major scale)', () => {
+    expect(getChordNotes('C', 'major-13th')).toEqual([
+      'C',
+      'E',
+      'G',
+      'B',
+      'D',
+      'F',
+      'A',
+    ]);
   });
 });
 
@@ -72,6 +88,10 @@ describe('getAvailableInversions', () => {
 
   it('returns [0,1,2,3,4] for a 9th chord type', () => {
     expect(getAvailableInversions('major-9th')).toEqual([0, 1, 2, 3, 4]);
+  });
+
+  it('returns [0,1,2,3,4,5,6] for a 13th chord type', () => {
+    expect(getAvailableInversions('major-13th')).toEqual([0, 1, 2, 3, 4, 5, 6]);
   });
 });
 
