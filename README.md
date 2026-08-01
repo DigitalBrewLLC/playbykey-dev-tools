@@ -7,7 +7,7 @@
 
 # Developer Tools
 
-Packages for PlayByKey. **[@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)** is a zero-dependency TypeScript music theory engine for scales, modes, intervals, key relationships, and note display maps.
+Packages for PlayByKey - see the table below for what's here.
 
 - **npm:** [npmjs.com/package/@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)
 - **Documentation:** [theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com) - interactive playgrounds
@@ -40,11 +40,11 @@ Quickstart and API examples: [packages/theory/README.md](./packages/theory)
 
 ## Packages
 
-| Package                                          | Description                                                    | Links                                                                                                                                                                                   |
-| ------------------------------------------------ | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`@playbykey/theory`](./packages/theory)         | Music theory engine (Music Theory Engine on the docs site)     | [npm](https://www.npmjs.com/package/@playbykey/theory) · [docs](https://theory-engine.docs.playbykey.com) · [changelog](https://github.com/DigitalBrewLLC/playbykey-dev-tools/releases) |
-| [`@playbykey/theory-mcp`](./packages/theory-mcp) | MCP server that exposes the theory engine as AI-callable tools | [npm](https://www.npmjs.com/package/@playbykey/theory-mcp) · [README](./packages/theory-mcp)                                                                                            |
-| [`theory-docs`](./packages/theory-docs)          | Starlight documentation site (private workspace package)       | [live site](https://theory-engine.docs.playbykey.com) · [README](./packages/theory-docs)                                                                                                |
+| Package                                          | Description                                                                                                        | Links                                                                                                                                                                                   |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@playbykey/theory`](./packages/theory)         | Zero-dependency TypeScript music theory engine - scales, modes, intervals, chords, progressions, key relationships | [npm](https://www.npmjs.com/package/@playbykey/theory) · [docs](https://theory-engine.docs.playbykey.com) · [changelog](https://github.com/DigitalBrewLLC/playbykey-dev-tools/releases) |
+| [`@playbykey/theory-mcp`](./packages/theory-mcp) | MCP server that exposes the theory engine as AI-callable tools                                                     | [npm](https://www.npmjs.com/package/@playbykey/theory-mcp) · [README](./packages/theory-mcp)                                                                                            |
+| [`theory-docs`](./packages/theory-docs)          | Starlight documentation site (private workspace package)                                                           | [live site](https://theory-engine.docs.playbykey.com) · [README](./packages/theory-docs)                                                                                                |
 
 ---
 
