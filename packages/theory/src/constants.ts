@@ -148,6 +148,17 @@ const ChordTypes = {
   Minor6th: 'minor-6th',
   Major9th: 'major-9th',
   Minor9th: 'minor-9th',
+  Diminished7th: 'diminished-7th',
+  HalfDiminished7th: 'half-diminished-7th',
+  Dominant9th: 'dominant-9th',
+  Sus2: 'sus2',
+  Sus4: 'sus4',
+  Major11th: 'major-11th',
+  Minor11th: 'minor-11th',
+  Dominant11th: 'dominant-11th',
+  Major13th: 'major-13th',
+  Minor13th: 'minor-13th',
+  Dominant13th: 'dominant-13th',
 } as const satisfies Record<string, ChordType>;
 
 /** Named constants for each catalog progression. Key names spell out the roman-numeral sequence since the string values aren't valid identifiers on their own. */

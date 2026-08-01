@@ -98,7 +98,18 @@ type ChordType =
   | 'major-6th'
   | 'minor-6th'
   | 'major-9th'
-  | 'minor-9th';
+  | 'minor-9th'
+  | 'diminished-7th'
+  | 'half-diminished-7th'
+  | 'dominant-9th'
+  | 'sus2'
+  | 'sus4'
+  | 'major-11th'
+  | 'minor-11th'
+  | 'dominant-11th'
+  | 'major-13th'
+  | 'minor-13th'
+  | 'dominant-13th';
 
 /** A chord: root note plus its type. Notes are derived via getChordNotes, not stored. */
 interface Chord {
