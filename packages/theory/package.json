@@ -4,18 +4,17 @@
   "description": "Zero-dependency TypeScript music theory engine for scales, modes, intervals, and key relationships.",
   "keywords": [
     "music-theory",
-    "typescript",
     "scales",
     "modes",
+    "chords",
+    "progressions",
     "intervals",
+    "transposition",
+    "midi",
     "key-signatures",
-    "diatonic",
-    "pentatonic",
-    "blues-scale",
-    "harmonic-minor",
-    "zero-dependencies",
-    "mcp",
-    "enharmonic"
+    "chord-detection",
+    "circle-of-fifths",
+    "roman-numerals"
   ],
   "homepage": "https://theory-engine.docs.playbykey.com",
   "repository": {
