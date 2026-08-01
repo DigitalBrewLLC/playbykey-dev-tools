@@ -71,8 +71,13 @@ const MODE_SEMITONE_OFFSETS: Record<ModeName, readonly number[]> = {
 
 /**
  * Reads an array element at an index guaranteed to be in range by the
- * caller (e.g. the result of a `% length` wrap). Throws if that invariant
- * is ever violated, satisfying `noUncheckedIndexedAccess` without `!`.
+ * caller (e.g. the result of a `% length` wrap). Satisfies
+ * `noUncheckedIndexedAccess` without `!`.
+ *
+ * @param array - Array to read from
+ * @param index - Index expected to be in range - not wrapped or clamped
+ * @returns The element at `index`
+ * @throws {RangeError} if `index` is out of bounds for `array`
  */
 const elementAt = <T>(array: readonly T[], index: number): T => {
   const value = array[index];
@@ -112,6 +117,14 @@ const noteAtIndex = (index: number): Note => {
 
 /**
  * Computes the ascending semitone distance between two notes (0-11).
+ *
+ * @param from - Starting note
+ * @param to - Ending note
+ * @returns Ascending distance in semitones, always 0-11 (wraps up, never negative)
+ *
+ * @example
+ * getSemitoneDistance("C", "E")
+ * // → 4
  */
 const getSemitoneDistance = (from: Note, to: Note): number => {
   return (((getNoteIndex(to) - getNoteIndex(from)) % 12) + 12) % 12;
@@ -121,7 +134,14 @@ const getSemitoneDistance = (from: Note, to: Note): number => {
  * Transposes a set of notes from one key to another by the semitone
  * distance between the two roots.
  *
- * Example: transpose(['C', 'E', 'G'], 'C', 'D') => ['D', 'F#', 'A']
+ * @param notes - Notes to transpose
+ * @param fromRoot - Root the notes are currently in
+ * @param toRoot - Root to transpose into
+ * @returns The same notes, each shifted by the semitone distance from `fromRoot` to `toRoot`
+ *
+ * @example
+ * transpose(["C", "E", "G"], "C", "D")
+ * // → ["D", "F#", "A"]
  */
 const transpose = (
   notes: readonly Note[],
@@ -135,8 +155,15 @@ const transpose = (
 /**
  * Returns the 7 notes of a diatonic mode for a given root.
  *
- * Example: getModeNotes('C', 'ionian') => ['C', 'D', 'E', 'F', 'G', 'A', 'B']
- * Example: getModeNotes('D', 'dorian') => ['D', 'E', 'F', 'G', 'A', 'B', 'C']
+ * @param root - Root of the mode
+ * @param mode - Diatonic mode name (e.g. `"ionian"`, `"dorian"`)
+ * @returns The mode's 7 notes, ascending from root
+ *
+ * @example
+ * getModeNotes("C", "ionian")
+ * // → ["C", "D", "E", "F", "G", "A", "B"]
+ * getModeNotes("D", "dorian")
+ * // → ["D", "E", "F", "G", "A", "B", "C"]
  */
 const getModeNotes = (root: Note, mode: ModeName): Note[] => {
   const rootIndex = getNoteIndex(root);
@@ -149,8 +176,14 @@ const getModeNotes = (root: Note, mode: ModeName): Note[] => {
  * Given any root+mode, finds the parent major (Ionian) key and returns all
  * 7 rotation pairs in scale degree order.
  *
- * Example: getParentScaleModes('D', 'dorian') => parent is C major =>
- * [{ root: 'C', mode: 'ionian' }, { root: 'D', mode: 'dorian' }, ...]
+ * @param key - Root of the mode to find the parent key for
+ * @param mode - Diatonic mode name
+ * @returns All 7 `{ root, mode }` rotations of the parent major scale, in scale-degree order
+ *
+ * @example
+ * getParentScaleModes("D", "dorian")
+ * // parent key is C major →
+ * // [{ root: "C", mode: "ionian" }, { root: "D", mode: "dorian" }, ...]
  */
 const getParentScaleModes = (
   key: Note,
@@ -175,9 +208,15 @@ const getParentScaleModes = (
  * The parent key is always treated as the Ionian root - the modal root is
  * the note at the mode's scale degree position within that parent scale.
  *
- * Example: getModalRoot('C', 'dorian')   => 'D'  (2nd degree of C major)
- * Example: getModalRoot('C', 'phrygian') => 'E'  (3rd degree of C major)
- * Example: getModalRoot('C', 'ionian')   => 'C'  (1st degree, unchanged)
+ * @param parentKey - Root of the parent major (Ionian) key
+ * @param mode - Diatonic mode name to find the natural root of, within that parent key
+ * @returns The mode's natural root note
+ *
+ * @example
+ * getModalRoot("C", "dorian")
+ * // → "D" (2nd degree of C major)
+ * getModalRoot("C", "phrygian")
+ * // → "E" (3rd degree of C major)
  */
 const getModalRoot = (parentKey: Note, mode: ModeName): Note => {
   const modeInfo = ModeInfoById[mode];
@@ -189,7 +228,12 @@ const getModalRoot = (parentKey: Note, mode: ModeName): Note => {
  * Returns the relative minor root for a given major key.
  * Equivalent to moving 9 semitones up (or 3 semitones down) from the major root.
  *
- * Example: getRelativeMinorKey('C') => 'A'
+ * @param majorKey - Major key root
+ * @returns The relative minor's root note
+ *
+ * @example
+ * getRelativeMinorKey("C")
+ * // → "A"
  */
 const getRelativeMinorKey = (majorKey: Note): Note => {
   return noteAtIndex(getNoteIndex(majorKey) + 9);
@@ -199,7 +243,12 @@ const getRelativeMinorKey = (majorKey: Note): Note => {
  * Returns the relative major root for a given minor key.
  * Equivalent to moving 3 semitones up from the minor root.
  *
- * Example: getRelativeMajorKey('A') => 'C'
+ * @param minorKey - Minor key root
+ * @returns The relative major's root note
+ *
+ * @example
+ * getRelativeMajorKey("A")
+ * // → "C"
  */
 const getRelativeMajorKey = (minorKey: Note): Note => {
   return noteAtIndex(getNoteIndex(minorKey) + 3);
@@ -208,6 +257,12 @@ const getRelativeMajorKey = (minorKey: Note): Note => {
 /**
  * Returns the 12 chromatic notes in ascending fifth order starting from C.
  * Used by CircleOfFifthsView to arrange key positions on the circle.
+ *
+ * @returns All 12 notes, each a perfect 5th above the last, starting from C
+ *
+ * @example
+ * getCircleOfFifthsOrder()
+ * // → ["C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#", "F"]
  */
 const getCircleOfFifthsOrder = (): readonly Note[] => {
   const result: Note[] = [];
@@ -223,12 +278,18 @@ const getCircleOfFifthsOrder = (): readonly Note[] => {
  * Returns the key signature accidental count for a given key.
  * Used by CircleOfFifthsView for labels on the circle.
  *
- * `quality` defaults to `'major'`. When `'minor'`, resolves the key's
- * relative major root and returns that root's accidental count.
+ * @param key - Key root
+ * @param quality - `"major"` or `"minor"` - defaults to `"major"`. When `"minor"`,
+ *   resolves the key's relative major root and returns that root's accidental count
+ * @returns `{ sharps: N }` or `{ flats: N }` - never both, C major/A minor return `{ sharps: 0 }`
  *
- * Example: getKeySignatureCount('G') => { sharps: 1 }
- * Example: getKeySignatureCount('F') => { flats: 1 }
- * Example: getKeySignatureCount('C#', 'minor') => { sharps: 4 } (relative major is E)
+ * @example
+ * getKeySignatureCount("G")
+ * // → { sharps: 1 }
+ * getKeySignatureCount("F")
+ * // → { flats: 1 }
+ * getKeySignatureCount("C#", "minor")
+ * // → { sharps: 4 } (relative major is E)
  */
 const getKeySignatureCount = (
   key: Note,
@@ -244,9 +305,23 @@ const normalizeNoteInput = (value: string): Note | null => {
   return NOTE_SET.has(normalized) ? (normalized as Note) : null;
 };
 
+/**
+ * Type guard - checks whether a string is a valid sharp-spelled `Note`
+ * (case-insensitive). Does not accept flat spellings - use `parseNote`/
+ * `parseNoteToken` if flat input needs to be recognized too.
+ *
+ * @param value - String to check
+ * @returns `true` if `value` is a recognized sharp note (narrows the type on `true`)
+ */
 const isNote = (value: string): value is Note =>
   normalizeNoteInput(value) !== null;
 
+/**
+ * Type guard - checks whether a string is a valid `ModeName` (case-insensitive).
+ *
+ * @param value - String to check
+ * @returns `true` if `value` is one of the 7 diatonic mode names (narrows the type on `true`)
+ */
 const isModeName = (value: string): value is ModeName =>
   MODE_NAME_SET.has(value.toLowerCase());
 
@@ -283,12 +358,21 @@ const firstToken = (value: string): string => {
 };
 
 /**
- * Parse a display key string into a chromatic Note, or null when not
- * recognized. Accepts flat-spelled note names (e.g. "Db") in addition to
- * sharps, normalizing them to their canonical sharp equivalent.
+ * Parses a display key string into a chromatic Note, or `null` when not
+ * recognized. Accepts flat-spelled note names (e.g. `"Db"`) in addition to
+ * sharps, normalizing them to their canonical sharp equivalent. Only reads
+ * the first token - use this to extract a note from a larger phrase like
+ * `"C ionian"`, not to validate that an entire string is exactly one note
+ * (use `parseNoteToken` for that).
  *
- * Example: parseNote('C ionian') => 'C'
- * Example: parseNote('Db aeolian') => 'C#'
+ * @param value - A note, optionally followed by more text (e.g. a mode name)
+ * @returns The canonical sharp `Note`, or `null` if the first token isn't a valid note
+ *
+ * @example
+ * parseNote("C ionian")
+ * // → "C"
+ * parseNote("Db aeolian")
+ * // → "C#"
  */
 const parseNote = (value: string): Note | null => {
   const token = firstToken(value);
@@ -297,19 +381,34 @@ const parseNote = (value: string): Note | null => {
 
 /**
  * Strict, exact-match note parser: accepts a single canonical sharp or flat
- * note token (no phrase-splitting, unlike parseNote). Returns null for
+ * note token (no phrase-splitting, unlike `parseNote`). Returns `null` for
  * anything but a bare note - use this for validating a single argument
  * rather than extracting a note from a larger phrase.
  *
- * Example: parseNoteToken('Db') => 'C#'
- * Example: parseNoteToken('C ionian') => null (parseNote would return 'C')
+ * @param value - A single note token, nothing else
+ * @returns The canonical sharp `Note`, or `null` if `value` isn't exactly one valid note
+ *
+ * @example
+ * parseNoteToken("Db")
+ * // → "C#"
+ * parseNoteToken("C ionian")
+ * // → null (parseNote would return "C")
  */
 const parseNoteToken = (value: string): Note | null => {
   const trimmed = value.trim();
   return normalizeNoteInput(trimmed) ?? normalizeFlatNoteInput(trimmed);
 };
 
-/** Parse a mode slug into a ModeName, or null when not recognized. */
+/**
+ * Parses a mode slug into a `ModeName`, or `null` when not recognized.
+ *
+ * @param value - A mode name, optionally followed by more text, case-insensitive
+ * @returns The `ModeName`, or `null` if the first token isn't a valid mode
+ *
+ * @example
+ * parseModeName("Dorian")
+ * // → "dorian"
+ */
 const parseModeName = (value: string): ModeName | null => {
   const token = firstToken(value).toLowerCase();
   return isModeName(token) ? token : null;
@@ -319,25 +418,42 @@ const parseModeName = (value: string): ModeName | null => {
  * Normalizes notes (which may be flat-spelled) to their canonical sharp
  * equivalents. Sharp/natural notes pass through unchanged.
  *
- * Example: getSharps(['Db', 'C#', 'D']) => ['C#', 'C#', 'D']
+ * @param notes - Notes, sharp or flat spelling
+ * @returns The same notes, all normalized to sharp spelling
+ *
+ * @example
+ * getSharps(["Db", "C#", "D"])
+ * // → ["C#", "C#", "D"]
  */
 const getSharps = (notes: readonly (Note | FlatNote)[]): Note[] =>
   notes.map((note) => (isFlatNote(note) ? FLAT_TO_SHARP[note] : note));
 
 /**
  * Converts notes to their flat-spelled equivalents. Natural notes are
- * unaffected.
+ * unaffected. Input must already be sharp-spelled - use `getSharps` first
+ * if the input might be flat-spelled.
  *
- * Example: getFlats(['C#', 'D']) => ['Db', 'D']
+ * @param notes - Sharp-spelled notes
+ * @returns The same notes, sharp black-key notes converted to flat spelling
+ *
+ * @example
+ * getFlats(["C#", "D"])
+ * // → ["Db", "D"]
  */
 const getFlats = (notes: readonly Note[]): string[] =>
   notes.map((note) => SHARP_TO_FLAT_MAP[note] ?? note);
 
 /**
- * Returns combined sharp/flat display labels for notes (e.g. "C#" -> "Db/C#").
- * Natural notes are unaffected.
+ * Returns combined sharp/flat display labels for notes (e.g. `"C#"` -> `"Db/C#"`).
+ * Natural notes are unaffected. Input must already be sharp-spelled - use
+ * `getSharps` first if the input might be flat-spelled.
  *
- * Example: getEnharmonicLabels(['C#', 'D']) => ['Db/C#', 'D']
+ * @param notes - Sharp-spelled notes
+ * @returns Display labels - black keys as `"Db/C#"`-style combined labels, naturals unchanged
+ *
+ * @example
+ * getEnharmonicLabels(["C#", "D"])
+ * // → ["Db/C#", "D"]
  */
 const getEnharmonicLabels = (notes: readonly Note[]): string[] =>
   notes.map((note) => ENHARMONIC_LABELS[note] ?? note);

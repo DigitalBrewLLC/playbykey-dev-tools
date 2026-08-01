@@ -8,17 +8,30 @@ const MIDI_A4 = 69;
  * MIDI note number for a note at a given octave, using scientific pitch
  * notation (C4 = middle C = MIDI 60).
  *
- * Example: noteToMidi('C', 4) => 60
- * Example: noteToMidi('A', 4) => 69
+ * @param note - Note, sharps-only chromatic spelling
+ * @param octave - Octave in scientific pitch notation (4 = the octave containing middle C)
+ * @returns MIDI note number, 0-127 for valid scientific-pitch-notation input
+ *
+ * @example
+ * noteToMidi("C", 4)
+ * // → 60
+ * noteToMidi("A", 4)
+ * // → 69
  */
 const noteToMidi = (note: Note, octave: number): number =>
   12 * (octave + 1) + getNoteIndex(note);
 
 /**
- * Note and octave for a given MIDI note number, inverse of noteToMidi.
+ * Note and octave for a given MIDI note number, inverse of `noteToMidi`.
  *
- * Example: midiToNote(60) => { note: 'C', octave: 4 }
- * Example: midiToNote(69) => { note: 'A', octave: 4 }
+ * @param midiNumber - MIDI note number (0-127 is the standard range, but not enforced here)
+ * @returns `{ note, octave }` in scientific pitch notation
+ *
+ * @example
+ * midiToNote(60)
+ * // → { note: "C", octave: 4 }
+ * midiToNote(69)
+ * // → { note: "A", octave: 4 }
  */
 const midiToNote = (midiNumber: number): { note: Note; octave: number } => {
   const octave = Math.floor(midiNumber / 12) - 1;
@@ -29,7 +42,13 @@ const midiToNote = (midiNumber: number): { note: Note; octave: number } => {
 /**
  * Frequency in Hz for a note at a given octave, equal temperament, A4 = 440Hz.
  *
- * Example: noteToFrequency('A', 4) => 440
+ * @param note - Note, sharps-only chromatic spelling
+ * @param octave - Octave in scientific pitch notation (4 = the octave containing middle C)
+ * @returns Frequency in Hz
+ *
+ * @example
+ * noteToFrequency("A", 4)
+ * // → 440
  */
 const noteToFrequency = (note: Note, octave: number): number => {
   const midiNumber = noteToMidi(note, octave);
