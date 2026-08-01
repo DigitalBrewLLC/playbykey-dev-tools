@@ -7,7 +7,7 @@
 
 # Developer Tools
 
-Developer-facing packages for PlayByKey. The first shipped package is **[@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)**, a zero-dependency TypeScript music theory engine for scales, modes, intervals, key relationships, and note display maps.
+Packages for PlayByKey. **[@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)** is a zero-dependency TypeScript music theory engine for scales, modes, intervals, key relationships, and note display maps.
 
 - **npm:** [npmjs.com/package/@playbykey/theory](https://www.npmjs.com/package/@playbykey/theory)
 - **Documentation:** [theory-engine.docs.playbykey.com](https://theory-engine.docs.playbykey.com) - interactive playgrounds
