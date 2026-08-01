@@ -2,5 +2,14 @@
   "printWidth": 80,
   "singleQuote": true,
   "trailingComma": "es5",
-  "semi": true
+  "semi": true,
+  "plugins": ["prettier-plugin-astro"],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    }
+  ]
 }
