@@ -6,6 +6,8 @@ interface FunctionCardProps {
   description: string;
   children?: React.ReactNode;
   result: unknown;
+  /** Extra panels rendered before the main Result panel (e.g. the raw input). */
+  beforeResult?: React.ReactNode;
   /** Extra result panels rendered after the main Result panel (e.g. alternate note spellings). */
   additionalResults?: React.ReactNode;
 }
@@ -58,6 +60,7 @@ const FunctionCard = ({
   description,
   children,
   result,
+  beforeResult,
   additionalResults,
 }: FunctionCardProps) => {
   return (
@@ -68,6 +71,7 @@ const FunctionCard = ({
       </pre>
       <p style={descriptionStyle}>{description}</p>
       {children && <div style={controlsStyle}>{children}</div>}
+      {beforeResult}
       <ResultPanel label="Result" value={result} />
       {additionalResults}
     </section>

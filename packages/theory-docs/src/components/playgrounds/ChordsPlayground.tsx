@@ -207,7 +207,7 @@ const ChordsPlayground = () => {
         signature="detectChords(notes: Note[]): Partial<Record<Note, ChordType[]>>"
         description="Returns every chord that matches a set of notes, as key-value pairs mapping each matching root note to its list of matching chord types. Pick an example to see how a note set can match more than one root."
         result={detectedChords}
-        additionalResults={
+        beforeResult={
           <ResultPanel label="Input notes" value={detectExample.notes} />
         }
       >
