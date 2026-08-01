@@ -4,6 +4,7 @@ import {
   getChordByDegree,
   getAvailableInversions,
   getChordInversion,
+  detectChord,
   Modes,
 } from '@playbykey/theory';
 import {
@@ -12,6 +13,7 @@ import {
   validateChordType,
   validateInversion,
   validateDegree,
+  validateNoteArray,
 } from '../validate.js';
 import { type ToolContent, errorContent, okContent } from '../tool-helpers.js';
 
@@ -103,4 +105,19 @@ export function handleGetChordInversion(
   } catch (error) {
     return errorContent(error instanceof Error ? error.message : String(error));
   }
+}
+
+export function handleDetectChord(args: Record<string, unknown>): ToolContent {
+  const notes = validateNoteArray(args['notes']);
+  if (!notes.ok) return errorContent(notes.error);
+
+  const chord = detectChord(notes.value);
+  if (chord === null) {
+    return okContent('No exact chord match for the given notes.', {
+      notes: notes.value,
+      chord: null,
+    });
+  }
+  const summary = `${chord.root} ${chord.type}`;
+  return okContent(summary, { notes: notes.value, chord });
 }
