@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.0.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.6.1...theory-mcp-v2.0.0) (2026-08-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **theory,theory-mcp:** detectChord no longer exists; detect_chord MCP tool no longer exists. Both are pre-release (this PR hasn't merged yet), so there are no external consumers to migrate.
+
+### Features
+
+* **theory-mcp:** add detect_chord tool ([2b80597](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/2b805973172d706a8720c7667525a85f7a67ed88))
+* **theory-mcp:** widen chord inversion validation to match the engine's 0-6 range ([04116b8](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/04116b83649457b6da2835bfa16113f6b0affd7b))
+* **theory,theory-mcp:** rename detectChord to detectChords, return all matching roots ([6512d9a](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/6512d9a2b0a474f0877d1dbc41fcf988e115de69))
+
+
+### Bug Fixes
+
+* clarify detectChords description and show explicit input in playground demo ([f573603](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/f5736030b4ca56754c23a0ad044e502a064885ff))
+* **theory-mcp,theory:** correct detectChord's ambiguity claim, accept flats in detect_chord ([4d74483](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/4d744839e390c93adbd3faf94260e4c66254c2f4))
+* **theory-mcp:** correct stale 0-4 range in validateInversion's error message ([bf00947](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/bf0094706a2420ccb365f9a9c795efc53571f08a))
+* **theory-mcp:** rewrite server.json title/description as real sentences ([b6e8fdc](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/b6e8fdc7c639f00b17793a39bfa12769927d876d))
+* **theory-mcp:** trim detect_chords tool description to 2 sentences ([54f38da](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/54f38da7758efb0488f2c4e9cc0ea292f6b698ee))
+* **theory,theory-mcp,theory-docs:** fix doc staleness found in code review ([88a1097](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/88a10973a32fcced0f51afeb160613d5928d0ff3))
+
 ## [1.6.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v1.6.0...theory-mcp-v1.6.1) (2026-07-28)
 
 

@@ -7,6 +7,31 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.0.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.5.0...theory-v2.0.0) (2026-08-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **theory,theory-mcp:** detectChord no longer exists; detect_chord MCP tool no longer exists. Both are pre-release (this PR hasn't merged yet), so there are no external consumers to migrate.
+
+### Features
+
+* **theory,theory-mcp:** rename detectChord to detectChords, return all matching roots ([6512d9a](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/6512d9a2b0a474f0877d1dbc41fcf988e115de69))
+* **theory:** add 11 new chord types to CHORD_DEFINITIONS ([c3d124f](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/c3d124f0262125987008b73db2d54672c0522055))
+* **theory:** add 2 new catalog progressions ([e365207](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/e365207503cbc879ff0071b226d1c92e6b439e78))
+* **theory:** add detectChord for notes-to-chord reverse lookup ([77538ab](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/77538abe8b7e52a04563c7e58b4d8ec0235f89bf))
+* **theory:** widen ChordInversion to support up to 7-note chords ([b51a57f](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/b51a57f4e54bd5033ce2e317a786c71c89e25538))
+
+
+### Bug Fixes
+
+* clarify detectChords description and show explicit input in playground demo ([f573603](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/f5736030b4ca56754c23a0ad044e502a064885ff))
+* **theory-mcp,theory:** correct detectChord's ambiguity claim, accept flats in detect_chord ([4d74483](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/4d744839e390c93adbd3faf94260e4c66254c2f4))
+* **theory,theory-mcp,theory-docs:** fix doc staleness found in code review ([88a1097](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/88a10973a32fcced0f51afeb160613d5928d0ff3))
+* **theory:** clarify the mod-12 dedup comment in detectChords ([8a748cb](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/8a748cb0868cc058dd52a06809cc87de8ddfb6b6))
+* **theory:** remove invalid out-of-type-range assertion in the 13th-chord inversion test ([cae72b8](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/cae72b81384ede079c5572a76a99fa9cef5c63cb))
+* **theory:** remove low-value comment on detectChords' mod-12 matching ([12c66b3](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/12c66b3d11f98b755a2e0a4b5e1f5b42e409b1af))
+
 ## [1.5.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v1.4.0...theory-v1.5.0) (2026-07-23)
 
 

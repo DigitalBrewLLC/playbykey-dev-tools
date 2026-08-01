@@ -7,6 +7,26 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.0.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.6.0...theory-docs-v2.0.0) (2026-08-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **theory,theory-mcp:** detectChord no longer exists; detect_chord MCP tool no longer exists. Both are pre-release (this PR hasn't merged yet), so there are no external consumers to migrate.
+
+### Features
+
+* **theory-docs:** add detectChords card to the chords playground ([7c2c06f](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/7c2c06f1359760731bb2b329f041cb334cf43ee9))
+* **theory,theory-mcp:** rename detectChord to detectChords, return all matching roots ([6512d9a](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/6512d9a2b0a474f0877d1dbc41fcf988e115de69))
+
+
+### Bug Fixes
+
+* clarify detectChords description and show explicit input in playground demo ([f573603](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/f5736030b4ca56754c23a0ad044e502a064885ff))
+* **theory-docs:** show input notes above the result in detectChords playground demo ([0fd4611](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/0fd46118e8280c435e5bc61bfd17360c40453098))
+* **theory-mcp,theory:** correct detectChord's ambiguity claim, accept flats in detect_chord ([4d74483](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/4d744839e390c93adbd3faf94260e4c66254c2f4))
+* **theory,theory-mcp,theory-docs:** fix doc staleness found in code review ([88a1097](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/88a10973a32fcced0f51afeb160613d5928d0ff3))
+
 ## [1.6.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v1.5.3...theory-docs-v1.6.0) (2026-07-28)
 
 
