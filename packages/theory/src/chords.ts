@@ -300,9 +300,9 @@ const detectChords = (
       .map((note) => getSemitoneDistance(candidateRoot, note))
       .sort((a, b) => a - b);
     const rootMatches = CHORD_TYPES.filter((type) => {
-      // Not deduplicated after mod 12 - safe today since no definition's
-      // offsets collide post-modulo, but a future chord type that does
-      // collide would silently stop matching here instead of erroring.
+      // Not deduplicated after mod 12 - a colliding future chord type
+      // would become permanently unmatchable, not error. None of the
+      // 22 current types collide.
       const definitionOffsets = [...CHORD_DEFINITIONS[type].semitoneOffsets]
         .map((offset) => offset % 12)
         .sort((a, b) => a - b);
