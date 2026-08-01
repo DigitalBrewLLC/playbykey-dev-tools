@@ -1,6 +1,6 @@
 ---
 title: Progressions
-description: Render a fixed catalog of 5 named chord progressions in any key, and label scale degrees with roman numerals in @playbykey/theory
+description: Render a fixed catalog of 7 named chord progressions in any key, and label scale degrees with roman numerals in @playbykey/theory
 head:
   - tag: meta
     attrs:
@@ -9,7 +9,7 @@ head:
   - tag: meta
     attrs:
       property: og:description
-      content: 'Render a fixed catalog of 5 named chord progressions in any key, and label scale degrees with roman numerals in @playbykey/theory'
+      content: 'Render a fixed catalog of 7 named chord progressions in any key, and label scale degrees with roman numerals in @playbykey/theory'
   - tag: meta
     attrs:
       property: og:url
@@ -26,13 +26,15 @@ head:
 
 import ProgressionsPlayground from '../../../components/playgrounds/ProgressionsPlayground';
 
-The progressions module renders a fixed catalog of 5 named chord progressions and labels scale degrees with correctly-cased roman numerals:
+The progressions module renders a fixed catalog of 7 named chord progressions and labels scale degrees with correctly-cased roman numerals:
 
 - `I-V-vi-IV` - the "pop" progression
 - `ii-V-I` - jazz cadence
 - `I-IV-V` - three-chord/blues-rock
 - `vi-IV-I-V` - the "axis" progression
 - `12-bar-blues` - standard 12-bar form
+- `I-vi-IV-V` - the "50s" progression
+- `I-vi-ii-V` - jazz turnaround
 
 `getRomanNumeral(degree, mode)` returns the roman numeral for a scale degree (1-7) in a mode, reflecting that degree's diatonic triad quality - uppercase for major (`"I"`), lowercase for minor (`"ii"`), lowercase with a `°` suffix for diminished (`"vii°"`).
 
