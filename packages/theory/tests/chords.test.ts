@@ -125,6 +125,38 @@ describe('getChordInversion', () => {
     expect(getChordInversion(chord, 3)).toEqual(['B', 'D', 'C', 'E', 'G']);
     expect(getChordInversion(chord, 4)).toEqual(['D', 'C', 'E', 'G', 'B']);
   });
+
+  it('rotates a C major 13th chord (7 notes) through all 7 positions - the top of the widened 0-6 range', () => {
+    const chord = { root: 'C', type: 'major-13th' } as const;
+    expect(getChordInversion(chord, 0)).toEqual([
+      'C',
+      'E',
+      'G',
+      'B',
+      'D',
+      'F',
+      'A',
+    ]);
+    expect(getChordInversion(chord, 5)).toEqual([
+      'F',
+      'A',
+      'C',
+      'E',
+      'G',
+      'B',
+      'D',
+    ]);
+    expect(getChordInversion(chord, 6)).toEqual([
+      'A',
+      'C',
+      'E',
+      'G',
+      'B',
+      'D',
+      'F',
+    ]);
+    expect(() => getChordInversion(chord, 7)).toThrow(RangeError);
+  });
 });
 
 describe('detectChords', () => {
