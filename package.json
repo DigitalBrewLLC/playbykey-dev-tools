@@ -16,13 +16,18 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,css,yml,md,astro}": [
+    "*.astro": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,yml,md}": [
       "prettier --write"
     ]
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
+    "eslint-plugin-astro": "2.1.1",
     "globals": "^17.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",

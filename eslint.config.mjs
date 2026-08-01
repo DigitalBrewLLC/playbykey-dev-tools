@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import ts from 'typescript-eslint';
 import globals from 'globals';
+import astro from 'eslint-plugin-astro';
 
 export default ts.config(
   { ignores: ['**/dist/', '**/node_modules/', '**/.astro/'] },
@@ -10,6 +11,9 @@ export default ts.config(
 
   // TypeScript recommended rules
   ...ts.configs.recommended,
+
+  // Astro recommended rules
+  ...astro.configs['flat/recommended'],
 
   {
     languageOptions: {
