@@ -109,11 +109,11 @@ interface Chord {
 /**
  * Chord inversion - which chord tone is in the bass. 0 = root position.
  * The valid range depends on the chord type (a triad has 3 valid inversions,
- * 0-2; a 9th chord has 5, 0-4) - this type covers the maximum range across
- * all chord types (0-4). Runtime validation against the actual valid range
+ * 0-2; a 13th chord has 7, 0-6) - this type covers the maximum range across
+ * all chord types (0-6). Runtime validation against the actual valid range
  * for a given chord type happens in the chords module, not via this type alone.
  */
-type ChordInversion = 0 | 1 | 2 | 3 | 4;
+type ChordInversion = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 /** Catalog identifier for a fixed, named progression - extend as the catalog grows. */
 type ProgressionId =
