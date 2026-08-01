@@ -121,6 +121,7 @@ export {
   getChordByDegree,
   getAvailableInversions,
   getChordInversion,
+  detectChord,
 } from './chords';
 
 export type { ProgressionDefinition } from './progressions';
