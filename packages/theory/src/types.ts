@@ -118,10 +118,12 @@ interface Chord {
 }
 
 /**
- * Chord inversion - which chord tone is in the bass. 0 = root position.
- * The valid range depends on the chord type (a triad has 3 valid inversions,
- * 0-2; a 13th chord has 7, 0-6) - this type covers the maximum range across
- * all chord types (0-6). Runtime validation against the actual valid range
+ * Which chord tone is in the bass. 0 = root position (not itself an
+ * inversion); 1 and up are 1st inversion, 2nd inversion, and so on. The
+ * valid range depends on the chord type - a triad allows 0-2 (root
+ * position plus 2 inversions), a 13th chord allows 0-6 (root position
+ * plus 6 inversions) - this type covers the maximum range across all
+ * chord types (0-6). Runtime validation against the actual valid range
  * for a given chord type happens in the chords module, not via this type alone.
  */
 type ChordInversion = 0 | 1 | 2 | 3 | 4 | 5 | 6;

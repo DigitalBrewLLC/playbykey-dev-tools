@@ -76,7 +76,7 @@ export function handleGetAvailableInversions(
   if (!chordType.ok) return errorContent(chordType.error);
 
   const inversions = getAvailableInversions(chordType.value);
-  const summary = `${chordType.value} has ${inversions.length} valid inversions: ${inversions.join(', ')}`;
+  const summary = `${chordType.value}'s valid inversion values: ${inversions.join(', ')} (0 = root position)`;
   return okContent(summary, { chordType: chordType.value, inversions });
 }
 

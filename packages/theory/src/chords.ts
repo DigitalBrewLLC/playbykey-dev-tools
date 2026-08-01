@@ -109,11 +109,14 @@ const getChordNotes = (root: Note, chordType: ChordType): Note[] =>
   notesFromSemitoneOffsets(root, CHORD_DEFINITIONS[chordType].semitoneOffsets);
 
 /**
- * Returns the valid inversion numbers for a chord type - always `[0, 1, ..., N-1]`
- * where N is that chord type's note count (3 for a triad, up to 7 for a 13th chord).
+ * Returns every valid value for a chord type's `inversion` parameter (see
+ * `getChordInversion`) - 0 is root position, not itself an inversion; 1
+ * and up are 1st inversion, 2nd inversion, and so on. A triad allows 0-2
+ * (root position plus 2 inversions); a 13th chord allows 0-6 (root
+ * position plus 6 inversions).
  *
  * @param chordType - One of the 22 supported chord types
- * @returns Every valid inversion number for that chord type, ascending from 0 (root position)
+ * @returns Every valid `inversion` value for that chord type, starting at 0 (root position)
  *
  * @example
  * getAvailableInversions("major-triad")
@@ -135,9 +138,10 @@ const getAvailableInversions = (
  * Reorders a chord's notes so the given inversion's chord tone is lowest (first in the array).
  *
  * @param chord - The chord to invert, `{ root, type }`
- * @param inversion - Which chord tone to put in the bass (0 = root position). Must be
- *   in range for `chord.type`'s actual note count - a triad only has 0-2 valid even
- *   though `ChordInversion` itself covers 0-6, the widest range across all chord types
+ * @param inversion - Which chord tone to put in the bass (0 = root position, not
+ *   itself an inversion). Must be in range for `chord.type`'s actual note count -
+ *   a triad only goes up to 2 even though `ChordInversion` itself covers 0-6, the
+ *   widest range across all chord types
  * @returns The chord's notes, rotated so the requested tone is first
  * @throws {RangeError} if `inversion` is out of range for `chord.type`'s note count -
  *   use `getAvailableInversions(chord.type)` to check first if the range isn't known
