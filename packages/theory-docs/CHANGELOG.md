@@ -7,6 +7,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.0.2](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v2.0.1...theory-docs-v2.0.2) (2026-08-02)
+
+
+### Bug Fixes
+
+* **theory-docs:** open external footer/social links in a new tab ([e4b3597](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/e4b359702e219a592150bfbb6a455bce32e9e1f2))
+* **theory-docs:** replace PK text mark with a play-triangle icon ([018d301](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/018d301531ec835d419a870e6e3239c91c74b242))
+
 ## [2.0.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v2.0.0...theory-docs-v2.0.1) (2026-08-01)
 
 
