@@ -15,10 +15,15 @@ const customIconSrc: Record<string, string> = {
   links.length > 0 && (
     <>
       {links.map(({ label, href, icon }) => (
-        <a {href} rel="me" class="sl-flex">
+        <a {href} rel="me noopener" target="_blank" class="sl-flex">
           <span class="sr-only">{label}</span>
           {customIconSrc[label] ? (
-            <img src={customIconSrc[label]} width="16" height="16" alt="" />
+            <img
+              src={customIconSrc[label]}
+              width="16"
+              height="16"
+              alt={label}
+            />
           ) : (
             <Icon name={icon} />
           )}

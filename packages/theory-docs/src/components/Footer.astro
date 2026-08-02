@@ -20,9 +20,14 @@ const customIconSrc: Record<string, string> = {
     links.length > 0 && (
       <div class="pbk-footer-links">
         {links.map(({ label, href, icon }) => (
-          <a {href} rel="me" class="pbk-footer-link">
+          <a {href} rel="me noopener" target="_blank" class="pbk-footer-link">
             {customIconSrc[label] ? (
-              <img src={customIconSrc[label]} width="16" height="16" alt="" />
+              <img
+                src={customIconSrc[label]}
+                width="16"
+                height="16"
+                alt={label}
+              />
             ) : (
               <Icon name={icon} />
             )}
