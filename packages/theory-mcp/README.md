@@ -175,6 +175,14 @@ Example: `get_flats(["C#", "D"])` → Db, D
 Input: `notes` (must be sharp-spelled)  
 Example: `get_enharmonic_labels(["C#", "D"])` → Db/C#, D
 
+**`get_root_letter`** - Resolves which letter (A-G) a root should be spelled as under a sharp or flat preference. Feeds `spell_diatonic_scale`.  
+Input: `root` (note), `preference` (`sharp` or `flat`)  
+Example: `get_root_letter("F#", "flat")` → G
+
+**`spell_diatonic_scale`** - Re-spells a 7-note diatonic scale so each of the 7 letters A-G is used exactly once, covering spellings a plain note can't represent alone (`B#`, `E#`, `Cb`, `Fb`, double-sharps, double-flats).  
+Input: `notes` (7 notes in scale order), `root_letter` (from `get_root_letter`)  
+Example: `spell_diatonic_scale(["F#","G#","A#","B","C#","D#","F"], "F")` → F#, G#, A#, B, C#, D#, E#
+
 ### Chords
 
 **`get_chord_notes`** - Returns the notes of a chord given a root and chord type.  
