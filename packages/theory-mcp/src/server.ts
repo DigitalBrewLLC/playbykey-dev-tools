@@ -33,6 +33,8 @@ import {
   handleGetSharps,
   handleGetFlats,
   handleGetEnharmonicLabels,
+  handleGetRootLetter,
+  handleSpellDiatonicScale,
 } from './tools/spelling.js';
 import {
   handleGetChordNotes,
@@ -112,6 +114,10 @@ const INTERVAL_ID_ENUM = [
 ] as const;
 
 const CHORD_TYPE_ENUM = [...Object.values(ChordTypes)] as const;
+
+const NOTE_LETTER_ENUM = ['A', 'B', 'C', 'D', 'E', 'F', 'G'] as const;
+
+const SPELLING_PREFERENCE_ENUM = ['sharp', 'flat'] as const;
 
 const PROGRESSION_ID_ENUM = [...Object.values(ProgressionIds)] as const;
 
@@ -432,6 +438,50 @@ const TOOLS = [
         },
       },
       required: ['notes'],
+    },
+  },
+  {
+    name: 'get_root_letter',
+    description:
+      'Resolves which letter (A-G) a root should be spelled as under a sharp or flat preference. Feeds spell_diatonic_scale.\n\nExample: get_root_letter({ root: "F#", preference: "flat" }) → "G"',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: {
+          type: 'string',
+          enum: [...NOTE_ENUM],
+          description: 'Root note',
+        },
+        preference: {
+          type: 'string',
+          enum: [...SPELLING_PREFERENCE_ENUM],
+          description: 'Sharp or flat spelling preference for ambiguous roots',
+        },
+      },
+      required: ['root', 'preference'],
+    },
+  },
+  {
+    name: 'spell_diatonic_scale',
+    description:
+      'Re-spells a 7-note diatonic scale (major, natural/harmonic/melodic minor, or any mode) so each of the 7 letters A-G is used exactly once - covering spellings a plain note can\'t represent alone (B#, E#, Cb, Fb, double-sharps, double-flats). Get notes from get_mode_notes/get_scale_notes/etc, and root_letter from get_root_letter.\n\nExample: spell_diatonic_scale({ notes: ["F#","G#","A#","B","C#","D#","F"], root_letter: "F" }) → ["F#","G#","A#","B","C#","D#","E#"]',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...NOTE_ENUM] },
+          minItems: 7,
+          maxItems: 7,
+          description: 'The 7 notes of a diatonic scale, in scale order',
+        },
+        root_letter: {
+          type: 'string',
+          enum: [...NOTE_LETTER_ENUM],
+          description: 'Which letter the root should be spelled as',
+        },
+      },
+      required: ['notes', 'root_letter'],
     },
   },
   {
@@ -805,6 +855,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleGetFlats(safeArgs);
     case 'get_enharmonic_labels':
       return handleGetEnharmonicLabels(safeArgs);
+    case 'get_root_letter':
+      return handleGetRootLetter(safeArgs);
+    case 'spell_diatonic_scale':
+      return handleSpellDiatonicScale(safeArgs);
     case 'get_chord_notes':
       return handleGetChordNotes(safeArgs);
     case 'get_diatonic_chords':

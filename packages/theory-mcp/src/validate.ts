@@ -20,6 +20,7 @@ import type {
   MelodicMinorModeName,
   HarmonicMinorModeName,
   BebopScaleType,
+  NoteLetter,
 } from '@playbykey/theory';
 
 type ValidateOk<T> = { ok: true; value: T };
@@ -57,6 +58,9 @@ const HARMONIC_MINOR_MODE_SET = new Set<string>(
 );
 const BEBOP_SCALE_TYPE_SET = new Set<string>(Object.values(BebopScaleTypes));
 
+const NOTE_LETTER_SET = new Set<string>(['A', 'B', 'C', 'D', 'E', 'F', 'G']);
+const SPELLING_PREFERENCE_SET = new Set<string>(['sharp', 'flat']);
+
 function isMelodicMinorMode(value: string): value is MelodicMinorModeName {
   return MELODIC_MINOR_MODE_SET.has(value);
 }
@@ -67,6 +71,14 @@ function isHarmonicMinorMode(value: string): value is HarmonicMinorModeName {
 
 function isBebopScaleType(value: string): value is BebopScaleType {
   return BEBOP_SCALE_TYPE_SET.has(value);
+}
+
+function isNoteLetter(value: string): value is NoteLetter {
+  return NOTE_LETTER_SET.has(value);
+}
+
+function isSpellingPreference(value: string): value is 'sharp' | 'flat' {
+  return SPELLING_PREFERENCE_SET.has(value);
 }
 
 export function validateNote(value: unknown): ValidateResult<Note> {
@@ -248,5 +260,27 @@ export function validateBebopScaleType(
   return {
     ok: false,
     error: `Invalid bebop scale type: "${String(value)}". Must be one of: ${Object.values(BebopScaleTypes).join(', ')}.`,
+  };
+}
+
+export function validateNoteLetter(value: unknown): ValidateResult<NoteLetter> {
+  if (typeof value === 'string' && isNoteLetter(value)) {
+    return { ok: true, value };
+  }
+  return {
+    ok: false,
+    error: `Invalid note letter: "${String(value)}". Must be one of: A, B, C, D, E, F, G.`,
+  };
+}
+
+export function validateSpellingPreference(
+  value: unknown
+): ValidateResult<'sharp' | 'flat'> {
+  if (typeof value === 'string' && isSpellingPreference(value)) {
+    return { ok: true, value };
+  }
+  return {
+    ok: false,
+    error: `Invalid spelling preference: "${String(value)}". Must be one of: sharp, flat.`,
   };
 }
