@@ -1,20 +1,26 @@
 ---
-name: Feature request
-about: Suggest a new function, type, or capability
+name: Feature Request
+about: Suggest a new feature or improvement
+title: '[FEATURE] '
 labels: enhancement
 ---
 
-**Package**
-Which package is this for? (`@playbykey/theory`, `@playbykey/theory-mcp`, `theory-docs`)
+## Description
 
-**What would you like added?**
-A clear description of the function, type, or capability you need.
+A clear and concise description of what you'd like to see added or improved.
 
-**Use case**
-What are you building and why does this help?
+## Motivation
 
-**Proposed API (optional)**
+Why would this feature be useful? What problem does it solve?
 
-```ts
-// example of what you'd like to call
-```
+## Proposed Solution
+
+A clear and concise description of how you'd like this feature to work.
+
+## Alternatives Considered
+
+A clear and concise description of any alternative solutions or features you've considered.
+
+## Additional Context
+
+Add any other context, sketches, examples, or information that might be helpful.

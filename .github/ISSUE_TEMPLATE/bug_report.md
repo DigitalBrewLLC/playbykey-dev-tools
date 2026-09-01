@@ -1,26 +1,40 @@
 ---
-name: Bug report
-about: Something isn't working as expected
+name: Bug Report
+about: Report a bug or unexpected behavior
+title: '[BUG] '
 labels: bug
 ---
 
-**Package**
-Which package is affected? (`@playbykey/theory`, `@playbykey/theory-mcp`, `theory-docs`)
+## Description
 
-**What happened**
-A clear description of the bug.
+A clear and concise description of what the bug is.
 
-**Expected behavior**
-What you expected to happen.
+## Affected Package(s)
 
-**Reproduction**
+- [ ] @playbykey/theory
+- [ ] @playbykey/theory-mcp
+- [ ] Other (please specify)
 
-```ts
-// minimal repro
-```
+## Steps to Reproduce
 
-**Environment**
+1.
+2.
+3.
 
-- Package version:
-- Node version:
-- OS:
+## Expected Behavior
+
+A clear and concise description of what you expected to happen.
+
+## Actual Behavior
+
+A clear and concise description of what actually happened.
+
+## Environment
+
+- **Node.js version**:
+- **Package version**:
+- **OS**:
+
+## Additional Context
+
+Add any other context or screenshots that might help explain the bug.
