@@ -24,6 +24,9 @@ export type {
   MelodicMinorModeName,
   HarmonicMinorModeName,
   BebopScaleType,
+  NoteLetter,
+  AccidentalCount,
+  SpelledNote,
 } from './types';
 
 export {
@@ -133,3 +136,9 @@ export {
 } from './progressions';
 
 export { noteToMidi, midiToNote, noteToFrequency } from './midi';
+
+export {
+  formatSpelledNote,
+  getRootLetter,
+  spellDiatonicScale,
+} from './spelling';
