@@ -7,6 +7,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v2.0.1...theory-v2.1.0) (2026-09-01)
+
+
+### Features
+
+* **theory:** add correct diatonic scale spelling for extreme keys ([98aaa82](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/98aaa82f9c9efe0074a7cc71950577753de624cf))
+* **theory:** add getSpelledAccidentalCount for key signature counts ([b428f3e](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/b428f3e7f48ee624580efe497e650c35b9e10881))
+
 ## [2.0.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-v2.0.0...theory-v2.0.1) (2026-08-01)
 
 

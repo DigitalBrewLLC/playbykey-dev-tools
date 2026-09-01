@@ -7,6 +7,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v2.0.2...theory-docs-v2.1.0) (2026-09-01)
+
+
+### Features
+
+* **theory-mcp:** expose diatonic scale spelling as MCP tools ([d53af3b](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/d53af3bb44432f5ccdf60903e29c8dd2e756a52c))
+* **theory-mcp:** expose get_spelled_accidental_count as an MCP tool ([f9cae84](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/f9cae8423d43e7a67a6e9223732dcbf414eff86e))
+
+
+### Bug Fixes
+
+* **theory-docs:** render plain string results as clean inline code ([245571a](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/245571af263e8542f55d0771501bac341bbb5337))
+* **theory-docs:** show the spelled-as-selected count in the Key Signatures explorer ([57f6aa0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/57f6aa07a81c6a15c13fe8374e1ee80f8ff311b9))
+
 ## [2.0.2](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v2.0.1...theory-docs-v2.0.2) (2026-08-02)
 
 
