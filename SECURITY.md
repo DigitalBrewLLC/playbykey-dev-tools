@@ -8,5 +8,8 @@ I monitor issues regularly and will respond within 48 hours. Using GitHub issues
 
 ## Package security
 
+**@playbykey/theory**
 [![Socket Badge](https://socket.dev/api/badge/npm/package/@playbykey/theory?key=ossf_score)](https://socket.dev/npm/package/@playbykey/theory)
+
+**@playbykey/theory-mcp**
 [![Socket Badge](https://socket.dev/api/badge/npm/package/@playbykey/theory-mcp?key=ossf_score)](https://socket.dev/npm/package/@playbykey/theory-mcp)
