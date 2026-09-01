@@ -5,6 +5,7 @@ import {
   handleGetEnharmonicLabels,
   handleGetRootLetter,
   handleSpellDiatonicScale,
+  handleGetSpelledAccidentalCount,
 } from '../src/tools/spelling.js';
 
 describe('handleGetSharps', () => {
@@ -116,6 +117,50 @@ describe('handleSpellDiatonicScale', () => {
 
   it('returns error for a scale that is not exactly 7 notes', () => {
     const result = handleSpellDiatonicScale({
+      notes: ['C', 'D', 'E'],
+      root_letter: 'C',
+    });
+    expect(result.content[0]?.text).toContain('expects exactly 7 notes');
+  });
+});
+
+describe('handleGetSpelledAccidentalCount', () => {
+  it('counts sharps and doubles for a key that needs them', () => {
+    const result = handleGetSpelledAccidentalCount({
+      notes: ['A#', 'C', 'D', 'D#', 'F', 'G', 'A'],
+      root_letter: 'A',
+    });
+    const text = result.content[0]?.text ?? '';
+    const parsed = JSON.parse(text.slice(text.indexOf('{'))) as {
+      sharps: number;
+      doubleSharps: number;
+    };
+    expect(parsed).toEqual({ sharps: 7, doubleSharps: 3 });
+  });
+
+  it('counts flats for a conventional key with none doubled', () => {
+    const result = handleGetSpelledAccidentalCount({
+      notes: ['F', 'G', 'A', 'A#', 'C', 'D', 'E'],
+      root_letter: 'F',
+    });
+    const text = result.content[0]?.text ?? '';
+    const parsed = JSON.parse(text.slice(text.indexOf('{'))) as {
+      flats: number;
+      doubleFlats: number;
+    };
+    expect(parsed).toEqual({ flats: 1, doubleFlats: 0 });
+  });
+
+  it('returns error for invalid note', () => {
+    const result = handleGetSpelledAccidentalCount({
+      notes: ['H'],
+      root_letter: 'F',
+    });
+    expect(result.content[0]?.text).toContain('Invalid note');
+  });
+
+  it('returns error for a scale that is not exactly 7 notes', () => {
+    const result = handleGetSpelledAccidentalCount({
       notes: ['C', 'D', 'E'],
       root_letter: 'C',
     });
