@@ -27,6 +27,7 @@ export type {
   NoteLetter,
   AccidentalCount,
   SpelledNote,
+  SpelledAccidentalCount,
 } from './types';
 
 export {
@@ -141,4 +142,5 @@ export {
   formatSpelledNote,
   getRootLetter,
   spellDiatonicScale,
+  getSpelledAccidentalCount,
 } from './spelling';
