@@ -8,9 +8,16 @@
  * Flats are intentionally excluded. The entire engine (chromatic indexing,
  * scale computation, NOTES array) depends on this fixed 12-element set.
  * For display purposes, `ENHARMONIC_LABELS` maps the 5 black-key notes to
- * their combined sharp/flat label (e.g. `'C#': 'Db/C#'`). A function that
- * returns a flat-spelled note (e.g. `Db`) cannot exist without extending
- * this type - which would be a cross-cutting breaking change.
+ * their combined sharp/flat label (e.g. `'C#': 'Db/C#'`). Extending this
+ * type itself (e.g. to add `Db` as a distinct member) would still be a
+ * cross-cutting breaking change, since every function that switches on or
+ * indexes `Note` assumes exactly these 12 values.
+ *
+ * Full letter-correct scale spelling - including notations this closed set
+ * can't represent, like `B#`, `E#`, `Cb`, `Fb`, or double-sharps/flats - is
+ * available additively via `SpelledNote` and `spellDiatonicScale`, which
+ * re-spell an already-computed `Note` scale without requiring any change to
+ * this type.
  */
 type Note =
   | 'C'
@@ -161,6 +168,27 @@ type HarmonicMinorModeName = 'harmonic-minor' | 'phrygian-dominant';
 /** Bebop scale variants - 8-note scales with a chromatic passing tone. */
 type BebopScaleType = 'bebop-dominant' | 'bebop-major' | 'bebop-dorian';
 
+/** A note letter, independent of accidental. */
+type NoteLetter = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G';
+
+/**
+ * Signed accidental count applied to a note letter: -2 (double flat) to
+ * +2 (double sharp), 0 (natural). Distinct from `AccidentalType`, which is
+ * a display preference (sharp/flat/both), not a per-note count.
+ */
+type AccidentalCount = -2 | -1 | 0 | 1 | 2;
+
+/**
+ * A letter-correct spelled note: a letter plus how many sharps or flats
+ * apply to it. Unlike `Note`, which is a closed 12-value pitch-class set,
+ * this can represent any letter/accidental combination, including ones a
+ * `Note` can't (`B#`, `E#`, `Cb`, `Fb`, double-sharps, double-flats).
+ */
+interface SpelledNote {
+  letter: NoteLetter;
+  accidental: AccidentalCount;
+}
+
 export type {
   Note,
   ModeName,
@@ -180,4 +208,7 @@ export type {
   MelodicMinorModeName,
   HarmonicMinorModeName,
   BebopScaleType,
+  NoteLetter,
+  AccidentalCount,
+  SpelledNote,
 };
