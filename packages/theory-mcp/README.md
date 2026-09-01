@@ -113,7 +113,7 @@ Example → C, G, D, A, E, B, F#, C#, G#, D#, A#, F
 
 ### Key Signatures
 
-**`get_key_signature`** - Returns the sharp or flat count for a given key, treated as a major-key tonic (minor-key signatures are not exposed by this tool).  
+**`get_key_signature`** - Returns the sharp or flat count for a given key, treated as a major-key tonic (minor-key signatures are not exposed by this tool). Resolves to whichever enharmonic spelling is conventionally written - `get_key_signature("A#")` returns Bb major's 2 flats, not A#'s own. For the count of a root exactly as spelled, use `get_spelled_accidental_count` with `get_root_letter`.  
 Input: `key` (note)  
 Example: `get_key_signature("D")` → 2 sharps
 
