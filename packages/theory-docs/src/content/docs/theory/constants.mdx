@@ -48,7 +48,11 @@ Every constant below is exported from `@playbykey/theory`. The catalog covers th
 
 ## Diatonic scale spelling
 
-`spellDiatonicScale(notes, rootLetter)` re-spells an already-computed 7-note diatonic scale (major, natural/harmonic/melodic minor, or any mode) so each of the 7 letters A-G is used exactly once - including spellings a plain `Note` can't represent on its own, like `B#`, `E#`, `Cb`, `Fb`, or double-sharps/double-flats. `getRootLetter(root, preference)` resolves which letter a root should be spelled as under a sharp or flat preference, and `formatSpelledNote` renders the result as a string (e.g. `F##`).
+A written scale should use each letter A-G exactly once. For most keys that's automatic, but a few need a spelling `Note` alone can't express - `B#`, `E#`, `Cb`, `Fb`, or a double sharp/flat.
+
+`spellDiatonicScale` fixes the spelling of a 7-note scale (major, minor, or any mode) so every letter is used once, correctly. `getRootLetter` tells it which letter to start from. `formatSpelledNote` turns a result into a plain string, like `F##`.
+
+`getSpelledAccidentalCount` counts the sharps or flats in that corrected spelling, including doubles - the real key signature for keys `getKeySignatureCount` alone can't represent correctly.
 
 <DiatonicSpellingExplorer client:load />
 
