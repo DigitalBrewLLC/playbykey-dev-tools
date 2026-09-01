@@ -4,10 +4,11 @@ import {
   getRootLetter,
   spellDiatonicScale,
   formatSpelledNote,
+  getSpelledAccidentalCount,
   Notes,
   Modes,
 } from '@playbykey/theory';
-import type { Note, ModeName } from '@playbykey/theory';
+import type { Note, ModeName, SpelledAccidentalCount } from '@playbykey/theory';
 import { CodeSnippet } from '../ui/CodeSnippet';
 import { NoteSelect } from '../ui/NoteSelect';
 import { ModeSelect } from '../ui/ModeSelect';
@@ -17,6 +18,11 @@ import {
   type SpellingPreference,
 } from '../ui/SpellingPreferenceSelect';
 import { containerStyle, controlsRowStyle } from './playgroundStyles';
+
+const formatAccidentalCount = (count: SpelledAccidentalCount): string =>
+  'sharps' in count
+    ? `${count.sharps} sharp${count.sharps === 1 ? '' : 's'}${count.doubleSharps > 0 ? ` (${count.doubleSharps} double sharp${count.doubleSharps === 1 ? '' : 's'})` : ''}`
+    : `${count.flats} flat${count.flats === 1 ? '' : 's'}${count.doubleFlats > 0 ? ` (${count.doubleFlats} double flat${count.doubleFlats === 1 ? '' : 's'})` : ''}`;
 
 const DiatonicSpellingExplorer = () => {
   const [root, setRoot] = useState<Note>(Notes.CSharp);
@@ -30,6 +36,10 @@ const DiatonicSpellingExplorer = () => {
   );
   const spelled = useMemo(
     () => spellDiatonicScale(notes, rootLetter).map(formatSpelledNote),
+    [notes, rootLetter]
+  );
+  const accidentalCount = useMemo(
+    () => formatAccidentalCount(getSpelledAccidentalCount(notes, rootLetter)),
     [notes, rootLetter]
   );
 
@@ -49,10 +59,12 @@ const DiatonicSpellingExplorer = () => {
           `const notes = getModeNotes(Notes.${noteKey}, Modes.${modeKey})`,
           `const rootLetter = getRootLetter(Notes.${noteKey}, '${preference}') // '${rootLetter}'`,
           `spellDiatonicScale(notes, rootLetter).map(formatSpelledNote)`,
+          `getSpelledAccidentalCount(notes, rootLetter)`,
         ]}
       />
 
       <ResultPanel label="Letter-correct spelling" value={spelled} />
+      <ResultPanel label="Key signature" value={accidentalCount} />
     </div>
   );
 };
