@@ -183,6 +183,10 @@ Example: `get_root_letter("F#", "flat")` → G
 Input: `notes` (7 notes in scale order), `root_letter` (from `get_root_letter`)  
 Example: `spell_diatonic_scale(["F#","G#","A#","B","C#","D#","F"], "F")` → F#, G#, A#, B, C#, D#, E#
 
+**`get_spelled_accidental_count`** - Returns the sharp or flat count for a 7-note diatonic scale's correct spelling, including how many are double accidentals. Works on a major or natural minor scale interchangeably - a key and its relative minor share the same count.  
+Input: `notes` (7 notes in scale order), `root_letter` (from `get_root_letter`)  
+Example: `get_spelled_accidental_count(["A#","C","D","D#","F","G","A"], "A")` → 7 sharps (3 double sharps)
+
 ### Chords
 
 **`get_chord_notes`** - Returns the notes of a chord given a root and chord type.  

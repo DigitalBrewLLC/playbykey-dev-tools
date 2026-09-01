@@ -5,6 +5,7 @@ import {
   getRootLetter,
   spellDiatonicScale,
   formatSpelledNote,
+  getSpelledAccidentalCount,
 } from '@playbykey/theory';
 import {
   validateNoteArray,
@@ -72,6 +73,26 @@ export function handleSpellDiatonicScale(
     return okContent(`Spelled scale: ${spelled.join(', ')}`, {
       notes: spelled,
     });
+  } catch (error) {
+    return errorContent(error instanceof Error ? error.message : String(error));
+  }
+}
+
+export function handleGetSpelledAccidentalCount(
+  args: Record<string, unknown>
+): ToolContent {
+  const notes = validateNoteArray(args['notes']);
+  if (!notes.ok) return errorContent(notes.error);
+  const rootLetter = validateNoteLetter(args['root_letter']);
+  if (!rootLetter.ok) return errorContent(rootLetter.error);
+
+  try {
+    const count = getSpelledAccidentalCount(notes.value, rootLetter.value);
+    const summary =
+      'sharps' in count
+        ? `${count.sharps} sharp(s)${count.doubleSharps > 0 ? `, ${count.doubleSharps} of them double sharps` : ''}`
+        : `${count.flats} flat(s)${count.doubleFlats > 0 ? `, ${count.doubleFlats} of them double flats` : ''}`;
+    return okContent(summary, count);
   } catch (error) {
     return errorContent(error instanceof Error ? error.message : String(error));
   }

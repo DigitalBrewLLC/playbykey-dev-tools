@@ -35,6 +35,7 @@ import {
   handleGetEnharmonicLabels,
   handleGetRootLetter,
   handleSpellDiatonicScale,
+  handleGetSpelledAccidentalCount,
 } from './tools/spelling.js';
 import {
   handleGetChordNotes,
@@ -485,6 +486,29 @@ const TOOLS = [
     },
   },
   {
+    name: 'get_spelled_accidental_count',
+    description:
+      'Returns the sharp or flat count for a 7-note diatonic scale\'s correct spelling, including how many of those are double accidentals. Works on a major or natural minor scale interchangeably - a key and its relative minor share the same count.\n\nExample: get_spelled_accidental_count({ notes: ["A#","C","D","D#","F","G","A"], root_letter: "A" }) → { "sharps": 7, "doubleSharps": 3 }',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...NOTE_ENUM] },
+          minItems: 7,
+          maxItems: 7,
+          description: 'The 7 notes of a diatonic scale, in scale order',
+        },
+        root_letter: {
+          type: 'string',
+          enum: [...NOTE_LETTER_ENUM],
+          description: 'Which letter the root should be spelled as',
+        },
+      },
+      required: ['notes', 'root_letter'],
+    },
+  },
+  {
     name: 'get_chord_notes',
     description:
       'Returns the notes of a chord given a root and chord type.\n\nExample: get_chord_notes({ root: "C", chord_type: "major-triad" }) → ["C","E","G"]',
@@ -859,6 +883,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return handleGetRootLetter(safeArgs);
     case 'spell_diatonic_scale':
       return handleSpellDiatonicScale(safeArgs);
+    case 'get_spelled_accidental_count':
+      return handleGetSpelledAccidentalCount(safeArgs);
     case 'get_chord_notes':
       return handleGetChordNotes(safeArgs);
     case 'get_diatonic_chords':
