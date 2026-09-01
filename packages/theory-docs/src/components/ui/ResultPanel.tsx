@@ -54,7 +54,11 @@ const ResultPanel = ({ label, value }: ResultPanelProps) => {
     content = <code style={codeStyle}>{value.join(', ')}</code>;
   } else if (isNumberArray(value)) {
     content = <code style={codeStyle}>[{value.join(', ')}]</code>;
-  } else if (typeof value === 'number' || typeof value === 'boolean') {
+  } else if (
+    typeof value === 'number' ||
+    typeof value === 'boolean' ||
+    typeof value === 'string'
+  ) {
     content = <code style={codeStyle}>{String(value)}</code>;
   } else {
     content = (
