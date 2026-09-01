@@ -3,6 +3,7 @@ import {
   formatSpelledNote,
   getRootLetter,
   spellDiatonicScale,
+  getSpelledAccidentalCount,
   getModeNotes,
   getHarmonicMinorNotes,
   getMelodicMinorNotes,
@@ -225,6 +226,133 @@ describe('spellDiatonicScale', () => {
     it('throws for an 8-note bebop scale', () => {
       const notes = getBebopScaleNotes('C', BebopScaleTypes.BebopDominant);
       expect(() => spellDiatonicScale(notes, 'C')).toThrow(RangeError);
+    });
+  });
+});
+
+describe('getSpelledAccidentalCount', () => {
+  describe('keys with a conventional (single-accidental) key signature', () => {
+    const CASES: Array<{
+      label: string;
+      root: Note;
+      rootLetter: NoteLetter;
+      expected: ReturnType<typeof getSpelledAccidentalCount>;
+    }> = [
+      {
+        label: 'C major (no accidentals)',
+        root: 'C',
+        rootLetter: 'C',
+        expected: { sharps: 0, doubleSharps: 0 },
+      },
+      {
+        label: 'G major (1 sharp)',
+        root: 'G',
+        rootLetter: 'G',
+        expected: { sharps: 1, doubleSharps: 0 },
+      },
+      {
+        label: 'F major (1 flat)',
+        root: 'F',
+        rootLetter: 'F',
+        expected: { flats: 1, doubleFlats: 0 },
+      },
+      {
+        label: 'F# major (6 sharps)',
+        root: 'F#',
+        rootLetter: 'F',
+        expected: { sharps: 6, doubleSharps: 0 },
+      },
+      {
+        label: 'Gb major (6 flats)',
+        root: 'F#',
+        rootLetter: 'G',
+        expected: { flats: 6, doubleFlats: 0 },
+      },
+      {
+        label: 'C# major (7 sharps)',
+        root: 'C#',
+        rootLetter: 'C',
+        expected: { sharps: 7, doubleSharps: 0 },
+      },
+    ];
+
+    it.each(CASES)('$label', ({ root, rootLetter, expected }) => {
+      const notes = getModeNotes(root, Modes.Ionian);
+      expect(getSpelledAccidentalCount(notes, rootLetter)).toEqual(expected);
+    });
+  });
+
+  describe('keys whose correct spelling requires a double accidental', () => {
+    const CASES: Array<{
+      label: string;
+      root: Note;
+      rootLetter: NoteLetter;
+      expected: ReturnType<typeof getSpelledAccidentalCount>;
+    }> = [
+      {
+        label: 'G# major',
+        root: 'G#',
+        rootLetter: 'G',
+        expected: { sharps: 7, doubleSharps: 1 },
+      },
+      {
+        label: 'D# major',
+        root: 'D#',
+        rootLetter: 'D',
+        expected: { sharps: 7, doubleSharps: 2 },
+      },
+      {
+        label: 'A# major',
+        root: 'A#',
+        rootLetter: 'A',
+        expected: { sharps: 7, doubleSharps: 3 },
+      },
+    ];
+
+    it.each(CASES)('$label', ({ root, rootLetter, expected }) => {
+      const notes = getModeNotes(root, Modes.Ionian);
+      expect(getSpelledAccidentalCount(notes, rootLetter)).toEqual(expected);
+    });
+
+    it('Gb minor (relative major would need a double flat too)', () => {
+      const notes = getModeNotes('F#', Modes.Aeolian);
+      expect(getSpelledAccidentalCount(notes, 'G')).toEqual({
+        flats: 7,
+        doubleFlats: 2,
+      });
+    });
+  });
+
+  describe("a minor key shares its relative major's count without resolving the relative key", () => {
+    it('A# minor matches C# major (both 7 sharps, no doubles)', () => {
+      const minorNotes = getModeNotes('A#', Modes.Aeolian);
+      const majorNotes = getModeNotes('C#', Modes.Ionian);
+      expect(getSpelledAccidentalCount(minorNotes, 'A')).toEqual(
+        getSpelledAccidentalCount(majorNotes, 'C')
+      );
+    });
+
+    it('D# minor matches F# major (both 6 sharps, no doubles)', () => {
+      const minorNotes = getModeNotes('D#', Modes.Aeolian);
+      const majorNotes = getModeNotes('F#', Modes.Ionian);
+      expect(getSpelledAccidentalCount(minorNotes, 'D')).toEqual(
+        getSpelledAccidentalCount(majorNotes, 'F')
+      );
+    });
+
+    it('G# minor matches B major (both 5 sharps, no doubles)', () => {
+      const minorNotes = getModeNotes('G#', Modes.Aeolian);
+      const majorNotes = getModeNotes('B', Modes.Ionian);
+      expect(getSpelledAccidentalCount(minorNotes, 'G')).toEqual(
+        getSpelledAccidentalCount(majorNotes, 'B')
+      );
+    });
+  });
+
+  describe('error paths', () => {
+    it('throws for a scale that is not exactly 7 notes', () => {
+      const notes = getPentatonicNotes('C', PentatonicTypes.Major);
+      expect(() => getSpelledAccidentalCount(notes, 'C')).toThrow(RangeError);
     });
   });
 });

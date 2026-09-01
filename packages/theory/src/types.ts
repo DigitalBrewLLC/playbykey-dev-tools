@@ -189,6 +189,17 @@ interface SpelledNote {
   accidental: AccidentalCount;
 }
 
+/**
+ * Sharp or flat count for a key signature, derived from a scale's correct
+ * letter spelling - including how many of those accidentals are doubled
+ * (a double-sharp/flat), which `KeyQuality`-based lookup alone can't
+ * express for the handful of keys that need one. Never both signs at once,
+ * matching the same convention as `getKeySignatureCount`'s return shape.
+ */
+type SpelledAccidentalCount =
+  | { sharps: number; doubleSharps: number }
+  | { flats: number; doubleFlats: number };
+
 export type {
   Note,
   ModeName,
@@ -211,4 +222,5 @@ export type {
   NoteLetter,
   AccidentalCount,
   SpelledNote,
+  SpelledAccidentalCount,
 };

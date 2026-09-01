@@ -7,7 +7,13 @@
  * (`B#`, `E#`, `Cb`, `Fb`, double-sharps, double-flats).
  */
 
-import type { Note, NoteLetter, AccidentalCount, SpelledNote } from './types';
+import type {
+  Note,
+  NoteLetter,
+  AccidentalCount,
+  SpelledNote,
+  SpelledAccidentalCount,
+} from './types';
 import { getNoteIndex, elementAt } from './engine';
 import { SHARP_TO_FLAT_MAP } from './constants';
 
@@ -117,4 +123,43 @@ const spellDiatonicScale = (
   });
 };
 
-export { formatSpelledNote, getRootLetter, spellDiatonicScale };
+/**
+ * Returns the sharp or flat count for a 7-note diatonic scale's correct
+ * spelling, including how many of those accidentals are doubled. Works on
+ * a major or natural minor scale interchangeably - a key and its relative
+ * minor share the same signature, so spelling either one directly gives
+ * the same count without resolving a relative key first.
+ *
+ * @param notes - A 7-note pitch-class scale, e.g. from `getModeNotes`/`getScaleNotes`
+ * @param rootLetter - Which letter the root should be spelled as (see `getRootLetter`)
+ * @returns `{ sharps, doubleSharps }` or `{ flats, doubleFlats }` - a scale with no accidentals returns `{ sharps: 0, doubleSharps: 0 }`
+ * @throws {RangeError} if `notes` isn't exactly 7 entries, or forms an invalid diatonic scale (see `spellDiatonicScale`)
+ *
+ * @example
+ * getSpelledAccidentalCount(getModeNotes('A#', 'ionian'), 'A')
+ * // → { sharps: 7, doubleSharps: 3 }
+ */
+const getSpelledAccidentalCount = (
+  notes: readonly Note[],
+  rootLetter: NoteLetter
+): SpelledAccidentalCount => {
+  const spelled = spellDiatonicScale(notes, rootLetter);
+  const flatCount = spelled.filter((n) => n.accidental < 0).length;
+  if (flatCount > 0) {
+    return {
+      flats: flatCount,
+      doubleFlats: spelled.filter((n) => n.accidental === -2).length,
+    };
+  }
+  return {
+    sharps: spelled.filter((n) => n.accidental > 0).length,
+    doubleSharps: spelled.filter((n) => n.accidental === 2).length,
+  };
+};
+
+export {
+  formatSpelledNote,
+  getRootLetter,
+  spellDiatonicScale,
+  getSpelledAccidentalCount,
+};
