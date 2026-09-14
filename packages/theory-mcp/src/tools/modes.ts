@@ -76,5 +76,5 @@ export function handleGetModeInfo(args: Record<string, unknown>): ToolContent {
 
   const info = ModeInfoById[mode.value];
   const summary = `${info.name} (degree ${info.scaleDegree}): ${info.character}`;
-  return okContent(summary, info);
+  return okContent(summary, { ...info });
 }
