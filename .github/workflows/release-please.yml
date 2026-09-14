@@ -27,7 +27,7 @@ jobs:
     needs: release-please
     if: >-
       needs.release-please.outputs.releases_created == 'true' &&
-      contains(needs.release-please.outputs.paths_released, 'packages/theory')
+      contains(fromJSON(needs.release-please.outputs.paths_released), 'packages/theory')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
     needs: [release-please, publish-npm]
     if: >-
       needs.release-please.outputs.releases_created == 'true' &&
-      contains(needs.release-please.outputs.paths_released, 'packages/theory-mcp') &&
+      contains(fromJSON(needs.release-please.outputs.paths_released), 'packages/theory-mcp') &&
       (needs.publish-npm.result == 'success' || needs.publish-npm.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
@@ -77,7 +77,7 @@ jobs:
     needs: release-please
     if: >-
       needs.release-please.outputs.releases_created == 'true' &&
-      contains(needs.release-please.outputs.paths_released, 'packages/theory-docs')
+      contains(fromJSON(needs.release-please.outputs.paths_released), 'packages/theory-docs')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
