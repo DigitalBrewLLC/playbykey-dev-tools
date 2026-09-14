@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v2.1.0...theory-mcp-v2.1.1) (2026-09-14)
+
+
+### Bug Fixes
+
+* **theory-mcp:** report actual package version in MCP server info ([eeb4b0b](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/eeb4b0bb6b28baecf36fb0dabd909cd35bc9f438))
+
 ## [2.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v2.0.1...theory-mcp-v2.1.0) (2026-09-01)
 
 
