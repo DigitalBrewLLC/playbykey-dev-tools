@@ -26,6 +26,8 @@ jobs:
   publish-npm:
     needs: release-please
     if: >-
+      always() &&
+      needs.release-please.result == 'success' &&
       needs.release-please.outputs.releases_created == 'true' &&
       contains(fromJSON(needs.release-please.outputs.paths_released), 'packages/theory')
     runs-on: ubuntu-latest
@@ -50,6 +52,8 @@ jobs:
   publish-theory-mcp:
     needs: [release-please, publish-npm]
     if: >-
+      always() &&
+      needs.release-please.result == 'success' &&
       needs.release-please.outputs.releases_created == 'true' &&
       contains(fromJSON(needs.release-please.outputs.paths_released), 'packages/theory-mcp') &&
       (needs.publish-npm.result == 'success' || needs.publish-npm.result == 'skipped')
@@ -76,6 +80,8 @@ jobs:
   build-theory-docs:
     needs: release-please
     if: >-
+      always() &&
+      needs.release-please.result == 'success' &&
       needs.release-please.outputs.releases_created == 'true' &&
       contains(fromJSON(needs.release-please.outputs.paths_released), 'packages/theory-docs')
     runs-on: ubuntu-latest
