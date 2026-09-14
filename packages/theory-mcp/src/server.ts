@@ -144,6 +144,18 @@ const TOOLS = [
       },
       required: ['root', 'mode'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        mode: { type: 'string', enum: [...MODE_ENUM] },
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['root', 'mode', 'notes'],
+    },
   },
   {
     name: 'get_parent_scale_modes',
@@ -164,6 +176,25 @@ const TOOLS = [
         },
       },
       required: ['root', 'mode'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        mode: { type: 'string', enum: [...MODE_ENUM] },
+        modes: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+              mode: { type: 'string', enum: [...MODE_ENUM] },
+            },
+            required: ['root', 'mode'],
+          },
+        },
+      },
+      required: ['root', 'mode', 'modes'],
     },
   },
   {
@@ -186,6 +217,15 @@ const TOOLS = [
       },
       required: ['parent_key', 'mode'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        parentKey: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        mode: { type: 'string', enum: [...MODE_ENUM] },
+        modalRoot: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+      },
+      required: ['parentKey', 'mode', 'modalRoot'],
+    },
   },
   {
     name: 'get_relative_minor',
@@ -201,6 +241,14 @@ const TOOLS = [
         },
       },
       required: ['major_key'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        majorKey: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        minorKey: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+      },
+      required: ['majorKey', 'minorKey'],
     },
   },
   {
@@ -218,6 +266,14 @@ const TOOLS = [
       },
       required: ['minor_key'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        minorKey: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        majorKey: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+      },
+      required: ['minorKey', 'majorKey'],
+    },
   },
   {
     name: 'get_mode_info',
@@ -234,12 +290,32 @@ const TOOLS = [
       },
       required: ['mode'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        id: { type: 'string', enum: [...MODE_ENUM] },
+        name: { type: 'string' },
+        scaleDegree: { type: 'integer' },
+        character: { type: 'string' },
+      },
+      required: ['id', 'name', 'scaleDegree', 'character'],
+    },
   },
   {
     name: 'get_circle_of_fifths',
     description:
       'Returns all 12 chromatic notes in ascending-fifths order starting from C. No input.\n\nExample: get_circle_of_fifths({}) → ["C","G","D","A","E","B","F#","C#","G#","D#","A#","F"]',
     inputSchema: { type: 'object', properties: {} },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['notes'],
+    },
   },
   {
     name: 'get_key_signature',
@@ -255,6 +331,26 @@ const TOOLS = [
         },
       },
       required: ['key'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        key: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        signature: {
+          type: 'object',
+          oneOf: [
+            {
+              properties: { sharps: { type: 'integer' } },
+              required: ['sharps'],
+            },
+            {
+              properties: { flats: { type: 'integer' } },
+              required: ['flats'],
+            },
+          ],
+        },
+      },
+      required: ['key', 'signature'],
     },
   },
   {
@@ -277,6 +373,18 @@ const TOOLS = [
       },
       required: ['root', 'scale_type'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        scaleType: { type: 'string', enum: [...SCALE_TYPE_ENUM] },
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['root', 'scaleType', 'notes'],
+    },
   },
   {
     name: 'build_note_map',
@@ -297,6 +405,26 @@ const TOOLS = [
         },
       },
       required: ['root', 'scale_type'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        scaleType: { type: 'string', enum: [...SCALE_TYPE_ENUM] },
+        noteMap: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              note: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+              scaleDegree: { type: 'integer' },
+              semitoneOffset: { type: 'integer' },
+            },
+            required: ['note', 'scaleDegree', 'semitoneOffset'],
+          },
+        },
+      },
+      required: ['root', 'scaleType', 'noteMap'],
     },
   },
   {
@@ -319,6 +447,18 @@ const TOOLS = [
       },
       required: ['root', 'interval'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        interval: { type: 'string', enum: [...INTERVAL_ID_ENUM] },
+        from: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        to: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        semitones: { type: 'integer' },
+        label: { type: 'string' },
+      },
+      required: ['root', 'interval', 'from', 'to', 'semitones', 'label'],
+    },
   },
   {
     name: 'get_semitone_distance',
@@ -339,6 +479,15 @@ const TOOLS = [
         },
       },
       required: ['from', 'to'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        from: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        to: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        semitones: { type: 'integer' },
+      },
+      required: ['from', 'to', 'semitones'],
     },
   },
   {
@@ -366,6 +515,17 @@ const TOOLS = [
       },
       required: ['root', 'scale_type', 'note'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        scaleType: { type: 'string', enum: [...SCALE_TYPE_ENUM] },
+        note: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        degree: { type: ['integer', 'null'] },
+        inScale: { type: 'boolean' },
+      },
+      required: ['root', 'scaleType', 'note', 'degree', 'inScale'],
+    },
   },
   {
     name: 'is_note_in_scale',
@@ -392,6 +552,16 @@ const TOOLS = [
       },
       required: ['root', 'scale_type', 'note'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        scaleType: { type: 'string', enum: [...SCALE_TYPE_ENUM] },
+        note: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        inScale: { type: 'boolean' },
+      },
+      required: ['root', 'scaleType', 'note', 'inScale'],
+    },
   },
   {
     name: 'get_sharps',
@@ -405,6 +575,16 @@ const TOOLS = [
           items: { type: 'string', enum: [...NOTE_ENUM] },
           description:
             'Notes to normalize to sharps (sharp or flat input accepted)',
+        },
+      },
+      required: ['notes'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
         },
       },
       required: ['notes'],
@@ -425,6 +605,16 @@ const TOOLS = [
       },
       required: ['notes'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...NOTE_ENUM] },
+        },
+      },
+      required: ['notes'],
+    },
   },
   {
     name: 'get_enharmonic_labels',
@@ -438,6 +628,13 @@ const TOOLS = [
           items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
           description: 'Sharp-spelled notes to label',
         },
+      },
+      required: ['notes'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        notes: { type: 'array', items: { type: 'string' } },
       },
       required: ['notes'],
     },
@@ -462,6 +659,13 @@ const TOOLS = [
       },
       required: ['root', 'preference'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        letter: { type: 'string', enum: [...NOTE_LETTER_ENUM] },
+      },
+      required: ['letter'],
+    },
   },
   {
     name: 'spell_diatonic_scale',
@@ -484,6 +688,13 @@ const TOOLS = [
         },
       },
       required: ['notes', 'root_letter'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        notes: { type: 'array', items: { type: 'string' } },
+      },
+      required: ['notes'],
     },
   },
   {
@@ -508,6 +719,25 @@ const TOOLS = [
       },
       required: ['notes', 'root_letter'],
     },
+    outputSchema: {
+      type: 'object',
+      oneOf: [
+        {
+          properties: {
+            sharps: { type: 'integer' },
+            doubleSharps: { type: 'integer' },
+          },
+          required: ['sharps', 'doubleSharps'],
+        },
+        {
+          properties: {
+            flats: { type: 'integer' },
+            doubleFlats: { type: 'integer' },
+          },
+          required: ['flats', 'doubleFlats'],
+        },
+      ],
+    },
   },
   {
     name: 'get_chord_notes',
@@ -529,6 +759,18 @@ const TOOLS = [
       },
       required: ['root', 'chord_type'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        chordType: { type: 'string', enum: [...CHORD_TYPE_ENUM] },
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['root', 'chordType', 'notes'],
+    },
   },
   {
     name: 'get_diatonic_chords',
@@ -549,6 +791,25 @@ const TOOLS = [
         },
       },
       required: ['root'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        mode: { type: 'string', enum: [...MODE_ENUM] },
+        chords: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+              type: { type: 'string', enum: [...CHORD_TYPE_ENUM] },
+            },
+            required: ['root', 'type'],
+          },
+        },
+      },
+      required: ['root', 'mode', 'chords'],
     },
   },
   {
@@ -572,6 +833,23 @@ const TOOLS = [
       },
       required: ['degree', 'root'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        degree: { type: 'integer' },
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        mode: { type: 'string', enum: [...MODE_ENUM] },
+        chord: {
+          type: 'object',
+          properties: {
+            root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+            type: { type: 'string', enum: [...CHORD_TYPE_ENUM] },
+          },
+          required: ['root', 'type'],
+        },
+      },
+      required: ['degree', 'root', 'mode', 'chord'],
+    },
   },
   {
     name: 'get_available_inversions',
@@ -587,6 +865,14 @@ const TOOLS = [
         },
       },
       required: ['chord_type'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        chordType: { type: 'string', enum: [...CHORD_TYPE_ENUM] },
+        inversions: { type: 'array', items: { type: 'integer' } },
+      },
+      required: ['chordType', 'inversions'],
     },
   },
   {
@@ -614,6 +900,19 @@ const TOOLS = [
       },
       required: ['root', 'chord_type', 'inversion'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        chordType: { type: 'string', enum: [...CHORD_TYPE_ENUM] },
+        inversion: { type: 'integer' },
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['root', 'chordType', 'inversion', 'notes'],
+    },
   },
   {
     name: 'detect_chords',
@@ -630,6 +929,23 @@ const TOOLS = [
         },
       },
       required: ['notes'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+        chords: {
+          type: 'object',
+          additionalProperties: {
+            type: 'array',
+            items: { type: 'string', enum: [...CHORD_TYPE_ENUM] },
+          },
+        },
+      },
+      required: ['notes', 'chords'],
     },
   },
   {
@@ -652,6 +968,25 @@ const TOOLS = [
       },
       required: ['progression_id', 'root'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        progressionId: { type: 'string', enum: [...PROGRESSION_ID_ENUM] },
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        chords: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+              type: { type: 'string', enum: [...CHORD_TYPE_ENUM] },
+            },
+            required: ['root', 'type'],
+          },
+        },
+      },
+      required: ['progressionId', 'root', 'chords'],
+    },
   },
   {
     name: 'get_roman_numeral',
@@ -668,6 +1003,15 @@ const TOOLS = [
         },
       },
       required: ['degree'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        degree: { type: 'integer' },
+        mode: { type: 'string', enum: [...MODE_ENUM] },
+        numeral: { type: 'string' },
+      },
+      required: ['degree', 'mode', 'numeral'],
     },
   },
   {
@@ -695,6 +1039,22 @@ const TOOLS = [
       },
       required: ['notes', 'from_root', 'to_root'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+        fromRoot: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        toRoot: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        result: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['notes', 'fromRoot', 'toRoot', 'result'],
+    },
   },
   {
     name: 'note_to_midi',
@@ -715,6 +1075,15 @@ const TOOLS = [
       },
       required: ['note', 'octave'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        note: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        octave: { type: 'integer' },
+        midiNumber: { type: 'integer' },
+      },
+      required: ['note', 'octave', 'midiNumber'],
+    },
   },
   {
     name: 'midi_to_note',
@@ -729,6 +1098,15 @@ const TOOLS = [
         },
       },
       required: ['midi_number'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        midiNumber: { type: 'integer' },
+        note: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        octave: { type: 'integer' },
+      },
+      required: ['midiNumber', 'note', 'octave'],
     },
   },
   {
@@ -750,6 +1128,15 @@ const TOOLS = [
       },
       required: ['note', 'octave'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        note: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        octave: { type: 'integer' },
+        frequency: { type: 'number' },
+      },
+      required: ['note', 'octave', 'frequency'],
+    },
   },
   {
     name: 'get_melodic_minor_notes',
@@ -765,6 +1152,17 @@ const TOOLS = [
         },
       },
       required: ['root'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['root', 'notes'],
     },
   },
   {
@@ -787,6 +1185,18 @@ const TOOLS = [
       },
       required: ['root', 'mode'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        mode: { type: 'string', enum: [...MELODIC_MINOR_MODE_ENUM] },
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['root', 'mode', 'notes'],
+    },
   },
   {
     name: 'get_harmonic_minor_mode_notes',
@@ -808,6 +1218,18 @@ const TOOLS = [
       },
       required: ['root', 'mode'],
     },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        mode: { type: 'string', enum: [...HARMONIC_MINOR_MODE_ENUM] },
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['root', 'mode', 'notes'],
+    },
   },
   {
     name: 'get_bebop_scale_notes',
@@ -828,6 +1250,18 @@ const TOOLS = [
         },
       },
       required: ['root', 'type'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        type: { type: 'string', enum: [...BEBOP_SCALE_TYPE_ENUM] },
+        notes: {
+          type: 'array',
+          items: { type: 'string', enum: [...SHARP_NOTE_ENUM] },
+        },
+      },
+      required: ['root', 'type', 'notes'],
     },
   },
 ];
