@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v2.1.1...theory-mcp-v2.2.0) (2026-09-14)
+
+
+### Features
+
+* **theory-mcp:** add structured output to all 36 MCP tools ([3da1f76](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/3da1f7646e2db0131167c4bc9d11b5515cd9f5aa))
+
 ## [2.1.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-mcp-v2.1.0...theory-mcp-v2.1.1) (2026-09-14)
 
 ### Bug Fixes

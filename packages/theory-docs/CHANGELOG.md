@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.2.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v2.1.1...theory-docs-v2.2.0) (2026-09-14)
+
+
+### Features
+
+* **theory-docs:** add Watch Releases CTA to the changelog page ([d4f5b68](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/d4f5b68d29d5d6435c0b69ff78e2b0be66d5a907))
+
 ## [2.1.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v2.1.0...theory-docs-v2.1.1) (2026-09-14)
 
 
