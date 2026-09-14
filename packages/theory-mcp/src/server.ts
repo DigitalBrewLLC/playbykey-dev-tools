@@ -356,7 +356,7 @@ const TOOLS = [
   {
     name: 'get_scale_notes',
     description:
-      'Returns the notes of a scale by type - major, blues, pentatonic-major, pentatonic-minor, harmonic-minor, melodic-minor, or chromatic.\n\nExample: get_scale_notes({ root: "A", scale_type: "blues" }) → ["A","C","D","D#","E","G"]',
+      'Returns the notes of a scale by type - major, blues, pentatonic-major, pentatonic-minor, harmonic-minor, melodic-minor, or chromatic. For scale_type "harmonic-minor" or "melodic-minor", this is interchangeable with get_harmonic_minor_mode_notes/get_melodic_minor_mode_notes called with mode set to that same value - same computation, same result; use whichever tool you already have the arguments for. Pitch-correct only, not letter-correct - for keys needing each of the 7 letters used exactly once (e.g. G# major), pipe the result through get_root_letter + spell_diatonic_scale.\n\nExample: get_scale_notes({ root: "A", scale_type: "blues" }) → ["A","C","D","D#","E","G"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -1141,7 +1141,7 @@ const TOOLS = [
   {
     name: 'get_melodic_minor_notes',
     description:
-      'Returns the 7 notes of the ascending melodic minor scale for a root.\n\nExample: get_melodic_minor_notes({ root: "C" }) → ["C","D","D#","F","G","A","B"]',
+      'Returns the 7 notes of the ascending melodic minor scale for a root. Interchangeable with get_scale_notes({ scale_type: "melodic-minor" }) and get_melodic_minor_mode_notes({ mode: "melodic-minor" }) - all three return identical notes for the same root; this one is a shorthand for when you don\'t need any other mode.\n\nExample: get_melodic_minor_notes({ root: "C" }) → ["C","D","D#","F","G","A","B"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -1168,7 +1168,7 @@ const TOOLS = [
   {
     name: 'get_melodic_minor_mode_notes',
     description:
-      'Returns the 7 notes of a melodic minor mode for a root.\n\nExample: get_melodic_minor_mode_notes({ root: "C", mode: "lydian-dominant" }) → ["C","D","E","F#","G","A","A#"]',
+      'Returns the 7 notes of a melodic minor mode for a root. mode: "melodic-minor" returns the base scale itself (not a rotation) - interchangeable with get_scale_notes({ scale_type: "melodic-minor" }) and get_melodic_minor_notes for that case.\n\nExample: get_melodic_minor_mode_notes({ root: "C", mode: "lydian-dominant" }) → ["C","D","E","F#","G","A","A#"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -1201,7 +1201,7 @@ const TOOLS = [
   {
     name: 'get_harmonic_minor_mode_notes',
     description:
-      'Returns the 7 notes of a harmonic minor mode for a root.\n\nExample: get_harmonic_minor_mode_notes({ root: "C", mode: "phrygian-dominant" }) → ["C","C#","E","F","G","G#","A#"]',
+      'Returns the 7 notes of a harmonic minor mode for a root. mode: "harmonic-minor" returns the base scale itself (not a rotation) - interchangeable with get_scale_notes({ scale_type: "harmonic-minor" }) for that case; "phrygian-dominant" is the only other mode currently supported.\n\nExample: get_harmonic_minor_mode_notes({ root: "C", mode: "phrygian-dominant" }) → ["C","C#","E","F","G","G#","A#"]',
     inputSchema: {
       type: 'object',
       properties: {
