@@ -493,7 +493,7 @@ const TOOLS = [
   {
     name: 'get_scale_degree',
     description:
-      'Returns the 1-based scale degree of a note within a scale, or null if not present.\n\nExample: get_scale_degree({ root: "C", scale_type: "major", note: "E" }) → 3',
+      'Returns the 1-based scale degree of a note within a scale, or null if not present. The response also includes an inScale boolean directly - if you need both the degree and whether it\'s in the scale, this alone covers is_note_in_scale too; no need to call both.\n\nExample: get_scale_degree({ root: "C", scale_type: "major", note: "E" }) → 3',
     inputSchema: {
       type: 'object',
       properties: {
@@ -530,7 +530,7 @@ const TOOLS = [
   {
     name: 'is_note_in_scale',
     description:
-      'Returns true if a note is present in a scale, false otherwise.\n\nExample: is_note_in_scale({ root: "C", scale_type: "major", note: "F#" }) → false',
+      'Returns true if a note is present in a scale, false otherwise. Equivalent to reading the inScale field from get_scale_degree\'s response - use that one instead if you also need the degree number.\n\nExample: is_note_in_scale({ root: "C", scale_type: "major", note: "F#" }) → false',
     inputSchema: {
       type: 'object',
       properties: {
