@@ -700,7 +700,7 @@ const TOOLS = [
   {
     name: 'get_spelled_accidental_count',
     description:
-      'Returns the sharp or flat count for a 7-note diatonic scale\'s correct spelling, including how many of those are double accidentals. Works on a major or natural minor scale interchangeably - a key and its relative minor share the same count.\n\nExample: get_spelled_accidental_count({ notes: ["A#","C","D","D#","F","G","A"], root_letter: "A" }) → { "sharps": 7, "doubleSharps": 3 }',
+      'Returns the sharp or flat count for a 7-note diatonic scale\'s correct spelling, including how many of those are double accidentals. Takes the same plain, pitch-correct notes as spell_diatonic_scale (e.g. from get_mode_notes/get_scale_notes) - not spell_diatonic_scale\'s already-spelled output. Computes the count directly; calling spell_diatonic_scale first is not required and its output wouldn\'t validate here (it can contain letters like "E#" outside this tool\'s note enum). Works on a major or natural minor scale interchangeably - a key and its relative minor share the same count.\n\nExample: get_spelled_accidental_count({ notes: ["A#","C","D","D#","F","G","A"], root_letter: "A" }) → { "sharps": 7, "doubleSharps": 3 }',
     inputSchema: {
       type: 'object',
       properties: {
