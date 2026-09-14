@@ -127,7 +127,7 @@ const TOOLS = [
   {
     name: 'get_mode_notes',
     description:
-      'Returns the 7 notes of a diatonic mode for a given root.\n\nExample: get_mode_notes({ root: "D", mode: "dorian" }) → ["D","E","F","G","A","B","C"]',
+      'Returns the 7 notes of a diatonic mode for a given root. mode: "ionian" is the major scale - interchangeable with get_scale_notes({ scale_type: "major" }) for that case.\n\nExample: get_mode_notes({ root: "D", mode: "dorian" }) → ["D","E","F","G","A","B","C"]',
     inputSchema: {
       type: 'object',
       properties: {
@@ -356,7 +356,7 @@ const TOOLS = [
   {
     name: 'get_scale_notes',
     description:
-      'Returns the notes of a scale by type - major, blues, pentatonic-major, pentatonic-minor, harmonic-minor, melodic-minor, or chromatic. For scale_type "harmonic-minor" or "melodic-minor", this is interchangeable with get_harmonic_minor_mode_notes/get_melodic_minor_mode_notes called with mode set to that same value - same computation, same result; use whichever tool you already have the arguments for. Pitch-correct only, not letter-correct - for keys needing each of the 7 letters used exactly once (e.g. G# major), pipe the result through get_root_letter + spell_diatonic_scale.\n\nExample: get_scale_notes({ root: "A", scale_type: "blues" }) → ["A","C","D","D#","E","G"]',
+      'Returns the notes of a scale by type - major, blues, pentatonic-major, pentatonic-minor, harmonic-minor, melodic-minor, or chromatic. For scale_type "harmonic-minor" or "melodic-minor", this is interchangeable with get_harmonic_minor_mode_notes/get_melodic_minor_mode_notes called with mode set to that same value - same computation, same result; use whichever tool you already have the arguments for. For scale_type "major", this is interchangeable with get_mode_notes({ mode: "ionian" }) - the major scale is Ionian mode. Pitch-correct only, not letter-correct - for keys needing each of the 7 letters used exactly once (e.g. G# major), pipe the result through get_root_letter + spell_diatonic_scale.\n\nExample: get_scale_notes({ root: "A", scale_type: "blues" }) → ["A","C","D","D#","E","G"]',
     inputSchema: {
       type: 'object',
       properties: {
