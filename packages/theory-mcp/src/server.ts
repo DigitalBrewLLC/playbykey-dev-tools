@@ -1,4 +1,5 @@
 import { Server } from '@modelcontextprotocol/sdk/server';
+import packageJson from '../package.json';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -832,7 +833,7 @@ const TOOLS = [
 ];
 
 export const server = new Server(
-  { name: 'theory-mcp', version: '1.0.0' },
+  { name: 'theory-mcp', version: packageJson.version },
   { capabilities: { tools: {} } }
 );
 
