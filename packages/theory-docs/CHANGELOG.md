@@ -7,6 +7,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [2.1.1](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v2.1.0...theory-docs-v2.1.1) (2026-09-14)
+
+
+### Bug Fixes
+
+* **deps:** patch 12 security advisories across 8 packages ([4e63385](https://github.com/DigitalBrewLLC/playbykey-dev-tools/commit/4e6338582e72bd1c35b7a5f0fb701701f2244b85))
+
 ## [2.1.0](https://github.com/DigitalBrewLLC/playbykey-dev-tools/compare/theory-docs-v2.0.2...theory-docs-v2.1.0) (2026-09-01)
 
 
